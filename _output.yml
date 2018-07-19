@@ -5,7 +5,7 @@ bookdown::gitbook:
       before: |
         <li><a href="./">Applied Time Series Analysis</a></li>
       after: |
-        <li><a href="https://github.com/vipulbhatt2178" target="blank">Published with bookdown</a></li>
+        <li><a href="https://vipul-bhatt.github.io/Econ-483-Notes/" target="blank">Published with bookdown</a></li>
     edit:
     download: ["pdf", "epub"]
 bookdown::pdf_book:

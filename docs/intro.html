@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Applied Time Series Analysis</title>
+  <meta name="description" content="Lecture notes for Applied Time Series Analysis">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Applied Time Series Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Lecture notes for Applied Time Series Analysis" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Applied Time Series Analysis" />
+  
+  <meta name="twitter:description" content="Lecture notes for Applied Time Series Analysis" />
+  
+
+<meta name="author" content="Vipul Bhatt">
+
+
+<meta name="date" content="2018-07-19">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="smoothing-methods-and-regression-based-forecasting.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Time Series Analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html"><i class="fa fa-check"></i><b>2</b> Smoothing Methods and Regression-based Forecasting</a><ul>
+<li class="chapter" data-level="2.1" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html#smoothing-methods"><i class="fa fa-check"></i><b>2.1</b> Smoothing Methods</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html#moving-average-method"><i class="fa fa-check"></i><b>2.1.1</b> Moving Average Method</a></li>
+<li class="chapter" data-level="2.1.2" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html#simple-exponential-smoothing"><i class="fa fa-check"></i><b>2.1.2</b> Simple Exponential Smoothing</a></li>
+<li class="chapter" data-level="2.1.3" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html#holts-exponential-smoothing"><i class="fa fa-check"></i><b>2.1.3</b> Holt’s Exponential Smoothing</a></li>
+<li class="chapter" data-level="2.1.4" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html#winters-exponential-smoothing"><i class="fa fa-check"></i><b>2.1.4</b> Winter’s Exponential Smoothing</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html#regression-based-forecasting"><i class="fa fa-check"></i><b>2.2</b> Regression-based Forecasting</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://vipul-bhatt.github.io/Econ-483-Notes/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Time Series Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
+<p>A time series is a specific kind of data where observations of a variable are recorded over time. For example, the data for the U.S. GDP for the last 30 years is a time series data.</p>
+<p>Such data shows how a variable is changing over time. Depending on the variable of interest we can have data measured at different frequencies. Some commonly used frequencies are intra-day, daily, weekly, monthly, quarterly, semi-annual and annual. Figure <a href="intro.html#fig:figone">1.1</a> below plots data for quarterly and monthly frequency.</p>
+<div class="figure" style="text-align: center"><span id="fig:figone"></span>
+<img src="bookdown-demo_files/figure-html/figone-1.png" alt="Time Series at quarterly and monthly frequency" width="80%" />
+<p class="caption">
+Figure 1.1: Time Series at quarterly and monthly frequency
+</p>
+</div>
+<p>The first panel shows data for the real gross domestic product (GDP) for the US in 2009 dollars, measured at a quarterly frequency. The second panel shows data for the retail sales in the U.S. billions of dollars, measured at monthly frequency.</p>
+<p>Formally, we denote a time series variable by <span class="math inline">\(x_t\)</span>, where <span class="math inline">\(t=0,1,2,..,T\)</span> is the observation index. For example, at <span class="math inline">\(t=10\)</span> we get the tenth observation of this time series, <span class="math inline">\(x_{10}\)</span>.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="smoothing-methods-and-regression-based-forecasting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
