@@ -1,6 +1,14 @@
 bookdown::gitbook:
   css: style.css
   config:
+    sharing:
+      facebook: no
+      twitter: no
+      google: no
+      linkedin: no
+      weibo: no
+      instapper: no
+      vk: no
     toc:
       before: |
         <li><a href="./">Applied Time Series Analysis</a></li>
