@@ -1,0 +1,27 @@
+# Introduction {#intro}
+
+A time series is a specific kind of data where observations of a variable are recorded over time. For example, the data for the U.S. GDP for the last 30 years is a time series data. 
+
+Such data shows how a variable is changing over time. Depending on the variable of interest we can have data measured at different frequencies. Some commonly used frequencies are intra-day, daily, weekly, monthly, quarterly, semi-annual and annual. Figure \@ref(fig:figone) below plots data for quarterly and monthly frequency. 
+
+```{r figone, echo = FALSE, fig.cap = 'Time Series at quarterly and monthly frequency', out.width='80%', fig.asp=.75, fig.align='center'}
+suppressMessages(library(xts))
+# cretae a data object frame called gdp that imports the csv file with data
+gdp= read.csv("/Users/home-mac/Documents/E483/gdp.csv")
+retail=read.csv("/Users/home-mac/Documents/E483/retail.csv")
+# create time series objects for data 
+y1=ts(gdp$y,start=1948, end=2015, frequency=4)
+y2=ts(retail$y, start=1959, end=2015, frequency=12)
+
+# plot data over time
+par(mfrow=c(2,1))
+plot.xts(as.xts(y1),yaxis.right=F, main="Real GDP (Billions of 2009 Dollars)")
+plot.xts(as.xts(y2),yaxis.right=F, main="Retail Sales (Billions of Dollars)")
+
+
+```
+The first panel shows data for the real gross domestic product (GDP) for the US in 2009 dollars, measured at a quarterly frequency. The second panel shows data for the retail sales in the U.S.  billions of dollars, measured at monthly frequency.
+
+Formally, we denote a time series variable by $x_t$, where $t=0,1,2,..,T$ is the observation index. For example, at $t=10$ we get the tenth observation of this time series, $x_{10}$.
+
+

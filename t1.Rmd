@@ -1,0 +1,92 @@
+# Smoothing Methods and Regression-based Forecasting
+In this chapter we will look at simple techniques that can be used to forecast a time series variable. Here we focus on methods that do not account for various components of a time series explicitly. The list of tecniques covered in this topic are:
+
+1. Smoothing Methods
+2. Regressiion-based Forecasting
+
+"Naive Forecasting Methods"
+ There are many `back-of-envelope' type of forecasting methods often used by practitioners. For example:
+ 
+
+ 
+## Smoothing Methods
+
+This approach attempts to *average* out the irregular component of a Time series.
+ 
+
+### Moving Average Method
+ 
+Here we compute an average of most recent data values for the time series and use it as a forecast for the next period.
+
+An important parameter is the *window* over which we take the average. Let us denote this window by $m$, then:
+\begin{equation}
+	y^f_{T+1}=\frac{\sum_{i=t-m+1}^{t}{y_i}}{m}
+	\end{equation}
+	
+	As we increase $m$, more weight is given to more recent observations and hence we get less *smoothing*. A larger value is more desirable when there are large but infrequent fluctuations in our data. In contrast, a smaller value of $m$ is preferred when data has sudden shits in our data. Typically, we set $m$ equal to the frequency at which our data is measured. For example, $m=4$ for quarterly data and $m=12$ for monthly data. One drawback of this method is that it assigns equal *weight* to each observation. It is reasonable to argue that for most economic and financial variables, the effect of past observations will be less pronounced than most recent observations. 
+	
+
+ 
+### Simple Exponential Smoothing
+
+Here, the weight attached to past observations exponentially decay over time.  The next period forecast is the exponentially weighted moving average of all previously observed values. 
+ \begin{equation}
+ 	y_{t}^{s}= \alpha y_t + (1-\alpha)y_{t-1}^{s}
+ \end{equation}
+ 
+ Here the h-period ahead forecast is:
+ 
+ \begin{equation}
+ 	y^f_{T+h} = y_T^s
+ 	\end{equation}
+ 
+*Can you show that 	$y_{t}^{s}$ is a is the weighted moving average of all past observations? Use backward substitution method.*
+
+### Holt's Exponential Smoothing
+
+Adds trend component to simple exponential smoothing.
+ \begin{equation}
+ 	y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
+ 	B_t = \gamma (y_t^s -y_{t-1}^s) + (1-\gamma) B_{t-1}
+ \end{equation}
+ 
+ 
+  Here the h-period ahead forecast is:
+  
+  \begin{equation}
+  	y^f_{T+h} = y_T^s + h\times B_T
+  \end{equation}
+  
+### Winter's Exponential Smoothing
+ Adds seasonal component along with trend. Assuming multiplicative seasonality:
+ 
+  \begin{equation}
+  	y_{t}^{s}= \alpha \frac{y_t}{S_{t-n}} + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
+  	B_t = \gamma (y_t^s -y_{t-1}^s) + (1-\gamma) B_{t-1}\\
+  	S_t = \beta\frac{y_t}{y_t^s}+(1-\beta)S_{t-n}
+  \end{equation}
+ \noindent where $n$ is the number of periods in a season.
+ 
+   \begin{equation}
+   	y^f_{T+h} = (y_T^s + h\times B_T) \times S_{T+h-n}
+   \end{equation}
+   
+## Regression-based Forecasting
+ A linear regression model estimates the value of the dependent variable as a function of the independent variable. The predicted value of the dependent variable can be used  as a ``forecast'' when working with the time series data. For example:
+ \begin{equation}
+ 	Y_t = \beta_0 +\beta_1 X_t + \epsilon_t
+ 	\end{equation}
+
+ Then given a sample of observations over time for $Y$ and $X$, we can estimate the above model using OLS and compute the predicted value of $Y$:
+  \begin{equation}
+  	\widehat{Y}_t = \widehat{\beta_0} +\widehat{\beta_1} X_t
+  \end{equation}
+  
+  Now suppose we are interested in computed the $h$ period ahead forecast for $Y$. Then, using the above equation we get:
+  \begin{equation}
+  	  	\widehat{Y}_{T+h} = \widehat{\beta_0} +\widehat{\beta_1} X_{T+h}
+  	\end{equation}
+  
+  Hence, to forecast the dependent variable we first need to compute a forecast for the independent variable. Larger the number of independent variables in our model greater the number of forecasts we need to compute making regression-based forecasting a rather difficult approach to implement in practice.
+  
+  Further, when working with time series data, we have to be careful about *spurious regression* problem. It is quite possible to find a strong linear relationship between two completely unrelated variables over time if they share a common stochastic trend. 
