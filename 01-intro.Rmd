@@ -33,8 +33,10 @@ Formally, we denote a time series variable by $y_t$, where $t=0,1,2,..,T$ is the
 Serial correlation is a measure of temporal dynamics of a time series. It addresses the following question: what is the effect of past realizations of a time series on the current period value? Formally, 
 
 \begin{equation}
-\rho(s)=Corr(y_t, y_{t-s})
+\rho(s)=Cor(y_t, y_{t-s}) =\frac{	Cov(y_t,y_{t-s})}{\sqrt{\sigma^2_{y_t} \times \sigma^2_{y_{t-s}}}}
 \end{equation}
+
+ where $Cov(y_t,y_{t-s})= E(y_t-\mu_{y_t})(y_{t-s}-\mu_{y_{t-s}})$ and $\sigma^2_{y_t}=E(y_t-\mu_{y_t})^2$
 
 Here, $\rho(s)$ is the serial correlation of order $s$. Note that often we use historical data to forecast. If there is no serial correlation, then past can offer no guidance for the present and future. In that sense, presence of serial correlation of some order is the first condition for being able to forecast a time series using its historical realizations.
 

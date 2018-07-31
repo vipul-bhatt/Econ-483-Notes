@@ -140,8 +140,9 @@ Figure 1.1: Time Series at quarterly and monthly frequency
 <h3><span class="header-section-number">1.1.1</span> Serial Correlation</h3>
 <p>Serial correlation is a measure of temporal dynamics of a time series. It addresses the following question: what is the effect of past realizations of a time series on the current period value? Formally,</p>
 <span class="math display">\[\begin{equation}
-\rho(s)=Corr(y_t, y_{t-s})
+\rho(s)=Cor(y_t, y_{t-s}) =\frac{   Cov(y_t,y_{t-s})}{\sqrt{\sigma^2_{y_t} \times \sigma^2_{y_{t-s}}}}
 \end{equation}\]</span>
+<p>where <span class="math inline">\(Cov(y_t,y_{t-s})= E(y_t-\mu_{y_t})(y_{t-s}-\mu_{y_{t-s}})\)</span> and <span class="math inline">\(\sigma^2_{y_t}=E(y_t-\mu_{y_t})^2\)</span></p>
 <p>Here, <span class="math inline">\(\rho(s)\)</span> is the serial correlation of order <span class="math inline">\(s\)</span>. Note that often we use historical data to forecast. If there is no serial correlation, then past can offer no guidance for the present and future. In that sense, presence of serial correlation of some order is the first condition for being able to forecast a time series using its historical realizations.</p>
 </div>
 <div id="white-noise-process" class="section level3">
