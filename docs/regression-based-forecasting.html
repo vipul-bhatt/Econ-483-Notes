@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="intro.html">
+<link rel="prev" href="intro.html">
+<link rel="next" href="components-of-a-time-series.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -122,25 +122,92 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Applied Time Series Analysis</h1>
-<h4 class="author"><em>Vipul Bhatt</em></h4>
-<h4 class="date"><em>2018-07-31</em></h4>
+<div id="regression-based-forecasting" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Regression-based Forecasting</h1>
+<p>One way to compute the conditional expectation is the linear regression model. Here, our information set contains data on all relevant explantory variacbles available at the time of forecast, i.e,</p>
+<span class="math display">\[\begin{equation}
+\Omega_t={X_{1t}, X_{2t},...X_{Kt}}
+\end{equation}\]</span>
+<p>Hence, we get the following equality:</p>
+<span class="math display">\[\begin{equation}
+E(y_t|\Omega_t)=E(y_{t+h}|X_{1t}, X_{2t}, X_{3t},...,X_{Kt})
+\end{equation}\]</span>
+The right hand side of the above equation is the multiple regression model of the form:
+<span class="math display">\[\begin{equation}
+ y_{t}=\beta_0+\beta_1 X_{1t}+\beta_2 X_{2t}+..+\beta_K X_{Kt}+\epsilon_t
+ \end{equation}\]</span>
+We can easily estimate the above model using Ordinary Least Squares (OLS) and compute the <em>predicted value</em> of <span class="math inline">\(y\)</span>:
+<span class="math display">\[\begin{equation}
+    \widehat{y}_t = \widehat{\beta_0} +\widehat{\beta_1} X_{1t} +\widehat{\beta_2} X_{2t}+...+ \widehat{\beta_k} X_{Kt}
+  \end{equation}\]</span>
+The above equation can be used to compute the optimal forecast. Suppose, we are interested in computed the <span class="math inline">\(h\)</span> period ahead forecast for <span class="math inline">\(y\)</span>. Then, using the above equation we get:
+<span class="math display">\[\begin{equation}
+        \widehat{y}_{t+h} =  \widehat{\beta_0} +\widehat{\beta_1} X_{1t+h} +\widehat{\beta_2} X_{2t+h}+...+ \widehat{\beta_k} X_{Kt+h}
+    \end{equation}\]</span>
+<div id="scenario-analysis-and-conditional-forecasts" class="section level2">
+<h2><span class="header-section-number">2.1</span> Scenario Analysis and Conditional Forecasts</h2>
+<p>One way to use a regression model to produce forecasts is called <em>scenario analysis</em> where we produce a different forecast for the dependent under each possible scenario about the future values of the independent variables. For example, what will be the forecast for inflation if the Federal Reserve Bank raises the interest rate? Would our forecast differ depending on the size of the increase in the interest rate?</p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>These lecture notes are prepared for an upper level undergraduate course in time series econometrics. Every fall I teach a course on applied time series analysis at James Madison University. These notes borrow heavliy from the teaching material that I have developed over several years of instruction of this course.</p>
-<p>One of my main objective is to develop a primer on time series analysis that is more accessible to undergraduate students than standard textbooks available in the market. Most of these textbooks in my opinion are densely written and assume advanced mathematical skills on the part of our students. Further, I have also struggled with their topic selection and organization. Often I end up not following the chapters in order and modify content (by adding or subtracting) to meet my students needs. Such changes causes confusion for some students and more importantly discourages optimal use of the textbook. Hence, this is an undertaking to develop a primer on time series that is accessible, follows a more logical sequencing of topics, and covers content that is most useful for undergraduate students in business and economics.</p>
-<p><em>Note: These notes have been prepared by me using various sources, published and unpublished. All errors that remain are mine.</em></p>
+<div id="unconditional-forecasts" class="section level2">
+<h2><span class="header-section-number">2.2</span> Unconditional Forecasts</h2>
+<p>An alternative is to separately forecast each independent variable and then compute the forecast for the dependent variable. Yet another alternative is to use lagged variables as independent variables. Depending on the number of lags, we can forecast that much ahead into future (see Distributed Lag Section for details).</p>
+</div>
+<div id="some-practical-issues" class="section level2">
+<h2><span class="header-section-number">2.3</span> Some practical issues</h2>
+<ol style="list-style-type: decimal">
+<li><p>To forecast the dependent variable we first need to compute a forecast for the independent variable. Errors in this step induce errors later.</p></li>
+<li><p><em>Spurious regression</em>: It is quite possible to find a strong linear relationship between two completely unrelated variables over time if they share a common time trend.</p></li>
+<li><p><em>Model Uncertainty</em>: We do not know the true functional form for the regression model and hence our estimated model is only a proxy for the true model.</p></li>
+<li><p><em>Parameter Uncertainty</em>: This kind of forecast uses regression coefficients that are computed using a fixed sample. Over time with new data, there will be changes in these coefficients.</p></li>
+</ol>
+</div>
+<div id="distributed-lag-regression-models" class="section level2">
+<h2><span class="header-section-number">2.4</span> Distributed Lag Regression Models</h2>
+<p>Consider the following simple regression model:</p>
+<span class="math display">\[\begin{equation}
+y_t= \beta_0 +\beta_1 x_t + \epsilon_t
+\end{equation}\]</span>
+<p>Here, if want to forecast <span class="math inline">\(y_{t+1}\)</span> then we must either consider different scenarios for <span class="math inline">\(x_{t+1}\)</span> or indpendently forecast <span class="math inline">\(x_{t+1}\)</span> first, and then use it to compute forecast for <span class="math inline">\(y_{t+1}\)</span>. An alternative is to estimate the following lagged regression model:</p>
+<span class="math display">\[\begin{equation}
+y_t= \beta_0 +\beta_1 x_{t-1} + \epsilon_t
+\end{equation}\]</span>
+<p>Note that by estimating the above model we get the following predicted value equation for <span class="math inline">\(t+1\)</span>:</p>
+<span class="math display">\[\begin{equation}
+\widehat{y_{t+1}}=\widehat{\beta_0}+\widehat{\beta_1}x_{t}
+\end{equation}\]</span>
+Hence, we can easily produce 1-period ahead forecast from this model. In order to produce forecast farther into future we would need to add more lags of the independent variable to the model. A generalized model of this kind is called <em>distributed lag model</em> and is given by:
+<span class="math display">\[\begin{equation}
+y_t= \beta_0 +\sum_{s=1}^p\beta_s x_{t-s} + \epsilon_t
+\end{equation}\]</span>
+<p>The number of lags to include can be determined using some kind of goodness of fit measure.</p>
+</div>
+<div id="model-selection-criterion" class="section level2">
+<h2><span class="header-section-number">2.5</span> Model Selection Criterion</h2>
+<p>Most often we compare models that have different number of independent variables. Here, we must account for the tradeoff between goodness of fit and degrees of freedom. Increasing the number of independent variables will:</p>
+<ol style="list-style-type: decimal">
+<li><p>lower the MSE and hence leads to better fit.</p></li>
+<li><p>lowers the degrees of freedom</p></li>
+</ol>
+<p>Two commonly used measures based on MSE incorporate this tradeoff:</p>
+<ol style="list-style-type: decimal">
+<li>Akaike Information Criterion (AIC): <span class="math display">\[ AIC= MSE \times e^{\frac{2k}{T}} \]</span></li>
+</ol>
+<p>where <span class="math inline">\(k\)</span> is the number of estimated parameteris, <span class="math inline">\(T\)</span> is the sample size. Then, <span class="math inline">\(K/T\)</span> is the number of parameters estimated per observation and <span class="math inline">\(e^{\frac{2k}{T}}\)</span> is the <em>penalty factor</em> imposed on adding more variables to the model. As we increase <span class="math inline">\(k\)</span>, this penalty factor will increase exponentially for a giveb value of <span class="math inline">\(T\)</span>.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Bayesian Information Criterion (BIC):</li>
+</ol>
+<p><span class="math display">\[ BIC= MSE \times T^{\frac{k}{T}} \]</span></p>
+<p>Lower values of either AIC or BIC indicates greater accuracy. So we select a model with lower value of either of these two criteria. Note that the penalty imposed by BIC is harsher and hence it will typically select a more parsiomonius model.</p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="components-of-a-time-series.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

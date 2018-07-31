@@ -25,7 +25,7 @@
 <meta name="author" content="Vipul Bhatt">
 
 
-<meta name="date" content="2018-07-20">
+<meta name="date" content="2018-07-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="index.html">
-<link rel="next" href="smoothing-methods-and-regression-based-forecasting.html">
+<link rel="next" href="regression-based-forecasting.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -67,16 +67,41 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html"><i class="fa fa-check"></i><b>2</b> Smoothing Methods and Regression-based Forecasting</a><ul>
-<li class="chapter" data-level="2.1" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html#smoothing-methods"><i class="fa fa-check"></i><b>2.1</b> Smoothing Methods</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html#moving-average-method"><i class="fa fa-check"></i><b>2.1.1</b> Moving Average Method</a></li>
-<li class="chapter" data-level="2.1.2" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html#simple-exponential-smoothing"><i class="fa fa-check"></i><b>2.1.2</b> Simple Exponential Smoothing</a></li>
-<li class="chapter" data-level="2.1.3" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html#holts-exponential-smoothing"><i class="fa fa-check"></i><b>2.1.3</b> Holt’s Exponential Smoothing</a></li>
-<li class="chapter" data-level="2.1.4" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html#winters-exponential-smoothing"><i class="fa fa-check"></i><b>2.1.4</b> Winter’s Exponential Smoothing</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#time-series"><i class="fa fa-check"></i><b>1.1</b> Time Series</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="intro.html"><a href="intro.html#serial-correlation"><i class="fa fa-check"></i><b>1.1.1</b> Serial Correlation</a></li>
+<li class="chapter" data-level="1.1.2" data-path="intro.html"><a href="intro.html#white-noise-process"><i class="fa fa-check"></i><b>1.1.2</b> White Noise Process</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="smoothing-methods-and-regression-based-forecasting.html"><a href="smoothing-methods-and-regression-based-forecasting.html#regression-based-forecasting"><i class="fa fa-check"></i><b>2.2</b> Regression-based Forecasting</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#important-elements-of-forecasting"><i class="fa fa-check"></i><b>1.2</b> Important Elements of Forecasting</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#loss-function-and-optimal-forecast"><i class="fa fa-check"></i><b>1.3</b> Loss Function and Optimal Forecast</a></li>
 </ul></li>
+<li class="chapter" data-level="2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html"><i class="fa fa-check"></i><b>2</b> Regression-based Forecasting</a><ul>
+<li class="chapter" data-level="2.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#scenario-analysis-and-conditional-forecasts"><i class="fa fa-check"></i><b>2.1</b> Scenario Analysis and Conditional Forecasts</a></li>
+<li class="chapter" data-level="2.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#unconditional-forecasts"><i class="fa fa-check"></i><b>2.2</b> Unconditional Forecasts</a></li>
+<li class="chapter" data-level="2.3" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#some-practical-issues"><i class="fa fa-check"></i><b>2.3</b> Some practical issues</a></li>
+<li class="chapter" data-level="2.4" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#distributed-lag-regression-models"><i class="fa fa-check"></i><b>2.4</b> Distributed Lag Regression Models</a></li>
+<li class="chapter" data-level="2.5" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#model-selection-criterion"><i class="fa fa-check"></i><b>2.5</b> Model Selection Criterion</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html"><i class="fa fa-check"></i><b>3</b> Components of a Time Series</a><ul>
+<li class="chapter" data-level="3.1" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html#decomposing-a-time-series"><i class="fa fa-check"></i><b>3.1</b> Decomposing a time series</a></li>
+<li class="chapter" data-level="3.2" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html#uses-of-decomposition-of-a-time-series"><i class="fa fa-check"></i><b>3.2</b> Uses of Decomposition of a time series</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="smoothing-methods.html"><a href="smoothing-methods.html"><i class="fa fa-check"></i><b>4</b> Smoothing Methods</a><ul>
+<li class="chapter" data-level="4.1" data-path="smoothing-methods.html"><a href="smoothing-methods.html#moving-average-method"><i class="fa fa-check"></i><b>4.1</b> Moving Average Method</a></li>
+<li class="chapter" data-level="4.2" data-path="smoothing-methods.html"><a href="smoothing-methods.html#simple-exponential-smoothing"><i class="fa fa-check"></i><b>4.2</b> Simple Exponential Smoothing</a></li>
+<li class="chapter" data-level="4.3" data-path="smoothing-methods.html"><a href="smoothing-methods.html#holt-winters-smoothing"><i class="fa fa-check"></i><b>4.3</b> Holt-Winters Smoothing</a></li>
+<li class="chapter" data-level="4.4" data-path="smoothing-methods.html"><a href="smoothing-methods.html#holt-winters-smoothing-with-seasonality"><i class="fa fa-check"></i><b>4.4</b> Holt-Winters Smoothing with Seasonality</a></li>
+<li class="chapter" data-level="4.5" data-path="smoothing-methods.html"><a href="smoothing-methods.html#application"><i class="fa fa-check"></i><b>4.5</b> Application</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="autoregressive-moving-average-arima.html"><a href="autoregressive-moving-average-arima.html"><i class="fa fa-check"></i><b>5</b> Autoregressive Moving Average (ARIMA)</a><ul>
+<li class="chapter" data-level="5.1" data-path="autoregressive-moving-average-arima.html"><a href="autoregressive-moving-average-arima.html#covariance-stationary-time-series"><i class="fa fa-check"></i><b>5.1</b> Covariance Stationary Time Series</a></li>
+<li class="chapter" data-level="5.2" data-path="autoregressive-moving-average-arima.html"><a href="autoregressive-moving-average-arima.html#correlation-over-time"><i class="fa fa-check"></i><b>5.2</b> Correlation over time</a></li>
+<li class="chapter" data-level="5.3" data-path="autoregressive-moving-average-arima.html"><a href="autoregressive-moving-average-arima.html#autoregressive-ar-model"><i class="fa fa-check"></i><b>5.3</b> Autoregressive (AR) Model</a></li>
+<li class="chapter" data-level="5.4" data-path="autoregressive-moving-average-arima.html"><a href="autoregressive-moving-average-arima.html#moving-average-ma-model"><i class="fa fa-check"></i><b>5.4</b> Moving Average (MA) Model</a></li>
+<li class="chapter" data-level="5.5" data-path="autoregressive-moving-average-arima.html"><a href="autoregressive-moving-average-arima.html#armap-q"><i class="fa fa-check"></i><b>5.5</b> ARMA(p, q)}</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>6</b> Modeling Volatility</a></li>
+<li class="chapter" data-level="7" data-path="vector-autoregresson-var.html"><a href="vector-autoregresson-var.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregresson (VAR)</a></li>
 <li class="divider"></li>
 <li><a href="https://vipul-bhatt.github.io/Econ-483-Notes/" target="blank">Published with bookdown</a></li>
 
@@ -98,7 +123,9 @@
 
             <section class="normal" id="section-">
 <div id="intro" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
+<h1><span class="header-section-number">Chapter 1</span> Introduction to Forecasting</h1>
+<div id="time-series" class="section level2">
+<h2><span class="header-section-number">1.1</span> Time Series</h2>
 <p>A time series is a specific kind of data where observations of a variable are recorded over time. For example, the data for the U.S. GDP for the last 30 years is a time series data.</p>
 <p>Such data shows how a variable is changing over time. Depending on the variable of interest we can have data measured at different frequencies. Some commonly used frequencies are intra-day, daily, weekly, monthly, quarterly, semi-annual and annual. Figure <a href="intro.html#fig:figone">1.1</a> below plots data for quarterly and monthly frequency.</p>
 <div class="figure" style="text-align: center"><span id="fig:figone"></span>
@@ -108,8 +135,136 @@ Figure 1.1: Time Series at quarterly and monthly frequency
 </p>
 </div>
 <p>The first panel shows data for the real gross domestic product (GDP) for the US in 2009 dollars, measured at a quarterly frequency. The second panel shows data for the retail sales in the U.S. billions of dollars, measured at monthly frequency.</p>
-<p>Formally, we denote a time series variable by <span class="math inline">\(x_t\)</span>, where <span class="math inline">\(t=0,1,2,..,T\)</span> is the observation index. For example, at <span class="math inline">\(t=10\)</span> we get the tenth observation of this time series, <span class="math inline">\(x_{10}\)</span>.</p>
+<p>Formally, we denote a time series variable by <span class="math inline">\(y_t\)</span>, where <span class="math inline">\(t=0,1,2,..,T\)</span> is the observation index. For example, at <span class="math inline">\(t=10\)</span> we get the tenth observation of this time series, <span class="math inline">\(y_{10}\)</span>.</p>
+<div id="serial-correlation" class="section level3">
+<h3><span class="header-section-number">1.1.1</span> Serial Correlation</h3>
+<p>Serial correlation is a measure of temporal dynamics of a time series. It addresses the following question: what is the effect of past realizations of a time series on the current period value? Formally,</p>
+<span class="math display">\[\begin{equation}
+\rho(s)=Corr(y_t, y_{t-s})
+\end{equation}\]</span>
+<p>Here, <span class="math inline">\(\rho(s)\)</span> is the serial correlation of order <span class="math inline">\(s\)</span>. Note that often we use historical data to forecast. If there is no serial correlation, then past can offer no guidance for the present and future. In that sense, presence of serial correlation of some order is the first condition for being able to forecast a time series using its historical realizations.</p>
+</div>
+<div id="white-noise-process" class="section level3">
+<h3><span class="header-section-number">1.1.2</span> White Noise Process</h3>
+<p>A time series is a <em>white noise</em> process is it has zero mean, constant and finite variance, and is seriall uncorrelated. Formally, <span class="math inline">\(y_t\)</span> is a white noise process if:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(E(y_t)=0\)</span></li>
+<li><span class="math inline">\(Var(y_t)=\sigma^2_y\)</span></li>
+<li><span class="math inline">\(Cov(y_t,y_{t-s})= 0 \forall s\neq t\)</span></li>
+</ol>
+<p>We can compress the above definition as: <span class="math inline">\(y_t\sim WN(0,\sigma^2_y)\)</span>. Often we assume that the unexplained part of a time series follows a white noise process. By definition we cannot forecast a white noise process. An important diagnostics of model adequacy is to test whether the estimated residuals are white noise (more on this later).</p>
+</div>
+</div>
+<div id="important-elements-of-forecasting" class="section level2">
+<h2><span class="header-section-number">1.2</span> Important Elements of Forecasting</h2>
 
+<div class="definition">
+<span id="def:d1" class="definition"><strong>Definition 1.1  (Forecast)  </strong></span>
+</div>
+<p> A <em>forecast</em> is an <em>informed</em> guess about the unknow future value of a time series of interest. For example, what is the stock price of Facebook next Monday?</p>
+<p>There are three possible types of forecasts:</p>
+<ol style="list-style-type: decimal">
+<li><em>Density Forecast</em>: we forecast the entire probability distribution of the possible future value of the time series of interest. Hence,</li>
+</ol>
+<span class="math display">\[\begin{equation}
+F(a)=P[y_{t+1}\leq a]
+\end{equation}\]</span>
+<p>give us the probability that the 1-period ahead future value of <span class="math inline">\(y_{t+1}\)</span> will be less than or equal to <span class="math inline">\(a\)</span>. For example, the future real GDP growth could be normally distributed with a mean of 1.3% and a standard deviation of 1.83%. Figure <a href="intro.html#fig:figtwo">1.2</a> below plots the density forecast for real GDP growth.</p>
+<div class="figure" style="text-align: center"><span id="fig:figtwo"></span>
+<img src="bookdown-demo_files/figure-html/figtwo-1.png" alt="Density Forecast for Future Real GDP Growth" width="80%" />
+<p class="caption">
+Figure 1.2: Density Forecast for Future Real GDP Growth
+</p>
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li><em>Point Forecast</em>: our forecast at each horizon is a single number. Often we use the expected value or mean as the point forecast. For example, the point forecast for the 1-period ahead real GDP growth can be the mean of the probability distribution of the future real GDP growth:
+<span class="math display">\[\begin{equation}
+f_{t,1}=1.3%
+\end{equation}\]</span></li>
+<li><em>Interval Forecast</em>: our forecast at each horizon is a range which is obtained by adding <em>margin of errors</em> to the point forecast. With some probablity we expect our future value to fall withing this range. For example, the 95% interval forecast for the next period real GDP growth is (-2.36%,4.96%). Hence, with 95% confidence we expect next period GDP to fall between -2.36% and 4.96%.</li>
+</ol>
+
+<div class="definition">
+<span id="def:d2" class="definition"><strong>Definition 1.2  (Forecast Horizon)  </strong></span>
+</div>
+<p> <em>Forecast Horizon</em> is the number of periods into the future for which we forecast a time series. We will denote it by <span class="math inline">\(h\)</span>. Hence, for <span class="math inline">\(h=1\)</span>, we are looking at 1-period ahead forecast, for <span class="math inline">\(h=2\)</span> we are looking at 2-period ahead forecast and so on.</p>
+<p>Formally, for a given time series <span class="math inline">\(y_t\)</span>, the h-period ahead unknow value is denoted by <span class="math inline">\(y_{t+h}\)</span>. The forecast of this value is denoted <span class="math inline">\(f_{t,h}\)</span>.</p>
+
+<div class="definition">
+<span id="def:d3" class="definition"><strong>Definition 1.3  (Forecast Error)  </strong></span>
+</div>
+
+<p>A <em>forecast error</em> is the difference between the realization of the future value and the previously made forecast. Formally, the <span class="math inline">\(h\)</span>-period ahead forecast error is given by:</p>
+<span class="math display">\[\begin{equation}
+e_{t,h}=y_{t+h}-f_{t,h}
+\end{equation}\]</span>
+<p>Hence, for every horizon, we will have a forecast and a corresponding forecast error. These errors can be negative (indicating over prediction) or positive (indicating under prediction).</p>
+
+<div class="definition">
+<span id="def:d4" class="definition"><strong>Definition 1.4  (Information Set)  </strong></span>
+</div>
+
+<p>Forecasts are based on <em>information</em> available at the time of making the forecast. <em>Information Set</em> contains all the relevant information about the time series we would like to forecast. We denote the set of information available at time <span class="math inline">\(T\)</span> by <span class="math inline">\(\Omega_T\)</span>. There are two types of information sets:</p>
+<ol style="list-style-type: decimal">
+<li>Univariate Information set: Only includes hisorical data on the time series of interest:
+<span class="math display">\[\begin{equation}
+\Omega_T=\{y_T, y_{T-1}, y_{T-2}, ...., y_1\}
+\end{equation}\]</span></li>
+<li>Multivaiate Information set: Includes hisorical data on the time series of interest as well as any other variable(s) of interest. For example, suppose we have one more variable <span class="math inline">\(x\)</span> that is relevant for forecasting <span class="math inline">\(y\)</span>. Then:
+<span class="math display">\[\begin{equation}
+\Omega_T=\{y_T, x_T, y_{T-1}, x_{T-1}, y_{T-2},x_{T-2}. ...., y_1, x_1\}
+\end{equation}\]</span></li>
+</ol>
+</div>
+<div id="loss-function-and-optimal-forecast" class="section level2">
+<h2><span class="header-section-number">1.3</span> Loss Function and Optimal Forecast</h2>
+<p>Think of a forecast as a solution to an <em>optimization</em> problem. When forecasts are wrong, the person making the forecast will suffer some <em>loss</em>. This loss will be a function of the magnitude as well as the sign of the <em>forecast error</em>. Hence, we can think of an <em>optimal forecast</em> as a solution to a minimization problem where the forecaster is minimizing the loss from the forecast error.</p>
+
+<div class="definition">
+<span id="def:d5" class="definition"><strong>Definition 1.5  (Loss Function)  </strong></span>
+</div>
+
+<p>A <em>loss</em> function is a mapping between forecast errors and their associated losses. Formally, we denote the h-period ahead loss function by <span class="math inline">\(L(e_{t,h})\)</span>. For a function to be used as a loss function, three properties must be satisfied:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(L(0)=0\)</span></li>
+<li><span class="math inline">\(\frac{dL}{de}&gt;0\)</span></li>
+<li><span class="math inline">\(L(e)\)</span> is a continuous function.</li>
+</ol>
+<p>Two types of loss functions are:</p>
+<ul>
+<li>Symmetric Loss Function: both positive and negative forecast errors lead to same loss. A commonly used loss function is <em>quadratic loss function</em> given by:</li>
+</ul>
+<span class="math display">\[\begin{equation}
+L(e_{t,h})=e_{t,h}^2 = (y_{t+h}-f{t,h})^2
+\end{equation}\]</span>
+<ul>
+<li>Asymmetric Loss Function: loss depends on the sign of the forecast error. For example, it could be that positive errors produce greater loss when compared to negative errors. See the function below that assumes a higher value for positive errors:</li>
+</ul>
+<span class="math display">\[\begin{equation}
+L(e_{t,h})=e_{t,h}^2+e_{t,h}
+\end{equation}\]</span>
+<p>Once we have chosen our loss function, the optimal forecast can be obtained by minimizing the expected loss function.</p>
+
+<div class="definition">
+<span id="def:d6" class="definition"><strong>Definition 1.6  (Optimal Forecast)  </strong></span>
+</div>
+
+An <em>optimal forecast</em> minimizes the expected loss from the forecast, given the information available at the time. Mathematically, we denote it by <span class="math inline">\(f^*_{t,h}\)</span> and it solves the following minimization problem:
+<span class="math display">\[\begin{equation}
+min_{f_{t,h}} E(L(e_{t,h})|\Omega_t)
+\end{equation}\]</span>
+<p>In theory we can assume any functional form for the loss function and that will lead to a different <em>optimal forecast</em>. An important result that follows from a specific functional form is stated as Theorem 1.1.</p>
+
+<div class="theorem">
+<span id="thm:unnamed-chunk-2" class="theorem"><strong>Theorem 1.1  </strong></span>If the loss function is quadtratic then the optimal forecast is the conditional mean of the time series of interest. Formally, if <span class="math inline">\(L(e_{t,h})=e_{t,h}^2\)</span> then,
+<span class="math display">\[\begin{equation}
+f^*_{t,h}=E(y_{t+h}|\Omega_t)
+\end{equation}\]</span>
+</div>
+
+<p>Note that <span class="math inline">\(E(e_{t,h}^2)\)</span> is known as <em>mean squared errors (MSE)</em>. Hence, the expected loss from a quadratic loss function is the same as the MSE. In this course, we assume that the forecaster faces a quadratic loss function and hence based on Theorem 1.1, we will learn different models for estimating the conditional mean of the future value of the time series of interest, i.e., <span class="math inline">\(E(y_{t+h}|\Omega_t)\)</span>.</p>
+
+</div>
 </div>
             </section>
 
@@ -117,7 +272,7 @@ Figure 1.1: Time Series at quarterly and monthly frequency
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="smoothing-methods-and-regression-based-forecasting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="regression-based-forecasting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

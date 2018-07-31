@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="intro.html">
+<link rel="prev" href="components-of-a-time-series.html">
+<link rel="next" href="autoregressive-moving-average-arima.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -122,25 +122,76 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Applied Time Series Analysis</h1>
-<h4 class="author"><em>Vipul Bhatt</em></h4>
-<h4 class="date"><em>2018-07-31</em></h4>
+<div id="smoothing-methods" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Smoothing Methods</h1>
+<p>One way to approach forecasting is to <em>average</em> out the fluctuations in the underlying time series to produce a <em>smoothed</em> data which can be extrapolated to produce forecasts. These smoothing methiods are essentially <em>model-free</em> and may not even produce <em>optimal forecasts</em>. Depending on the method used one can accomodate seasonal as well as trend components of the underlying time series.</p>
+<div id="moving-average-method" class="section level2">
+<h2><span class="header-section-number">4.1</span> Moving Average Method</h2>
+<p>We compute an average of most recent data values for the time series and use it as a forecast for the next period.</p>
+An important parameter is the <em>window</em> over which we take the average. Let us denote this window by <span class="math inline">\(m\)</span>, then:
+<span class="math display">\[\begin{equation}
+    y^f_{T+1}=\frac{\sum_{i=t-m+1}^{t}{y_i}}{m}
+    \end{equation}\]</span>
+<p>A larger value of <span class="math inline">\(m\)</span> produces greater smoothing and most softwares have a default value of this parameter which can be changed if needed.</p>
+<!-- A larger value is more desirable when there are large but infrequent fluctuations in our data. In contrast, a smaller value of $m$ is preferred when data has sudden shits in our data. Typically, we set $m$ equal to the frequency at which our data is measured. For example, $m=4$ for quarterly data and $m=12$ for monthly data. One drawback of this method is that it assigns equal *weight* to each observation. It is reasonable to argue that for most economic and financial variables, the effect of past observations will be less pronounced than most recent observations.  -->
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>These lecture notes are prepared for an upper level undergraduate course in time series econometrics. Every fall I teach a course on applied time series analysis at James Madison University. These notes borrow heavliy from the teaching material that I have developed over several years of instruction of this course.</p>
-<p>One of my main objective is to develop a primer on time series analysis that is more accessible to undergraduate students than standard textbooks available in the market. Most of these textbooks in my opinion are densely written and assume advanced mathematical skills on the part of our students. Further, I have also struggled with their topic selection and organization. Often I end up not following the chapters in order and modify content (by adding or subtracting) to meet my students needs. Such changes causes confusion for some students and more importantly discourages optimal use of the textbook. Hence, this is an undertaking to develop a primer on time series that is accessible, follows a more logical sequencing of topics, and covers content that is most useful for undergraduate students in business and economics.</p>
-<p><em>Note: These notes have been prepared by me using various sources, published and unpublished. All errors that remain are mine.</em></p>
+<div id="simple-exponential-smoothing" class="section level2">
+<h2><span class="header-section-number">4.2</span> Simple Exponential Smoothing</h2>
+<p>In the moving average method, all obseravtions receieved same weight. However, it is reasonable to argue that more recent observations may have a greater influence than those in the remote past. In this methiod, the weight attached to past observations exponentially decay over time. Here is the algorthim for computing the smoothed data and its forecast:</p>
+<ol style="list-style-type: decimal">
+<li><p>Initialize at t=1: <span class="math display">\[y_1^s=y_1 \]</span></p></li>
+<li><p>Update: <span class="math display">\[      y_{t}^{s}= \alpha y_t + (1-\alpha)y_{t-1}^{s}  \quad for \ t=2,3,...T\]</span></p></li>
+</ol>
+<p>3: h-period ahead forecast:</p>
+<p><span class="math display">\[  f_{T,h}= y_T^s\]</span></p>
+<p>Here the h-period ahead forecast is:</p>
+<p><em>Exercise: Can you show that <span class="math inline">\(y_{t}^{s}\)</span> is a is the weighted moving average of all past observations? Use backward substitution method.</em></p>
+<p>Here <span class="math inline">\(\alpha \in (0,1)\)</span> is the smoothing parameter, with smaller value indicating greater smoothing.</p>
+</div>
+<div id="holt-winters-smoothing" class="section level2">
+<h2><span class="header-section-number">4.3</span> Holt-Winters Smoothing</h2>
+<p>We add trend component to the simple exponential smoothing. In step 2 the equation we use to update the smoothed data is given by:</p>
+<span class="math display">\[\begin{equation}
+    y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
+    B_t = \beta (y_t^s -y_{t-1}^s) + (1-\beta) B_{t-1}
+ \end{equation}\]</span>
+<p>We now have an additional parameter <span class="math inline">\(\beta\)</span> that is the trend parameter. Here the h-period ahead forecast is:</p>
+<span class="math display">\[\begin{equation}
+  f_{T,h} = y_T^s + h\times B_T
+  \end{equation}\]</span>
+</div>
+<div id="holt-winters-smoothing-with-seasonality" class="section level2">
+<h2><span class="header-section-number">4.4</span> Holt-Winters Smoothing with Seasonality</h2>
+<p>We now add seasonal component along with trend. Assuming multiplicative seasonality with period <span class="math inline">\(n\)</span>:</p>
+<span class="math display">\[\begin{equation}
+    y_{t}^{s}= \alpha \frac{y_t}{S_{t-n}} + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
+    B_t = \gamma (y_t^s -y_{t-1}^s) + (1-\gamma) B_{t-1}\\
+    S_t = \beta\frac{y_t}{y_t^s}+(1-\beta)S_{t-n}
+  \end{equation}\]</span>
+<p>The h-period ahead forecast is given by:</p>
+<span class="math display">\[\begin{equation}
+    f_{T,h}= (y_T^s + h\times B_T) \times S_{T+h-n}
+   \end{equation}\]</span>
+</div>
+<div id="application" class="section level2">
+<h2><span class="header-section-number">4.5</span> Application</h2>
+<p>We use R to implement a 12-period ahead forecast for retail sales for the U.S. The data is at monthly frequency from 1959 through 2015. We use natural logs of the data and compute smoothed series using each of the three methods. The resulting forecasts are ploted in Figure <a href="smoothing-methods.html#fig:figfour">4.1</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:figfour"></span>
+<img src="bookdown-demo_files/figure-html/figfour-1.png" alt="Forecast of Retail Sales: Three Smoothing Methods" width="80%" />
+<p class="caption">
+Figure 4.1: Forecast of Retail Sales: Three Smoothing Methods
+</p>
+</div>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="components-of-a-time-series.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="autoregressive-moving-average-arima.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

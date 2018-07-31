@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="intro.html">
+<link rel="prev" href="regression-based-forecasting.html">
+<link rel="next" href="smoothing-methods.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -122,25 +122,61 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Applied Time Series Analysis</h1>
-<h4 class="author"><em>Vipul Bhatt</em></h4>
-<h4 class="date"><em>2018-07-31</em></h4>
+<div id="components-of-a-time-series" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Components of a Time Series</h1>
+<p>A given time series can have four possible components:</p>
+<ol style="list-style-type: decimal">
+<li><p>Trend: denoted by <span class="math inline">\(B_t\)</span> captures the long run behavior of the time series of interest.</p></li>
+<li><p>Season: denoted by <span class="math inline">\(S_t\)</span> are <em>periodic</em> fluctuations over <em>seasons</em>. The period of the season is fixed and known. For example, rise in non-durable sales during Christmas.</p></li>
+<li><p>Cycle: denoted by <span class="math inline">\(C_t\)</span> are <em>non-periodic</em> are flcutuations in that they occur regularly but over periods that are not fixed in duration.</p></li>
+<li><p>Irregular: denoted by <span class="math inline">\(\epsilon_t\)</span> are random fluctuations, typically modeled as a white noise process.</p></li>
+</ol>
+<div id="decomposing-a-time-series" class="section level2">
+<h2><span class="header-section-number">3.1</span> Decomposing a time series</h2>
+<p>We can decompose any given time series into its components. There are two ways to accomplish this:</p>
+<ol style="list-style-type: decimal">
+<li>Additive Decomposition: Here it is assumed that all four components are added to obtain the underlying timer series:
+<span class="math display">\[\begin{equation}
+y_t= B_t+S_t+C_t +\epsilon_t
+\end{equation}\]</span></li>
+<li>Multiplicative Decomposition: Here it is assumed that all four components are multiplied to obtain the underlying timer series:
+<span class="math display">\[\begin{equation}
+y_t= B_t \times S_t \times C_t \times \epsilon_t
+\end{equation}\]</span></li>
+</ol>
+Note that using properties of logarithms, multiplicative decomposition is the same as additive decomposition in log terms:
+<span class="math display">\[\begin{equation}
+log(y_t)= log(B_t) + log(S_t) + log(C_t) + log(\epsilon_t)
+\end{equation}\]</span>
+<p>Most statistical softwares can implement these decompositions using data on a time series variable as input. Typically they combine cyclical component with irregular component and provide a three-way decomposition. In Figure <a href="components-of-a-time-series.html#fig:figthree">3.1</a> I use R to decompose real GDP for the US into its components.</p>
+<div class="figure" style="text-align: center"><span id="fig:figthree"></span>
+<img src="bookdown-demo_files/figure-html/figthree-1.png" alt=" Additive Decomposition of Real GDP" width="80%" />
+<p class="caption">
+Figure 3.1:  Additive Decomposition of Real GDP
+</p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>These lecture notes are prepared for an upper level undergraduate course in time series econometrics. Every fall I teach a course on applied time series analysis at James Madison University. These notes borrow heavliy from the teaching material that I have developed over several years of instruction of this course.</p>
-<p>One of my main objective is to develop a primer on time series analysis that is more accessible to undergraduate students than standard textbooks available in the market. Most of these textbooks in my opinion are densely written and assume advanced mathematical skills on the part of our students. Further, I have also struggled with their topic selection and organization. Often I end up not following the chapters in order and modify content (by adding or subtracting) to meet my students needs. Such changes causes confusion for some students and more importantly discourages optimal use of the textbook. Hence, this is an undertaking to develop a primer on time series that is accessible, follows a more logical sequencing of topics, and covers content that is most useful for undergraduate students in business and economics.</p>
-<p><em>Note: These notes have been prepared by me using various sources, published and unpublished. All errors that remain are mine.</em></p>
+</div>
+<div id="uses-of-decomposition-of-a-time-series" class="section level2">
+<h2><span class="header-section-number">3.2</span> Uses of Decomposition of a time series</h2>
+<p>The usefulness of decomposing a time series depends on our objective.</p>
+<ol style="list-style-type: decimal">
+<li><p>It may be of interest to study each component separtaely or to simply improve our understanding of the temporal dynammics of a time series of interest. Decompositing it into different components is the first step towards achieving that goal.</p></li>
+<li>We can also use the decomposition to filter out components that we are not interested in studying. If for example we are only interested in modeling the cyclical component of the time series, then we can assume some kind decomposition, additive or multiplicative, and filter out the trend and seasonal component. For example, assuming additive decomposition, the filtered time series is given by:
+<span class="math display">\[\begin{equation}
+Filtered \ y_t= y_t-B_t-C_t
+\end{equation}\]</span></li>
+</ol>
+<p>We can then proceed to model the cyclical component using the filtered data.</p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="regression-based-forecasting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="smoothing-methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

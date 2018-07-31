@@ -1,0 +1,53 @@
+# Autoregressive Moving Average (ARIMA) 
+
+## Covariance Stationary Time Series
+```{definition, d1, name='Covariance Stationary Time Series'}
+```
+A time series $\{y_t\}$ is said to be a *covariance stationary process* if:
+ 
+1. $E(y_t)=\mu_x \quad \forall \quad t$
+2. $Var(y_t)=\sigma_x^2 \quad \forall \quad t$
+3. $Cov(y_t,y_{t-s})=\gamma(s) \quad \forall \quad s\neq t$
+
+## Correlation over time
+In general, for a time series, $\{y_t\}$,
+ \begin{align}
+ 	Cor(y_t,y_{t-s})=\frac{	Cov(y_t,y_{t-s})}{\sqrt{\sigma^2_{y_t} \times \sigma^2_{y_{t-s}}}}
+ 	 	\end{align}
+ 	where $Cov(y_t,y_{t-s})= E(y_t-\mu_{y_t})(y_{t-s}-\mu_{y_{t-s}})$ and $\sigma^2_{y_t}=E(y_t-\mu_{y_t})^2$
+
+	
+ 
+ ```{definition, d2, name='Auto Correlation Function (ACF)'}
+```
+ 
+An *ACF* plots the correlation of a time series with its own past values over time. For a stationary time series, using the three conditions we get:
+ \begin{align}
+ 	ACF(s) \ or \ \rho(s)=\frac{\gamma(s)}{\gamma(0)}
+ 	\end{align}
+ 	
+ 	 ```{definition, d3, name='Partial Auto Correlation Function (PACF)'}
+```
+ The *partial autocorrelation function  (PACF)* for a stationary time series $y_t$ at lag $s$ is the direct correlation between $y_t$ and $y_{t-s}$, after filtering out the linear influence of  $ y_{t-1},\ldots,y_{t-s-1}$ on $y_t$.
+ 
+## Autoregressive (AR) Model
+ A *stationary*time series $\{x_t\}$ can be modeled as an AR(p) process:
+ \begin{equation}
+ y_t = \phi_0 +\phi_1 y_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t
+ \end{equation}
+ 
+## Moving Average (MA) Model
+  A *stationary* time series $\{y_t\}$ can be modeled as an MA(q) process:
+  \begin{equation}
+  y_t = \theta_0 + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
+    \end{equation}
+  
+## ARMA(p, q)}
+  
+An ARMA model simply combines both AR and MA components to model the dynamics of a time series. Formula,
+  
+   \begin{equation}
+   y_t = \phi_0 +\phi_1 x_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
+   \end{equation}
+
+ 

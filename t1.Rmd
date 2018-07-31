@@ -1,92 +1,99 @@
-# Smoothing Methods and Regression-based Forecasting
-In this chapter we will look at simple techniques that can be used to forecast a time series variable. Here we focus on methods that do not account for various components of a time series explicitly. The list of tecniques covered in this topic are:
+# Regression-based Forecasting
 
-1. Smoothing Methods
-2. Regressiion-based Forecasting
+One way to compute the conditional expectation is the linear regression model. Here, our information set contains data on all relevant explantory variacbles available at the time of forecast, i.e,
 
-"Naive Forecasting Methods"
- There are many `back-of-envelope' type of forecasting methods often used by practitioners. For example:
- 
-
- 
-## Smoothing Methods
-
-This approach attempts to *average* out the irregular component of a Time series.
- 
-
-### Moving Average Method
- 
-Here we compute an average of most recent data values for the time series and use it as a forecast for the next period.
-
-An important parameter is the *window* over which we take the average. Let us denote this window by $m$, then:
 \begin{equation}
-	y^f_{T+1}=\frac{\sum_{i=t-m+1}^{t}{y_i}}{m}
-	\end{equation}
-	
-	As we increase $m$, more weight is given to more recent observations and hence we get less *smoothing*. A larger value is more desirable when there are large but infrequent fluctuations in our data. In contrast, a smaller value of $m$ is preferred when data has sudden shits in our data. Typically, we set $m$ equal to the frequency at which our data is measured. For example, $m=4$ for quarterly data and $m=12$ for monthly data. One drawback of this method is that it assigns equal *weight* to each observation. It is reasonable to argue that for most economic and financial variables, the effect of past observations will be less pronounced than most recent observations. 
-	
+\Omega_t={X_{1t}, X_{2t},...X_{Kt}}
+\end{equation}
 
- 
-### Simple Exponential Smoothing
+Hence, we get the following equality:
 
-Here, the weight attached to past observations exponentially decay over time.  The next period forecast is the exponentially weighted moving average of all previously observed values. 
+\begin{equation}
+E(y_t|\Omega_t)=E(y_{t+h}|X_{1t}, X_{2t}, X_{3t},...,X_{Kt})
+\end{equation}
+
+The right hand side of the above equation is the multiple regression model of the form:
  \begin{equation}
- 	y_{t}^{s}= \alpha y_t + (1-\alpha)y_{t-1}^{s}
+ y_{t}=\beta_0+\beta_1 X_{1t}+\beta_2 X_{2t}+..+\beta_K X_{Kt}+\epsilon_t
  \end{equation}
  
- Here the h-period ahead forecast is:
- 
- \begin{equation}
- 	y^f_{T+h} = y_T^s
- 	\end{equation}
- 
-*Can you show that 	$y_{t}^{s}$ is a is the weighted moving average of all past observations? Use backward substitution method.*
-
-### Holt's Exponential Smoothing
-
-Adds trend component to simple exponential smoothing.
- \begin{equation}
- 	y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
- 	B_t = \gamma (y_t^s -y_{t-1}^s) + (1-\gamma) B_{t-1}
- \end{equation}
- 
- 
-  Here the h-period ahead forecast is:
-  
+We can easily estimate the above model using Ordinary Least Squares (OLS) and compute the *predicted value* of $y$:
   \begin{equation}
-  	y^f_{T+h} = y_T^s + h\times B_T
+  	\widehat{y}_t = \widehat{\beta_0} +\widehat{\beta_1} X_{1t} +\widehat{\beta_2} X_{2t}+...+ \widehat{\beta_k} X_{Kt}
   \end{equation}
   
-### Winter's Exponential Smoothing
- Adds seasonal component along with trend. Assuming multiplicative seasonality:
  
-  \begin{equation}
-  	y_{t}^{s}= \alpha \frac{y_t}{S_{t-n}} + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
-  	B_t = \gamma (y_t^s -y_{t-1}^s) + (1-\gamma) B_{t-1}\\
-  	S_t = \beta\frac{y_t}{y_t^s}+(1-\beta)S_{t-n}
-  \end{equation}
- \noindent where $n$ is the number of periods in a season.
  
-   \begin{equation}
-   	y^f_{T+h} = (y_T^s + h\times B_T) \times S_{T+h-n}
-   \end{equation}
-   
-## Regression-based Forecasting
- A linear regression model estimates the value of the dependent variable as a function of the independent variable. The predicted value of the dependent variable can be used  as a ``forecast'' when working with the time series data. For example:
- \begin{equation}
- 	Y_t = \beta_0 +\beta_1 X_t + \epsilon_t
- 	\end{equation}
-
- Then given a sample of observations over time for $Y$ and $X$, we can estimate the above model using OLS and compute the predicted value of $Y$:
+The above equation can be used to compute the optimal forecast. Suppose, we are interested in computed the $h$ period ahead forecast for $y$. Then, using the above equation we get:
   \begin{equation}
-  	\widehat{Y}_t = \widehat{\beta_0} +\widehat{\beta_1} X_t
-  \end{equation}
-  
-  Now suppose we are interested in computed the $h$ period ahead forecast for $Y$. Then, using the above equation we get:
-  \begin{equation}
-  	  	\widehat{Y}_{T+h} = \widehat{\beta_0} +\widehat{\beta_1} X_{T+h}
+  	  	\widehat{y}_{t+h} =  \widehat{\beta_0} +\widehat{\beta_1} X_{1t+h} +\widehat{\beta_2} X_{2t+h}+...+ \widehat{\beta_k} X_{Kt+h}
   	\end{equation}
+  	
+## Scenario Analysis and Conditional Forecasts
+
+One way to use a regression model to produce forecasts is called
+ *scenario analysis* where we produce a different forecast for the dependent under each possible scenario about the future values of the independent variables. For example, what will be the forecast for inflation if the Federal Reserve Bank raises the interest rate? Would our forecast differ depending on the size of the increase in the interest rate?
+
+## Unconditional Forecasts
+
+An alternative is to separately forecast each independent variable and then compute the forecast for the dependent variable.  Yet another alternative is to use lagged variables as independent variables. Depending on the number of lags, we can forecast that much ahead into future (see Distributed Lag Section for details).
+
+## Some practical issues
+
+1. To forecast the dependent variable we first need to compute a forecast for the independent variable. Errors in this step induce errors later.
   
-  Hence, to forecast the dependent variable we first need to compute a forecast for the independent variable. Larger the number of independent variables in our model greater the number of forecasts we need to compute making regression-based forecasting a rather difficult approach to implement in practice.
-  
-  Further, when working with time series data, we have to be careful about *spurious regression* problem. It is quite possible to find a strong linear relationship between two completely unrelated variables over time if they share a common stochastic trend. 
+2.  *Spurious regression*: It is quite possible to find a strong linear relationship between two completely unrelated variables over time if they share a common time trend.
+
+3. *Model Uncertainty*: We do not know the true functional form for the regression model and hence our estimated model is only a proxy for the true model.
+
+4. *Parameter Uncertainty*: This kind of forecast uses regression coefficients that are computed using a fixed sample. Over time with new data, there will be changes in these coefficients.
+
+## Distributed Lag Regression Models
+
+Consider the following simple regression model:
+
+\begin{equation}
+y_t= \beta_0 +\beta_1 x_t + \epsilon_t
+\end{equation}
+
+Here, if want to forecast $y_{t+1}$ then we must either consider different scenarios for $x_{t+1}$ or indpendently forecast $x_{t+1}$ first, and then use it to compute forecast for $y_{t+1}$. An alternative is to estimate the following lagged regression model:
+
+\begin{equation}
+y_t= \beta_0 +\beta_1 x_{t-1} + \epsilon_t
+\end{equation}
+
+Note that by estimating the above model we get the following predicted value equation for $t+1$:
+
+\begin{equation}
+\widehat{y_{t+1}}=\widehat{\beta_0}+\widehat{\beta_1}x_{t}
+\end{equation}
+
+Hence, we can easily produce 1-period ahead forecast from this model. In order to produce forecast farther into future we would need to add more lags of the independent variable to the model. A generalized model of this kind is called *distributed lag model* and is given by:
+\begin{equation}
+y_t= \beta_0 +\sum_{s=1}^p\beta_s x_{t-s} + \epsilon_t
+\end{equation}
+
+The number of lags to include can be determined using some kind of goodness of fit measure. 
+
+## Model Selection Criterion
+
+Most often we compare models that have different number of independent variables. Here, we must account for the tradeoff between goodness of fit and degrees of freedom. Increasing the number of independent variables will:
+
+1. lower the MSE and hence leads to better fit.
+
+2. lowers the degrees of freedom
+
+Two commonly used measures based on MSE incorporate this tradeoff:
+
+1. Akaike Information Criterion (AIC):
+\[ AIC= MSE \times e^{\frac{2k}{T}} \]
+
+where $k$ is the number of estimated parameteris, $T$ is the sample size. Then, $K/T$ is the number of parameters estimated per observation and $e^{\frac{2k}{T}}$ is the *penalty factor* imposed on adding more variables to the model. As we increase $k$, this penalty factor will increase exponentially for a giveb value of $T$.
+
+2. Bayesian Information Criterion (BIC):
+
+\[ BIC= MSE \times T^{\frac{k}{T}} \]
+
+
+Lower values of either AIC or BIC indicates greater accuracy. So we select a model with lower value of either of these two criteria. Note that the penalty imposed by BIC is harsher and hence it will typically select a more parsiomonius model.
+
