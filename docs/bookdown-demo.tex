@@ -85,7 +85,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-07-31}
+    \date{2018-08-01}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -808,6 +808,220 @@ three methods. The resulting forecasts are ploted in Figure
 \caption{Forecast of Retail Sales: Three Smoothing Methods}\label{fig:figfour}
 \end{figure}
 
+\chapter{Modeling Trend and Seasonal
+Components}\label{modeling-trend-and-seasonal-components}
+
+\section{Trend Estimation}\label{trend-estimation}
+
+An important component of a time series is \emph{trend} that captures
+the long run evolution of the variable of interest. There are two types
+of trends:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Deterministic Trend: the underlying trend component is a \emph{known}
+  function of time with \emph{unknown} parameters.
+\item
+  Stochastic Trend: the trend component is random.
+\end{enumerate}
+
+In this note we will focuse on estimating and forecasting deterministic
+trend models. We will come back to stochastic trend later when we talk
+about stationarity property of a time series.
+
+\subsection{Parametrizing a deterministic
+trend}\label{parametrizing-a-deterministic-trend}
+
+Whether or not there is deterministic trend in the data can be typically
+gleaned by simply plotting the time series over time. For example,
+Figure @ref(fig: figurefive) below plots real GDP for the US at quartely
+frequency. We can observe a positive time trend with real GDP increasing
+with time. In this section we will learn to \emph{fit} a function that
+captures this relationship accurately.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{bookdown-demo_files/figure-latex/figurefive-1} 
+
+}
+
+\caption{ Plot of Real GDP}\label{fig:figurefive}
+\end{figure}
+
+\emph{Note: The variable time is denoted by \(t\) and it is artificially
+created to take value of 1 for the first period, 2 for the second period
+and so on.}
+
+There are two commonly used functional forms for capturing a
+deterministic trend:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Polynomial Trend: We fit a polynomial of appropriate order to capture
+  the time trend. For example, A. Linear trend:
+
+  \begin{equation}
+  y_t=\beta_0 +\beta_1 t +\epsilon_t
+  \end{equation}
+\end{enumerate}
+
+B. Quadratic trend:
+
+\begin{equation}
+y_t=\beta_0 +\beta_1 t + \beta_2 t^2 +\epsilon_t
+\end{equation}
+
+In general, we can fit a polynomial of order \(q\):
+
+\begin{equation}
+y_t=\beta_0 + \sum_{i=1}^q \beta_i t^i +\epsilon_t
+\end{equation}
+
+We can estimate this model using the OLS. One of the key component here
+is to determine the \emph{right} order of the polynomial. We can begin
+with a large enough number for \(q\) and then select the approprirate
+order using AIC or BIC criterion.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Exponential or log-linear trend: In some cases we may want to use an
+  exponential trend or equivalently a log-linear trend.
+
+  \begin{equation}
+  y_t=e^(\beta_0 +\beta_1 t +\epsilon_t)\\
+  equivalently\\
+  log(y_t)=\beta_0 +\beta_1 t +\epsilon_t
+  \end{equation}
+\end{enumerate}
+
+Again we can estimate the above model using OLS.
+
+\subsection{Uses of the Deterministic Trend
+Model}\label{uses-of-the-deterministic-trend-model}
+
+Once we have finalized our deterministic trend model i.e., either a
+polynomial of a specific order or log-liner trend, we can use the
+estmated model for the following two purposes:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Detrending our data: Suppose we would like to eliminate trend from our
+  data. The residual from our final trend model is the \emph{detrended}
+  time series.
+\item
+  Forecasting: We can also forecast our time series based on the
+  estimated trend. For example, suppose our final model is a quadratic
+  trend. The predicted value is given by:
+\end{enumerate}
+
+\begin{equation}
+\widehat{y_t}=\widehat{\beta_0}+\widehat{\beta_1} t + \widehat{\beta_2} t^2
+\end{equation}
+
+Then, the 1-period ahead forecast for \(y_{t+1}\) can be obtained by
+solving:
+
+\begin{equation}
+\widehat{y_{t+1}}=\widehat{\beta_0}+\widehat{\beta_1} (t+1) + \widehat{\beta_2} (t+1)^2
+\end{equation}
+
+\subsection{Application: Estimating a polynomial trend for U.S. Real
+GDP}\label{application-estimating-a-polynomial-trend-for-u.s.-real-gdp}
+
+We will now fit a polynomial trend to the US real GDP data that was
+presented in Figure \ref{fig:figurefive}. We first estimate polynomials
+of different orders and select the optimal order determined by the
+lowest possible AIC/BIC. Table \ref{tab:tableone}. shows these
+statistics for upto 4th order polynomial. We find that the lowest value
+occur at \(q=4\).
+
+\begin{table}
+
+\caption{\label{tab:tableone}Optimal Order of the Polynomial}
+\centering
+\begin{tabular}[t]{ccc}
+\toprule
+order & AIC & BIC\\
+\midrule
+1 & 4399.225 & 4410.009\\
+2 & 3877.692 & 3892.071\\
+3 & 3868.441 & 3886.415\\
+4 & 3763.525 & 3785.094\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Hence, our final trend model is:
+
+\begin{equation}
+y_t=\beta_0 +\beta_1 t + \beta_2 t^2 + \beta_3 t^3 + \beta_4 t^4 +\epsilon_t
+\end{equation}
+
+The estimated trend model is presented in Table \ref{tab:tabletwo}.
+
+\begin{table}
+
+\caption{\label{tab:tabletwo}Regression Results}
+\centering
+\begin{tabular}[t]{lcccc}
+\toprule
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\midrule
+(Intercept) & 7520.008 & 15.898 & 473.021 & 0\\
+poly(t, 4)1 & 69434.197 & 260.744 & 266.293 & 0\\
+poly(t, 4)2 & 12928.805 & 260.744 & 49.584 & 0\\
+poly(t, 4)3 & -1068.061 & 260.744 & -4.096 & 0\\
+poly(t, 4)4 & -2959.656 & 260.744 & -11.351 & 0\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Using the estimated model, we can compute the detrended data as the
+residual and also forecast \(y_t\). Figure \ref{fig:figuresix} below
+plots the detrened real GDP obtained as a residual from our trend model.
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{bookdown-demo_files/figure-latex/figuresix-1} 
+
+}
+
+\caption{ Plot of Detrended Real GDP}\label{fig:figuresix}
+\end{figure}
+
+Table \ref{tab:tablethree} shows the forecast of real GDP for next 8
+quarters along with the 95\% confidence bands.
+
+\begin{table}
+
+\caption{\label{tab:tablethree}Forecast for 8 Quarters}
+\centering
+\begin{tabular}[t]{cccc}
+\toprule
+h & Forecast &  95\% Lower Bound &  95\% Upper Bound\\
+\midrule
+1 & 15924.30 & 15764.22 & 16084.36\\
+2 & 15968.97 & 15801.63 & 16136.31\\
+3 & 16012.42 & 15837.52 & 16187.31\\
+4 & 16054.60 & 15871.86 & 16237.34\\
+5 & 16095.50 & 15904.62 & 16286.38\\
+\addlinespace
+6 & 16135.09 & 15935.78 & 16334.40\\
+7 & 16173.35 & 15965.32 & 16381.38\\
+8 & 16210.24 & 15993.19 & 16427.29\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Seasonal Model}\label{seasonal-model}
+
 \chapter{Autoregressive Moving Average
 (ARIMA)}\label{autoregressive-moving-average-arima}
 
@@ -889,10 +1103,6 @@ dynamics of a time series. Formula,
 \begin{equation}
    y_t = \phi_0 +\phi_1 x_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
    \end{equation}
-
-\chapter{Modeling Volatility}\label{modeling-volatility}
-
-\chapter{Vector Autoregresson (VAR)}\label{vector-autoregresson-var}
 
 \bibliography{book.bib,packages.bib}
 

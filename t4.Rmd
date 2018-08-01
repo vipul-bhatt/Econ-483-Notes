@@ -1,53 +1,173 @@
-# Autoregressive Moving Average (ARIMA) 
+# Modeling Trend and Seasonal Components
 
-## Covariance Stationary Time Series
-```{definition, d1, name='Covariance Stationary Time Series'}
+## Trend Estimation
+
+An important component of a time series is *trend* that captures the long run evolution of the variable of interest. There are two types of trends:
+
+1. Deterministic Trend: the underlying trend component is a *known* function of time with *unknown* parameters.
+
+2. Stochastic Trend: the trend component is random.
+
+In this note we will focuse on estimating and forecasting deterministic trend models. We will come back to stochastic trend later when we talk about stationarity property of a time series.
+
+### Parametrizing a deterministic trend
+
+Whether or not there is deterministic trend in the data can be typically gleaned by simply plotting the time series over time. For example, Figure \@ref(fig: figurefive) below plots real GDP for the US at quartely frequency. We can observe a positive time trend with real GDP increasing with time. In this section we will learn to *fit* a function that captures this relationship accurately.
+
+```{r figurefive, echo = FALSE, fig.cap = ' Plot of Real GDP', out.width='80%', fig.asp=.75, fig.align='center'}
+suppressMessages(library(xts))
+# cretae a data object frame called gdp that imports the csv file with data
+gdp= read.csv("/Users/home-mac/Documents/E483/gdp.csv")
+# create time series objects for data 
+y1=ts(gdp$y,start=1948, end=2015, frequency=4)
+
+#### additive decomposition
+suppressMessages(library(graphics))
+plot(y1)
 ```
-A time series $\{y_t\}$ is said to be a *covariance stationary process* if:
- 
-1. $E(y_t)=\mu_x \quad \forall \quad t$
-2. $Var(y_t)=\sigma_x^2 \quad \forall \quad t$
-3. $Cov(y_t,y_{t-s})=\gamma(s) \quad \forall \quad s\neq t$
 
-## Correlation over time
-In general, for a time series, $\{y_t\}$,
- \begin{align}
- 	Cor(y_t,y_{t-s})=\frac{	Cov(y_t,y_{t-s})}{\sqrt{\sigma^2_{y_t} \times \sigma^2_{y_{t-s}}}}
- 	 	\end{align}
- 	where $Cov(y_t,y_{t-s})= E(y_t-\mu_{y_t})(y_{t-s}-\mu_{y_{t-s}})$ and $\sigma^2_{y_t}=E(y_t-\mu_{y_t})^2$
+*Note: The variable time is denoted by $t$ and it is artificially created to take value of 1 for the first period, 2 for the second period and so on.*
 
-	
+There are two commonly used functional forms for capturing a deterministic trend:
+
+1. Polynomial Trend: We fit a polynomial of appropriate order  to capture the time trend. For example,
+A. Linear trend:
+\begin{equation}
+y_t=\beta_0 +\beta_1 t +\epsilon_t
+\end{equation}
+
+B. Quadratic trend:
+\begin{equation}
+y_t=\beta_0 +\beta_1 t + \beta_2 t^2 +\epsilon_t
+\end{equation}
+
+In general, we can fit a polynomial of order $q$:
+\begin{equation}
+y_t=\beta_0 + \sum_{i=1}^q \beta_i t^i +\epsilon_t
+\end{equation}
+
+We can estimate this model using the OLS. One of the key component here is to determine the *right* order of the polynomial. We can begin with a large enough number for $q$ and then select the approprirate order using AIC or BIC criterion.
+
+2. Exponential or log-linear trend: In some cases we may want to use an exponential trend or equivalently a log-linear trend.
+\begin{equation}
+y_t=e^(\beta_0 +\beta_1 t +\epsilon_t)\\
+equivalently\\
+log(y_t)=\beta_0 +\beta_1 t +\epsilon_t
+\end{equation}
+
+Again we can estimate the above model using OLS.
+
+
+### Uses of the Deterministic Trend Model
+
+Once we have finalized our deterministic trend model i.e., either a polynomial of a specific order or log-liner trend, we can use the estmated model for the following two purposes:
+
+1. Detrending our data: Suppose we would like to eliminate trend from our data. The residual from our final trend model is the *detrended* time series.
+
+2. Forecasting: We can also forecast our time series based on the estimated trend. For example, suppose our final model is a quadratic trend. The predicted value is given by:
+
+\begin{equation}
+\widehat{y_t}=\widehat{\beta_0}+\widehat{\beta_1} t + \widehat{\beta_2} t^2
+\end{equation}
+
+Then, the 1-period ahead forecast for $y_{t+1}$ can be obtained by solving:
+\begin{equation}
+\widehat{y_{t+1}}=\widehat{\beta_0}+\widehat{\beta_1} (t+1) + \widehat{\beta_2} (t+1)^2
+\end{equation}
+
+### Application: Estimating a polynomial trend for U.S. Real GDP
+
+We will now fit a polynomial trend to the US real GDP data that was presented in Figure \@ref(fig:figurefive). We first estimate polynomials of different orders and select the optimal order determined by the lowest possible AIC/BIC. Table \@ref(tab:tableone). shows these statistics for upto 4th order polynomial. We find that the lowest value occur at $q=4$. 
+
+```{r tableone, echo = FALSE}
+suppressMessages(library(xts))
+suppressMessages(library(knitr))
+# cretae a data object frame called gdp that imports the csv file with data
+gdp= read.csv("/Users/home-mac/Documents/E483/gdp.csv")
+# create time series objects for data 
+y1=ts(gdp$y,start=1948, end=2015, frequency=4)
+
+# generate time variable-
+
+t=1:1:length(y1)
+
+n = length(t)
+
+
+qmax=4
+q = seq(1,qmax, 1)
+aic =double(length(q))
+bic = double(length(q))
+
+
+
+for (i in seq(along = q)) {
+  k = q[i]
+  out = lm(y1 ~ poly(t, k))
+  aic[i] = AIC(out)
+  bic[i] = AIC(out, k = log(n))
+  
+}
  
- ```{definition, d2, name='Auto Correlation Function (ACF)'}
+
+
+
+
+
+
+#### what is the optimal degree?
+select <- cbind(q,aic, bic)
+dimnames(select) <- list(NULL, c("order", "AIC","BIC"))
+
+kable(select, booktabs=TRUE, caption='Optimal Order of the Polynomial', align=rep("c",3))
+
+
 ```
- 
-An *ACF* plots the correlation of a time series with its own past values over time. For a stationary time series, using the three conditions we get:
- \begin{align}
- 	ACF(s) \ or \ \rho(s)=\frac{\gamma(s)}{\gamma(0)}
- 	\end{align}
- 	
- 	 ```{definition, d3, name='Partial Auto Correlation Function (PACF)'}
-```
- The *partial autocorrelation function  (PACF)* for a stationary time series $y_t$ at lag $s$ is the direct correlation between $y_t$ and $y_{t-s}$, after filtering out the linear influence of  $ y_{t-1},\ldots,y_{t-s-1}$ on $y_t$.
- 
-## Autoregressive (AR) Model
- A *stationary*time series $\{x_t\}$ can be modeled as an AR(p) process:
- \begin{equation}
- y_t = \phi_0 +\phi_1 y_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t
- \end{equation}
- 
-## Moving Average (MA) Model
-  A *stationary* time series $\{y_t\}$ can be modeled as an MA(q) process:
-  \begin{equation}
-  y_t = \theta_0 + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
-    \end{equation}
-  
-## ARMA(p, q)}
-  
-An ARMA model simply combines both AR and MA components to model the dynamics of a time series. Formula,
-  
-   \begin{equation}
-   y_t = \phi_0 +\phi_1 x_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
-   \end{equation}
 
- 
+
+
+Hence, our final trend model is:
+
+\begin{equation}
+y_t=\beta_0 +\beta_1 t + \beta_2 t^2 + \beta_3 t^3 + \beta_4 t^4 +\epsilon_t
+\end{equation}
+
+The estimated trend model is presented in Table \@ref(tab:tabletwo).
+```{r tabletwo, echo = FALSE}
+##  estimate the final model
+final=lm(y1~poly(t,4))
+kable(summary(final)$coefficients, align=rep("c",4), booktabs=TRUE, caption='Regression Results', digits=c(3,3,3,3))
+
+
+```
+
+
+
+Using the estimated model, we can compute the detrended data as the residual and also forecast $y_t$.  Figure \@ref(fig:figuresix) below plots the detrened real GDP obtained as a residual from our trend model. 
+
+```{r figuresix, echo = FALSE, fig.cap = ' Plot of Detrended Real GDP', out.width='80%', fig.asp=.75, fig.align='center'}
+
+e=ts(final$residuals,start=1948, end=2015, frequency=4)
+plot(e, type="l", ylab="Detrended Real GDP", xlab="")
+
+```
+
+
+
+
+Table \@ref(tab:tablethree) shows the forecast of real GDP for next 8 quarters along with the 95% confidence bands.
+
+
+```{r tablethree, echo = FALSE}
+### get forecast values using forecast package
+suppressMessages(library(forecast))
+final=lm(y1~poly(t,4))
+new=data.frame(t=c(270,271,272,273,274,275,276,277))
+time=1:1:8
+f_gdp=predict(final,newdata=new, interval ="confidence", level=0.95)
+kable(cbind(time,f_gdp), booktabs=TRUE, caption='Forecast for 8 Quarters', align=rep("c",4), digits=c(1,3,3,3), col.names=c("h", "Forecast", " 95% Lower Bound", " 95% Upper Bound"))
+
+```
+
+
+## Seasonal Model

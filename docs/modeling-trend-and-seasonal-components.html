@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="components-of-a-time-series.html">
-<link rel="next" href="modeling-trend-and-seasonal-components.html">
+<link rel="prev" href="smoothing-methods.html">
+<link rel="next" href="autoregressive-moving-average-arima.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -128,66 +128,229 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="smoothing-methods" class="section level1">
-<h1><span class="header-section-number">Chapter 4</span> Smoothing Methods</h1>
-<p>One way to approach forecasting is to <em>average</em> out the fluctuations in the underlying time series to produce a <em>smoothed</em> data which can be extrapolated to produce forecasts. These smoothing methiods are essentially <em>model-free</em> and may not even produce <em>optimal forecasts</em>. Depending on the method used one can accomodate seasonal as well as trend components of the underlying time series.</p>
-<div id="moving-average-method" class="section level2">
-<h2><span class="header-section-number">4.1</span> Moving Average Method</h2>
-<p>We compute an average of most recent data values for the time series and use it as a forecast for the next period.</p>
-An important parameter is the <em>window</em> over which we take the average. Let us denote this window by <span class="math inline">\(m\)</span>, then:
-<span class="math display">\[\begin{equation}
-    y^f_{T+1}=\frac{\sum_{i=t-m+1}^{t}{y_i}}{m}
-    \end{equation}\]</span>
-<p>A larger value of <span class="math inline">\(m\)</span> produces greater smoothing and most softwares have a default value of this parameter which can be changed if needed.</p>
-<!-- A larger value is more desirable when there are large but infrequent fluctuations in our data. In contrast, a smaller value of $m$ is preferred when data has sudden shits in our data. Typically, we set $m$ equal to the frequency at which our data is measured. For example, $m=4$ for quarterly data and $m=12$ for monthly data. One drawback of this method is that it assigns equal *weight* to each observation. It is reasonable to argue that for most economic and financial variables, the effect of past observations will be less pronounced than most recent observations.  -->
-</div>
-<div id="simple-exponential-smoothing" class="section level2">
-<h2><span class="header-section-number">4.2</span> Simple Exponential Smoothing</h2>
-<p>In the moving average method, all obseravtions receieved same weight. However, it is reasonable to argue that more recent observations may have a greater influence than those in the remote past. In this methiod, the weight attached to past observations exponentially decay over time. Here is the algorthim for computing the smoothed data and its forecast:</p>
+<div id="modeling-trend-and-seasonal-components" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Modeling Trend and Seasonal Components</h1>
+<div id="trend-estimation" class="section level2">
+<h2><span class="header-section-number">5.1</span> Trend Estimation</h2>
+<p>An important component of a time series is <em>trend</em> that captures the long run evolution of the variable of interest. There are two types of trends:</p>
 <ol style="list-style-type: decimal">
-<li><p>Initialize at t=1: <span class="math display">\[y_1^s=y_1 \]</span></p></li>
-<li><p>Update: <span class="math display">\[      y_{t}^{s}= \alpha y_t + (1-\alpha)y_{t-1}^{s}  \quad for \ t=2,3,...T\]</span></p></li>
+<li><p>Deterministic Trend: the underlying trend component is a <em>known</em> function of time with <em>unknown</em> parameters.</p></li>
+<li><p>Stochastic Trend: the trend component is random.</p></li>
 </ol>
-<p>3: h-period ahead forecast:</p>
-<p><span class="math display">\[  f_{T,h}= y_T^s\]</span></p>
-<p>Here the h-period ahead forecast is:</p>
-<p><em>Exercise: Can you show that <span class="math inline">\(y_{t}^{s}\)</span> is a is the weighted moving average of all past observations? Use backward substitution method.</em></p>
-<p>Here <span class="math inline">\(\alpha \in (0,1)\)</span> is the smoothing parameter, with smaller value indicating greater smoothing.</p>
-</div>
-<div id="holt-winters-smoothing" class="section level2">
-<h2><span class="header-section-number">4.3</span> Holt-Winters Smoothing</h2>
-<p>We add trend component to the simple exponential smoothing. In step 2 the equation we use to update the smoothed data is given by:</p>
-<span class="math display">\[\begin{equation}
-    y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
-    B_t = \beta (y_t^s -y_{t-1}^s) + (1-\beta) B_{t-1}
- \end{equation}\]</span>
-<p>We now have an additional parameter <span class="math inline">\(\beta\)</span> that is the trend parameter. Here the h-period ahead forecast is:</p>
-<span class="math display">\[\begin{equation}
-  f_{T,h} = y_T^s + h\times B_T
-  \end{equation}\]</span>
-</div>
-<div id="holt-winters-smoothing-with-seasonality" class="section level2">
-<h2><span class="header-section-number">4.4</span> Holt-Winters Smoothing with Seasonality</h2>
-<p>We now add seasonal component along with trend. Assuming multiplicative seasonality with period <span class="math inline">\(n\)</span>:</p>
-<span class="math display">\[\begin{equation}
-    y_{t}^{s}= \alpha \frac{y_t}{S_{t-n}} + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
-    B_t = \gamma (y_t^s -y_{t-1}^s) + (1-\gamma) B_{t-1}\\
-    S_t = \beta\frac{y_t}{y_t^s}+(1-\beta)S_{t-n}
-  \end{equation}\]</span>
-<p>The h-period ahead forecast is given by:</p>
-<span class="math display">\[\begin{equation}
-    f_{T,h}= (y_T^s + h\times B_T) \times S_{T+h-n}
-   \end{equation}\]</span>
-</div>
-<div id="application" class="section level2">
-<h2><span class="header-section-number">4.5</span> Application</h2>
-<p>We use R to implement a 12-period ahead forecast for retail sales for the U.S. The data is at monthly frequency from 1959 through 2015. We use natural logs of the data and compute smoothed series using each of the three methods. The resulting forecasts are ploted in Figure <a href="smoothing-methods.html#fig:figfour">4.1</a>.</p>
-<div class="figure" style="text-align: center"><span id="fig:figfour"></span>
-<img src="bookdown-demo_files/figure-html/figfour-1.png" alt="Forecast of Retail Sales: Three Smoothing Methods" width="80%" />
+<p>In this note we will focuse on estimating and forecasting deterministic trend models. We will come back to stochastic trend later when we talk about stationarity property of a time series.</p>
+<div id="parametrizing-a-deterministic-trend" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Parametrizing a deterministic trend</h3>
+<p>Whether or not there is deterministic trend in the data can be typically gleaned by simply plotting the time series over time. For example, Figure @ref(fig: figurefive) below plots real GDP for the US at quartely frequency. We can observe a positive time trend with real GDP increasing with time. In this section we will learn to <em>fit</em> a function that captures this relationship accurately.</p>
+<div class="figure" style="text-align: center"><span id="fig:figurefive"></span>
+<img src="bookdown-demo_files/figure-html/figurefive-1.png" alt=" Plot of Real GDP" width="80%" />
 <p class="caption">
-Figure 4.1: Forecast of Retail Sales: Three Smoothing Methods
+Figure 5.1:  Plot of Real GDP
 </p>
 </div>
+<p><em>Note: The variable time is denoted by <span class="math inline">\(t\)</span> and it is artificially created to take value of 1 for the first period, 2 for the second period and so on.</em></p>
+<p>There are two commonly used functional forms for capturing a deterministic trend:</p>
+<ol style="list-style-type: decimal">
+<li>Polynomial Trend: We fit a polynomial of appropriate order to capture the time trend. For example, A. Linear trend:
+<span class="math display">\[\begin{equation}
+y_t=\beta_0 +\beta_1 t +\epsilon_t
+\end{equation}\]</span></li>
+</ol>
+B. Quadratic trend:
+<span class="math display">\[\begin{equation}
+y_t=\beta_0 +\beta_1 t + \beta_2 t^2 +\epsilon_t
+\end{equation}\]</span>
+In general, we can fit a polynomial of order <span class="math inline">\(q\)</span>:
+<span class="math display">\[\begin{equation}
+y_t=\beta_0 + \sum_{i=1}^q \beta_i t^i +\epsilon_t
+\end{equation}\]</span>
+<p>We can estimate this model using the OLS. One of the key component here is to determine the <em>right</em> order of the polynomial. We can begin with a large enough number for <span class="math inline">\(q\)</span> and then select the approprirate order using AIC or BIC criterion.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Exponential or log-linear trend: In some cases we may want to use an exponential trend or equivalently a log-linear trend.
+<span class="math display">\[\begin{equation}
+y_t=e^(\beta_0 +\beta_1 t +\epsilon_t)\\
+equivalently\\
+log(y_t)=\beta_0 +\beta_1 t +\epsilon_t
+\end{equation}\]</span></li>
+</ol>
+<p>Again we can estimate the above model using OLS.</p>
+</div>
+<div id="uses-of-the-deterministic-trend-model" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Uses of the Deterministic Trend Model</h3>
+<p>Once we have finalized our deterministic trend model i.e., either a polynomial of a specific order or log-liner trend, we can use the estmated model for the following two purposes:</p>
+<ol style="list-style-type: decimal">
+<li><p>Detrending our data: Suppose we would like to eliminate trend from our data. The residual from our final trend model is the <em>detrended</em> time series.</p></li>
+<li><p>Forecasting: We can also forecast our time series based on the estimated trend. For example, suppose our final model is a quadratic trend. The predicted value is given by:</p></li>
+</ol>
+<span class="math display">\[\begin{equation}
+\widehat{y_t}=\widehat{\beta_0}+\widehat{\beta_1} t + \widehat{\beta_2} t^2
+\end{equation}\]</span>
+Then, the 1-period ahead forecast for <span class="math inline">\(y_{t+1}\)</span> can be obtained by solving:
+<span class="math display">\[\begin{equation}
+\widehat{y_{t+1}}=\widehat{\beta_0}+\widehat{\beta_1} (t+1) + \widehat{\beta_2} (t+1)^2
+\end{equation}\]</span>
+</div>
+<div id="application-estimating-a-polynomial-trend-for-u.s.-real-gdp" class="section level3">
+<h3><span class="header-section-number">5.1.3</span> Application: Estimating a polynomial trend for U.S. Real GDP</h3>
+<p>We will now fit a polynomial trend to the US real GDP data that was presented in Figure <a href="modeling-trend-and-seasonal-components.html#fig:figurefive">5.1</a>. We first estimate polynomials of different orders and select the optimal order determined by the lowest possible AIC/BIC. Table <a href="modeling-trend-and-seasonal-components.html#tab:tableone">5.1</a>. shows these statistics for upto 4th order polynomial. We find that the lowest value occur at <span class="math inline">\(q=4\)</span>.</p>
+<table>
+<caption><span id="tab:tableone">Table 5.1: </span>Optimal Order of the Polynomial</caption>
+<thead>
+<tr class="header">
+<th align="center">order</th>
+<th align="center">AIC</th>
+<th align="center">BIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">4399.225</td>
+<td align="center">4410.009</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">3877.692</td>
+<td align="center">3892.071</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">3868.441</td>
+<td align="center">3886.415</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">3763.525</td>
+<td align="center">3785.094</td>
+</tr>
+</tbody>
+</table>
+<p>Hence, our final trend model is:</p>
+<span class="math display">\[\begin{equation}
+y_t=\beta_0 +\beta_1 t + \beta_2 t^2 + \beta_3 t^3 + \beta_4 t^4 +\epsilon_t
+\end{equation}\]</span>
+<p>The estimated trend model is presented in Table <a href="modeling-trend-and-seasonal-components.html#tab:tabletwo">5.2</a>.</p>
+<table>
+<caption><span id="tab:tabletwo">Table 5.2: </span>Regression Results</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(Intercept)</td>
+<td align="center">7520.008</td>
+<td align="center">15.898</td>
+<td align="center">473.021</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td>poly(t, 4)1</td>
+<td align="center">69434.197</td>
+<td align="center">260.744</td>
+<td align="center">266.293</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td>poly(t, 4)2</td>
+<td align="center">12928.805</td>
+<td align="center">260.744</td>
+<td align="center">49.584</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td>poly(t, 4)3</td>
+<td align="center">-1068.061</td>
+<td align="center">260.744</td>
+<td align="center">-4.096</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td>poly(t, 4)4</td>
+<td align="center">-2959.656</td>
+<td align="center">260.744</td>
+<td align="center">-11.351</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<p>Using the estimated model, we can compute the detrended data as the residual and also forecast <span class="math inline">\(y_t\)</span>. Figure <a href="modeling-trend-and-seasonal-components.html#fig:figuresix">5.2</a> below plots the detrened real GDP obtained as a residual from our trend model.</p>
+<div class="figure" style="text-align: center"><span id="fig:figuresix"></span>
+<img src="bookdown-demo_files/figure-html/figuresix-1.png" alt=" Plot of Detrended Real GDP" width="80%" />
+<p class="caption">
+Figure 5.2:  Plot of Detrended Real GDP
+</p>
+</div>
+<p>Table <a href="modeling-trend-and-seasonal-components.html#tab:tablethree">5.3</a> shows the forecast of real GDP for next 8 quarters along with the 95% confidence bands.</p>
+<table>
+<caption><span id="tab:tablethree">Table 5.3: </span>Forecast for 8 Quarters</caption>
+<thead>
+<tr class="header">
+<th align="center">h</th>
+<th align="center">Forecast</th>
+<th align="center">95% Lower Bound</th>
+<th align="center">95% Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">15924.30</td>
+<td align="center">15764.22</td>
+<td align="center">16084.36</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">15968.97</td>
+<td align="center">15801.63</td>
+<td align="center">16136.31</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">16012.42</td>
+<td align="center">15837.52</td>
+<td align="center">16187.31</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">16054.60</td>
+<td align="center">15871.86</td>
+<td align="center">16237.34</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">16095.50</td>
+<td align="center">15904.62</td>
+<td align="center">16286.38</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">16135.09</td>
+<td align="center">15935.78</td>
+<td align="center">16334.40</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">16173.35</td>
+<td align="center">15965.32</td>
+<td align="center">16381.38</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">16210.24</td>
+<td align="center">15993.19</td>
+<td align="center">16427.29</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="seasonal-model" class="section level2">
+<h2><span class="header-section-number">5.2</span> Seasonal Model</h2>
 
 </div>
 </div>
@@ -196,8 +359,8 @@ Figure 4.1: Forecast of Retail Sales: Three Smoothing Methods
           </div>
         </div>
       </div>
-<a href="components-of-a-time-series.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="modeling-trend-and-seasonal-components.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="smoothing-methods.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="autoregressive-moving-average-arima.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
