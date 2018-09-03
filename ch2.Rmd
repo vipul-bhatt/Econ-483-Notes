@@ -1,0 +1,298 @@
+# Regression-based Forecasting
+
+One way to compute the conditional expectation is the linear regression model. Here, our information set contains data on all relevant explanatory variables available at the time of forecast, i.e,
+
+\begin{equation}
+\Omega_t={X_{1t}, X_{2t},...X_{Kt}}
+\end{equation}
+
+Hence, we get the following equality:
+
+\begin{equation}
+E(y_t|\Omega_t)=E(y_{t+h}|X_{1t}, X_{2t}, X_{3t},...,X_{Kt})
+\end{equation}
+
+The right hand side of the above equation is the multiple regression model of the form:
+ \begin{equation}
+ y_{t}=\beta_0+\beta_1 X_{1t}+\beta_2 X_{2t}+..+\beta_K X_{Kt}+\epsilon_t
+ \end{equation}
+ 
+We can easily estimate the above model using Ordinary Least Squares (OLS) and compute the *predicted value* of $y$:
+  \begin{equation}
+  	\widehat{y}_t = \widehat{\beta_0} +\widehat{\beta_1} X_{1t} +\widehat{\beta_2} X_{2t}+...+ \widehat{\beta_k} X_{Kt}
+  \end{equation}
+  
+ 
+ 
+The above equation can be used to compute the optimal forecast. Suppose, we are interested in computed the $h$ period ahead forecast for $y$. Then, using the above equation we get:
+  \begin{equation}
+  	  	\widehat{y}_{t+h} =  \widehat{\beta_0} +\widehat{\beta_1} X_{1t+h} +\widehat{\beta_2} X_{2t+h}+...+ \widehat{\beta_k} X_{Kt+h}
+  	\end{equation}
+  	
+## Scenario Analysis and Conditional Forecasts
+
+One way to use a regression model to produce forecasts is called
+ *scenario analysis* where we produce a different forecast for the dependent under each possible scenario about the future values of the independent variables. For example, what will be the forecast for inflation if the Federal Reserve Bank raises the interest rate? Would our forecast differ depending on the size of the increase in the interest rate?
+
+## Unconditional Forecasts
+
+An alternative is to separately forecast each independent variable and then compute the forecast for the dependent variable.  Yet another alternative is to use lagged variables as independent variables. Depending on the number of lags, we can forecast that much ahead into future (see Distributed Lag Section for details).
+
+## Some practical issues
+
+1. To forecast the dependent variable we first need to compute a forecast for the independent variable. Errors in this step induce errors later.
+  
+2.  *Spurious regression*: It is quite possible to find a strong linear relationship between two completely unrelated variables over time if they share a common time trend.
+
+3. *Model Uncertainty*: We do not know the true functional form for the regression model and hence our estimated model is only a proxy for the true model.
+
+4. *Parameter Uncertainty*: This kind of forecast uses regression coefficients that are computed using a fixed sample. Over time with new data, there will be changes in these coefficients.
+
+## Distributed Lag Regression Models
+
+Consider the following simple regression model:
+
+\begin{equation}
+y_t= \beta_0 +\beta_1 x_t + \epsilon_t
+\end{equation}
+
+Here, if want to forecast $y_{t+1}$ then we must either consider different scenarios for $x_{t+1}$ or independently forecast $x_{t+1}$ first, and then use it to compute forecast for $y_{t+1}$. An alternative is to estimate the following lagged regression model:
+
+\begin{equation}
+y_t= \beta_0 +\beta_1 x_{t-1} + \epsilon_t
+\end{equation}
+
+Note that by estimating the above model we get the following predicted value equation for $t+1$:
+
+\begin{equation}
+\widehat{y_{t+1}}=\widehat{\beta_0}+\widehat{\beta_1}x_{t}
+\end{equation}
+
+Hence, we can easily produce 1-period ahead forecast from this model. In order to produce forecast farther into future we would need to add more lags of the independent variable to the model. A generalized model of this kind is called *distributed lag model* and is given by:
+\begin{equation}
+y_t= \beta_0 +\sum_{s=1}^p\beta_s x_{t-s} + \epsilon_t
+\end{equation}
+
+The number of lags to include can be determined using some kind of goodness of fit measure. 
+
+
+
+### Dynamic Effect of X on Y
+
+A very useful benefit of estimating a distributed lag model is that it allows us to measure how changes in $x$ in the current period can impact the dependent variable over time. Consider a simple distributed lag model with two lags:
+\begin{equation}
+y_t=\beta_0 + \beta_1 x_{t-1} + \beta_2 x_{t-2} +\epsilon_t
+\end{equation}
+
+
+In this model the lag structure implies that any change in $x$ will persist for two periods in terms of its effect on $y$. In fact we now have to consider the *dynamic* effect of $x$ on $y$. Formally, there are two types of effects:
+
+1. *dynamic effect* of $x$ on $y$ given by:
+\[ \frac{\partial y_{t+s}}{\partial x_t} \quad s=0,1,2,... \]
+
+In our example, the sequence of dynamic effects are:
+\begin{equation}
+\frac{\partial y_{t+1}}{\partial x_t}  =0; \ \frac{\partial y_{t+1}}{\partial x_t}=\beta_1; \ \frac{\partial y_{t+2}}{\partial x_t}=\beta_2; \ \frac{\partial y_{t+s}}{\partial x_t}=0 \ \forall \ s>2 
+\end{equation}
+
+2. *long run effect* of $x$ on $y$ given by:
+\begin{equation}
+\sum_{s=0}^p\frac{\partial y_{t+s}}{\partial x_t}   
+\end{equation}
+
+In our example, the long run effect is:
+
+\[\beta_1+\beta_2\]
+
+### Model Selection Criterion
+
+Most often we compare models that have different number of independent variables. For example, in our application, in order to select the number of lags for output  and capital stock, we will essentially compare models with different number of independent variables. In such cases we must account for the trade-off between goodness of fit and degrees of freedom. Increasing the number of independent variables will:
+
+1. lower the MSE and hence leads to better fit.
+
+2. lowers the degrees of freedom
+
+Two commonly used measures based on MSE incorporate this trade-off:
+
+1. Akaike Information Criterion (AIC):
+\[ AIC= MSE \times e^{\frac{2k}{T}} \]
+
+where $k$ is the number of estimated parameters, $T$ is the sample size. Then, $K/T$ is the number of parameters estimated per observation and $e^{\frac{2k}{T}}$ is the *penalty factor* imposed on adding more variables to the model. As we increase $k$, this penalty factor will increase exponentially for a given value of $T$.
+
+2. Bayesian Information Criterion (BIC):
+
+\[ BIC= MSE \times T^{\frac{k}{T}} \]
+
+
+Lower values of either AIC or BIC indicates greater accuracy. So we select a model with lower value of either of these two criteria. Note that the penalty imposed by BIC is harsher and hence it will typically select a more parsimonious model (Figure \@ref(fig:ch2-figure1)).
+
+```{r ch2-figure1, echo = FALSE, fig.cap = 'Penalty Factor of AIC and BIC', out.width='80%', fig.asp=.75, fig.align='center'}
+T=100
+k=1:1:25
+
+ratio=k/T
+
+AIC_p=exp(2*k/T)
+SIC_p=T^(k/T)
+
+#### plot###
+
+library(ggplot2)
+df=data.frame(ratio,AIC_p,SIC_p)
+ggplot(df, aes(ratio)) +                    
+geom_line(aes(y=AIC_p, color="AIC_p"))+  # first layer
+geom_line(aes(y=SIC_p, color="SIC_P"))+ # second layer
+ylab("Penalty Factor")+
+xlab("k/T")
+```
+
+
+
+## Application: A  Model of Investment Expenditure
+
+### A Multiple Regression Model of Invesment Expenditure
+Suppose have annual data on private investment, private sector output, and capital stock. Our model specification is given by:
+\begin{equation}
+y_t= \beta_0 + \beta_1 x_{1t}+ \beta_2 x_{2t}+\epsilon_t
+\end{equation}
+
+We can estimate the above model using OLS and then conduct scenario-based forecasting. For ease of interpretation, we will convert all variables in natural logarithms.
+
+Table \@ref(tab:ch2-table1) below presents the estimated coefficients of our regression model. Higher output and capital stock leads to greater investment expenditure. 
+
+```{r ch2-table1, echo = FALSE}
+suppressMessages(library(xts))
+suppressMessages(library(knitr))
+suppressMessages(library(forecast))
+suppressMessages(library(timeSeries))
+suppressMessages(library(ggplot2))
+# cretae a data object frame 
+data=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/dlag.csv")
+
+y=ts(data$y, start=1950, end=2014, frequency = 1)
+x1=ts(data$x1, start=1950, end=2014, frequency = 1)
+x2=ts(data$x2, start=1950, end=2014, frequency = 1)
+
+y=log(y)
+x1=log(x1)
+x2=log(x2)
+
+
+fit=tslm(y~x1+x2)
+kable(summary(fit)$coefficients, booktabs=TRUE, caption='A Multiple Regression Model of Investment Expenditure', align=rep("c",4), col.names=c("Estimated Coefficients", "Std. Error", "t-ratio", "p-value"))
+
+```
+
+Next, we forecast of investment expenditure under three different scenarios:
+
+1. For next 3 years, both output and capital stock remain at the average of last 3 years.
+
+2. For next 3 years, both output and capital stock remain at 1% above  the average of last 3 years.
+
+2. For next 3 years, both output and capital stock remain at 1% below the average of last 3 years.
+
+Figure \@ref(fig:ch2-figure2) below present our investment expenditure outlook under these 3 scenarios.
+
+```{r ch2-figure2, echo = FALSE, fig.cap = 'Investment outlook for next 3 years', out.width='80%', fig.asp=.75, fig.align='center'}
+
+x1past=window(x1,2012)
+x2past=window(x2,2012)
+
+newdata=data.frame(x1=rep(mean(x1past),3), x2=rep(mean(x2past),3))
+#newdata=data.frame(x1=c(2,2,2,2),x2=c(0,0,0,0))
+
+s1=forecast(fit, newdata=newdata, level=95)
+
+newdata=data.frame(x1=1.01*rep(mean(x1past),3), x2=1.01*rep(mean(x2past),3))
+
+s2=forecast(fit, newdata=newdata, level=95)
+
+newdata=data.frame(x1=0.99*rep(mean(x1past),3), x2=0.99*rep(mean(x2past),3))
+s3=forecast(fit, newdata=newdata, level=95)
+
+par(mfrow=c(3,1))
+par(mar=c(2,2,2,2))
+plot(s1,include=25,  main="Scenario 1")
+plot(s2,include=25,  main="Scenario 2")
+plot(s3,include=25,  main="Scenario 3")
+
+
+```
+
+
+
+### A Distributed Lag Model of Investment Expenditure
+In this application we will estimate a distributed lag model for investment expenditure. The idea here is that it takes time for investment to respond to output and capital stock changes. The model specification we want to estimate is:
+
+\begin{equation}
+y_t= \beta_0 + \sum_{i=1}^p\beta_i x_{1t-i}+\sum_{i=1}^p\alpha_i x_{2t-i}+\epsilon_t
+\end{equation}
+
+where $y$ denotes real investment expenditure of the private sector, $x_1$ denotes output of the private sector, and $x_2$ denotes capital stock of the private sector.
+
+We estimate our model by first selecting the optimal lag order for each independent variable, and selecting the one with lowest  value for AIC/BIC. From @\ref(tab:ch2-table2) we find that the lowest BIC occurs at lag=2. Hence, we estimate a model with two lags for each independent variable in our model.
+
+```{r ch2-table2, echo = FALSE}
+suppressMessages(library(xts))
+suppressMessages(library(knitr))
+suppressMessages(library(dynlm))
+# cretae a data object frame 
+data=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/dlag.csv")
+
+y=ts(data$y, start=1950, end=2014, frequency = 1)
+x1=ts(data$x1, start=1950, end=2014, frequency = 1)
+x2=ts(data$x2, start=1950, end=2014, frequency = 1)
+
+y=log(y)
+x1=log(x1)
+x2=log(x2)
+
+
+
+pmax=4
+p = seq(1,pmax, 1)
+aic =double(length(p))
+bic = double(length(p))
+
+
+
+for (i in seq(along = p)) {
+  k =p[i]
+  out = dynlm(formula=y ~ L(x1,1:k)+L(x2,1:k))
+  aic[i] = AIC(out,k=2)
+  bic[i] = AIC(out, k = log(length(y)))
+  
+}
+
+
+
+
+#### what is the optimal degree?
+select = cbind(p,aic, bic)
+kable(select, booktabs=TRUE, caption='Optimal Order of the lags', align=rep("c",3), col.names=c("Lag", "AIC", "BIC"))
+
+
+```
+
+
+
+Hence, our final model is given by:
+\begin{equation}
+y_t= \beta_0 + \sum_{i=1}^2\beta_i x_{1t-i}+\sum_{i=1}^2\alpha_i x_{2t-i}
+\end{equation}
+
+The results of our estimation are presented below in Table \@ref(tab:ch2-table3)
+
+```{r ch2-table3, echo = FALSE}
+final=dynlm(formula=y~L(x1, 1:2)+L(x2, 1:2))
+kable(summary(final)$coefficients, booktabs=TRUE, caption='Distributed Lag Model of Investment Expenditure', align=rep("c",4), col.names=c("Estimated Coefficients", "Std. Error", "t-ratio", "p-value"))
+
+```
+
+1. Using our estimated model we can easily compute the dynamic effect as well as the long run effect of each independent variable on the dependent variable.
+
+2. Given the lag structure of our estimated model, we can also produce forecasts for $y_{t+1}$ by computing the following equation:
+
+\begin{equation}
+f_{t,1}=\widehat{y_{t+1}}=\hat{\beta_0}+\hat{\beta_1}x_{1t} + \hat{\beta_2}x_{1t-1}+ \hat{\alpha_1}x_{2t}+\hat{\alpha_2}x_{2t-1}
+\end{equation}

@@ -3,60 +3,118 @@
 ## Time Series
 A time series is a specific kind of data where observations of a variable are recorded over time. For example, the data for the U.S. GDP for the last 30 years is a time series data. 
 
-Such data shows how a variable is changing over time. Depending on the variable of interest we can have data measured at different frequencies. Some commonly used frequencies are intra-day, daily, weekly, monthly, quarterly, semi-annual and annual. Figure \@ref(fig:figone) below plots data for quarterly and monthly frequency. 
+Such data shows how a variable is changing over time. Depending on the variable of interest we can have data measured at different frequencies. Some commonly used frequencies are intra-day, daily, weekly, monthly, quarterly, semi-annual and annual. Figure \@ref(fig:ch1-figure1) below plots data for quarterly and monthly frequency. 
 
-```{r figone, echo = FALSE, fig.cap = 'Time Series at quarterly and monthly frequency', out.width='80%', fig.asp=.75, fig.align='center'}
+```{r ch1-figure1, echo = FALSE, fig.cap = 'Time Series at quarterly and monthly frequency', out.width='80%', fig.asp=.75, fig.align='center'}
 suppressMessages(library(xts))
 # cretae a data object frame called gdp that imports the csv file with data
-gdp= read.csv("/Users/home-mac/Documents/E483/gdp.csv")
-retail=read.csv("/Users/home-mac/Documents/E483/retail.csv")
+gdp= read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/gdp.csv")
+retail=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/retail.csv")
 # create time series objects for data 
-y1=ts(gdp$y,start=1948, end=2015, frequency=4)
-y2=ts(retail$y, start=1959, end=2015, frequency=12)
+y1=ts(gdp$y,start=c(1947,1), end=c(2018,1), frequency=4)
+y2=ts(retail$y, start=c(1992,1), end=c(2018,6), frequency=12)
 
 # plot data over time
+
 par(mfrow=c(2,1))
 plot.xts(as.xts(y1),yaxis.right=F, main="Real GDP (Billions of 2009 Dollars)")
 plot.xts(as.xts(y2),yaxis.right=F, main="Retail Sales (Billions of Dollars)")
 
 
 ```
-The first panel shows data for the real gross domestic product (GDP) for the US in 2009 dollars, measured at a quarterly frequency. The second panel shows data for the retail sales in the U.S.  billions of dollars, measured at monthly frequency.
+The first panel shows data for the real gross domestic product (GDP) for the US in billions of 2012 dollars, measured at a quarterly frequency. The second panel shows data for the advance retail sales (millions of dollars), measured at monthly frequency.
 
 Formally, we denote a time series variable by $y_t$, where $t=0,1,2,..,T$ is the observation index. For example, at $t=10$ we get the tenth observation of this time series, $y_{10}$.
 
 
 
 
-### Serial Correlation
+## Serial Correlation
 
-Serial correlation is a measure of temporal dynamics of a time series. It addresses the following question: what is the effect of past realizations of a time series on the current period value? Formally, 
+Serial correlation (or auto correlation) refers to the tendency of observations of a time series being correlated over time. It is a measure of the temporal dynamics of a time series and addresses the following question: what is the effect of past realizations of a time series on the current period value? Formally, 
 
 \begin{equation}
 \rho(s)=Cor(y_t, y_{t-s}) =\frac{	Cov(y_t,y_{t-s})}{\sqrt{\sigma^2_{y_t} \times \sigma^2_{y_{t-s}}}}
+(\#eq:sercor)
 \end{equation}
 
  where $Cov(y_t,y_{t-s})= E(y_t-\mu_{y_t})(y_{t-s}-\mu_{y_{t-s}})$ and $\sigma^2_{y_t}=E(y_t-\mu_{y_t})^2$
 
-Here, $\rho(s)$ is the serial correlation of order $s$. Note that often we use historical data to forecast. If there is no serial correlation, then past can offer no guidance for the present and future. In that sense, presence of serial correlation of some order is the first condition for being able to forecast a time series using its historical realizations.
+Here, $\rho(s)$ is the serial correlation of order $s$. For example, $s=1$ implies *first order* serial correlation between $y_t$ and $y_{t-1}$, $s=2$ implies *second order* serial correlation between $y_t$ and $y_{t-2}$, and so on.
 
 
-### White Noise Process
+Note that often we use historical data to forecast. If there is no serial correlation, then past can offer no guidance for the present and future. In that sense, presence of serial correlation of some order is the first condition for being able to forecast a time series using its historical realizations.
 
-A time series is a *white noise* process is it has zero mean, constant and finite variance, and is seriall uncorrelated. Formally, $y_t$ is a white noise process if:
+Now, we can either have positive or negative serial correlation in data. Figure \@ref(fig:ch1-figure2) plots two time series with positive and negative serial correlation, respectively.
+
+```{r ch1-figure2, echo = FALSE, fig.cap = 'Serial Correlation', out.width='80%', fig.asp=.75, fig.align='center'}
+
+# simulate AR(1) process: phi = 0.5
+ar1.model = list(ar=0.9)
+mu = 1
+set.seed(123)
+y = mu + arima.sim(model=ar1.model,n=100)
+p1=plot(y[1:100],y[2:101], ylab=expression('y'[t+1]), xlab=expression('y'[t]), main="Positive Serial Correlation")
+
+# simulate AR(1) process: phi = -0.6
+ar1.model = list(ar=-0.9)
+mu = 1
+set.seed(123)
+x= mu + arima.sim(model=ar1.model,n=100)
+p2=plot(x[1:100],x[2:101], ylab=expression('y'[t+1]), xlab=expression('y'[t]), main="Negative Serial Correlation")
+
+par(mfrow=c(2,1))
+invisible(p1)
+invisible(p2)
+
+```
+## Testing for Serial Correlion
+
+We can use a Lagrange-Multiplier (LM) test for detecting serial correlation. This test is also known as *Breuch-Godfrey* test. I will use the linear regression model to explain this test. Consider the following regression model:
+\begin{equation}
+y_t=\beta_0 + \beta_1 X_{1t}+\epsilon_t
+\end{equation}
+
+Consider the following model for serial correlation of order *p* for the error term:
+\begin{equation}
+\epsilon_t=\rho_1 \epsilon_{t-1}+\rho_2 \epsilon_{t-2}+...+ \rho_p \epsilon_{t-p}+\nu_t
+(\#eq:bg)
+\end{equation}
+
+Then we are interested in the following test:
+
+\[H_0=\rho_1=\rho_2=...=\rho_p=0 \]
+\[H_A = Not \ H_0 \]
+
+To implement this test, we estimate equation \@ref(eq:bg) by replacing the error term with the OLS residuals. The LM test statistic is given by:
+
+\[ LM  = N\times R^2_{BG}  \sim \chi^2_p  \]
+
+If the test statistic value is greater than the critical value then we reject the null hypothesis.
+
+
+## White Noise Process
+
+A time series is a *white noise* process is it has zero mean, constant and finite variance, and is serially uncorrelated. Formally, $y_t$ is a white noise process if:
 
 1. $E(y_t)=0$
 2. $Var(y_t)=\sigma^2_y$
 3. $Cov(y_t,y_{t-s})= 0 \forall s\neq t$
 
 We can compress the above definition as: $y_t\sim WN(0,\sigma^2_y)$. 
-Often we assume that the unexplained part of a time series follows a white noise process. By definition we cannot forecast a white noise process. An important diagnostics of model adequacy is to test whether the estimated residuals are white noise (more on this later).
+Often we assume that the unexplained part of a time series follows a white noise process. Formally,
+
+\begin{equation}
+Time \ Series \ = \  Explained  \ + \ White \ Noise
+\end{equation}
+
+By definition we cannot forecast a white noise process. An important diagnostics of model adequacy is to test whether the estimated residuals are white noise (more on this later).
 
 ## Important Elements of Forecasting
 
 ```{definition, d1, name='Forecast'}
 ```
-A *forecast*  is an *informed* guess about the unknow future value of a time series of interest. For example, what is the stock price of Facebook next Monday? 
+A *forecast*  is an *informed* guess about the unknown future value of a time series of interest. For example, what is the stock price of Facebook next Monday? 
 
 There are three possible types of forecasts:
 
@@ -66,11 +124,11 @@ There are three possible types of forecasts:
 F(a)=P[y_{t+1}\leq a]
 \end{equation}
 
-give us the probability that the 1-period ahead future value of $y_{t+1}$ will be less than or equal to $a$.  For example, the future real GDP growth could be normally distributed with a mean of 1.3% and a standard deviation of 1.83%. Figure \@ref(fig:figtwo) below plots the density forecast for real GDP growth.
+give us the probability that the 1-period ahead future value of $y_{t+1}$ will be less than or equal to $a$.  For example, the future real GDP growth could be normally distributed with a mean of 1.3% and a standard deviation of 1.83%. Figure \@ref(fig:ch1-figure3) below plots the density forecast for real GDP growth.
 
 
 
-```{r figtwo, echo = FALSE, fig.cap = 'Density Forecast for Future Real GDP Growth', out.width='80%', fig.asp=.75, fig.align='center'}
+```{r ch1-figure3, echo = FALSE, fig.cap = 'Density Forecast for Future Real GDP Growth', out.width='80%', fig.asp=.75, fig.align='center'}
 
 population_mean <- 1.3
 population_sd <- 1.83
@@ -136,16 +194,25 @@ f_{t,1}=1.3%
 \end{equation}
 
 
-3. *Interval Forecast*: our forecast at each horizon is a range which is obtained by adding *margin of errors* to the point forecast. With some probablity we expect our future value to fall withing this range. For example, the  95% interval forecast for the next period real GDP growth is (-2.36%,4.96%). Hence, with 95% confidence we expect next period GDP to fall between -2.36% and 4.96%.
+3. *Interval Forecast*: our forecast at each horizon is a range which is obtained by adding *margin of errors* to the point forecast. With some probability we expect our future value to fall withing this range. For example, the  95% interval forecast for the next period real GDP growth is (-2.36%,4.96%). Hence, with 95% confidence we expect next period GDP to fall between -2.36% and 4.96%.
 
 
 ```{definition, d2, name='Forecast Horizon'}
 ```
 *Forecast Horizon* is the number of periods into the future for which we forecast a time series. We will denote it by $h$. Hence, for $h=1$, we are looking at 1-period ahead forecast,  for $h=2$ we are looking at 2-period ahead forecast and so on.
 
-Formally, for a given time series $y_t$, the h-period ahead unknow value is denoted by $y_{t+h}$. The forecast of this value is denoted $f_{t,h}$.  
+Formally, for a given time series $y_t$, the h-period ahead unknown value is denoted by $y_{t+h}$. The forecast of this value is denoted $f_{t,h}$.  
 
+```{r ch1-figure4, echo = FALSE, fig.cap = 'Forecast Horizon', out.width='80%', fig.asp=.8, fig.align='center'}
 
+plot(1:28,axes = FALSE, type="n",xlab="",ylab="", main="")
+axis(1, at=seq(1,28,by=2),
+     labels=c("0","", "", "t-1","t","t+1", "" , "" ,"T","T+1","T+2","","", "T+h"))
+abline(v=17, col="blue", lty="dotted")
+text(8, 16,"Sample")
+text(22, 16,"Forecast Horizon \n (Out-of-Sample)")
+
+```
 
 ```{definition, d3, name='Forecast Error'}
 ```
@@ -163,12 +230,12 @@ Hence, for every horizon, we will have a forecast and a corresponding forecast e
 
 Forecasts are based on *information* available at the time of making the forecast. *Information Set* contains all the relevant information about the time series we would like to forecast. We denote the set of information available at time $T$ by $\Omega_T$. There are two types of information sets:
 
-1. Univariate Information set: Only includes hisorical data on the time series of interest:
+1. Univariate Information set: Only includes historical data on the time series of interest:
 \begin{equation}
 \Omega_T=\{y_T, y_{T-1}, y_{T-2}, ...., y_1\}
 \end{equation}
 
-2. Multivaiate Information set: Includes hisorical data on the time series of interest as well as any other variable(s) of interest. For example, suppose we have one more variable $x$ that is relevant for forecasting $y$. Then:
+2. Multivariate Information set: Includes historical data on the time series of interest as well as any other variable(s) of interest. For example, suppose we have one more variable $x$ that is relevant for forecasting $y$. Then:
 \begin{equation}
 \Omega_T=\{y_T, x_T, y_{T-1}, x_{T-1}, y_{T-2},x_{T-2}. ...., y_1, x_1\}
 \end{equation}
@@ -193,17 +260,29 @@ A *loss* function is a mapping between forecast errors and their associated loss
 
 Two types of loss functions are:
 
-- Symmetric Loss Function: both positive and negative forecast errors lead to same loss. A commonly used loss function is *quadratic loss function* given by:
+- Symmetric Loss Function: both positive and negative forecast errors lead to same loss. See Figure \@ref(fig:ch1-figure5). A commonly used loss function is *quadratic loss function* given by:
 
 \begin{equation}
 L(e_{t,h})=e_{t,h}^2 = (y_{t+h}-f{t,h})^2
 \end{equation}
 
-- Asymmetric Loss Function: loss depends on the sign of the forecast error. For example, it could be that positive errors produce greater loss when compared to negative errors. See the function below that assumes a higher value for positive errors:
+
+```{r ch1-figure5, echo = FALSE, fig.cap = 'Quadratic Loss Functions', out.width='80%', fig.asp=.8, fig.align='center'}
+
+curve(x^2, from=-10, to=10, xlab="e", ylab="Loss")
+```
+
+- Asymmetric Loss Function: loss depends on the sign of the forecast error. For example, it could be that positive errors produce greater loss when compared to negative errors. See the function below and Figure \@ref(fig:ch1-figure6) that attaches a higher loss to  positive errors:
 
 \begin{equation}
-L(e_{t,h})=e_{t,h}^2+e_{t,h}
+L(e_{t,h})=e_{t,h}^2+4 \times e_{t,h}
 \end{equation}
+
+```{r ch1-figure6, echo = FALSE, fig.cap = 'Asymmetric Loss Function', out.width='80%', fig.asp=.8, fig.align='center'}
+
+
+curve(x^2+4*x, from=-10, to=10, xlab="e", ylab="Loss")
+```
 
 Once we have chosen our loss function, the optimal forecast can be obtained by minimizing the expected loss function. 
 

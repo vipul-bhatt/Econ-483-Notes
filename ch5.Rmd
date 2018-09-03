@@ -1,0 +1,222 @@
+# Modeling Trend and Seasonal Components
+
+## Trend Estimation
+
+An important component of a time series is *trend* that captures the long run evolution of the variable of interest. There are two types of trends:
+
+1. Deterministic Trend: the underlying trend component is a *known* function of time with *unknown* parameters.
+
+2. Stochastic Trend: the trend component is random.
+
+In this note we will focus on estimating and forecasting deterministic trend models. We will come back to stochastic trend later when we talk about stationarity property of a time series.
+
+### Parametrizing a deterministic trend
+
+Whether or not there is deterministic trend in the data can be typically gleaned by simply plotting the time series over time. For example, Figure \@ref(fig: ch5-figure1) below plots real GDP for the US at quarterly frequency. We can observe a positive time trend with real GDP increasing with time. In this section we will learn to *fit* a function that captures this relationship accurately.
+
+```{r ch5-figure1, echo = FALSE, fig.cap = 'Real GDP (2012 Chained Billions of Dollars)', out.width='80%', fig.asp=.75, fig.align='center'}
+suppressMessages(library(xts))
+# cretae a data object frame called gdp that imports the csv file with data
+gdp=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/gdp.csv")
+
+# create time series objects for data 
+y1=ts(gdp$y,start=c(1947,1), end=c(2018,1), frequency=4)
+
+plot.xts(as.xts(y1), main="")
+```
+
+*Note: The variable time is denoted by $t$ and it is artificially created to take value of 1 for the first period, 2 for the second period and so on.*
+
+There are two commonly used functional forms for capturing a deterministic trend:
+
+1. Polynomial Trend: We fit a polynomial of appropriate order  to capture the time trend. For example,
+A. Linear trend:
+\begin{equation}
+y_t=\beta_0 +\beta_1 t +\epsilon_t
+\end{equation}
+
+B. Quadratic trend:
+\begin{equation}
+y_t=\beta_0 +\beta_1 t + \beta_2 t^2 +\epsilon_t
+\end{equation}
+
+In general, we can fit a polynomial of order $q$:
+\begin{equation}
+y_t=\beta_0 + \sum_{i=1}^q \beta_i t^i +\epsilon_t
+\end{equation}
+
+We can estimate this model using the OLS. One of the key component here is to determine the *right* order of the polynomial. We can begin with a large enough number for $q$ and then select the appropriate order using AIC or BIC criterion.
+
+2. Exponential or log-linear trend: In some cases we may want to use an exponential trend or equivalently a log-linear trend.
+\begin{equation}
+y_t=e^(\beta_0 +\beta_1 t +\epsilon_t)\\
+equivalently\\
+log(y_t)=\beta_0 +\beta_1 t +\epsilon_t
+\end{equation}
+
+Again we can estimate the above model using OLS.
+
+
+### Uses of the Deterministic Trend Model
+
+Once we have finalized our deterministic trend model i.e., either a polynomial of a specific order or log-liner trend, we can use the estimated model for the following two purposes:
+
+1. Detrending our data: Suppose we would like to eliminate trend from our data. The residual from our final trend model is the *detrended* time series.
+
+2. Forecasting: We can also forecast our time series based on the estimated trend. For example, suppose our final model is a quadratic trend. The predicted value is given by:
+
+\begin{equation}
+\widehat{y_t}=\widehat{\beta_0}+\widehat{\beta_1} t + \widehat{\beta_2} t^2
+\end{equation}
+
+Then, the 1-period ahead forecast for $y_{t+1}$ can be obtained by solving:
+\begin{equation}
+\widehat{y_{t+1}}=\widehat{\beta_0}+\widehat{\beta_1} (t+1) + \widehat{\beta_2} (t+1)^2
+\end{equation}
+
+### Application: Estimating a polynomial trend for U.S. Real GDP
+
+We will now fit a polynomial trend to the US real GDP data that was presented in Figure \@ref(fig:figure10). We first estimate polynomials of different orders and select the optimal order determined by the lowest possible AIC/BIC. Table \@ref(tab:ch5-table1). shows these statistics for up to 4th order polynomial. We find that the lowest value occur at $q=4$. 
+
+```{r ch5-table1, echo = FALSE}
+suppressMessages(library(xts))
+suppressMessages(library(knitr))
+# cretae a data object frame called gdp that imports the csv file with data
+# generate time variable-
+
+t=1:1:length(y1)
+
+n = length(t)
+
+
+qmax=4
+q = seq(1,qmax, 1)
+aic =double(length(q))
+bic = double(length(q))
+
+
+
+for (i in seq(along = q)) {
+  k = q[i]
+  out = lm(y1 ~ poly(t, k, raw=T))
+  aic[i] = AIC(out)
+  bic[i] = AIC(out, k = log(n))
+  
+}
+ 
+
+
+
+
+
+
+#### what is the optimal degree?
+select <- cbind(q,aic, bic)
+dimnames(select) <- list(NULL, c("order", "AIC","BIC"))
+
+kable(select, booktabs=TRUE, caption='Optimal Order of the Polynomial', align=rep("c",3))
+
+
+```
+
+
+
+Hence, our final trend model is:
+
+\begin{equation}
+y_t=\beta_0 +\beta_1 t + \beta_2 t^2 + \beta_3 t^3 + \beta_4 t^4 +\epsilon_t
+\end{equation}
+
+The estimated trend model is presented in Table \@ref(tab:ch5-table2).
+```{r ch5-table2, echo = FALSE}
+##  estimate the final model
+fit=tslm(y1~trend+I(trend^2)+I(trend^3)+I(trend^4))
+#fit=lm(y1~poly(t,4,raw=T))
+kable(summary(fit)$coefficients, align=rep("c",4), booktabs=TRUE, caption='Regression Results', digits=c(3,3,3,3))
+
+
+```
+
+
+
+Using the estimated model, we can compute the detrended data as the residual and also forecast $y_t$.  Figure \@ref(fig:ch5-figure2) below plots the detrended real GDP obtained as a residual from our trend model. 
+
+```{r ch5-figure2, echo = FALSE, fig.cap = 'Detrended Real GDP', out.width='80%', fig.asp=.75, fig.align='center'}
+suppressMessages(library(xts))
+e=ts(fit$residuals,start=c(1947,1), end=c(2018,1), frequency=4)
+plot.xts(as.xts(e), main="")
+
+```
+
+
+
+
+Figure \@ref(fig:ch5-figure3) shows the forecast of real GDP for next 8 quarters along with the 95% confidence bands.
+
+
+```{r ch5-figure3, echo = FALSE, fig.cap = 'Forecast of Real GDP', out.width='80%', fig.asp=.75, fig.align='center'}
+### get forecast values using forecast package
+suppressMessages(library(forecast))
+fit=tslm(y1~trend+I(trend^2)+I(trend^3)+I(trend^4))
+fcast=forecast(fit,h=8)
+plot(fcast, include=24, main="")
+#new=data.frame(t=c(286,287,288,289,290,300,301,302))
+#time=1:1:8
+#f_gdp=predict(final,newdata=new, interval ="confidence", level=0.95)
+#kable(cbind(time,f_gdp), booktabs=TRUE, caption='Forecast for 8 Quarters', align=rep("c",4), digits=c(1,3,3,3), col.names=c("h", "Forecast", " 95% Lower Bound", " 95% Upper Bound"))
+
+```
+
+
+## Seasonal Model
+
+We now focus on the *seasonal* component of a time series, i.e., that is periodic fluctuations that repeat themselves every season. For example, increase in ice cream sales during summer season. Just like trend component, such seasonal pattern could be *deterministic* or *stochastic*. In this chapter we will focus on estimating deterministic seasonal component.
+
+In Figure \@ref(fig:ch5-figure4) we plot housing starts in the U.S. The data is at monthly frequency and we can see a clear seasonal pattern. Housing starts seem to increase in spring and summer months. This is followed by a decline in fall and winter months.
+
+```{r ch5-figure4, echo = FALSE, fig.cap =  'Housing Starts in U.S.', out.width='80%', fig.asp=.75, fig.align='center'}
+suppressMessages(library(timeSeries))
+suppressMessages(library(xts))
+hstart=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/hstarts.csv")
+### create time series object
+y=ts(hstart$y, start=c(2000,6), end=c(2018,6), frequency=12)
+plot.xts(as.xts(y),yaxis.right=F, main="")
+```
+
+One option to deal with seasonality is to either obtain seasonally adjusted data from the source itself. Alternatively, we can use decomposition method and appropriately filter out the seasonal component. However, if our objective is to explicitly model the seasonal component of a time series then we must work with non-seasonally adjusted data.
+
+### Regression Model with Seasonal Dummy Variables
+
+One way to account for seasonal patterns in data is to add dummy variables for season. To avoid perfect multicollinearity, is there are $s$ seasons, we can include $s-1$ dummy variables. For example, for quarterly data, $s=4$ and hence we need $s-1=3$ dummy variables in our regression model. Formally, for quarterly data, the seasonal regression model is given by:
+
+\begin{equation}
+y_t= \beta_0 + \beta_1 D_{1t}+ \beta_2 D_{2t} + \beta_3 D_{3t} + \epsilon_t
+\end{equation}
+
+In the above regression model, $D_1,D_2,$ and $D_3$ are dummy variables that capture first three quarters of the year. For example, $D_1=1$ for the first quarter and $D_1=0$ otherwise. Similarly, $D_2=1$ for the second quarter and $D_2=0$ otherwise. In this example, we use the fourth quarter as the *base group*.
+
+The above model can be estimated using OLS. Again, we can use the residual from our estimated model as a measure of *deseasonlized* data. We can also forecast the dependent variable based on the seasonal component only.
+
+### Application: Seasonal Model of Housing Starts
+
+We now estimate a seasonal regression model for the housing starts data presented in Figure \@ref(fig:ch5-figure4). The data is at monthly frequency which implies we can have 12 possible seasons and hence would need 11 dummy variables in our regression model. Formally, we use January as the base group and include dummy variables for the last 11 months of the year:
+
+\begin{equation}
+y_t=\beta_0 + \sum_{i=2}^{12}\beta_i D_{it} + \epsilon_t
+\end{equation}
+
+Table \@ref(tab:ch5-table3) presents the estimation results for this exercise. In Figure \@ref(fig:ch5-figure5) we plot the forecast of housing starts for next 12 months using our estimated model, along with 95% confidence bands.
+```{r ch5-table3, echo = FALSE}
+##  estimate the final model
+fit= tslm(y ~ season)
+kable(summary(fit)$coefficients, align=rep("c",4), booktabs=TRUE, caption='Regression Results', digits=c(3,3,3,3))
+
+
+```
+
+
+```{r ch5-figure5, echo = FALSE, fig.cap = 'Forecast of Housing Starts', out.width='80%', fig.asp=.75, fig.align='center'}
+### forecast next 12 months
+fcast = forecast(fit, h=12)
+plot(fcast, include=24, main="")
+```

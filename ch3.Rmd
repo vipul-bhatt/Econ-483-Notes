@@ -6,7 +6,7 @@ A given time series can have four possible components:
 
 2. Season: denoted by $S_t$ are *periodic* fluctuations over *seasons*. The period of the season is fixed and known. For example, rise in non-durable sales during Christmas.
 
-3. Cycle: denoted by $C_t$ are *non-periodic* are flcutuations in that they occur regularly but over periods that are not fixed in duration.
+3. Cycle: denoted by $C_t$ are *non-periodic* are fluctuations in that they occur regularly but over periods that are not fixed in duration.
 
 4. Irregular: denoted by $\epsilon_t$ are random fluctuations, typically modeled as a white noise process.
 
@@ -29,18 +29,19 @@ Note that using properties of logarithms, multiplicative decomposition is the sa
 log(y_t)= log(B_t) + log(S_t) + log(C_t) + log(\epsilon_t)
 \end{equation}
 
-Most statistical softwares can implement these decompositions using data on a time series variable as input. Typically they combine cyclical component with irregular component and provide a three-way decomposition. In Figure \@ref(fig:figthree) I use R to decompose real GDP for the US into its components.
+Most statistical software can implement these decomposition using data on a time series variable as input. Typically they combine cyclical component with irregular component and provide a three-way decomposition. In Figure \@ref(fig:ch3-figure1) I use R to decompose real GDP for the US into its components.
 
-```{r figthree, echo = FALSE, fig.cap = ' Additive Decomposition of Real GDP', out.width='80%', fig.asp=.75, fig.align='center'}
+```{r ch3-figure1, echo = FALSE, fig.cap = 'Additive Decomposition of Retail Sales', out.width='80%', fig.asp=.75, fig.align='center'}
 suppressMessages(library(xts))
-# cretae a data object frame called gdp that imports the csv file with data
-gdp= read.csv("/Users/home-mac/Documents/E483/gdp.csv")
-retail=read.csv("/Users/home-mac/Documents/E483/retail.csv")
+suppressMessages(library(graphics))
+retail=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/retail.csv")
+
 # create time series objects for data 
-y1=ts(gdp$y,start=1948, end=2015, frequency=4)
+y1=ts(retail$y, start=c(1992,1), end=c(2018,6), frequency=12)
+
 
 #### additive decomposition
-suppressMessages(library(graphics))
+
 z=decompose(y1,type="additive")
 plot(cbind(observed = z$random + 
     z$trend + z$seasonal, trend = z$trend, seasonal = z$seasonal, 
@@ -48,15 +49,16 @@ plot(cbind(observed = z$random +
 
 ```
 
+
 ## Uses of Decomposition of a time series
 
 The usefulness of decomposing a time series depends on our objective.
 
-1. It may be of interest to study each component separtaely or to simply improve our understanding of the temporal dynammics of a time series of interest. Decompositing it into different components is the first step towards achieving that goal.
+1. It may be of interest to study each component separately or to simply improve our understanding of the temporal dynamics of a time series of interest. Decomposing it into different components is the first step towards achieving that goal.
 
 2. We can also use the decomposition to filter out components that we are not interested in studying. If for example we are only interested in modeling the cyclical component of the time series, then we can assume some kind decomposition, additive or multiplicative, and filter out the trend and seasonal component. For example, assuming additive decomposition, the filtered time series is given by:
 \begin{equation}
-Filtered \ y_t= y_t-B_t-C_t
+Filtered \ y_t= y_t-B_t-S_t
 \end{equation}
 
 We can then proceed to model the cyclical component using the filtered data.

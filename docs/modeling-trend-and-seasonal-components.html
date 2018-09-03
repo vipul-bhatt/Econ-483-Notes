@@ -25,7 +25,7 @@
 <meta name="author" content="Vipul Bhatt">
 
 
-<meta name="date" content="2018-08-01">
+<meta name="date" content="2018-09-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="smoothing-methods.html">
-<link rel="next" href="autoregressive-moving-average-arima.html">
+<link rel="next" href="autoregressive-moving-average-arma-model.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -68,19 +68,25 @@
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a><ul>
-<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#time-series"><i class="fa fa-check"></i><b>1.1</b> Time Series</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="intro.html"><a href="intro.html#serial-correlation"><i class="fa fa-check"></i><b>1.1.1</b> Serial Correlation</a></li>
-<li class="chapter" data-level="1.1.2" data-path="intro.html"><a href="intro.html#white-noise-process"><i class="fa fa-check"></i><b>1.1.2</b> White Noise Process</a></li>
-</ul></li>
-<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#important-elements-of-forecasting"><i class="fa fa-check"></i><b>1.2</b> Important Elements of Forecasting</a></li>
-<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#loss-function-and-optimal-forecast"><i class="fa fa-check"></i><b>1.3</b> Loss Function and Optimal Forecast</a></li>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#time-series"><i class="fa fa-check"></i><b>1.1</b> Time Series</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#serial-correlation"><i class="fa fa-check"></i><b>1.2</b> Serial Correlation</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#testing-for-serial-correlion"><i class="fa fa-check"></i><b>1.3</b> Testing for Serial Correlion</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#white-noise-process"><i class="fa fa-check"></i><b>1.4</b> White Noise Process</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#important-elements-of-forecasting"><i class="fa fa-check"></i><b>1.5</b> Important Elements of Forecasting</a></li>
+<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#loss-function-and-optimal-forecast"><i class="fa fa-check"></i><b>1.6</b> Loss Function and Optimal Forecast</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html"><i class="fa fa-check"></i><b>2</b> Regression-based Forecasting</a><ul>
 <li class="chapter" data-level="2.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#scenario-analysis-and-conditional-forecasts"><i class="fa fa-check"></i><b>2.1</b> Scenario Analysis and Conditional Forecasts</a></li>
 <li class="chapter" data-level="2.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#unconditional-forecasts"><i class="fa fa-check"></i><b>2.2</b> Unconditional Forecasts</a></li>
 <li class="chapter" data-level="2.3" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#some-practical-issues"><i class="fa fa-check"></i><b>2.3</b> Some practical issues</a></li>
-<li class="chapter" data-level="2.4" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#distributed-lag-regression-models"><i class="fa fa-check"></i><b>2.4</b> Distributed Lag Regression Models</a></li>
-<li class="chapter" data-level="2.5" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#model-selection-criterion"><i class="fa fa-check"></i><b>2.5</b> Model Selection Criterion</a></li>
+<li class="chapter" data-level="2.4" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#distributed-lag-regression-models"><i class="fa fa-check"></i><b>2.4</b> Distributed Lag Regression Models</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#dynamic-effect-of-x-on-y"><i class="fa fa-check"></i><b>2.4.1</b> Dynamic Effect of X on Y</a></li>
+<li class="chapter" data-level="2.4.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#model-selection-criterion"><i class="fa fa-check"></i><b>2.4.2</b> Model Selection Criterion</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#application-a-model-of-investment-expenditure"><i class="fa fa-check"></i><b>2.5</b> Application: A Model of Investment Expenditure</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#a-multiple-regression-model-of-invesment-expenditure"><i class="fa fa-check"></i><b>2.5.1</b> A Multiple Regression Model of Invesment Expenditure</a></li>
+<li class="chapter" data-level="2.5.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#a-distributed-lag-model-of-investment-expenditure"><i class="fa fa-check"></i><b>2.5.2</b> A Distributed Lag Model of Investment Expenditure</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html"><i class="fa fa-check"></i><b>3</b> Components of a Time Series</a><ul>
 <li class="chapter" data-level="3.1" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html#decomposing-a-time-series"><i class="fa fa-check"></i><b>3.1</b> Decomposing a time series</a></li>
@@ -99,14 +105,17 @@
 <li class="chapter" data-level="5.1.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#uses-of-the-deterministic-trend-model"><i class="fa fa-check"></i><b>5.1.2</b> Uses of the Deterministic Trend Model</a></li>
 <li class="chapter" data-level="5.1.3" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#application-estimating-a-polynomial-trend-for-u.s.-real-gdp"><i class="fa fa-check"></i><b>5.1.3</b> Application: Estimating a polynomial trend for U.S. Real GDP</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#seasonal-model"><i class="fa fa-check"></i><b>5.2</b> Seasonal Model</a></li>
+<li class="chapter" data-level="5.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#seasonal-model"><i class="fa fa-check"></i><b>5.2</b> Seasonal Model</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#regression-model-with-seasonal-dummy-variables"><i class="fa fa-check"></i><b>5.2.1</b> Regression Model with Seasonal Dummy Variables</a></li>
+<li class="chapter" data-level="5.2.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#application-seasonal-model-of-housing-starts"><i class="fa fa-check"></i><b>5.2.2</b> Application: Seasonal Model of Housing Starts</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="autoregressive-moving-average-arima.html"><a href="autoregressive-moving-average-arima.html"><i class="fa fa-check"></i><b>6</b> Autoregressive Moving Average (ARIMA)</a><ul>
-<li class="chapter" data-level="6.1" data-path="autoregressive-moving-average-arima.html"><a href="autoregressive-moving-average-arima.html#covariance-stationary-time-series"><i class="fa fa-check"></i><b>6.1</b> Covariance Stationary Time Series</a></li>
-<li class="chapter" data-level="6.2" data-path="autoregressive-moving-average-arima.html"><a href="autoregressive-moving-average-arima.html#correlation-over-time"><i class="fa fa-check"></i><b>6.2</b> Correlation over time</a></li>
-<li class="chapter" data-level="6.3" data-path="autoregressive-moving-average-arima.html"><a href="autoregressive-moving-average-arima.html#autoregressive-ar-model"><i class="fa fa-check"></i><b>6.3</b> Autoregressive (AR) Model</a></li>
-<li class="chapter" data-level="6.4" data-path="autoregressive-moving-average-arima.html"><a href="autoregressive-moving-average-arima.html#moving-average-ma-model"><i class="fa fa-check"></i><b>6.4</b> Moving Average (MA) Model</a></li>
-<li class="chapter" data-level="6.5" data-path="autoregressive-moving-average-arima.html"><a href="autoregressive-moving-average-arima.html#armap-q"><i class="fa fa-check"></i><b>6.5</b> ARMA(p, q)}</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="autoregressive-moving-average-arma-model.html"><a href="autoregressive-moving-average-arma-model.html"><i class="fa fa-check"></i><b>6</b> Autoregressive Moving Average (ARMA) Model</a><ul>
+<li class="chapter" data-level="6.1" data-path="autoregressive-moving-average-arma-model.html"><a href="autoregressive-moving-average-arma-model.html#covariance-stationary-time-series"><i class="fa fa-check"></i><b>6.1</b> Covariance Stationary Time Series</a></li>
+<li class="chapter" data-level="6.2" data-path="autoregressive-moving-average-arma-model.html"><a href="autoregressive-moving-average-arma-model.html#correlation-over-time"><i class="fa fa-check"></i><b>6.2</b> Correlation over time</a></li>
+<li class="chapter" data-level="6.3" data-path="autoregressive-moving-average-arma-model.html"><a href="autoregressive-moving-average-arma-model.html#autoregressive-ar-model"><i class="fa fa-check"></i><b>6.3</b> Autoregressive (AR) Model</a></li>
+<li class="chapter" data-level="6.4" data-path="autoregressive-moving-average-arma-model.html"><a href="autoregressive-moving-average-arma-model.html#moving-average-ma-model"><i class="fa fa-check"></i><b>6.4</b> Moving Average (MA) Model</a></li>
+<li class="chapter" data-level="6.5" data-path="autoregressive-moving-average-arma-model.html"><a href="autoregressive-moving-average-arma-model.html#armap-q"><i class="fa fa-check"></i><b>6.5</b> ARMA(p, q)}</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://vipul-bhatt.github.io/Econ-483-Notes/" target="blank">Published with bookdown</a></li>
@@ -137,14 +146,14 @@
 <li><p>Deterministic Trend: the underlying trend component is a <em>known</em> function of time with <em>unknown</em> parameters.</p></li>
 <li><p>Stochastic Trend: the trend component is random.</p></li>
 </ol>
-<p>In this note we will focuse on estimating and forecasting deterministic trend models. We will come back to stochastic trend later when we talk about stationarity property of a time series.</p>
+<p>In this note we will focus on estimating and forecasting deterministic trend models. We will come back to stochastic trend later when we talk about stationarity property of a time series.</p>
 <div id="parametrizing-a-deterministic-trend" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> Parametrizing a deterministic trend</h3>
-<p>Whether or not there is deterministic trend in the data can be typically gleaned by simply plotting the time series over time. For example, Figure @ref(fig: figurefive) below plots real GDP for the US at quartely frequency. We can observe a positive time trend with real GDP increasing with time. In this section we will learn to <em>fit</em> a function that captures this relationship accurately.</p>
-<div class="figure" style="text-align: center"><span id="fig:figurefive"></span>
-<img src="bookdown-demo_files/figure-html/figurefive-1.png" alt=" Plot of Real GDP" width="80%" />
+<p>Whether or not there is deterministic trend in the data can be typically gleaned by simply plotting the time series over time. For example, Figure @ref(fig: ch5-figure1) below plots real GDP for the US at quarterly frequency. We can observe a positive time trend with real GDP increasing with time. In this section we will learn to <em>fit</em> a function that captures this relationship accurately.</p>
+<div class="figure" style="text-align: center"><span id="fig:ch5-figure1"></span>
+<img src="bookdown-demo_files/figure-html/ch5-figure1-1.png" alt="Real GDP (2012 Chained Billions of Dollars)" width="80%" />
 <p class="caption">
-Figure 5.1:  Plot of Real GDP
+Figure 5.1: Real GDP (2012 Chained Billions of Dollars)
 </p>
 </div>
 <p><em>Note: The variable time is denoted by <span class="math inline">\(t\)</span> and it is artificially created to take value of 1 for the first period, 2 for the second period and so on.</em></p>
@@ -163,7 +172,7 @@ In general, we can fit a polynomial of order <span class="math inline">\(q\)</sp
 <span class="math display">\[\begin{equation}
 y_t=\beta_0 + \sum_{i=1}^q \beta_i t^i +\epsilon_t
 \end{equation}\]</span>
-<p>We can estimate this model using the OLS. One of the key component here is to determine the <em>right</em> order of the polynomial. We can begin with a large enough number for <span class="math inline">\(q\)</span> and then select the approprirate order using AIC or BIC criterion.</p>
+<p>We can estimate this model using the OLS. One of the key component here is to determine the <em>right</em> order of the polynomial. We can begin with a large enough number for <span class="math inline">\(q\)</span> and then select the appropriate order using AIC or BIC criterion.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Exponential or log-linear trend: In some cases we may want to use an exponential trend or equivalently a log-linear trend.
 <span class="math display">\[\begin{equation}
@@ -176,7 +185,7 @@ log(y_t)=\beta_0 +\beta_1 t +\epsilon_t
 </div>
 <div id="uses-of-the-deterministic-trend-model" class="section level3">
 <h3><span class="header-section-number">5.1.2</span> Uses of the Deterministic Trend Model</h3>
-<p>Once we have finalized our deterministic trend model i.e., either a polynomial of a specific order or log-liner trend, we can use the estmated model for the following two purposes:</p>
+<p>Once we have finalized our deterministic trend model i.e., either a polynomial of a specific order or log-liner trend, we can use the estimated model for the following two purposes:</p>
 <ol style="list-style-type: decimal">
 <li><p>Detrending our data: Suppose we would like to eliminate trend from our data. The residual from our final trend model is the <em>detrended</em> time series.</p></li>
 <li><p>Forecasting: We can also forecast our time series based on the estimated trend. For example, suppose our final model is a quadratic trend. The predicted value is given by:</p></li>
@@ -191,9 +200,9 @@ Then, the 1-period ahead forecast for <span class="math inline">\(y_{t+1}\)</spa
 </div>
 <div id="application-estimating-a-polynomial-trend-for-u.s.-real-gdp" class="section level3">
 <h3><span class="header-section-number">5.1.3</span> Application: Estimating a polynomial trend for U.S. Real GDP</h3>
-<p>We will now fit a polynomial trend to the US real GDP data that was presented in Figure <a href="modeling-trend-and-seasonal-components.html#fig:figurefive">5.1</a>. We first estimate polynomials of different orders and select the optimal order determined by the lowest possible AIC/BIC. Table <a href="modeling-trend-and-seasonal-components.html#tab:tableone">5.1</a>. shows these statistics for upto 4th order polynomial. We find that the lowest value occur at <span class="math inline">\(q=4\)</span>.</p>
+<p>We will now fit a polynomial trend to the US real GDP data that was presented in Figure <a href="#fig:figure10"><strong>??</strong></a>. We first estimate polynomials of different orders and select the optimal order determined by the lowest possible AIC/BIC. Table <a href="modeling-trend-and-seasonal-components.html#tab:ch5-table1">5.1</a>. shows these statistics for up to 4th order polynomial. We find that the lowest value occur at <span class="math inline">\(q=4\)</span>.</p>
 <table>
-<caption><span id="tab:tableone">Table 5.1: </span>Optimal Order of the Polynomial</caption>
+<caption><span id="tab:ch5-table1">Table 5.1: </span>Optimal Order of the Polynomial</caption>
 <thead>
 <tr class="header">
 <th align="center">order</th>
@@ -204,23 +213,23 @@ Then, the 1-period ahead forecast for <span class="math inline">\(y_{t+1}\)</spa
 <tbody>
 <tr class="odd">
 <td align="center">1</td>
-<td align="center">4399.225</td>
-<td align="center">4410.009</td>
+<td align="center">4716.836</td>
+<td align="center">4727.794</td>
 </tr>
 <tr class="even">
 <td align="center">2</td>
-<td align="center">3877.692</td>
-<td align="center">3892.071</td>
+<td align="center">4133.469</td>
+<td align="center">4148.079</td>
 </tr>
 <tr class="odd">
 <td align="center">3</td>
-<td align="center">3868.441</td>
-<td align="center">3886.415</td>
+<td align="center">4105.087</td>
+<td align="center">4123.350</td>
 </tr>
 <tr class="even">
 <td align="center">4</td>
-<td align="center">3763.525</td>
-<td align="center">3785.094</td>
+<td align="center">4002.212</td>
+<td align="center">4024.127</td>
 </tr>
 </tbody>
 </table>
@@ -228,9 +237,9 @@ Then, the 1-period ahead forecast for <span class="math inline">\(y_{t+1}\)</spa
 <span class="math display">\[\begin{equation}
 y_t=\beta_0 +\beta_1 t + \beta_2 t^2 + \beta_3 t^3 + \beta_4 t^4 +\epsilon_t
 \end{equation}\]</span>
-<p>The estimated trend model is presented in Table <a href="modeling-trend-and-seasonal-components.html#tab:tabletwo">5.2</a>.</p>
+<p>The estimated trend model is presented in Table <a href="modeling-trend-and-seasonal-components.html#tab:ch5-table2">5.2</a>.</p>
 <table>
-<caption><span id="tab:tabletwo">Table 5.2: </span>Regression Results</caption>
+<caption><span id="tab:ch5-table2">Table 5.2: </span>Regression Results</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -243,115 +252,190 @@ y_t=\beta_0 +\beta_1 t + \beta_2 t^2 + \beta_3 t^3 + \beta_4 t^4 +\epsilon_t
 <tbody>
 <tr class="odd">
 <td>(Intercept)</td>
-<td align="center">7520.008</td>
-<td align="center">15.898</td>
-<td align="center">473.021</td>
+<td align="center">1714.277</td>
+<td align="center">81.019</td>
+<td align="center">21.159</td>
 <td align="center">0</td>
 </tr>
 <tr class="even">
-<td>poly(t, 4)1</td>
-<td align="center">69434.197</td>
-<td align="center">260.744</td>
-<td align="center">266.293</td>
+<td>trend</td>
+<td align="center">43.398</td>
+<td align="center">3.911</td>
+<td align="center">11.097</td>
 <td align="center">0</td>
 </tr>
 <tr class="odd">
-<td>poly(t, 4)2</td>
-<td align="center">12928.805</td>
-<td align="center">260.744</td>
-<td align="center">49.584</td>
+<td>I(trend^2)</td>
+<td align="center">-0.344</td>
+<td align="center">0.055</td>
+<td align="center">-6.194</td>
 <td align="center">0</td>
 </tr>
 <tr class="even">
-<td>poly(t, 4)3</td>
-<td align="center">-1068.061</td>
-<td align="center">260.744</td>
-<td align="center">-4.096</td>
+<td>I(trend^3)</td>
+<td align="center">0.003</td>
+<td align="center">0.000</td>
+<td align="center">10.233</td>
 <td align="center">0</td>
 </tr>
 <tr class="odd">
-<td>poly(t, 4)4</td>
-<td align="center">-2959.656</td>
-<td align="center">260.744</td>
-<td align="center">-11.351</td>
+<td>I(trend^4)</td>
+<td align="center">0.000</td>
+<td align="center">0.000</td>
+<td align="center">-11.160</td>
 <td align="center">0</td>
 </tr>
 </tbody>
 </table>
-<p>Using the estimated model, we can compute the detrended data as the residual and also forecast <span class="math inline">\(y_t\)</span>. Figure <a href="modeling-trend-and-seasonal-components.html#fig:figuresix">5.2</a> below plots the detrened real GDP obtained as a residual from our trend model.</p>
-<div class="figure" style="text-align: center"><span id="fig:figuresix"></span>
-<img src="bookdown-demo_files/figure-html/figuresix-1.png" alt=" Plot of Detrended Real GDP" width="80%" />
+<p>Using the estimated model, we can compute the detrended data as the residual and also forecast <span class="math inline">\(y_t\)</span>. Figure <a href="modeling-trend-and-seasonal-components.html#fig:ch5-figure2">5.2</a> below plots the detrended real GDP obtained as a residual from our trend model.</p>
+<div class="figure" style="text-align: center"><span id="fig:ch5-figure2"></span>
+<img src="bookdown-demo_files/figure-html/ch5-figure2-1.png" alt="Detrended Real GDP" width="80%" />
 <p class="caption">
-Figure 5.2:  Plot of Detrended Real GDP
+Figure 5.2: Detrended Real GDP
 </p>
 </div>
-<p>Table <a href="modeling-trend-and-seasonal-components.html#tab:tablethree">5.3</a> shows the forecast of real GDP for next 8 quarters along with the 95% confidence bands.</p>
-<table>
-<caption><span id="tab:tablethree">Table 5.3: </span>Forecast for 8 Quarters</caption>
-<thead>
-<tr class="header">
-<th align="center">h</th>
-<th align="center">Forecast</th>
-<th align="center">95% Lower Bound</th>
-<th align="center">95% Upper Bound</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">1</td>
-<td align="center">15924.30</td>
-<td align="center">15764.22</td>
-<td align="center">16084.36</td>
-</tr>
-<tr class="even">
-<td align="center">2</td>
-<td align="center">15968.97</td>
-<td align="center">15801.63</td>
-<td align="center">16136.31</td>
-</tr>
-<tr class="odd">
-<td align="center">3</td>
-<td align="center">16012.42</td>
-<td align="center">15837.52</td>
-<td align="center">16187.31</td>
-</tr>
-<tr class="even">
-<td align="center">4</td>
-<td align="center">16054.60</td>
-<td align="center">15871.86</td>
-<td align="center">16237.34</td>
-</tr>
-<tr class="odd">
-<td align="center">5</td>
-<td align="center">16095.50</td>
-<td align="center">15904.62</td>
-<td align="center">16286.38</td>
-</tr>
-<tr class="even">
-<td align="center">6</td>
-<td align="center">16135.09</td>
-<td align="center">15935.78</td>
-<td align="center">16334.40</td>
-</tr>
-<tr class="odd">
-<td align="center">7</td>
-<td align="center">16173.35</td>
-<td align="center">15965.32</td>
-<td align="center">16381.38</td>
-</tr>
-<tr class="even">
-<td align="center">8</td>
-<td align="center">16210.24</td>
-<td align="center">15993.19</td>
-<td align="center">16427.29</td>
-</tr>
-</tbody>
-</table>
+<p>Figure <a href="modeling-trend-and-seasonal-components.html#fig:ch5-figure3">5.3</a> shows the forecast of real GDP for next 8 quarters along with the 95% confidence bands.</p>
+<div class="figure" style="text-align: center"><span id="fig:ch5-figure3"></span>
+<img src="bookdown-demo_files/figure-html/ch5-figure3-1.png" alt="Forecast of Real GDP" width="80%" />
+<p class="caption">
+Figure 5.3: Forecast of Real GDP
+</p>
+</div>
 </div>
 </div>
 <div id="seasonal-model" class="section level2">
 <h2><span class="header-section-number">5.2</span> Seasonal Model</h2>
+<p>We now focus on the <em>seasonal</em> component of a time series, i.e., that is periodic fluctuations that repeat themselves every season. For example, increase in ice cream sales during summer season. Just like trend component, such seasonal pattern could be <em>deterministic</em> or <em>stochastic</em>. In this chapter we will focus on estimating deterministic seasonal component.</p>
+<p>In Figure <a href="modeling-trend-and-seasonal-components.html#fig:ch5-figure4">5.4</a> we plot housing starts in the U.S. The data is at monthly frequency and we can see a clear seasonal pattern. Housing starts seem to increase in spring and summer months. This is followed by a decline in fall and winter months.</p>
+<div class="figure" style="text-align: center"><span id="fig:ch5-figure4"></span>
+<img src="bookdown-demo_files/figure-html/ch5-figure4-1.png" alt="Housing Starts in U.S." width="80%" />
+<p class="caption">
+Figure 5.4: Housing Starts in U.S.
+</p>
+</div>
+<p>One option to deal with seasonality is to either obtain seasonally adjusted data from the source itself. Alternatively, we can use decomposition method and appropriately filter out the seasonal component. However, if our objective is to explicitly model the seasonal component of a time series then we must work with non-seasonally adjusted data.</p>
+<div id="regression-model-with-seasonal-dummy-variables" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Regression Model with Seasonal Dummy Variables</h3>
+<p>One way to account for seasonal patterns in data is to add dummy variables for season. To avoid perfect multicollinearity, is there are <span class="math inline">\(s\)</span> seasons, we can include <span class="math inline">\(s-1\)</span> dummy variables. For example, for quarterly data, <span class="math inline">\(s=4\)</span> and hence we need <span class="math inline">\(s-1=3\)</span> dummy variables in our regression model. Formally, for quarterly data, the seasonal regression model is given by:</p>
+<span class="math display">\[\begin{equation}
+y_t= \beta_0 + \beta_1 D_{1t}+ \beta_2 D_{2t} + \beta_3 D_{3t} + \epsilon_t
+\end{equation}\]</span>
+<p>In the above regression model, <span class="math inline">\(D_1,D_2,\)</span> and <span class="math inline">\(D_3\)</span> are dummy variables that capture first three quarters of the year. For example, <span class="math inline">\(D_1=1\)</span> for the first quarter and <span class="math inline">\(D_1=0\)</span> otherwise. Similarly, <span class="math inline">\(D_2=1\)</span> for the second quarter and <span class="math inline">\(D_2=0\)</span> otherwise. In this example, we use the fourth quarter as the <em>base group</em>.</p>
+<p>The above model can be estimated using OLS. Again, we can use the residual from our estimated model as a measure of <em>deseasonlized</em> data. We can also forecast the dependent variable based on the seasonal component only.</p>
+</div>
+<div id="application-seasonal-model-of-housing-starts" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Application: Seasonal Model of Housing Starts</h3>
+<p>We now estimate a seasonal regression model for the housing starts data presented in Figure <a href="modeling-trend-and-seasonal-components.html#fig:ch5-figure4">5.4</a>. The data is at monthly frequency which implies we can have 12 possible seasons and hence would need 11 dummy variables in our regression model. Formally, we use January as the base group and include dummy variables for the last 11 months of the year:</p>
+<span class="math display">\[\begin{equation}
+y_t=\beta_0 + \sum_{i=2}^{12}\beta_i D_{it} + \epsilon_t
+\end{equation}\]</span>
+<p>Table <a href="modeling-trend-and-seasonal-components.html#tab:ch5-table3">5.3</a> presents the estimation results for this exercise. In Figure <a href="modeling-trend-and-seasonal-components.html#fig:ch5-figure5">5.5</a> we plot the forecast of housing starts for next 12 months using our estimated model, along with 95% confidence bands.</p>
+<table>
+<caption><span id="tab:ch5-table3">Table 5.3: </span>Regression Results</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(Intercept)</td>
+<td align="center">84.422</td>
+<td align="center">9.852</td>
+<td align="center">8.569</td>
+<td align="center">0.000</td>
+</tr>
+<tr class="even">
+<td>season2</td>
+<td align="center">2.283</td>
+<td align="center">13.933</td>
+<td align="center">0.164</td>
+<td align="center">0.870</td>
+</tr>
+<tr class="odd">
+<td>season3</td>
+<td align="center">19.133</td>
+<td align="center">13.933</td>
+<td align="center">1.373</td>
+<td align="center">0.171</td>
+</tr>
+<tr class="even">
+<td>season4</td>
+<td align="center">28.350</td>
+<td align="center">13.933</td>
+<td align="center">2.035</td>
+<td align="center">0.043</td>
+</tr>
+<tr class="odd">
+<td>season5</td>
+<td align="center">34.061</td>
+<td align="center">13.933</td>
+<td align="center">2.445</td>
+<td align="center">0.015</td>
+</tr>
+<tr class="even">
+<td>season6</td>
+<td align="center">35.562</td>
+<td align="center">13.749</td>
+<td align="center">2.587</td>
+<td align="center">0.010</td>
+</tr>
+<tr class="odd">
+<td>season7</td>
+<td align="center">33.422</td>
+<td align="center">13.933</td>
+<td align="center">2.399</td>
+<td align="center">0.017</td>
+</tr>
+<tr class="even">
+<td>season8</td>
+<td align="center">27.794</td>
+<td align="center">13.933</td>
+<td align="center">1.995</td>
+<td align="center">0.047</td>
+</tr>
+<tr class="odd">
+<td>season9</td>
+<td align="center">26.139</td>
+<td align="center">13.933</td>
+<td align="center">1.876</td>
+<td align="center">0.062</td>
+</tr>
+<tr class="even">
+<td>season10</td>
+<td align="center">25.622</td>
+<td align="center">13.933</td>
+<td align="center">1.839</td>
+<td align="center">0.067</td>
+</tr>
+<tr class="odd">
+<td>season11</td>
+<td align="center">10.489</td>
+<td align="center">13.933</td>
+<td align="center">0.753</td>
+<td align="center">0.452</td>
+</tr>
+<tr class="even">
+<td>season12</td>
+<td align="center">0.639</td>
+<td align="center">13.933</td>
+<td align="center">0.046</td>
+<td align="center">0.963</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:ch5-figure5"></span>
+<img src="bookdown-demo_files/figure-html/ch5-figure5-1.png" alt="Forecast of Housing Starts" width="80%" />
+<p class="caption">
+Figure 5.5: Forecast of Housing Starts
+</p>
+</div>
 
+</div>
 </div>
 </div>
             </section>
@@ -360,7 +444,7 @@ Figure 5.2:  Plot of Detrended Real GDP
         </div>
       </div>
 <a href="smoothing-methods.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="autoregressive-moving-average-arima.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="autoregressive-moving-average-arma-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

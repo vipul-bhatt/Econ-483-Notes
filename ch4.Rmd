@@ -1,6 +1,6 @@
 # Smoothing Methods 
 
-One way to approach forecasting is to *average* out the fluctuations in the underlying time series to produce a *smoothed* data which can be extrapolated to produce forecasts. These smoothing methiods are essentially *model-free* and may not even produce *optimal forecasts*. Depending on the method used one can accomodate seasonal as well as trend components of the underlying time series.
+One way to approach forecasting is to *average* out the fluctuations in the underlying time series to produce a *smoothed* data which can be extrapolated to produce forecasts. These smoothing methods are essentially *model-free* and may not even produce *optimal forecasts*. Depending on the method used one can accommodate seasonal as well as trend components of the underlying time series.
  
 
 ## Moving Average Method
@@ -13,7 +13,7 @@ An important parameter is the *window* over which we take the average. Let us de
 	\end{equation}
 	
 	
-A larger value of $m$ produces greater smoothing and most softwares have a default value of this parameter which can be changed if needed.	
+A larger value of $m$ produces greater smoothing and most software have a default value of this parameter which can be changed if needed.	
 	
 <!-- A larger value is more desirable when there are large but infrequent fluctuations in our data. In contrast, a smaller value of $m$ is preferred when data has sudden shits in our data. Typically, we set $m$ equal to the frequency at which our data is measured. For example, $m=4$ for quarterly data and $m=12$ for monthly data. One drawback of this method is that it assigns equal *weight* to each observation. It is reasonable to argue that for most economic and financial variables, the effect of past observations will be less pronounced than most recent observations.  -->
 	
@@ -21,7 +21,7 @@ A larger value of $m$ produces greater smoothing and most softwares have a defau
  
 ## Simple Exponential Smoothing
 
-In the moving average method, all obseravtions receieved same weight. However, it is reasonable to argue that more recent observations may have a greater influence than those in the remote past. In this methiod, the weight attached to past observations exponentially decay over time. Here is the algorthim for computing the smoothed data and its forecast:
+In the moving average method, all observations received same weight. However, it is reasonable to argue that more recent observations may have a greater influence than those in the remote past. In this method, the weight attached to past observations exponentially decay over time. Here is the algorithm for computing the smoothed data and its forecast:
 
 1. Initialize at t=1: 
 \[y_1^s=y_1 \]
@@ -75,21 +75,20 @@ The h-period ahead forecast is given by:
    
 ## Application
 
-We use R to implement a 12-period ahead forecast for retail sales for the U.S. The data is at monthly frequency from 1959 through 2015. We use natural logs of the data and compute smoothed series using each of the three methods. The resulting forecasts are ploted in Figure \@ref(fig:figfour).
+We use R to implement a 12-period ahead forecast for retail sales for the U.S. The data is at monthly frequency from 1959 through 2015. We use natural logs of the data and compute smoothed series using each of the three methods. The resulting forecasts are plotted in Figure \@ref(fig:ch4-figure1).
 
-```{r figfour, echo = FALSE, fig.cap = 'Forecast of Retail Sales: Three Smoothing Methods', out.width='80%', fig.asp=.75, fig.align='center'}
+```{r ch4-figure1, echo = FALSE, fig.cap = 'Forecast of Housing Starts: Three Smoothing Methods', out.width='80%', fig.asp=.75, fig.align='center'}
 suppressMessages(library(forecast))
 suppressMessages(library(timeSeries))
 
-retail=read.csv("/Users/home-mac/Documents/E483/retail.csv")
+hstart=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/hstarts.csv")
 ### create time series object
-y=ts(retail$y, start=1959, end=2015, frequency=12)
-y=log(y)
+y=ts(hstart$y, start=c(2000,6), end=c(2018,6), frequency=12)
 
 ### simple exponential smoothing
 s_exp1=HoltWinters(y,beta=FALSE, gamma=FALSE)
-s_exp2=HoltWinters(y,beta=T, gamma=FALSE)
-s_exp3=HoltWinters(y,beta=T, gamma=T)
+s_exp2=HoltWinters(y,beta=TRUE, gamma=FALSE)
+s_exp3=HoltWinters(y,beta=TRUE, gamma=TRUE)
 
 
 f_exp1=forecast(s_exp1,h=12)

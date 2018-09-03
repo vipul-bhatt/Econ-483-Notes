@@ -1,0 +1,223 @@
+# Autoregressive Moving Average (ARMA) Model
+
+In this chapter we will focus on the cyclical component of a time series and hence focus on data that either has no trend and seasonal components, or data that is filtered to eliminate any trend and seasonality. One of the most commonly used method to model cyclicality is the  *Autogressive Moving Average (ARMA)*. We first learn some new concepts that will help us in understanding the properties of this model.
+
+
+## Covariance Stationary Time Series
+```{definition, d7, name='Covariance Stationary Time Series'}
+```
+A time series $\{y_t\}$ is said to be a *covariance stationary process* if:
+ 
+1. $E(y_t)=\mu_x \quad \forall \quad t$
+2. $Var(y_t)=\sigma_x^2 \quad \forall \quad t$
+3. $Cov(y_t,y_{t-s})=\gamma(s) \quad \forall \quad s\neq t$
+
+
+One way to think about stationarity is *mean-reversion*, i.e, the tendency of a time series to return to its *long-run* unconditional mean following a shock (or a series of shock). Figure @\ref(fig:ch6-figure1) below shows this property graphically.
+
+
+```{r ch6-figure1, echo = FALSE, fig.cap = 'Reversion to mean', out.width='80%', fig.asp=.75, fig.align='center'}
+### simulate data and plot
+
+phi1 =-0.8
+phi0 = 0.5
+timeserieslength = 20
+y1 =0.5 #initial Value
+y2a =0
+t = 0
+ybara=phi0/(1-phi1)
+for (i in 1:timeserieslength) {
+  y2a[i] = phi0+(phi1*y1[i])
+  t[i] = i
+  if (i < timeserieslength){y1[i+1]=y2a[i]}}
+
+
+
+phi1 =0.8
+phi0 = 0.5
+timeserieslength = 20
+y1 =0.5 #initial Value
+y2b =0
+t = 0
+ybarb=phi0/(1-phi1)
+for (i in 1:timeserieslength) {
+  y2b[i] = phi0+(phi1*y1[i])
+  t[i] = i
+  if (i < timeserieslength){y1[i+1]=y2b[i]}}
+
+
+phi1 =1.2
+phi0 = 0.5
+timeserieslength = 20
+y1 =0.5 #initial Value
+y2c =0
+t = 0
+ybarc=phi0/(1-phi1)
+for (i in 1:timeserieslength) {
+  y2c[i] = phi0+(phi1*y1[i])
+  t[i] = i
+  if (i < timeserieslength){y1[i+1]=y2c[i]}}
+
+
+
+phi1 =-1.5
+phi0 = 0.5
+timeserieslength = 20
+y1 =0.5 #initial Value
+y2d =0
+t = 0
+ybard=phi0/(1-phi1)
+for (i in 1:timeserieslength) {
+  y2d[i] = phi0+(phi1*y1[i])
+  t[i] = i
+  if (i < timeserieslength){y1[i+1]=y2d[i]}}
+
+par(mar=c(3,3,3,3))
+par(mfrow=c(2,2))
+plot(t, y2a, type="o", main="Non-monotonic Stationary", ylab="Y", ylim=c(min(y2a)-0.2,max(y2a)+0.2),xlab="time", lwd=2)
+abline(h = ybara, v=0, col = "red", lwd=2,lty=2)
+
+plot(t, y2b, type="o", main="Monotonic Stationary", ylab="Y", ylim=c(min(y2b)-0.2,max(y2b)+0.2),xlab="time", lwd=2)
+abline(h = ybarb, v=0, col = "red", lwd=2,lty=2)
+
+
+plot(t, y2d, type="o", main="Non-monotonic Non-Stationary", ylab="Y",xlab="time", lwd=2)
+abline(h = ybard, v=0, col = "red", lwd=2,lty=2)
+
+plot(t, y2c, type="o", main="Monotonic Non-Stationary", ylim=c(min(y2c)-20, max(y2c)+10)+10,ylab="Y",,xlab="time", lwd=2)
+abline(h = ybarc, v=0, col = "red", lwd=2,lty=2)
+
+```
+
+```{r ch6-figure2, echo = FALSE, fig.cap = 'Reversion to mean in practice', out.width='80%', fig.asp=.75, fig.align='center'}
+
+
+suppressMessages(library(xts))
+suppressMessages(library(quantmod))
+suppressWarnings(library(quantmod))
+# get data from fred stat
+options("getSymbols.warning4.0"=FALSE)
+
+
+suppressMessages(library(xts))
+suppressMessages(library(quantmod))
+suppressWarnings(library(quantmod))
+# get data from fred stat
+options("getSymbols.warning4.0"=FALSE)
+invisible(getSymbols('GDPC1',src='FRED'))
+
+###
+### gdp growth
+y=diff(log(GDPC1))*100
+
+## vector of mean growth over the sample
+
+ymean=rep(mean(coredata(y), na.rm=T),length(y))
+
+### get date from xts
+
+date=index(y)
+
+### create xts for mean
+ymean=xts(ymean,order.by=date)
+
+###
+par(mar=c(8,8,1,1))
+p1=plot.xts(as.xts(y),yaxis.right=F, main="US Real GDP Growth")
+p1=lines(ymean, col="red", lwd=2, lty=2)
+p1
+#mtext(text="Long Run Mean",
+     #  side=4, las=1,
+     #  at=c(0.77:0.77)
+     #  )
+
+```
+
+In practice however, you will not be able to visualize a mean-reverting stationary process this clearly. For example, in Figure \@ref(fig:ch6-figure2) we plot real GDP growth for the U.S. which is a stationary process with a mean of 0.7%. In this chapter we will only consider stationary time series data. Later on we will learn how to work with non-stationary data.
+
+
+<!-- Note: -->
+
+<!-- 1. By definition a time series with trend is non-stationary. For example, consider the following linear trend model: -->
+
+<!-- \[ y_t = \beta_0 + \beta_1 t + \epsilon_t \quad where \ \epsilon_t \sim WN(0,\sigma^2_\epsilon) \] -->
+
+<!-- Here it is easy to show that the unconditional mean of this model changes over time and hence is not constant. If after removing the trend (i.e., the residual from the above model) we get stationarity, then such data is called *trend stationary*. -->
+
+<!-- 2. Similarly, a model with seasonality will be non-stationary. -->
+
+
+<!--  -->
+
+
+## Correlation over time
+
+In order to forecast into future, we need information available in the present to correlate with the future value of the variable of interest. In other words, we need some serial correlation in our data which can be utilized to generate forecasts. In general, for a time series, $\{y_t\}$,
+ \begin{align}
+ 	Cor(y_t,y_{t-s})=\frac{	Cov(y_t,y_{t-s})}{\sqrt{\sigma^2_{y_t} \times \sigma^2_{y_{t-s}}}}
+ 	 	\end{align}
+ 	where $Cov(y_t,y_{t-s})= E(y_t-\mu_{y_t})(y_{t-s}-\mu_{y_{t-s}})$ and $\sigma^2_{y_t}=E(y_t-\mu_{y_t})^2$
+
+	
+ 
+ ```{definition, d8, name='Auto Correlation Function (ACF)'}
+```
+ 
+An *ACF* plots the correlation of a time series with its own past values over time. For a stationary time series, using the three conditions we get:
+ \begin{align}
+ 	ACF(s) \ or \ \rho(s)=\frac{\gamma(s)}{\gamma(0)}
+ 	\end{align}
+ 	
+Hence, non-zero values of the ACF indicates presences of serial correlation in the data. Figure \@ref(fig:ch6-figure3)	shows the ACF for a stationary time series with positive serial correlation.
+ 	
+ 	
+```{r ch6-figure3, echo = FALSE, fig.cap = 'ACF for a Stationary Time Series', out.width='80%', fig.asp=.75, fig.align='center'}
+suppressMessages(library(forecast))
+ar1.model = list(ar=0.5)
+mu = 1
+set.seed(123)
+ar1.sim = mu + arima.sim(model=ar1.model,n=1000)
+acf(ar1.sim, lag.max=10, main="")
+
+```
+ 	
+
+```{definition, d9, name='Partial Auto Correlation Function (PACF)'}
+```
+ The *partial autocorrelation function  (PACF)* for a stationary time series $y_t$ at lag $s$ is the direct correlation between $y_t$ and $y_{t-s}$, after filtering out the linear influence of  $ y_{t-1},\ldots,y_{t-s-1}$ on $y_t$. Figure \@ref(fig:ch6-figure4) below shows the PACF for a stationary time series where only one lag directly affects the time series in the current period.
+ 
+ 
+```{r ch6-figure4, echo = FALSE, fig.cap = 'PACF for a Stationary Time Series', out.width='80%', fig.asp=.75, fig.align='center'}
+ 
+suppressMessages(library(forecast))
+ar1.model = list(ar=0.5)
+mu = 1
+set.seed(123)
+ar1.sim = mu + arima.sim(model=ar1.model,n=1000)
+pacf(ar1.sim, lag.max=10, main="")
+
+```
+
+ 
+ 
+## Autoregressive (AR) Model
+ A *stationary*time series $\{x_t\}$ can be modeled as an AR(p) process:
+ \begin{equation}
+ y_t = \phi_0 +\phi_1 y_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t
+ \end{equation}
+ 
+## Moving Average (MA) Model
+  A *stationary* time series $\{y_t\}$ can be modeled as an MA(q) process:
+  \begin{equation}
+  y_t = \theta_0 + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
+    \end{equation}
+  
+## ARMA(p, q)}
+  
+An ARMA model simply combines both AR and MA components to model the dynamics of a time series. Formula,
+  
+   \begin{equation}
+   y_t = \phi_0 +\phi_1 x_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
+   \end{equation}
+
+ 
