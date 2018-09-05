@@ -86,7 +86,14 @@ Then we are interested in the following test:
 \[H_0=\rho_1=\rho_2=...=\rho_p=0 \]
 \[H_A = Not \ H_0 \]
 
-To implement this test, we estimate equation \@ref(eq:bg) by replacing the error term with the OLS residuals. The LM test statistic is given by:
+To implement this test, we estimate the BG regression model given by:
+\begin{equation}
+e_t=\alpha_0 + \alpha_1 X_{1t}+ \rho_1 e_{t-1}+\rho_2 e_{t-2}+...+ \rho_p e_{t-p}+\nu_t
+(\#eq:bg1)
+\end{equation}
+
+
+where we replacr the error term with the OLS residuals (denoted by $e$). The LM test statistic is given by:
 
 \[ LM  = N\times R^2_{BG}  \sim \chi^2_p  \]
 
