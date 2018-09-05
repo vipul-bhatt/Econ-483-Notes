@@ -155,10 +155,10 @@ Figure 1.1: Time Series at quarterly and monthly frequency
 <div id="serial-correlation" class="section level2">
 <h2><span class="header-section-number">1.2</span> Serial Correlation</h2>
 <p>Serial correlation (or auto correlation) refers to the tendency of observations of a time series being correlated over time. It is a measure of the temporal dynamics of a time series and addresses the following question: what is the effect of past realizations of a time series on the current period value? Formally,</p>
-<span class="math display" id="eq:sercor">\[\begin{equation}
+<p><span class="math display" id="eq:sercor">\[\begin{equation}
 \rho(s)=Cor(y_t, y_{t-s}) =\frac{   Cov(y_t,y_{t-s})}{\sqrt{\sigma^2_{y_t} \times \sigma^2_{y_{t-s}}}}
 \tag{1.1}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>where <span class="math inline">\(Cov(y_t,y_{t-s})= E(y_t-\mu_{y_t})(y_{t-s}-\mu_{y_{t-s}})\)</span> and <span class="math inline">\(\sigma^2_{y_t}=E(y_t-\mu_{y_t})^2\)</span></p>
 <p>Here, <span class="math inline">\(\rho(s)\)</span> is the serial correlation of order <span class="math inline">\(s\)</span>. For example, <span class="math inline">\(s=1\)</span> implies <em>first order</em> serial correlation between <span class="math inline">\(y_t\)</span> and <span class="math inline">\(y_{t-1}\)</span>, <span class="math inline">\(s=2\)</span> implies <em>second order</em> serial correlation between <span class="math inline">\(y_t\)</span> and <span class="math inline">\(y_{t-2}\)</span>, and so on.</p>
 <p>Note that often we use historical data to forecast. If there is no serial correlation, then past can offer no guidance for the present and future. In that sense, presence of serial correlation of some order is the first condition for being able to forecast a time series using its historical realizations.</p>
@@ -178,22 +178,23 @@ Figure 1.2: Serial Correlation
 </div>
 <div id="testing-for-serial-correlion" class="section level2">
 <h2><span class="header-section-number">1.3</span> Testing for Serial Correlion</h2>
-We can use a Lagrange-Multiplier (LM) test for detecting serial correlation. This test is also known as <em>Breuch-Godfrey</em> test. I will use the linear regression model to explain this test. Consider the following regression model:
+<p>We can use a Lagrange-Multiplier (LM) test for detecting serial correlation. This test is also known as <em>Breuch-Godfrey</em> test. I will use the linear regression model to explain this test. Consider the following regression model:
 <span class="math display">\[\begin{equation}
 y_t=\beta_0 + \beta_1 X_{1t}+\epsilon_t
-\end{equation}\]</span>
-Consider the following model for serial correlation of order <em>p</em> for the error term:
+\end{equation}\]</span></p>
+<p>Consider the following model for serial correlation of order <em>p</em> for the error term:
 <span class="math display" id="eq:bg">\[\begin{equation}
 \epsilon_t=\rho_1 \epsilon_{t-1}+\rho_2 \epsilon_{t-2}+...+ \rho_p \epsilon_{t-p}+\nu_t
 \tag{1.2}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>Then we are interested in the following test:</p>
-<p><span class="math display">\[H_0=\rho_1=\rho_2=...=\rho_p=0 \]</span> <span class="math display">\[H_A = Not \ H_0 \]</span></p>
-To implement this test, we estimate the BG regression model given by:
+<p><span class="math display">\[H_0=\rho_1=\rho_2=...=\rho_p=0 \]</span>
+<span class="math display">\[H_A = Not \ H_0 \]</span></p>
+<p>To implement this test, we estimate the BG regression model given by:
 <span class="math display" id="eq:bg1">\[\begin{equation}
 e_t=\alpha_0 + \alpha_1 X_{1t}+ \rho_1 e_{t-1}+\rho_2 e_{t-2}+...+ \rho_p e_{t-p}+\nu_t
 \tag{1.3}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>where we replacr the error term with the OLS residuals (denoted by <span class="math inline">\(e\)</span>). The LM test statistic is given by:</p>
 <p><span class="math display">\[ LM  = N\times R^2_{BG}  \sim \chi^2_p  \]</span></p>
 <p>If the test statistic value is greater than the critical value then we reject the null hypothesis.</p>
@@ -206,10 +207,11 @@ e_t=\alpha_0 + \alpha_1 X_{1t}+ \rho_1 e_{t-1}+\rho_2 e_{t-2}+...+ \rho_p e_{t-p
 <li><span class="math inline">\(Var(y_t)=\sigma^2_y\)</span></li>
 <li><span class="math inline">\(Cov(y_t,y_{t-s})= 0 \forall s\neq t\)</span></li>
 </ol>
-<p>We can compress the above definition as: <span class="math inline">\(y_t\sim WN(0,\sigma^2_y)\)</span>. Often we assume that the unexplained part of a time series follows a white noise process. Formally,</p>
-<span class="math display">\[\begin{equation}
+<p>We can compress the above definition as: <span class="math inline">\(y_t\sim WN(0,\sigma^2_y)\)</span>.
+Often we assume that the unexplained part of a time series follows a white noise process. Formally,</p>
+<p><span class="math display">\[\begin{equation}
 Time \ Series \ = \  Explained  \ + \ White \ Noise
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>By definition we cannot forecast a white noise process. An important diagnostics of model adequacy is to test whether the estimated residuals are white noise (more on this later).</p>
 </div>
 <div id="important-elements-of-forecasting" class="section level2">
@@ -218,14 +220,15 @@ Time \ Series \ = \  Explained  \ + \ White \ Noise
 <div class="definition">
 <span id="def:d1" class="definition"><strong>Definition 1.1  (Forecast)  </strong></span>
 </div>
-<p> A <em>forecast</em> is an <em>informed</em> guess about the unknown future value of a time series of interest. For example, what is the stock price of Facebook next Monday?</p>
+
+<p>A <em>forecast</em> is an <em>informed</em> guess about the unknown future value of a time series of interest. For example, what is the stock price of Facebook next Monday?</p>
 <p>There are three possible types of forecasts:</p>
 <ol style="list-style-type: decimal">
 <li><em>Density Forecast</em>: we forecast the entire probability distribution of the possible future value of the time series of interest. Hence,</li>
 </ol>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 F(a)=P[y_{t+1}\leq a]
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>give us the probability that the 1-period ahead future value of <span class="math inline">\(y_{t+1}\)</span> will be less than or equal to <span class="math inline">\(a\)</span>. For example, the future real GDP growth could be normally distributed with a mean of 1.3% and a standard deviation of 1.83%. Figure <a href="intro.html#fig:ch1-figure3">1.3</a> below plots the density forecast for real GDP growth.</p>
 <div class="figure" style="text-align: center"><span id="fig:ch1-figure3"></span>
 <img src="bookdown-demo_files/figure-html/ch1-figure3-1.png" alt="Density Forecast for Future Real GDP Growth" width="80%" />
@@ -234,17 +237,18 @@ Figure 1.3: Density Forecast for Future Real GDP Growth
 </p>
 </div>
 <ol start="2" style="list-style-type: decimal">
-<li><em>Point Forecast</em>: our forecast at each horizon is a single number. Often we use the expected value or mean as the point forecast. For example, the point forecast for the 1-period ahead real GDP growth can be the mean of the probability distribution of the future real GDP growth:
+<li><p><em>Point Forecast</em>: our forecast at each horizon is a single number. Often we use the expected value or mean as the point forecast. For example, the point forecast for the 1-period ahead real GDP growth can be the mean of the probability distribution of the future real GDP growth:
 <span class="math display">\[\begin{equation}
 f_{t,1}=1.3%
-\end{equation}\]</span></li>
-<li><em>Interval Forecast</em>: our forecast at each horizon is a range which is obtained by adding <em>margin of errors</em> to the point forecast. With some probability we expect our future value to fall withing this range. For example, the 95% interval forecast for the next period real GDP growth is (-2.36%,4.96%). Hence, with 95% confidence we expect next period GDP to fall between -2.36% and 4.96%.</li>
+\end{equation}\]</span></p></li>
+<li><p><em>Interval Forecast</em>: our forecast at each horizon is a range which is obtained by adding <em>margin of errors</em> to the point forecast. With some probability we expect our future value to fall withing this range. For example, the 95% interval forecast for the next period real GDP growth is (-2.36%,4.96%). Hence, with 95% confidence we expect next period GDP to fall between -2.36% and 4.96%.</p></li>
 </ol>
 
 <div class="definition">
 <span id="def:d2" class="definition"><strong>Definition 1.2  (Forecast Horizon)  </strong></span>
 </div>
-<p> <em>Forecast Horizon</em> is the number of periods into the future for which we forecast a time series. We will denote it by <span class="math inline">\(h\)</span>. Hence, for <span class="math inline">\(h=1\)</span>, we are looking at 1-period ahead forecast, for <span class="math inline">\(h=2\)</span> we are looking at 2-period ahead forecast and so on.</p>
+
+<p><em>Forecast Horizon</em> is the number of periods into the future for which we forecast a time series. We will denote it by <span class="math inline">\(h\)</span>. Hence, for <span class="math inline">\(h=1\)</span>, we are looking at 1-period ahead forecast, for <span class="math inline">\(h=2\)</span> we are looking at 2-period ahead forecast and so on.</p>
 <p>Formally, for a given time series <span class="math inline">\(y_t\)</span>, the h-period ahead unknown value is denoted by <span class="math inline">\(y_{t+h}\)</span>. The forecast of this value is denoted <span class="math inline">\(f_{t,h}\)</span>.</p>
 <div class="figure" style="text-align: center"><span id="fig:ch1-figure4"></span>
 <img src="bookdown-demo_files/figure-html/ch1-figure4-1.png" alt="Forecast Horizon" width="80%" />
@@ -258,9 +262,9 @@ Figure 1.4: Forecast Horizon
 </div>
 
 <p>A <em>forecast error</em> is the difference between the realization of the future value and the previously made forecast. Formally, the <span class="math inline">\(h\)</span>-period ahead forecast error is given by:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 e_{t,h}=y_{t+h}-f_{t,h}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>Hence, for every horizon, we will have a forecast and a corresponding forecast error. These errors can be negative (indicating over prediction) or positive (indicating under prediction).</p>
 
 <div class="definition">
@@ -269,14 +273,14 @@ e_{t,h}=y_{t+h}-f_{t,h}
 
 <p>Forecasts are based on <em>information</em> available at the time of making the forecast. <em>Information Set</em> contains all the relevant information about the time series we would like to forecast. We denote the set of information available at time <span class="math inline">\(T\)</span> by <span class="math inline">\(\Omega_T\)</span>. There are two types of information sets:</p>
 <ol style="list-style-type: decimal">
-<li>Univariate Information set: Only includes historical data on the time series of interest:
+<li><p>Univariate Information set: Only includes historical data on the time series of interest:
 <span class="math display">\[\begin{equation}
 \Omega_T=\{y_T, y_{T-1}, y_{T-2}, ...., y_1\}
-\end{equation}\]</span></li>
-<li>Multivariate Information set: Includes historical data on the time series of interest as well as any other variable(s) of interest. For example, suppose we have one more variable <span class="math inline">\(x\)</span> that is relevant for forecasting <span class="math inline">\(y\)</span>. Then:
+\end{equation}\]</span></p></li>
+<li><p>Multivariate Information set: Includes historical data on the time series of interest as well as any other variable(s) of interest. For example, suppose we have one more variable <span class="math inline">\(x\)</span> that is relevant for forecasting <span class="math inline">\(y\)</span>. Then:
 <span class="math display">\[\begin{equation}
 \Omega_T=\{y_T, x_T, y_{T-1}, x_{T-1}, y_{T-2},x_{T-2}. ...., y_1, x_1\}
-\end{equation}\]</span></li>
+\end{equation}\]</span></p></li>
 </ol>
 </div>
 <div id="loss-function-and-optimal-forecast" class="section level2">
@@ -297,9 +301,9 @@ e_{t,h}=y_{t+h}-f_{t,h}
 <ul>
 <li>Symmetric Loss Function: both positive and negative forecast errors lead to same loss. See Figure <a href="intro.html#fig:ch1-figure5">1.5</a>. A commonly used loss function is <em>quadratic loss function</em> given by:</li>
 </ul>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 L(e_{t,h})=e_{t,h}^2 = (y_{t+h}-f{t,h})^2
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <div class="figure" style="text-align: center"><span id="fig:ch1-figure5"></span>
 <img src="bookdown-demo_files/figure-html/ch1-figure5-1.png" alt="Quadratic Loss Functions" width="80%" />
 <p class="caption">
@@ -309,9 +313,9 @@ Figure 1.5: Quadratic Loss Functions
 <ul>
 <li>Asymmetric Loss Function: loss depends on the sign of the forecast error. For example, it could be that positive errors produce greater loss when compared to negative errors. See the function below and Figure <a href="intro.html#fig:ch1-figure6">1.6</a> that attaches a higher loss to positive errors:</li>
 </ul>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 L(e_{t,h})=e_{t,h}^2+4 \times e_{t,h}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <div class="figure" style="text-align: center"><span id="fig:ch1-figure6"></span>
 <img src="bookdown-demo_files/figure-html/ch1-figure6-1.png" alt="Asymmetric Loss Function" width="80%" />
 <p class="caption">
@@ -324,10 +328,10 @@ Figure 1.6: Asymmetric Loss Function
 <span id="def:d6" class="definition"><strong>Definition 1.6  (Optimal Forecast)  </strong></span>
 </div>
 
-An <em>optimal forecast</em> minimizes the expected loss from the forecast, given the information available at the time. Mathematically, we denote it by <span class="math inline">\(f^*_{t,h}\)</span> and it solves the following minimization problem:
+<p>An <em>optimal forecast</em> minimizes the expected loss from the forecast, given the information available at the time. Mathematically, we denote it by <span class="math inline">\(f^*_{t,h}\)</span> and it solves the following minimization problem:
 <span class="math display">\[\begin{equation}
 min_{f_{t,h}} E(L(e_{t,h})|\Omega_t)
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>In theory we can assume any functional form for the loss function and that will lead to a different <em>optimal forecast</em>. An important result that follows from a specific functional form is stated as Theorem 1.1.</p>
 
 <div class="theorem">
@@ -390,7 +394,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

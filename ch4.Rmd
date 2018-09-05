@@ -24,14 +24,13 @@ A larger value of $m$ produces greater smoothing and most software have a defaul
 In the moving average method, all observations received same weight. However, it is reasonable to argue that more recent observations may have a greater influence than those in the remote past. In this method, the weight attached to past observations exponentially decay over time. Here is the algorithm for computing the smoothed data and its forecast:
 
 1. Initialize at t=1: 
-\[y_1^s=y_1 \]
+$$y_1^s=y_1$$
 
 2. Update:
-\[  	y_{t}^{s}= \alpha y_t + (1-\alpha)y_{t-1}^{s}  \quad for \ t=2,3,...T\]  
+$$y_{t}^{s}= \alpha y_t + (1-\alpha)y_{t-1}^{s}  \quad for \ t=2,3,...T$$ 
 
 3: h-period ahead forecast:
-
-\[  f_{T,h}= y_T^s\]
+$$f_{T,h}= y_T^s$$
  
  Here the h-period ahead forecast is:
 
@@ -45,27 +44,27 @@ Here $\alpha \in (0,1)$ is the smoothing parameter, with smaller value indicatin
 
 We add trend component to the simple exponential smoothing. In step 2 the equation we use to update the smoothed data is given by:
 
- \begin{equation}
- 	y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
+ \begin{align}
+ 	y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1})
  	B_t = \beta (y_t^s -y_{t-1}^s) + (1-\beta) B_{t-1}
- \end{equation}
+ \end{align}
  
 We now have an additional parameter $\beta$ that is the trend parameter. Here the h-period ahead forecast is:
   
-  \begin{equation}
+  \begin{align}
   f_{T,h} = y_T^s + h\times B_T
-  \end{equation}
+  \end{align}
   
   
 
 ## Holt-Winters Smoothing with Seasonality
 We now add seasonal component along with trend. Assuming multiplicative seasonality with period $n$:
  
-  \begin{equation}
+  \begin{align}
   	y_{t}^{s}= \alpha \frac{y_t}{S_{t-n}} + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
   	B_t = \gamma (y_t^s -y_{t-1}^s) + (1-\gamma) B_{t-1}\\
   	S_t = \beta\frac{y_t}{y_t^s}+(1-\beta)S_{t-n}
-  \end{equation}
+  \end{align}
 
 The h-period ahead forecast is given by:
  

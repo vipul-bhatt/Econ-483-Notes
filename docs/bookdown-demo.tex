@@ -118,7 +118,8 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\chapter*{Preface}\label{preface}
+\hypertarget{preface}{%
+\chapter*{Preface}\label{preface}}
 \addcontentsline{toc}{chapter}{Preface}
 
 These lecture notes are prepared for an upper level undergraduate course
@@ -143,9 +144,11 @@ most useful for undergraduate students in business and economics.
 \emph{Note: These notes have been prepared by me using various sources,
 published and unpublished. All errors that remain are mine.}
 
-\chapter{Introduction to Forecasting}\label{intro}
+\hypertarget{intro}{%
+\chapter{Introduction to Forecasting}\label{intro}}
 
-\section{Time Series}\label{time-series}
+\hypertarget{time-series}{%
+\section{Time Series}\label{time-series}}
 
 A time series is a specific kind of data where observations of a
 variable are recorded over time. For example, the data for the U.S. GDP
@@ -175,7 +178,8 @@ Formally, we denote a time series variable by \(y_t\), where
 \(t=0,1,2,..,T\) is the observation index. For example, at \(t=10\) we
 get the tenth observation of this time series, \(y_{10}\).
 
-\section{Serial Correlation}\label{serial-correlation}
+\hypertarget{serial-correlation}{%
+\section{Serial Correlation}\label{serial-correlation}}
 
 Serial correlation (or auto correlation) refers to the tendency of
 observations of a time series being correlated over time. It is a
@@ -213,7 +217,8 @@ negative serial correlation, respectively.
 }
 
 \caption{Serial Correlation}\label{fig:ch1-figure21}
-\end{figure}\begin{figure}
+\end{figure}
+\begin{figure}
 
 {\centering \includegraphics[width=0.8\linewidth]{bookdown-demo_files/figure-latex/ch1-figure2-2} 
 
@@ -222,22 +227,19 @@ negative serial correlation, respectively.
 \caption{Serial Correlation}\label{fig:ch1-figure22}
 \end{figure}
 
+\hypertarget{testing-for-serial-correlion}{%
 \section{Testing for Serial
-Correlion}\label{testing-for-serial-correlion}
+Correlion}\label{testing-for-serial-correlion}}
 
 We can use a Lagrange-Multiplier (LM) test for detecting serial
 correlation. This test is also known as \emph{Breuch-Godfrey} test. I
 will use the linear regression model to explain this test. Consider the
-following regression model:
-
-\begin{equation}
+following regression model: \begin{equation}
 y_t=\beta_0 + \beta_1 X_{1t}+\epsilon_t
 \end{equation}
 
 Consider the following model for serial correlation of order \emph{p}
-for the error term:
-
-\begin{equation}
+for the error term: \begin{equation}
 \epsilon_t=\rho_1 \epsilon_{t-1}+\rho_2 \epsilon_{t-2}+...+ \rho_p \epsilon_{t-p}+\nu_t
 \label{eq:bg}
 \end{equation}
@@ -247,7 +249,6 @@ Then we are interested in the following test:
 \[H_0=\rho_1=\rho_2=...=\rho_p=0 \] \[H_A = Not \ H_0 \]
 
 To implement this test, we estimate the BG regression model given by:
-
 \begin{equation}
 e_t=\alpha_0 + \alpha_1 X_{1t}+ \rho_1 e_{t-1}+\rho_2 e_{t-2}+...+ \rho_p e_{t-p}+\nu_t
 \label{eq:bg1}
@@ -261,7 +262,8 @@ where we replacr the error term with the OLS residuals (denoted by
 If the test statistic value is greater than the critical value then we
 reject the null hypothesis.
 
-\section{White Noise Process}\label{white-noise-process}
+\hypertarget{white-noise-process}{%
+\section{White Noise Process}\label{white-noise-process}}
 
 A time series is a \emph{white noise} process is it has zero mean,
 constant and finite variance, and is serially uncorrelated. Formally,
@@ -290,14 +292,17 @@ By definition we cannot forecast a white noise process. An important
 diagnostics of model adequacy is to test whether the estimated residuals
 are white noise (more on this later).
 
+\hypertarget{important-elements-of-forecasting}{%
 \section{Important Elements of
-Forecasting}\label{important-elements-of-forecasting}
+Forecasting}\label{important-elements-of-forecasting}}
 
 \BeginKnitrBlock{definition}[Forecast]
 \protect\hypertarget{def:d1}{}{\label{def:d1} \iffalse (Forecast) \fi{} }
-\EndKnitrBlock{definition} A \emph{forecast} is an \emph{informed} guess
-about the unknown future value of a time series of interest. For
-example, what is the stock price of Facebook next Monday?
+\EndKnitrBlock{definition}
+
+A \emph{forecast} is an \emph{informed} guess about the unknown future
+value of a time series of interest. For example, what is the stock price
+of Facebook next Monday?
 
 There are three possible types of forecasts:
 
@@ -332,15 +337,12 @@ the density forecast for real GDP growth.
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{1}
-\tightlist
 \item
   \emph{Point Forecast}: our forecast at each horizon is a single
   number. Often we use the expected value or mean as the point forecast.
   For example, the point forecast for the 1-period ahead real GDP growth
   can be the mean of the probability distribution of the future real GDP
-  growth:
-
-  \begin{equation}
+  growth: \begin{equation}
   f_{t,1}=1.3%
   \end{equation}
 \item
@@ -356,11 +358,12 @@ the density forecast for real GDP growth.
 \BeginKnitrBlock{definition}[Forecast Horizon]
 \protect\hypertarget{def:d2}{}{\label{def:d2} \iffalse (Forecast Horizon)
 \fi{} }
-\EndKnitrBlock{definition} \emph{Forecast Horizon} is the number of
-periods into the future for which we forecast a time series. We will
-denote it by \(h\). Hence, for \(h=1\), we are looking at 1-period ahead
-forecast, for \(h=2\) we are looking at 2-period ahead forecast and so
-on.
+\EndKnitrBlock{definition}
+
+\emph{Forecast Horizon} is the number of periods into the future for
+which we forecast a time series. We will denote it by \(h\). Hence, for
+\(h=1\), we are looking at 1-period ahead forecast, for \(h=2\) we are
+looking at 2-period ahead forecast and so on.
 
 Formally, for a given time series \(y_t\), the h-period ahead unknown
 value is denoted by \(y_{t+h}\). The forecast of this value is denoted
@@ -405,27 +408,23 @@ are two types of information sets:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   Univariate Information set: Only includes historical data on the time
-  series of interest:
-
-  \begin{equation}
+  series of interest: \begin{equation}
   \Omega_T=\{y_T, y_{T-1}, y_{T-2}, ...., y_1\}
   \end{equation}
 \item
   Multivariate Information set: Includes historical data on the time
   series of interest as well as any other variable(s) of interest. For
   example, suppose we have one more variable \(x\) that is relevant for
-  forecasting \(y\). Then:
-
-  \begin{equation}
+  forecasting \(y\). Then: \begin{equation}
   \Omega_T=\{y_T, x_T, y_{T-1}, x_{T-1}, y_{T-2},x_{T-2}. ...., y_1, x_1\}
   \end{equation}
 \end{enumerate}
 
+\hypertarget{loss-function-and-optimal-forecast}{%
 \section{Loss Function and Optimal
-Forecast}\label{loss-function-and-optimal-forecast}
+Forecast}\label{loss-function-and-optimal-forecast}}
 
 Think of a forecast as a solution to an \emph{optimization} problem.
 When forecasts are wrong, the person making the forecast will suffer
@@ -512,9 +511,7 @@ obtained by minimizing the expected loss function.
 An \emph{optimal forecast} minimizes the expected loss from the
 forecast, given the information available at the time. Mathematically,
 we denote it by \(f^*_{t,h}\) and it solves the following minimization
-problem:
-
-\begin{equation}
+problem: \begin{equation}
 min_{f_{t,h}} E(L(e_{t,h})|\Omega_t)
 \end{equation}
 
@@ -527,9 +524,7 @@ result that follows from a specific functional form is stated as Theorem
 \protect\hypertarget{thm:unnamed-chunk-2}{}{\label{thm:unnamed-chunk-2} }If
 the loss function is quadtratic then the optimal forecast is the
 conditional mean of the time series of interest. Formally, if
-\(L(e_{t,h})=e_{t,h}^2\) then,
-
-\begin{equation}
+\(L(e_{t,h})=e_{t,h}^2\) then, \begin{equation}
 f^*_{t,h}=E(y_{t+h}|\Omega_t)
 \end{equation}
 \EndKnitrBlock{theorem}
@@ -541,8 +536,9 @@ loss function and hence based on Theorem 1.1, we will learn different
 models for estimating the conditional mean of the future value of the
 time series of interest, i.e., \(E(y_{t+h}|\Omega_t)\).
 
+\hypertarget{regression-based-forecasting}{%
 \chapter{Regression-based
-Forecasting}\label{regression-based-forecasting}
+Forecasting}\label{regression-based-forecasting}}
 
 One way to compute the conditional expectation is the linear regression
 model. Here, our information set contains data on all relevant
@@ -555,33 +551,28 @@ explanatory variables available at the time of forecast, i.e,
 Hence, we get the following equality:
 
 \begin{equation}
-E(y_t|\Omega_t)=E(y_{t+h}|X_{1t}, X_{2t}, X_{3t},...,X_{Kt})
+E(y_t|\Omega_t)=E(y_{t}|X_{1t}, X_{2t}, X_{3t},...,X_{Kt})
 \end{equation}
 
 The right hand side of the above equation is the multiple regression
-model of the form:
-
-\begin{equation}
+model of the form: \begin{equation}
  y_{t}=\beta_0+\beta_1 X_{1t}+\beta_2 X_{2t}+..+\beta_K X_{Kt}+\epsilon_t
  \end{equation}
 
 We can easily estimate the above model using Ordinary Least Squares
-(OLS) and compute the \emph{predicted value} of \(y\):
-
-\begin{equation}
+(OLS) and compute the \emph{predicted value} of \(y\): \begin{equation}
     \widehat{y}_t = \widehat{\beta_0} +\widehat{\beta_1} X_{1t} +\widehat{\beta_2} X_{2t}+...+ \widehat{\beta_k} X_{Kt}
   \end{equation}
 
 The above equation can be used to compute the optimal forecast. Suppose,
 we are interested in computed the \(h\) period ahead forecast for \(y\).
-Then, using the above equation we get:
-
-\begin{equation}
+Then, using the above equation we get: \begin{equation}
         \widehat{y}_{t+h} =  \widehat{\beta_0} +\widehat{\beta_1} X_{1t+h} +\widehat{\beta_2} X_{2t+h}+...+ \widehat{\beta_k} X_{Kt+h}
     \end{equation}
 
+\hypertarget{scenario-analysis-and-conditional-forecasts}{%
 \section{Scenario Analysis and Conditional
-Forecasts}\label{scenario-analysis-and-conditional-forecasts}
+Forecasts}\label{scenario-analysis-and-conditional-forecasts}}
 
 One way to use a regression model to produce forecasts is called
 \emph{scenario analysis} where we produce a different forecast for the
@@ -591,7 +582,8 @@ inflation if the Federal Reserve Bank raises the interest rate? Would
 our forecast differ depending on the size of the increase in the
 interest rate?
 
-\section{Unconditional Forecasts}\label{unconditional-forecasts}
+\hypertarget{unconditional-forecasts}{%
+\section{Unconditional Forecasts}\label{unconditional-forecasts}}
 
 An alternative is to separately forecast each independent variable and
 then compute the forecast for the dependent variable. Yet another
@@ -599,7 +591,8 @@ alternative is to use lagged variables as independent variables.
 Depending on the number of lags, we can forecast that much ahead into
 future (see Distributed Lag Section for details).
 
-\section{Some practical issues}\label{some-practical-issues}
+\hypertarget{some-practical-issues}{%
+\section{Some practical issues}\label{some-practical-issues}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -620,8 +613,9 @@ future (see Distributed Lag Section for details).
   new data, there will be changes in these coefficients.
 \end{enumerate}
 
+\hypertarget{distributed-lag-regression-models}{%
 \section{Distributed Lag Regression
-Models}\label{distributed-lag-regression-models}
+Models}\label{distributed-lag-regression-models}}
 
 Consider the following simple regression model:
 
@@ -649,7 +643,6 @@ Hence, we can easily produce 1-period ahead forecast from this model. In
 order to produce forecast farther into future we would need to add more
 lags of the independent variable to the model. A generalized model of
 this kind is called \emph{distributed lag model} and is given by:
-
 \begin{equation}
 y_t= \beta_0 +\sum_{s=1}^p\beta_s x_{t-s} + \epsilon_t
 \end{equation}
@@ -657,14 +650,13 @@ y_t= \beta_0 +\sum_{s=1}^p\beta_s x_{t-s} + \epsilon_t
 The number of lags to include can be determined using some kind of
 goodness of fit measure.
 
-\subsection{Dynamic Effect of X on Y}\label{dynamic-effect-of-x-on-y}
+\hypertarget{dynamic-effect-of-x-on-y}{%
+\subsection{Dynamic Effect of X on Y}\label{dynamic-effect-of-x-on-y}}
 
 A very useful benefit of estimating a distributed lag model is that it
 allows us to measure how changes in \(x\) in the current period can
 impact the dependent variable over time. Consider a simple distributed
-lag model with two lags:
-
-\begin{equation}
+lag model with two lags: \begin{equation}
 y_t=\beta_0 + \beta_1 x_{t-1} + \beta_2 x_{t-2} +\epsilon_t
 \end{equation}
 
@@ -681,9 +673,7 @@ there are two types of effects:
   \[ \frac{\partial y_{t+s}}{\partial x_t} \quad s=0,1,2,... \]
 \end{enumerate}
 
-In our example, the sequence of dynamic effects are:
-
-\begin{equation}
+In our example, the sequence of dynamic effects are: \begin{equation}
 \frac{\partial y_{t+1}}{\partial x_t}  =0; \ \frac{\partial y_{t+1}}{\partial x_t}=\beta_1; \ \frac{\partial y_{t+2}}{\partial x_t}=\beta_2; \ \frac{\partial y_{t+s}}{\partial x_t}=0 \ \forall \ s>2 
 \end{equation}
 
@@ -692,9 +682,7 @@ In our example, the sequence of dynamic effects are:
 \setcounter{enumi}{1}
 \tightlist
 \item
-  \emph{long run effect} of \(x\) on \(y\) given by:
-
-  \begin{equation}
+  \emph{long run effect} of \(x\) on \(y\) given by: \begin{equation}
   \sum_{s=0}^p\frac{\partial y_{t+s}}{\partial x_t}   
   \end{equation}
 \end{enumerate}
@@ -703,7 +691,8 @@ In our example, the long run effect is:
 
 \[\beta_1+\beta_2\]
 
-\subsection{Model Selection Criterion}\label{model-selection-criterion}
+\hypertarget{model-selection-criterion}{%
+\subsection{Model Selection Criterion}\label{model-selection-criterion}}
 
 Most often we compare models that have different number of independent
 variables. For example, in our application, in order to select the
@@ -761,16 +750,16 @@ select a more parsimonious model (Figure \ref{fig:ch2-figure1}).
 \caption{Penalty Factor of AIC and BIC}\label{fig:ch2-figure1}
 \end{figure}
 
+\hypertarget{application-a-model-of-investment-expenditure}{%
 \section{Application: A Model of Investment
-Expenditure}\label{application-a-model-of-investment-expenditure}
+Expenditure}\label{application-a-model-of-investment-expenditure}}
 
+\hypertarget{a-multiple-regression-model-of-invesment-expenditure}{%
 \subsection{A Multiple Regression Model of Invesment
-Expenditure}\label{a-multiple-regression-model-of-invesment-expenditure}
+Expenditure}\label{a-multiple-regression-model-of-invesment-expenditure}}
 
 Suppose have annual data on private investment, private sector output,
-and capital stock. Our model specification is given by:
-
-\begin{equation}
+and capital stock. Our model specification is given by: \begin{equation}
 y_t= \beta_0 + \beta_1 x_{1t}+ \beta_2 x_{2t}+\epsilon_t
 \end{equation}
 
@@ -825,8 +814,9 @@ outlook under these 3 scenarios.
 \caption{Investment outlook for next 3 years}\label{fig:ch2-figure2}
 \end{figure}
 
+\hypertarget{a-distributed-lag-model-of-investment-expenditure}{%
 \subsection{A Distributed Lag Model of Investment
-Expenditure}\label{a-distributed-lag-model-of-investment-expenditure}
+Expenditure}\label{a-distributed-lag-model-of-investment-expenditure}}
 
 In this application we will estimate a distributed lag model for
 investment expenditure. The idea here is that it takes time for
@@ -863,9 +853,7 @@ Lag & AIC & BIC\\
 \end{tabular}
 \end{table}
 
-Hence, our final model is given by:
-
-\begin{equation}
+Hence, our final model is given by: \begin{equation}
 y_t= \beta_0 + \sum_{i=1}^2\beta_i x_{1t-i}+\sum_{i=1}^2\alpha_i x_{2t-i}
 \end{equation}
 
@@ -904,7 +892,9 @@ L(x2, 1:2)2 & -2.189088 & 0.7904689 & -2.769354 & 0.0075309\\
 f_{t,1}=\widehat{y_{t+1}}=\hat{\beta_0}+\hat{\beta_1}x_{1t} + \hat{\beta_2}x_{1t-1}+ \hat{\alpha_1}x_{2t}+\hat{\alpha_2}x_{2t-1}
 \end{equation}
 
-\chapter{Components of a Time Series}\label{components-of-a-time-series}
+\hypertarget{components-of-a-time-series}{%
+\chapter{Components of a Time
+Series}\label{components-of-a-time-series}}
 
 A given time series can have four possible components:
 
@@ -926,34 +916,29 @@ A given time series can have four possible components:
   typically modeled as a white noise process.
 \end{enumerate}
 
-\section{Decomposing a time series}\label{decomposing-a-time-series}
+\hypertarget{decomposing-a-time-series}{%
+\section{Decomposing a time series}\label{decomposing-a-time-series}}
 
 We can decompose any given time series into its components. There are
 two ways to accomplish this:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   Additive Decomposition: Here it is assumed that all four components
-  are added to obtain the underlying timer series:
-
-  \begin{equation}
+  are added to obtain the underlying timer series: \begin{equation}
   y_t= B_t+S_t+C_t +\epsilon_t
   \end{equation}
 \item
   Multiplicative Decomposition: Here it is assumed that all four
   components are multiplied to obtain the underlying timer series:
-
   \begin{equation}
   y_t= B_t \times S_t \times C_t \times \epsilon_t
   \end{equation}
 \end{enumerate}
 
 Note that using properties of logarithms, multiplicative decomposition
-is the same as additive decomposition in log terms:
-
-\begin{equation}
+is the same as additive decomposition in log terms: \begin{equation}
 log(y_t)= log(B_t) + log(S_t) + log(C_t) + log(\epsilon_t)
 \end{equation}
 
@@ -972,8 +957,9 @@ GDP for the US into its components.
 \caption{Additive Decomposition of Retail Sales}\label{fig:ch3-figure1}
 \end{figure}
 
+\hypertarget{uses-of-decomposition-of-a-time-series}{%
 \section{Uses of Decomposition of a time
-series}\label{uses-of-decomposition-of-a-time-series}
+series}\label{uses-of-decomposition-of-a-time-series}}
 
 The usefulness of decomposing a time series depends on our objective.
 
@@ -990,9 +976,7 @@ The usefulness of decomposing a time series depends on our objective.
   modeling the cyclical component of the time series, then we can assume
   some kind decomposition, additive or multiplicative, and filter out
   the trend and seasonal component. For example, assuming additive
-  decomposition, the filtered time series is given by:
-
-  \begin{equation}
+  decomposition, the filtered time series is given by: \begin{equation}
   Filtered \ y_t= y_t-B_t-S_t
   \end{equation}
 \end{enumerate}
@@ -1000,7 +984,8 @@ The usefulness of decomposing a time series depends on our objective.
 We can then proceed to model the cyclical component using the filtered
 data.
 
-\chapter{Smoothing Methods}\label{smoothing-methods}
+\hypertarget{smoothing-methods}{%
+\chapter{Smoothing Methods}\label{smoothing-methods}}
 
 One way to approach forecasting is to \emph{average} out the
 fluctuations in the underlying time series to produce a \emph{smoothed}
@@ -1010,23 +995,23 @@ methods are essentially \emph{model-free} and may not even produce
 accommodate seasonal as well as trend components of the underlying time
 series.
 
-\section{Moving Average Method}\label{moving-average-method}
+\hypertarget{moving-average-method}{%
+\section{Moving Average Method}\label{moving-average-method}}
 
 We compute an average of most recent data values for the time series and
 use it as a forecast for the next period.
 
 An important parameter is the \emph{window} over which we take the
-average. Let us denote this window by \(m\), then:
-
-\begin{equation}
+average. Let us denote this window by \(m\), then: \begin{equation}
     y^f_{T+1}=\frac{\sum_{i=t-m+1}^{t}{y_i}}{m}
     \end{equation}
 
 A larger value of \(m\) produces greater smoothing and most software
 have a default value of this parameter which can be changed if needed.
 
+\hypertarget{simple-exponential-smoothing}{%
 \section{Simple Exponential
-Smoothing}\label{simple-exponential-smoothing}
+Smoothing}\label{simple-exponential-smoothing}}
 
 In the moving average method, all observations received same weight.
 However, it is reasonable to argue that more recent observations may
@@ -1037,15 +1022,13 @@ Here is the algorithm for computing the smoothed data and its forecast:
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Initialize at t=1: \[y_1^s=y_1 \]
+  Initialize at t=1: \[y_1^s=y_1\]
 \item
   Update:
-  \[      y_{t}^{s}= \alpha y_t + (1-\alpha)y_{t-1}^{s}  \quad for \ t=2,3,...T\]
+  \[y_{t}^{s}= \alpha y_t + (1-\alpha)y_{t-1}^{s}  \quad for \ t=2,3,...T\]
 \end{enumerate}
 
-3: h-period ahead forecast:
-
-\[  f_{T,h}= y_T^s\]
+3: h-period ahead forecast: \[f_{T,h}= y_T^s\]
 
 Here the h-period ahead forecast is:
 
@@ -1056,34 +1039,36 @@ method.}
 Here \(\alpha \in (0,1)\) is the smoothing parameter, with smaller value
 indicating greater smoothing.
 
-\section{Holt-Winters Smoothing}\label{holt-winters-smoothing}
+\hypertarget{holt-winters-smoothing}{%
+\section{Holt-Winters Smoothing}\label{holt-winters-smoothing}}
 
 We add trend component to the simple exponential smoothing. In step 2
 the equation we use to update the smoothed data is given by:
 
-\begin{equation}
-    y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
+\begin{align}
+    y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1})
     B_t = \beta (y_t^s -y_{t-1}^s) + (1-\beta) B_{t-1}
- \end{equation}
+ \end{align}
 
 We now have an additional parameter \(\beta\) that is the trend
 parameter. Here the h-period ahead forecast is:
 
-\begin{equation}
+\begin{align}
   f_{T,h} = y_T^s + h\times B_T
-  \end{equation}
+  \end{align}
 
+\hypertarget{holt-winters-smoothing-with-seasonality}{%
 \section{Holt-Winters Smoothing with
-Seasonality}\label{holt-winters-smoothing-with-seasonality}
+Seasonality}\label{holt-winters-smoothing-with-seasonality}}
 
 We now add seasonal component along with trend. Assuming multiplicative
 seasonality with period \(n\):
 
-\begin{equation}
+\begin{align}
     y_{t}^{s}= \alpha \frac{y_t}{S_{t-n}} + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
     B_t = \gamma (y_t^s -y_{t-1}^s) + (1-\gamma) B_{t-1}\\
     S_t = \beta\frac{y_t}{y_t^s}+(1-\beta)S_{t-n}
-  \end{equation}
+  \end{align}
 
 The h-period ahead forecast is given by:
 
@@ -1091,7 +1076,8 @@ The h-period ahead forecast is given by:
     f_{T,h}= (y_T^s + h\times B_T) \times S_{T+h-n}
    \end{equation}
 
-\section{Application}\label{application}
+\hypertarget{application}{%
+\section{Application}\label{application}}
 
 We use R to implement a 12-period ahead forecast for retail sales for
 the U.S. The data is at monthly frequency from 1959 through 2015. We use
@@ -1108,10 +1094,12 @@ three methods. The resulting forecasts are plotted in Figure
 \caption{Forecast of Housing Starts: Three Smoothing Methods}\label{fig:ch4-figure1}
 \end{figure}
 
+\hypertarget{modeling-trend-and-seasonal-components}{%
 \chapter{Modeling Trend and Seasonal
-Components}\label{modeling-trend-and-seasonal-components}
+Components}\label{modeling-trend-and-seasonal-components}}
 
-\section{Trend Estimation}\label{trend-estimation}
+\hypertarget{trend-estimation}{%
+\section{Trend Estimation}\label{trend-estimation}}
 
 An important component of a time series is \emph{trend} that captures
 the long run evolution of the variable of interest. There are two types
@@ -1130,8 +1118,9 @@ In this note we will focus on estimating and forecasting deterministic
 trend models. We will come back to stochastic trend later when we talk
 about stationarity property of a time series.
 
+\hypertarget{parametrizing-a-deterministic-trend}{%
 \subsection{Parametrizing a deterministic
-trend}\label{parametrizing-a-deterministic-trend}
+trend}\label{parametrizing-a-deterministic-trend}}
 
 Whether or not there is deterministic trend in the data can be typically
 gleaned by simply plotting the time series over time. For example,
@@ -1161,22 +1150,16 @@ deterministic trend:
 \tightlist
 \item
   Polynomial Trend: We fit a polynomial of appropriate order to capture
-  the time trend. For example, A. Linear trend:
-
-  \begin{equation}
+  the time trend. For example, A. Linear trend: \begin{equation}
   y_t=\beta_0 +\beta_1 t +\epsilon_t
   \end{equation}
 \end{enumerate}
 
-B. Quadratic trend:
-
-\begin{equation}
+B. Quadratic trend: \begin{equation}
 y_t=\beta_0 +\beta_1 t + \beta_2 t^2 +\epsilon_t
 \end{equation}
 
-In general, we can fit a polynomial of order \(q\):
-
-\begin{equation}
+In general, we can fit a polynomial of order \(q\): \begin{equation}
 y_t=\beta_0 + \sum_{i=1}^q \beta_i t^i +\epsilon_t
 \end{equation}
 
@@ -1191,19 +1174,18 @@ order using AIC or BIC criterion.
 \tightlist
 \item
   Exponential or log-linear trend: In some cases we may want to use an
-  exponential trend or equivalently a log-linear trend.
-
-  \begin{equation}
+  exponential trend or equivalently a log-linear trend. \begin{align}
   y_t=e^(\beta_0 +\beta_1 t +\epsilon_t)\\
   equivalently\\
   log(y_t)=\beta_0 +\beta_1 t +\epsilon_t
-  \end{equation}
+  \end{align}
 \end{enumerate}
 
 Again we can estimate the above model using OLS.
 
+\hypertarget{uses-of-the-deterministic-trend-model}{%
 \subsection{Uses of the Deterministic Trend
-Model}\label{uses-of-the-deterministic-trend-model}
+Model}\label{uses-of-the-deterministic-trend-model}}
 
 Once we have finalized our deterministic trend model i.e., either a
 polynomial of a specific order or log-liner trend, we can use the
@@ -1226,14 +1208,13 @@ estimated model for the following two purposes:
 \end{equation}
 
 Then, the 1-period ahead forecast for \(y_{t+1}\) can be obtained by
-solving:
-
-\begin{equation}
+solving: \begin{equation}
 \widehat{y_{t+1}}=\widehat{\beta_0}+\widehat{\beta_1} (t+1) + \widehat{\beta_2} (t+1)^2
 \end{equation}
 
+\hypertarget{application-estimating-a-polynomial-trend-for-u.s.-real-gdp}{%
 \subsection{Application: Estimating a polynomial trend for U.S. Real
-GDP}\label{application-estimating-a-polynomial-trend-for-u.s.-real-gdp}
+GDP}\label{application-estimating-a-polynomial-trend-for-u.s.-real-gdp}}
 
 We will now fit a polynomial trend to the US real GDP data that was
 presented in Figure \ref{fig:figure10}. We first estimate polynomials of
@@ -1309,7 +1290,8 @@ quarters along with the 95\% confidence bands.
 \caption{Forecast of Real GDP}\label{fig:ch5-figure3}
 \end{figure}
 
-\section{Seasonal Model}\label{seasonal-model}
+\hypertarget{seasonal-model}{%
+\section{Seasonal Model}\label{seasonal-model}}
 
 We now focus on the \emph{seasonal} component of a time series, i.e.,
 that is periodic fluctuations that repeat themselves every season. For
@@ -1339,8 +1321,9 @@ component. However, if our objective is to explicitly model the seasonal
 component of a time series then we must work with non-seasonally
 adjusted data.
 
+\hypertarget{regression-model-with-seasonal-dummy-variables}{%
 \subsection{Regression Model with Seasonal Dummy
-Variables}\label{regression-model-with-seasonal-dummy-variables}
+Variables}\label{regression-model-with-seasonal-dummy-variables}}
 
 One way to account for seasonal patterns in data is to add dummy
 variables for season. To avoid perfect multicollinearity, is there are
@@ -1364,8 +1347,9 @@ residual from our estimated model as a measure of \emph{deseasonlized}
 data. We can also forecast the dependent variable based on the seasonal
 component only.
 
+\hypertarget{application-seasonal-model-of-housing-starts}{%
 \subsection{Application: Seasonal Model of Housing
-Starts}\label{application-seasonal-model-of-housing-starts}
+Starts}\label{application-seasonal-model-of-housing-starts}}
 
 We now estimate a seasonal regression model for the housing starts data
 presented in Figure \ref{fig:ch5-figure4}. The data is at monthly
@@ -1418,8 +1402,9 @@ season12 & 0.639 & 13.933 & 0.046 & 0.963\\
 \caption{Forecast of Housing Starts}\label{fig:ch5-figure5}
 \end{figure}
 
+\hypertarget{autoregressive-moving-average-arma-model}{%
 \chapter{Autoregressive Moving Average (ARMA)
-Model}\label{autoregressive-moving-average-arma-model}
+Model}\label{autoregressive-moving-average-arma-model}}
 
 In this chapter we will focus on the cyclical component of a time series
 and hence focus on data that either has no trend and seasonal
@@ -1429,14 +1414,17 @@ is the \emph{Autogressive Moving Average (ARMA)}. We first learn some
 new concepts that will help us in understanding the properties of this
 model.
 
+\hypertarget{covariance-stationary-time-series}{%
 \section{Covariance Stationary Time
-Series}\label{covariance-stationary-time-series}
+Series}\label{covariance-stationary-time-series}}
 
 \BeginKnitrBlock{definition}[Covariance Stationary Time Series]
 \protect\hypertarget{def:d7}{}{\label{def:d7} \iffalse (Covariance
 Stationary Time Series) \fi{} }
-\EndKnitrBlock{definition} A time series \(\{y_t\}\) is said to be a
-\emph{covariance stationary process} if:
+\EndKnitrBlock{definition}
+
+A time series \(\{y_t\}\) is said to be a \emph{covariance stationary
+process} if:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1479,19 +1467,17 @@ stationary process with a mean of 0.7\%. In this chapter we will only
 consider stationary time series data. Later on we will learn how to work
 with non-stationary data.
 
-\section{Correlation over time}\label{correlation-over-time}
+\hypertarget{correlation-over-time}{%
+\section{Correlation over time}\label{correlation-over-time}}
 
 In order to forecast into future, we need information available in the
 present to correlate with the future value of the variable of interest.
 In other words, we need some serial correlation in our data which can be
 utilized to generate forecasts. In general, for a time series,
-\(\{y_t\}\),
-
-\begin{align}
+\(\{y_t\}\), \begin{align}
     Cor(y_t,y_{t-s})=\frac{ Cov(y_t,y_{t-s})}{\sqrt{\sigma^2_{y_t} \times \sigma^2_{y_{t-s}}}}
-        \end{align}
-
-where \(Cov(y_t,y_{t-s})= E(y_t-\mu_{y_t})(y_{t-s}-\mu_{y_{t-s}})\) and
+        \end{align} where
+\(Cov(y_t,y_{t-s})= E(y_t-\mu_{y_t})(y_{t-s}-\mu_{y_{t-s}})\) and
 \(\sigma^2_{y_t}=E(y_t-\mu_{y_t})^2\)
 
 \BeginKnitrBlock{definition}[Auto Correlation Function (ACF)]
@@ -1501,9 +1487,7 @@ Function (ACF)) \fi{} }
 
 An \emph{ACF} plots the correlation of a time series with its own past
 values over time. For a stationary time series, using the three
-conditions we get:
-
-\begin{align}
+conditions we get: \begin{align}
     ACF(s) \ or \ \rho(s)=\frac{\gamma(s)}{\gamma(0)}
     \end{align}
 
@@ -1523,13 +1507,15 @@ a stationary time series with positive serial correlation.
 \BeginKnitrBlock{definition}[Partial Auto Correlation Function (PACF)]
 \protect\hypertarget{def:d9}{}{\label{def:d9} \iffalse (Partial Auto
 Correlation Function (PACF)) \fi{} }
-\EndKnitrBlock{definition} The \emph{partial autocorrelation function
-(PACF)} for a stationary time series \(y_t\) at lag \(s\) is the direct
-correlation between \(y_t\) and \(y_{t-s}\), after filtering out the
-linear influence of \$ y\_\{t-1\},\ldots,y\_\{t-s-1\}\$ on \(y_t\).
-Figure \ref{fig:ch6-figure4} below shows the PACF for a stationary time
-series where only one lag directly affects the time series in the
-current period.
+\EndKnitrBlock{definition}
+
+The \emph{partial autocorrelation function (PACF)} for a stationary time
+series \(y_t\) at lag \(s\) is the direct correlation between \(y_t\)
+and \(y_{t-s}\), after filtering out the linear influence of \$
+y\_\{t-1\},\ldots,y\_\{t-s-1\}\$ on \(y_t\). Figure
+\ref{fig:ch6-figure4} below shows the PACF for a stationary time series
+where only one lag directly affects the time series in the current
+period.
 
 \begin{figure}
 
@@ -1540,25 +1526,24 @@ current period.
 \caption{PACF for a Stationary Time Series}\label{fig:ch6-figure4}
 \end{figure}
 
-\section{Autoregressive (AR) Model}\label{autoregressive-ar-model}
+\hypertarget{autoregressive-ar-model}{%
+\section{Autoregressive (AR) Model}\label{autoregressive-ar-model}}
 
 A \emph{stationary}time series \(\{x_t\}\) can be modeled as an AR(p)
-process:
-
-\begin{equation}
+process: \begin{equation}
  y_t = \phi_0 +\phi_1 y_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t
  \end{equation}
 
-\section{Moving Average (MA) Model}\label{moving-average-ma-model}
+\hypertarget{moving-average-ma-model}{%
+\section{Moving Average (MA) Model}\label{moving-average-ma-model}}
 
 A \emph{stationary} time series \(\{y_t\}\) can be modeled as an MA(q)
-process:
-
-\begin{equation}
+process: \begin{equation}
   y_t = \theta_0 + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
     \end{equation}
 
-\section{ARMA(p, q)\}}\label{armap-q}
+\hypertarget{armap-q}{%
+\section{ARMA(p, q)\}}\label{armap-q}}
 
 An ARMA model simply combines both AR and MA components to model the
 dynamics of a time series. Formula,

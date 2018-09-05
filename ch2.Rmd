@@ -9,7 +9,7 @@ One way to compute the conditional expectation is the linear regression model. H
 Hence, we get the following equality:
 
 \begin{equation}
-E(y_t|\Omega_t)=E(y_{t+h}|X_{1t}, X_{2t}, X_{3t},...,X_{Kt})
+E(y_t|\Omega_t)=E(y_{t}|X_{1t}, X_{2t}, X_{3t},...,X_{Kt})
 \end{equation}
 
 The right hand side of the above equation is the multiple regression model of the form:

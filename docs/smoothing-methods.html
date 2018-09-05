@@ -143,10 +143,10 @@
 <div id="moving-average-method" class="section level2">
 <h2><span class="header-section-number">4.1</span> Moving Average Method</h2>
 <p>We compute an average of most recent data values for the time series and use it as a forecast for the next period.</p>
-An important parameter is the <em>window</em> over which we take the average. Let us denote this window by <span class="math inline">\(m\)</span>, then:
+<p>An important parameter is the <em>window</em> over which we take the average. Let us denote this window by <span class="math inline">\(m\)</span>, then:
 <span class="math display">\[\begin{equation}
     y^f_{T+1}=\frac{\sum_{i=t-m+1}^{t}{y_i}}{m}
-    \end{equation}\]</span>
+    \end{equation}\]</span></p>
 <p>A larger value of <span class="math inline">\(m\)</span> produces greater smoothing and most software have a default value of this parameter which can be changed if needed.</p>
 <!-- A larger value is more desirable when there are large but infrequent fluctuations in our data. In contrast, a smaller value of $m$ is preferred when data has sudden shits in our data. Typically, we set $m$ equal to the frequency at which our data is measured. For example, $m=4$ for quarterly data and $m=12$ for monthly data. One drawback of this method is that it assigns equal *weight* to each observation. It is reasonable to argue that for most economic and financial variables, the effect of past observations will be less pronounced than most recent observations.  -->
 </div>
@@ -154,11 +154,13 @@ An important parameter is the <em>window</em> over which we take the average. Le
 <h2><span class="header-section-number">4.2</span> Simple Exponential Smoothing</h2>
 <p>In the moving average method, all observations received same weight. However, it is reasonable to argue that more recent observations may have a greater influence than those in the remote past. In this method, the weight attached to past observations exponentially decay over time. Here is the algorithm for computing the smoothed data and its forecast:</p>
 <ol style="list-style-type: decimal">
-<li><p>Initialize at t=1: <span class="math display">\[y_1^s=y_1 \]</span></p></li>
-<li><p>Update: <span class="math display">\[      y_{t}^{s}= \alpha y_t + (1-\alpha)y_{t-1}^{s}  \quad for \ t=2,3,...T\]</span></p></li>
+<li><p>Initialize at t=1:
+<span class="math display">\[y_1^s=y_1\]</span></p></li>
+<li><p>Update:
+<span class="math display">\[y_{t}^{s}= \alpha y_t + (1-\alpha)y_{t-1}^{s}  \quad for \ t=2,3,...T\]</span></p></li>
 </ol>
-<p>3: h-period ahead forecast:</p>
-<p><span class="math display">\[  f_{T,h}= y_T^s\]</span></p>
+<p>3: h-period ahead forecast:
+<span class="math display">\[f_{T,h}= y_T^s\]</span></p>
 <p>Here the h-period ahead forecast is:</p>
 <p><em>Exercise: Can you show that <span class="math inline">\(y_{t}^{s}\)</span> is a is the weighted moving average of all past observations? Use backward substitution method.</em></p>
 <p>Here <span class="math inline">\(\alpha \in (0,1)\)</span> is the smoothing parameter, with smaller value indicating greater smoothing.</p>
@@ -166,27 +168,27 @@ An important parameter is the <em>window</em> over which we take the average. Le
 <div id="holt-winters-smoothing" class="section level2">
 <h2><span class="header-section-number">4.3</span> Holt-Winters Smoothing</h2>
 <p>We add trend component to the simple exponential smoothing. In step 2 the equation we use to update the smoothed data is given by:</p>
-<span class="math display">\[\begin{equation}
-    y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
+<p><span class="math display">\[\begin{align}
+    y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1})
     B_t = \beta (y_t^s -y_{t-1}^s) + (1-\beta) B_{t-1}
- \end{equation}\]</span>
+ \end{align}\]</span></p>
 <p>We now have an additional parameter <span class="math inline">\(\beta\)</span> that is the trend parameter. Here the h-period ahead forecast is:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{align}
   f_{T,h} = y_T^s + h\times B_T
-  \end{equation}\]</span>
+  \end{align}\]</span></p>
 </div>
 <div id="holt-winters-smoothing-with-seasonality" class="section level2">
 <h2><span class="header-section-number">4.4</span> Holt-Winters Smoothing with Seasonality</h2>
 <p>We now add seasonal component along with trend. Assuming multiplicative seasonality with period <span class="math inline">\(n\)</span>:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{align}
     y_{t}^{s}= \alpha \frac{y_t}{S_{t-n}} + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
     B_t = \gamma (y_t^s -y_{t-1}^s) + (1-\gamma) B_{t-1}\\
     S_t = \beta\frac{y_t}{y_t^s}+(1-\beta)S_{t-n}
-  \end{equation}\]</span>
+  \end{align}\]</span></p>
 <p>The h-period ahead forecast is given by:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
     f_{T,h}= (y_T^s + h\times B_T) \times S_{T+h-n}
-   \end{equation}\]</span>
+   \end{equation}\]</span></p>
 </div>
 <div id="application" class="section level2">
 <h2><span class="header-section-number">4.5</span> Application</h2>
@@ -249,7 +251,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

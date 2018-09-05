@@ -159,27 +159,28 @@ Figure 5.1: Real GDP (2012 Chained Billions of Dollars)
 <p><em>Note: The variable time is denoted by <span class="math inline">\(t\)</span> and it is artificially created to take value of 1 for the first period, 2 for the second period and so on.</em></p>
 <p>There are two commonly used functional forms for capturing a deterministic trend:</p>
 <ol style="list-style-type: decimal">
-<li>Polynomial Trend: We fit a polynomial of appropriate order to capture the time trend. For example, A. Linear trend:
+<li>Polynomial Trend: We fit a polynomial of appropriate order to capture the time trend. For example,
+A. Linear trend:
 <span class="math display">\[\begin{equation}
 y_t=\beta_0 +\beta_1 t +\epsilon_t
 \end{equation}\]</span></li>
 </ol>
-B. Quadratic trend:
+<p>B. Quadratic trend:
 <span class="math display">\[\begin{equation}
 y_t=\beta_0 +\beta_1 t + \beta_2 t^2 +\epsilon_t
-\end{equation}\]</span>
-In general, we can fit a polynomial of order <span class="math inline">\(q\)</span>:
+\end{equation}\]</span></p>
+<p>In general, we can fit a polynomial of order <span class="math inline">\(q\)</span>:
 <span class="math display">\[\begin{equation}
 y_t=\beta_0 + \sum_{i=1}^q \beta_i t^i +\epsilon_t
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>We can estimate this model using the OLS. One of the key component here is to determine the <em>right</em> order of the polynomial. We can begin with a large enough number for <span class="math inline">\(q\)</span> and then select the appropriate order using AIC or BIC criterion.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Exponential or log-linear trend: In some cases we may want to use an exponential trend or equivalently a log-linear trend.
-<span class="math display">\[\begin{equation}
+<span class="math display">\[\begin{align}
 y_t=e^(\beta_0 +\beta_1 t +\epsilon_t)\\
 equivalently\\
 log(y_t)=\beta_0 +\beta_1 t +\epsilon_t
-\end{equation}\]</span></li>
+\end{align}\]</span></li>
 </ol>
 <p>Again we can estimate the above model using OLS.</p>
 </div>
@@ -190,13 +191,13 @@ log(y_t)=\beta_0 +\beta_1 t +\epsilon_t
 <li><p>Detrending our data: Suppose we would like to eliminate trend from our data. The residual from our final trend model is the <em>detrended</em> time series.</p></li>
 <li><p>Forecasting: We can also forecast our time series based on the estimated trend. For example, suppose our final model is a quadratic trend. The predicted value is given by:</p></li>
 </ol>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 \widehat{y_t}=\widehat{\beta_0}+\widehat{\beta_1} t + \widehat{\beta_2} t^2
-\end{equation}\]</span>
-Then, the 1-period ahead forecast for <span class="math inline">\(y_{t+1}\)</span> can be obtained by solving:
+\end{equation}\]</span></p>
+<p>Then, the 1-period ahead forecast for <span class="math inline">\(y_{t+1}\)</span> can be obtained by solving:
 <span class="math display">\[\begin{equation}
 \widehat{y_{t+1}}=\widehat{\beta_0}+\widehat{\beta_1} (t+1) + \widehat{\beta_2} (t+1)^2
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 </div>
 <div id="application-estimating-a-polynomial-trend-for-u.s.-real-gdp" class="section level3">
 <h3><span class="header-section-number">5.1.3</span> Application: Estimating a polynomial trend for U.S. Real GDP</h3>
@@ -234,9 +235,9 @@ Then, the 1-period ahead forecast for <span class="math inline">\(y_{t+1}\)</spa
 </tbody>
 </table>
 <p>Hence, our final trend model is:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 y_t=\beta_0 +\beta_1 t + \beta_2 t^2 + \beta_3 t^3 + \beta_4 t^4 +\epsilon_t
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>The estimated trend model is presented in Table <a href="modeling-trend-and-seasonal-components.html#tab:ch5-table2">5.2</a>.</p>
 <table>
 <caption><span id="tab:ch5-table2">Table 5.2: </span>Regression Results</caption>
@@ -317,18 +318,18 @@ Figure 5.4: Housing Starts in U.S.
 <div id="regression-model-with-seasonal-dummy-variables" class="section level3">
 <h3><span class="header-section-number">5.2.1</span> Regression Model with Seasonal Dummy Variables</h3>
 <p>One way to account for seasonal patterns in data is to add dummy variables for season. To avoid perfect multicollinearity, is there are <span class="math inline">\(s\)</span> seasons, we can include <span class="math inline">\(s-1\)</span> dummy variables. For example, for quarterly data, <span class="math inline">\(s=4\)</span> and hence we need <span class="math inline">\(s-1=3\)</span> dummy variables in our regression model. Formally, for quarterly data, the seasonal regression model is given by:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 y_t= \beta_0 + \beta_1 D_{1t}+ \beta_2 D_{2t} + \beta_3 D_{3t} + \epsilon_t
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>In the above regression model, <span class="math inline">\(D_1,D_2,\)</span> and <span class="math inline">\(D_3\)</span> are dummy variables that capture first three quarters of the year. For example, <span class="math inline">\(D_1=1\)</span> for the first quarter and <span class="math inline">\(D_1=0\)</span> otherwise. Similarly, <span class="math inline">\(D_2=1\)</span> for the second quarter and <span class="math inline">\(D_2=0\)</span> otherwise. In this example, we use the fourth quarter as the <em>base group</em>.</p>
 <p>The above model can be estimated using OLS. Again, we can use the residual from our estimated model as a measure of <em>deseasonlized</em> data. We can also forecast the dependent variable based on the seasonal component only.</p>
 </div>
 <div id="application-seasonal-model-of-housing-starts" class="section level3">
 <h3><span class="header-section-number">5.2.2</span> Application: Seasonal Model of Housing Starts</h3>
 <p>We now estimate a seasonal regression model for the housing starts data presented in Figure <a href="modeling-trend-and-seasonal-components.html#fig:ch5-figure4">5.4</a>. The data is at monthly frequency which implies we can have 12 possible seasons and hence would need 11 dummy variables in our regression model. Formally, we use January as the base group and include dummy variables for the last 11 months of the year:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 y_t=\beta_0 + \sum_{i=2}^{12}\beta_i D_{it} + \epsilon_t
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>Table <a href="modeling-trend-and-seasonal-components.html#tab:ch5-table3">5.3</a> presents the estimation results for this exercise. In Figure <a href="modeling-trend-and-seasonal-components.html#fig:ch5-figure5">5.5</a> we plot the forecast of housing starts for next 12 months using our estimated model, along with 95% confidence bands.</p>
 <table>
 <caption><span id="tab:ch5-table3">Table 5.3: </span>Regression Results</caption>
@@ -487,7 +488,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

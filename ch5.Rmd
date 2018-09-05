@@ -48,11 +48,11 @@ y_t=\beta_0 + \sum_{i=1}^q \beta_i t^i +\epsilon_t
 We can estimate this model using the OLS. One of the key component here is to determine the *right* order of the polynomial. We can begin with a large enough number for $q$ and then select the appropriate order using AIC or BIC criterion.
 
 2. Exponential or log-linear trend: In some cases we may want to use an exponential trend or equivalently a log-linear trend.
-\begin{equation}
+\begin{align}
 y_t=e^(\beta_0 +\beta_1 t +\epsilon_t)\\
 equivalently\\
 log(y_t)=\beta_0 +\beta_1 t +\epsilon_t
-\end{equation}
+\end{align}
 
 Again we can estimate the above model using OLS.
 
