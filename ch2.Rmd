@@ -92,7 +92,7 @@ In this model the lag structure implies that any change in $x$ will persist for 
 
 In our example, the sequence of dynamic effects are:
 \begin{equation}
-\frac{\partial y_{t+1}}{\partial x_t}  =0; \ \frac{\partial y_{t+1}}{\partial x_t}=\beta_1; \ \frac{\partial y_{t+2}}{\partial x_t}=\beta_2; \ \frac{\partial y_{t+s}}{\partial x_t}=0 \ \forall \ s>2 
+\frac{\partial y_{t}}{\partial x_t}  =0; \ \frac{\partial y_{t+1}}{\partial x_t}=\beta_1; \ \frac{\partial y_{t+2}}{\partial x_t}=\beta_2; \ \frac{\partial y_{t+s}}{\partial x_t}=0 \ \forall \ s>2 
 \end{equation}
 
 2. *long run effect* of $x$ on $y$ given by:
