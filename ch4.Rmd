@@ -9,7 +9,7 @@ We compute an average of most recent data values for the time series and use it 
 
 An important parameter is the *window* over which we take the average. Let us denote this window by $m$, then:
 \begin{equation}
-	y^f_{T+1}=\frac{\sum_{i=t-m+1}^{t}{y_i}}{m}
+	y^s_{t+1}=\frac{\sum \limits_{i=t-m+1}^{t}{y_i}}{m}
 	\end{equation}
 	
 	
@@ -45,7 +45,7 @@ Here $\alpha \in (0,1)$ is the smoothing parameter, with smaller value indicatin
 We add trend component to the simple exponential smoothing. In step 2 the equation we use to update the smoothed data is given by:
 
  \begin{align}
- 	y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1})
+ 	y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1}) \\ \nonumber
  	B_t = \beta (y_t^s -y_{t-1}^s) + (1-\beta) B_{t-1}
  \end{align}
  
@@ -62,8 +62,8 @@ We now add seasonal component along with trend. Assuming multiplicative seasonal
  
   \begin{align}
   	y_{t}^{s}= \alpha \frac{y_t}{S_{t-n}} + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
-  	B_t = \gamma (y_t^s -y_{t-1}^s) + (1-\gamma) B_{t-1}\\
-  	S_t = \beta\frac{y_t}{y_t^s}+(1-\beta)S_{t-n}
+  	B_t = \beta (y_t^s -y_{t-1}^s) + (1-\beta) B_{t-1}\\
+  	S_t = \gamma\frac{y_t}{y_t^s}+(1-\gamma)S_{t-n}
   \end{align}
 
 The h-period ahead forecast is given by:

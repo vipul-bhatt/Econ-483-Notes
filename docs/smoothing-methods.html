@@ -25,7 +25,7 @@
 <meta name="author" content="Vipul Bhatt">
 
 
-<meta name="date" content="2018-09-16">
+<meta name="date" content="2018-09-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -145,7 +145,7 @@
 <p>We compute an average of most recent data values for the time series and use it as a forecast for the next period.</p>
 <p>An important parameter is the <em>window</em> over which we take the average. Let us denote this window by <span class="math inline">\(m\)</span>, then:
 <span class="math display">\[\begin{equation}
-    y^f_{T+1}=\frac{\sum_{i=t-m+1}^{t}{y_i}}{m}
+    y^s_{t+1}=\frac{\sum \limits_{i=t-m+1}^{t}{y_i}}{m}
     \end{equation}\]</span></p>
 <p>A larger value of <span class="math inline">\(m\)</span> produces greater smoothing and most software have a default value of this parameter which can be changed if needed.</p>
 <!-- A larger value is more desirable when there are large but infrequent fluctuations in our data. In contrast, a smaller value of $m$ is preferred when data has sudden shits in our data. Typically, we set $m$ equal to the frequency at which our data is measured. For example, $m=4$ for quarterly data and $m=12$ for monthly data. One drawback of this method is that it assigns equal *weight* to each observation. It is reasonable to argue that for most economic and financial variables, the effect of past observations will be less pronounced than most recent observations.  -->
@@ -169,7 +169,7 @@
 <h2><span class="header-section-number">4.3</span> Holt-Winters Smoothing</h2>
 <p>We add trend component to the simple exponential smoothing. In step 2 the equation we use to update the smoothed data is given by:</p>
 <p><span class="math display">\[\begin{align}
-    y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1})
+    y_{t}^{s}= \alpha y_t + (1-\alpha)(y_{t-1}^{s}+B_{t-1}) \\ \nonumber
     B_t = \beta (y_t^s -y_{t-1}^s) + (1-\beta) B_{t-1}
  \end{align}\]</span></p>
 <p>We now have an additional parameter <span class="math inline">\(\beta\)</span> that is the trend parameter. Here the h-period ahead forecast is:</p>
@@ -182,8 +182,8 @@
 <p>We now add seasonal component along with trend. Assuming multiplicative seasonality with period <span class="math inline">\(n\)</span>:</p>
 <p><span class="math display">\[\begin{align}
     y_{t}^{s}= \alpha \frac{y_t}{S_{t-n}} + (1-\alpha)(y_{t-1}^{s}+B_{t-1})\\
-    B_t = \gamma (y_t^s -y_{t-1}^s) + (1-\gamma) B_{t-1}\\
-    S_t = \beta\frac{y_t}{y_t^s}+(1-\beta)S_{t-n}
+    B_t = \beta (y_t^s -y_{t-1}^s) + (1-\beta) B_{t-1}\\
+    S_t = \gamma\frac{y_t}{y_t^s}+(1-\gamma)S_{t-n}
   \end{align}\]</span></p>
 <p>The h-period ahead forecast is given by:</p>
 <p><span class="math display">\[\begin{equation}
