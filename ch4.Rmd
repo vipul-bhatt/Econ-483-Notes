@@ -74,7 +74,7 @@ The h-period ahead forecast is given by:
    
 ## Application
 
-We use R to implement a 12-period ahead forecast for retail sales for the U.S. The data is at monthly frequency from 1959 through 2015. We use natural logs of the data and compute smoothed series using each of the three methods. The resulting forecasts are plotted in Figure \@ref(fig:ch4-figure1).
+We use R to implement a 12-period ahead forecast for new housing starts for the U.S. The data is at monthly frequency from June 2000 through June 2018. The resulting forecasts are plotted in Figure \@ref(fig:ch4-figure1).
 
 ```{r ch4-figure1, echo = FALSE, fig.cap = 'Forecast of Housing Starts: Three Smoothing Methods', out.width='80%', fig.asp=.75, fig.align='center'}
 suppressMessages(library(forecast))
@@ -86,15 +86,21 @@ y=ts(hstart$y, start=c(2000,6), end=c(2018,6), frequency=12)
 
 ### simple exponential smoothing
 s_exp1=HoltWinters(y,beta=FALSE, gamma=FALSE)
+
+### Holt's exponential smoothing with linear trend
 s_exp2=HoltWinters(y,beta=TRUE, gamma=FALSE)
+
+#### Holt-Winters exponential smoothing with linear trend and seasonal adjustment
 s_exp3=HoltWinters(y,beta=TRUE, gamma=TRUE)
 
+### creating forecast objects for each method for next 12 months
 
 f_exp1=forecast(s_exp1,h=12)
 f_exp2=forecast(s_exp2,h=12)
 f_exp3=forecast(s_exp3,h=12)
 
 
+#### plotting all forecasts in one window
 
 par(mfrow=c(2,2))
 par(mar=c(2,2,2,2))
