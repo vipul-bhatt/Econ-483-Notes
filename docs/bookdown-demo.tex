@@ -85,10 +85,12 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-09-19}
+    \date{2018-10-08}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
 \makeatletter
 \def\thm@space@setup{%
   \thm@preskip=8pt plus 2pt minus 4pt
@@ -1174,7 +1176,7 @@ order using AIC or BIC criterion.
 \item
   Exponential or log-linear trend: In some cases we may want to use an
   exponential trend or equivalently a log-linear trend. \begin{align}
-  y_t=e^(\beta_0 +\beta_1 t +\epsilon_t)\\
+  y_t=e^{(\beta_0 +\beta_1 t +\epsilon_t)}\\
   equivalently\\
   log(y_t)=\beta_0 +\beta_1 t +\epsilon_t
   \end{align}
@@ -1401,20 +1403,48 @@ season12 & 0.639 & 13.933 & 0.046 & 0.963\\
 \caption{Forecast of Housing Starts}\label{fig:ch5-figure5}
 \end{figure}
 
-\hypertarget{autoregressive-moving-average-arma-model}{%
-\chapter{Autoregressive Moving Average (ARMA)
-Model}\label{autoregressive-moving-average-arma-model}}
+\hypertarget{modeling-cycle}{%
+\chapter{Modeling Cycle}\label{modeling-cycle}}
 
 In this chapter we will focus on the cyclical component of a time series
 and hence focus on data that either has no trend and seasonal
 components, or data that is filtered to eliminate any trend and
 seasonality. One of the most commonly used method to model cyclicality
-is the \emph{Autogressive Moving Average (ARMA)}. We first learn some
-new concepts that will help us in understanding the properties of this
-model.
+is the \emph{Autogressive Moving Average (ARMA)}. This model has two
+distinct components:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \emph{Autoregressive (AR) component}: the current period value of a
+  time series variable depends on its past (lagged) observations. We use
+  \(p\) to denote the \textbf{order} of the AR component and is the
+  number of lags of a variable that directly affect the current period
+  value. For example, a firm's production in the current period maybe
+  impacted by past levels of production. If last year's production
+  exceeded demand, the stock of unsold goods may be used to meet this
+  period demand first, hence lowering the current period production.
+\item
+  \emph{Moving average (MA) component}: the current period value of a
+  time series variable depends on current period \textbf{shock} as well
+  as past shocks to this variable. We use \(q\) to denote the
+  \textbf{order} of the MA component and is the number of past period
+  shocks that affect the current period value of the variable of
+  interest. For example, if the Federal Reserve Bank raises the interest
+  in 2016, the effects of that policy shock may impact investment and
+  consumption spending in 2017.
+\end{enumerate}
+
+Before we consider these time series model in details it is useful to
+discuss certain properties of time series that allow us a better
+understanding of these models.
+
+\hypertarget{stationarity-and-autocorrelation}{%
+\section{Stationarity and
+Autocorrelation}\label{stationarity-and-autocorrelation}}
 
 \hypertarget{covariance-stationary-time-series}{%
-\section{Covariance Stationary Time
+\subsection{Covariance Stationary Time
 Series}\label{covariance-stationary-time-series}}
 
 \BeginKnitrBlock{definition}[Covariance Stationary Time Series]
@@ -1429,9 +1459,9 @@ process} if:
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  \(E(y_t)=\mu_x \quad \forall \quad t\)
+  \(E(y_t)=\mu_y \quad \forall \quad t\)
 \item
-  \(Var(y_t)=\sigma_x^2 \quad \forall \quad t\)
+  \(Var(y_t)=\sigma_y^2 \quad \forall \quad t\)
 \item
   \(Cov(y_t,y_{t-s})=\gamma(s) \quad \forall \quad s\neq t\)
 \end{enumerate}
@@ -1466,33 +1496,38 @@ stationary process with a mean of 0.7\%. In this chapter we will only
 consider stationary time series data. Later on we will learn how to work
 with non-stationary data.
 
-\hypertarget{correlation-over-time}{%
-\section{Correlation over time}\label{correlation-over-time}}
+\hypertarget{correlation-vs-autocorrelation}{%
+\subsection{Correlation vs
+Autocorrelation}\label{correlation-vs-autocorrelation}}
 
-In order to forecast into future, we need information available in the
-present to correlate with the future value of the variable of interest.
-In other words, we need some serial correlation in our data which can be
-utilized to generate forecasts. In general, for a time series,
-\(\{y_t\}\), \begin{align}
+In statistics, correlation is a measure of relationship between two
+variables. In the time series setting, we can think of the current
+period value and the past period value of a variable as two
+\textbf{separate} variables, and compute correlation between them. Such
+a correlation, between current and lagged observation of a time series
+is called \textbf{serial correlation} or \textbf{autocorrelation}. In
+general, for a time series, \(\{y_t\}\), the autocorrelation is given
+by:
+
+\begin{align}
     Cor(y_t,y_{t-s})=\frac{ Cov(y_t,y_{t-s})}{\sqrt{\sigma^2_{y_t} \times \sigma^2_{y_{t-s}}}}
         \end{align} where
 \(Cov(y_t,y_{t-s})= E(y_t-\mu_{y_t})(y_{t-s}-\mu_{y_{t-s}})\) and
 \(\sigma^2_{y_t}=E(y_t-\mu_{y_t})^2\)
 
-\BeginKnitrBlock{definition}[Auto Correlation Function (ACF)]
-\protect\hypertarget{def:d8}{}{\label{def:d8} \iffalse (Auto Correlation
-Function (ACF)) \fi{} }
-\EndKnitrBlock{definition}
+For a stationary time series, using the three conditions the
+\textbf{Autocorrelation Function (ACF)} denoted by \(\rho(s)\) is given
+by:
 
-An \emph{ACF} plots the correlation of a time series with its own past
-values over time. For a stationary time series, using the three
-conditions we get: \begin{align}
+\begin{align}
     ACF(s) \ or \ \rho(s)=\frac{\gamma(s)}{\gamma(0)}
     \end{align}
 
-Hence, non-zero values of the ACF indicates presences of serial
-correlation in the data. Figure \ref{fig:ch6-figure3} shows the ACF for
-a stationary time series with positive serial correlation.
+Non-zero values of the ACF indicates presences of serial correlation in
+the data. Figure \ref{fig:ch6-figure3} shows the ACF for a stationary
+time series with positive serial correlation. If your data is stationary
+then the ACF should eventually converge to 0. For a non-stationary data,
+the ACF function will not decay over time.
 
 \begin{figure}
 
@@ -1503,15 +1538,23 @@ a stationary time series with positive serial correlation.
 \caption{ACF for a Stationary Time Series}\label{fig:ch6-figure3}
 \end{figure}
 
+\hypertarget{partial-autocorrelation}{%
+\subsection{Partial Autocorrelation}\label{partial-autocorrelation}}
+
 \BeginKnitrBlock{definition}[Partial Auto Correlation Function (PACF)]
 \protect\hypertarget{def:d9}{}{\label{def:d9} \iffalse (Partial Auto
 Correlation Function (PACF)) \fi{} }
 \EndKnitrBlock{definition}
 
-The \emph{partial autocorrelation function (PACF)} for a stationary time
-series \(y_t\) at lag \(s\) is the direct correlation between \(y_t\)
-and \(y_{t-s}\), after filtering out the linear influence of \$
-y\_\{t-1\},\ldots,y\_\{t-s-1\}\$ on \(y_t\). Figure
+The ACF captures the relationship between the current period value of a
+time series and all of its past observations. It includes both direct as
+well as indirect effects of the past observations on the current period
+value. Often times it is of interest to measure the direct relationship
+between the current and past observations, \textbf{partialing} out all
+indirect effects. The \emph{partial autocorrelation function (PACF)} for
+a stationary time series \(y_t\) at lag \(s\) is the direct correlation
+between \(y_t\) and \(y_{t-s}\), after filtering out the linear
+influence of \(y_{t-1},\ldots,y_{t-s-1}\) on \(y_t\). Figure
 \ref{fig:ch6-figure4} below shows the PACF for a stationary time series
 where only one lag directly affects the time series in the current
 period.
@@ -1525,13 +1568,261 @@ period.
 \caption{PACF for a Stationary Time Series}\label{fig:ch6-figure4}
 \end{figure}
 
+\hypertarget{lag-operator}{%
+\subsection{Lag operator}\label{lag-operator}}
+
+A \textbf{lag operator} denoted by \(L\) allows us to write ARMA models
+in a more concise way. Applying lag operator once moves the time index
+by one period; applying it twice moves the time index back by two
+period; applying it \(s\) times moves the index back by \(s\) periods.
+\[ Ly_t=y_{t-1} \] \[ L^2y_t=y_{t-2} \] \[ L^3y_t=y_{t-3} \] \[\vdots\]
+\[ L^sy_t=y_{t-s} \]
+
 \hypertarget{autoregressive-ar-model}{%
 \section{Autoregressive (AR) Model}\label{autoregressive-ar-model}}
 
-A \emph{stationary}time series \(\{x_t\}\) can be modeled as an AR(p)
-process: \begin{equation}
+A \emph{stationary}time series \(\{x_t\}\) can be modeled as an AR
+process. In general, an AR(p) model is given by:
+
+\begin{equation}
  y_t = \phi_0 +\phi_1 y_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t
  \end{equation}
+
+Here \(\phi_i\) captures the effect of \(y_{t-i}\) on \(y_t\). The order
+of the AR process is not known apriori. It is common to use either AIC
+or BIC to determine the optimal lag length for an AR process.
+
+Using the Lag operator, we can rewrite the above AR(p) model as follows:
+\[ \Phi(L)y_t=\phi_0+\epsilon_t \]
+
+where \(\displaystyle \Phi(L)\) is a polynomial of degree \(p\) in L:
+
+\[ \Phi(L) = 1-\phi_1 L - \phi_2 L^2- \ldots\ldots\ldots\ldots -\phi_p L^p\]
+
+For example, an AR(1) model can be written as:
+\[y_t=\phi_0+\phi_1 y_{t-1} + \epsilon_t \Rightarrow  \Phi(L)y_t=\phi_0+\epsilon_t\]
+where, \[ \Phi(L) = 1-\phi_1 L \]
+
+\textbf{Characteristic equation}: A characteristic equation is given by:
+
+\[\Phi(L)=0\]
+
+The roots of this equation play an important role in determining the
+dynamic behavior of a time series.
+
+\hypertarget{unit-root-and-stationarity}{%
+\subsection{Unit root and
+Stationarity}\label{unit-root-and-stationarity}}
+
+For a time series to be stationary there should be no \textbf{unit root}
+in its \emph{characteristic equation}. In other words, all roots of the
+characteristic equation must fall outside the unit circle. Consider the
+following AR(1) model: \[\Phi(L)y_t = \phi_0 + \epsilon_t\]
+
+The characteristic equation is given by: \[\Phi(L)=1-\phi_1L=0 \]
+
+The root that satsifies the above equation is: \[ L^*=\frac{1}{\phi_1}\]
+
+For no unit root to be present, \(L^*>|1|\) which implies that
+\(|\phi_1|<1\).
+
+Typically, for any AR process to be stationary, some restrictions will
+be imposed on the values of \(\phi_i's\), the coefficients of the lagged
+variables in the model.
+
+\hypertarget{properties-of-an-ar1-model}{%
+\subsection{Properties of an AR(1)
+model}\label{properties-of-an-ar1-model}}
+
+A stationary AR(1) model is given by:
+\[ y_t=\phi_0 +\phi_1 y_{t-1}+ \epsilon_t \quad ; \ \epsilon_t\sim WN(0, \sigma^2) \ and \  |\phi_1|<1\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \(\displaystyle \phi_1\) measures the persistence in data. A larger
+  value indicates shocks to \(y_t\) dissipate slowly over time.
+\item
+  Stationarity of \(y_t\) implies certain restrictions on the AR(1)
+  model.
+
+  \begin{enumerate}
+  \def\labelenumii{\roman{enumii}.}
+  \tightlist
+  \item
+    Constant long run mean: is the unconditional expectation of \(y_t\):
+    \[ E(y_t) = \mu_y= \frac{\phi_0}{1-\phi_1}  \]
+  \item
+    Constant long run variance: is the unconditional variance of
+    \(y_t\):
+    \[ Var(y_t)=\sigma^2_y= \frac{\sigma^2_\epsilon}{1-\phi_1^2}\]
+  \item
+    ACF function: \[ \rho(s) = \phi_1^s\]
+  \end{enumerate}
+\end{enumerate}
+
+\hypertarget{estimating-an-ar-model}{%
+\section{Estimating an AR model}\label{estimating-an-ar-model}}
+
+When estimating the AR model we have two alternatives: 1. OLS: biased
+(but consistent) estimates. Also, later on when we add MA components we
+cannot use OLS.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Maximum Likelihood Estimation (MLE): can be used to estimate AR as
+  well as MA components
+\end{enumerate}
+
+\hypertarget{maximum-likelihood-estimation-mle}{%
+\subsection{Maximum Likelihood Estimation
+(MLE)}\label{maximum-likelihood-estimation-mle}}
+
+\begin{itemize}
+\tightlist
+\item
+  MLE approach is based on the following idea:
+\end{itemize}
+
+\emph{what set of values of our parameters maximize the likelihood of
+observing our data if the model we have was used to generate this data.}
+
+\textbf{Likelihood function}: is a function that gives us the
+probability of observing our data given a model with some parameters.
+
+\hypertarget{likelihood-vs-probability}{%
+\subsubsection{Likelihood vs
+Probability}\label{likelihood-vs-probability}}
+
+Consider a simple example of tossing a coin. Let \(X\) denotes the
+random variable that is the outcome of this experiment being either
+heads or tails. Let \(\theta\) denote the probability of heads which
+implies \(1-\theta\) is the probability of obtaining tails. Here,
+\(\theta\) is our parameter of interest. Suppose we toss the coin 10
+times and obtain the following data on \(X\):
+\[X=\{H,H,H,H,H,H,T,T,T,T\}\]
+
+Then, the probability of obtaining this sequence of X is given by:
+\[Prob (X|\theta)=\theta^6 (1-\theta)^4\]
+
+This is the probability distribution function the variable \(X\). As we
+change \(X\), we get a different probability for a given value of
+\(\theta\).
+
+Now let us ask a different question. Once we have observed the sequence
+of heads and tails, lets call it our data which is fixed. Then, what is
+probability of observing this data, if our probability distribution
+function is given by the equation above? That gives us the likelihood
+function:
+
+\[ L(\theta)=Prob(X|\theta)=\theta^6(1-\theta)^4\]
+
+Note that with fixed \(X\), as we change \(\theta\) the likelihood of
+observing this data will change.
+
+\textbf{This is an important point that distinguishes likelihood
+function from the probability distribution function. Although both have
+the same equation, the probability function is a function of the data
+with the value of the parameter fixed, while the likelihood function is
+a function of the parameter with the data fixed.}
+
+\hypertarget{maximum-likelhood-estimation}{%
+\subsubsection{Maximum Likelhood
+Estimation}\label{maximum-likelhood-estimation}}
+
+Now we are in a position to formally define the likelihood function.
+
+\BeginKnitrBlock{definition}
+\protect\hypertarget{def:unnamed-chunk-3}{}{\label{def:unnamed-chunk-3} }Let
+\(X\) denotes a random variable with a given probability distribution
+function denoted by \(f(x_i|\theta)\). Let \(D=\{x_1, x_2,\dots,x_n\}\)
+denote a sample realization of \(X\). Then, the likelhood function,
+denoted by \(L(\theta)\) is given by:
+\[L(\theta)=f(x_1,x_2,\dots,x_n|\theta)\]
+\EndKnitrBlock{definition}
+
+If we further assume that each realization of \(X\) is independent of
+the others, we get:
+\[L(\theta)=f(x_1,x_2,\dots,x_n|\theta)=f(x_1|\theta)\times f(x_2|\theta) \times \dots \times f(x_n|\theta)\]
+
+A mathematical simplification is to work with natural logs of the
+likelihood function, which assuming indpendently distributed random
+sample, gives us:
+
+\[ lnL(\theta)=ln(f(x_1|\theta)\times f(x_2|\theta) \times \dots \times f(x_n|\theta))=\sum_{i=1}^{N}ln(f(x_i|\theta))\]
+
+\BeginKnitrBlock{definition}
+\protect\hypertarget{def:unnamed-chunk-4}{}{\label{def:unnamed-chunk-4} }The
+maximum likelihood estimator, denoted by \(\hat{\theta}_{MLE}\),
+maximizes the log likelihood function:
+\[ \hat{\theta}_{MLE} \equiv arg \max_{\theta} lnL(\theta) \]
+\EndKnitrBlock{definition}
+
+\BeginKnitrBlock{example}
+\protect\hypertarget{exm:unnamed-chunk-5}{}{\label{exm:unnamed-chunk-5}
+}Compute maximum likelihood estimator of \(\mu\) of an indpendently
+distributed random variable that is normally distributed with a mean of
+\(\mu\) and a variance of \(1\):
+
+\[ f(y_t|\mu)=\frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2} (y_t-\mu)^2}\]
+
+Solution: The log likelihood function is given by:
+
+\[lnL= -Tln2\pi-\frac{1}{2}\sum_{t=1}^T(y_t-\mu)^2 \]
+
+From the first order condition, we get
+\[ \frac{\partial LnL}{\partial \mu}=\sum_{t=1}^T(y_t-\mu)=0\Rightarrow \hat{\mu}_{MLE}=\frac{\sum_{t=1}^T y_t}{T}\]
+\EndKnitrBlock{example}
+
+\hypertarget{mle-of-an-arp-model}{%
+\subsection{MLE of an AR(p) model}\label{mle-of-an-arp-model}}
+
+One complication we face in estimating an AR(p) model is that by
+definition the realizations of the variable are not independent of each
+other. As a result we cannot simplify the likelihood function by
+multiplying individual probablity density functions to obtain the joint
+probability density function, i.e.,
+\[ f(y_1,y_2,\dots,y_T|\theta) \neq f(y_1|\theta)\times f(y_2|\theta)\times \dots \times f(y_T|\theta)\]
+
+Furthermore, as the order of AR increases, the joint density function we
+need to estimate becomes even more compplicated.
+
+\hypertarget{forecasting-using-arp-model}{%
+\subsection{Forecasting using AR(p)
+model}\label{forecasting-using-arp-model}}
+
+Having estimated our AR(p) model with the optimal lag length, we can use
+the conditional mean to compute the forecast and conditional variance to
+compute the forecast errors. Consider an AR(1) model:
+
+\[y_t=\phi_0+\phi_1 y_{t-1} +\epsilon_t\]
+
+Then, the 1-period ahead forecast is given by:
+\[f_{t,1}=E(y_{t+1}|\Omega_t)=\phi_0+\phi_1 y_t\] Similaryl, the
+2-period ahead forecast is given by:
+\[f_{t,2}=E(y_{t+2}|\Omega_t)=\phi_0+\phi_1 E(y_{t+1}|\Omega_t) =\phi_0+\phi_1f_{t,1}\]
+
+In general, we can get the following recursive forecast equation for
+h-period's ahead: \[f_{t,h}=\phi_0+\phi_1 f_{t,h-1}\]
+
+Correspondingly, the 1-period ahead forecast error is given by:
+\[e_{t,1}=y_{t+1}- f_{t,1}=\epsilon_{t+1}\]
+
+The 2-period ahead forecast error is given by:
+
+\[e_{t,2}=y_{t+2}-f_{t,2}=\epsilon_{t+2}+\phi_1 \epsilon_{t+1} \] Hence,
+the h-period ahead forecast is given by:
+
+\[e_{t,h}=\epsilon_{t+h} + \phi_1 \epsilon_{t+h-1}\]
+
+\BeginKnitrBlock{theorem}
+\protect\hypertarget{thm:unnamed-chunk-6}{}{\label{thm:unnamed-chunk-6} }The
+h-period ahead forecast converges to the unconditional mean of \(y_t\),
+i.e., \[\lim_{h\to\infty} f_{t,h}=\mu_y=\frac{\phi_0}{1-\phi_1}\]
+\EndKnitrBlock{theorem}
 
 \hypertarget{moving-average-ma-model}{%
 \section{Moving Average (MA) Model}\label{moving-average-ma-model}}
@@ -1542,7 +1833,7 @@ process: \begin{equation}
     \end{equation}
 
 \hypertarget{armap-q}{%
-\section{ARMA(p, q)\}}\label{armap-q}}
+\section{ARMA(p, q)}\label{armap-q}}
 
 An ARMA model simply combines both AR and MA components to model the
 dynamics of a time series. Formula,

@@ -49,7 +49,7 @@ We can estimate this model using the OLS. One of the key component here is to de
 
 2. Exponential or log-linear trend: In some cases we may want to use an exponential trend or equivalently a log-linear trend.
 \begin{align}
-y_t=e^(\beta_0 +\beta_1 t +\epsilon_t)\\
+y_t=e^{(\beta_0 +\beta_1 t +\epsilon_t)}\\
 equivalently\\
 log(y_t)=\beta_0 +\beta_1 t +\epsilon_t
 \end{align}
