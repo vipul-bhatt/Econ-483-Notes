@@ -273,7 +273,15 @@ A stationary AR(1) model is given by:
  \[ Var(y_t)=\sigma^2_y= \frac{\sigma^2_\epsilon}{1-\phi_1^2}\]
     iii. ACF function:
     \[ \rho(s) = \phi_1^s\]
-    
+    iv. PACF function:
+  \begin{equation*}
+  PACF(s) =
+  \begin{cases}
+    \phi_1 & \text{if  s=1}\\
+    0 & \text{if s>1}
+  \end{cases}
+ \end{equation*}
+     
 ## Estimating an AR model
 
 When estimating the AR model we have two alternatives:
@@ -385,7 +393,7 @@ The h-period ahead forecast converges to the unconditional mean of $y_t$, i.e., 
 An ARMA model simply combines both AR and MA components to model the dynamics of a time series. Formula,
   
    \begin{equation}
-   y_t = \phi_0 +\phi_1 x_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
+   y_t = \phi_0 +\phi_1 y_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
    \end{equation}
 
  
