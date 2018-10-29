@@ -250,7 +250,7 @@ For a time series to be stationary there should be no **unit root**  in its *cha
 The characteristic equation is given by:
 \[\Phi(L)=1-\phi_1L=0 \]
 
-The root that satsifies the above equation is:
+The root that satisfies the above equation is:
 \[ L^*=\frac{1}{\phi_1}\]
 
 For no unit root to be present, $L^*>|1|$ which implies that $|\phi_1|<1$.
@@ -261,7 +261,7 @@ Typically, for any AR process to be stationary, some restrictions will be impose
 ### Properties of an AR(1) model
 
 A stationary AR(1) model is given by:
-\[ y_t=\phi_0 +\phi_1 y_{t-1}+ \epsilon_t \quad ; \ \epsilon_t\sim WN(0, \sigma^2) \ and \  |\phi_1|<1\]
+\[ y_t=\phi_0 +\phi_1 y_{t-1}+ \epsilon_t \quad ; \ \epsilon_t\sim WN(0, \sigma_\epsilon^2) \ and \  |\phi_1|<1\]
  
  1. $\displaystyle \phi_1$  measures the persistence in data. A larger value indicates shocks to $y_t$ dissipate slowly over time.
  
@@ -285,6 +285,7 @@ A stationary AR(1) model is given by:
 ## Estimating an AR model
 
 When estimating the AR model we have two alternatives:
+
 1. OLS: biased (but consistent) estimates. Also, later on when we add MA components we cannot use OLS.
 
 2. Maximum Likelihood Estimation (MLE): can be used to estimate AR as well as MA components
@@ -326,7 +327,7 @@ Let $X$ denotes a random variable with a given probability distribution function
 If we further assume that each realization of $X$ is independent of the others, we get:
 \[L(\theta)=f(x_1,x_2,\dots,x_n|\theta)=f(x_1|\theta)\times f(x_2|\theta) \times \dots \times f(x_n|\theta)\]
 
-A mathematical simplification is to work with natural logs of the likelihood function, which assuming indpendently distributed random sample, gives us:
+A mathematical simplification is to work with natural logs of the likelihood function, which assuming independently distributed random sample, gives us:
 
 \[ lnL(\theta)=ln(f(x_1|\theta)\times f(x_2|\theta) \times \dots \times f(x_n|\theta))=\sum_{i=1}^{N}ln(f(x_i|\theta))\]
 
@@ -349,10 +350,43 @@ From the first order condition, we get
 ```
 ### MLE of an AR(p) model
 
-One complication we face in estimating an AR(p) model is that by definition the realizations of the variable are not independent of each other. As a result we cannot simplify the likelihood function by multiplying individual probablity density functions to obtain the joint probability density function, i.e.,
+One complication we face in estimating an AR(p) model is that by definition the realizations of the variable are not independent of each other. As a result we cannot simplify the likelihood function by multiplying individual probability density functions to obtain the joint probability density function, i.e.,
 \[ f(y_1,y_2,\dots,y_T|\theta) \neq f(y_1|\theta)\times f(y_2|\theta)\times \dots \times f(y_T|\theta)\]
 
-Furthermore, as the order of AR increases, the joint density function we need to estimate becomes even more compplicated. 
+Furthermore, as the order of AR increases, the joint density function we need to estimate becomes even more complicated. In this class we will focus on the method that divides the joint density into the product of conditional densities and density of a set of initial values. The idea comes from the conditional probability formula for two related events $A$ and $B$:
+
+\[ P(A|B) =\frac{P(\text{A and B})}{P(B)} \Rightarrow P(\text{A and B}) = P(A|B)\times P(B) \]
+
+In the time series context, I will explain this for a stationary AR(1) model. We know that in this model only last period observation directly affects the current period value. Hence, consider the first two observations of a stationary time series: $y_1$ and $y_2$. Then the joint density of these adjacent observations is given by,
+
+\[ f(y_1,y_2;\theta)= f(y_2|y_1; \theta)\times f(y_1;\theta)\]
+
+Similarly, for the first three observations we get:
+
+\[ f(y_1,y_2,y_3;\theta)= f(y_3|y_2; \theta)\times f(y_2|y_1; \theta) \times f(y_1; \theta)\]
+
+Hence, for $T$ observations we get:
+
+
+\[ f(y_1,y_2,y_3, ...,y_T; \theta)= f(y_T|y_{T-1};\theta)\times f(y_{T-1}|y_{T-2}; \theta)\times.... \times f(y_1; \theta)\]
+
+The log-likelihood function is given by:
+
+\[ ln \ L(\theta) = ln \ f(y_1;\theta) + \sum_{t=2}^{T} ln \ f(y_t|y_{t-1}; \theta)  \]
+
+We can then maximize the above likelihood function to obtain an MLE estimator for the AR(1) model.
+
+### Selection of optimal order of the AR model
+
+Note that apriori we do not know the order of the AR model for any given time series. We can determine the optimal lag order by using either AIC or BIC. The process is as follows:
+
+1. Set $p=p_{max}$ where $p_{max}$ is an integer. A rule of thumb is to set
+\[p_{max}=integer\left[12\times \left(\frac{T}{100}\right)^{0.25}\right]\]
+
+2. Estimate all AR models from $p=1$ to $p=p_{max}$.
+
+3. Select the  final model as the one with lowest AIC or lowest BIC.
+
 
 ### Forecasting using AR(p) model
 
@@ -362,7 +396,7 @@ Having estimated our AR(p) model with the optimal lag length, we can use the con
 
 Then, the 1-period ahead forecast is given by:
 \[f_{t,1}=E(y_{t+1}|\Omega_t)=\phi_0+\phi_1 y_t\]
-Similaryl, the 2-period ahead forecast is given by:
+Similarly, the 2-period ahead forecast is given by:
  \[f_{t,2}=E(y_{t+2}|\Omega_t)=\phi_0+\phi_1 E(y_{t+1}|\Omega_t) =\phi_0+\phi_1f_{t,1}\]
 
 In general, we can get the following recursive forecast equation for h-period's ahead:
@@ -381,13 +415,90 @@ Hence, the h-period ahead forecast is given by:
 ```{theorem}
 The h-period ahead forecast converges to the unconditional mean of $y_t$, i.e., $$\lim_{h\to\infty} f_{t,h}=\mu_y=\frac{\phi_0}{1-\phi_1}$$
 ```
+```{theorem}
+The variance of the h-period ahead forecast error converges to the unconditional variance of $y_t$, i.e., $$\lim_{h\to\infty} Var(e_{t,h})=\sigma^2_y=\frac{\sigma^2_\epsilon}{1-\phi_1^2}$$
+```
 
 ## Moving Average (MA) Model
-  A *stationary* time series $\{y_t\}$ can be modeled as an MA(q) process:
+Another commonly used method for capturing the cyclical component of the time series is the **moving average (MA)** model where the current value of a time series linearly depends on current and past shocks. Formally, a *stationary* time series $\{y_t\}$ can be modeled as an MA(q) process:
   \begin{equation}
   y_t = \theta_0 + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
     \end{equation}
-  
+
+Using lag operator, we can write this in more compact form as:
+
+\[y_t = \theta_0 +\Theta(L) \epsilon_t\]
+
+where $\Theta(L)=1+\theta_1 L+ \theta_2 L^2+...+\theta_q L^q$ is lag polynomial of order $q$.
+
+Note that because each one of the current and past shocks are white noise processes, an MA(q) model is always stationary.
+
+
+### Invertibility of an MA process
+
+Consider the following MA(1) process with$\theta_0=0$ for simplicity:
+\[y_t=\epsilon_t +\theta_1 \epsilon_{t-1}\]
+
+Using the lag operator we can rewrite this equation as follows:
+
+\[y_t= (1+\theta_1L)\epsilon_t \Rightarrow y_t(1+\theta_1 L) ^{-1}=\epsilon_t\]
+
+Note that if $|\theta_1|<1$, then we can use the Taylor series expansion centered at 0 and get:
+
+\[(1+\theta_1 L)^{-1}=1-\theta_1 L+(\theta_1L)^2-(\theta_1L)^3+ (\theta_1L)^4-...... \]
+
+Hence, an MA(1) can be rewritten as follows:
+
+\[y_t (1-\theta_1 L+(\theta_1L)^2-(\theta_1L)^3+ (\theta_1L)^4-......)=\epsilon_t\]
+\[\Rightarrow y_t -\theta_1 y_{t-1} +\theta_1^2y_{t-2}-\theta_1^3 y_{t-3}....=\epsilon_t\]
+
+Rearranging terms, we get the $AR(\infty)$ representation for an invertible MA(1) model:
+\[y_t=-\sum_{i=1}^{\infty}(-\theta_1)^i \ y_{t-i}+\epsilon_t\]
+
+```{definition}
+An MA process is invertible if it can be represented as a stationary $AR(\infty)$.
+```
+
+### Properties of an invetible MA(1)
+
+An invertible MA(1) model is given by:
+
+\[ y_t = \theta_0 + \epsilon_t + \theta_1 \epsilon_{t-1} \quad ; \ \epsilon_t\sim WN(0, \sigma_\epsilon^2) \ and \  |\theta_1|<1\]
+
+
+1. Constant unconditional mean of $y_t$:
+\[E(y_t)=\mu_y =\theta_0 \]
+
+2. Constant unconditional variance of $y_t$:
+
+\[Var(y_t)=\sigma^2_y=\sigma^2_\epsilon(1+\theta_1^2)\])
+
+3. ACF function:
+  \begin{equation*}
+  ACF(s) =
+  \begin{cases}
+    \frac{\theta_1}{1+\theta_1^2} & \text{if  s=1}\\
+    0 & \text{if s>1}
+  \end{cases}
+ \end{equation*}
+
+4. PACF function: using the invertibility it is evident that PACF of an MA(1) decays with $s$.
+
+### Forecast based on MA(q)
+
+Like before, the h-period ahead forecast is the conditional expected value of the time series. Consider an MA(1) model:
+
+\[y_t=\theta_0 +\epsilon_t + \theta_1 \epsilon_{t-1}\]
+
+Then, the 1-period ahead forecast is given by:
+
+
+The h-period ahead forecast for $h>1$ is given by:
+ \[f_{t,h}=E(y_{t+h}|\Omega_t)=\theta_0\]
+ 
+In general, for an MA(q) model, the forecast for $h>q$ is the long run mean $\theta_0$.  This is why we say that an MA(q) process has a memory of *q* periods.
+
+
 ## ARMA(p, q)
   
 An ARMA model simply combines both AR and MA components to model the dynamics of a time series. Formula,
@@ -396,4 +507,25 @@ An ARMA model simply combines both AR and MA components to model the dynamics of
    y_t = \phi_0 +\phi_1 y_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
    \end{equation}
 
+Note that:
+
+1. Estimation is done by maximum likelihood method. 
+
+2. Optimal order for AR and MA components is selected using AIC and/or BIC.
+
+3. The forecast of $y_t$ from an ARMA(p,q)  model will be dominated by the AR component for $h>q$. To see this consider the following ARMA(1,1) model:
+
+\[y_t = \phi_0 +\phi_1 y_{t-1}+ \epsilon_t + \theta_1 \epsilon_{t-1}\]
+
+Then, the 1-period ahead forecast is:
+\[f_{t,1} = E(y_{t+1}|\Omega_t) = \phi_0 + \phi_1 y_t + \theta_1 \epsilon_{t-1}\]
  
+Here both MA and AR component affect the forecast. But now consider the 2-period ahead forecast:
+
+\[f_{t,2} = E(y_{t+2}|\Omega_t) = \phi_0 + \phi_1 f_{t,1}\]
+
+Here there is no role played by the MA component. For any $h>1$ only the AR component affects the forecast from this model.
+
+
+## Testing for Unit root
+
