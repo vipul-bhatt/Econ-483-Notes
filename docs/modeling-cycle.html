@@ -391,12 +391,8 @@ Similarly, the 2-period ahead forecast is given by:
 <span class="math display">\[f_{t,2}=E(y_{t+2}|\Omega_t)=\phi_0+\phi_1 E(y_{t+1}|\Omega_t) =\phi_0+\phi_1f_{t,1}\]</span></p>
 <p>In general, we can get the following recursive forecast equation for h-period’s ahead:
 <span class="math display">\[f_{t,h}=\phi_0+\phi_1 f_{t,h-1}\]</span></p>
-<p>Correspondingly, the 1-period ahead forecast error is given by:
-<span class="math display">\[e_{t,1}=y_{t+1}- f_{t,1}=\epsilon_{t+1}\]</span></p>
-<p>The 2-period ahead forecast error is given by:</p>
-<p><span class="math display">\[e_{t,2}=y_{t+2}-f_{t,2}=\epsilon_{t+2}+\phi_1 \epsilon_{t+1} \]</span>
-Hence, the h-period ahead forecast is given by:</p>
-<p><span class="math display">\[e_{t,h}=\epsilon_{t+h} + \phi_1 \epsilon_{t+h-1}\]</span></p>
+<p>Correspondingly, the h-period ahead forecast error is given by:
+<span class="math display">\[e_{t,h}=y_{t+h}- f_{t,h}=\epsilon_{t+h}+\phi_1 e_{t,h-1}\]</span></p>
 
 <div class="theorem">
 <span id="thm:unnamed-chunk-6" class="theorem"><strong>Theorem 6.1  </strong></span>The h-period ahead forecast converges to the unconditional mean of <span class="math inline">\(y_t\)</span>, i.e., <span class="math display">\[\lim_{h\to\infty} f_{t,h}=\mu_y=\frac{\phi_0}{1-\phi_1}\]</span>

@@ -1864,15 +1864,8 @@ Then, the 1-period ahead forecast is given by:
 In general, we can get the following recursive forecast equation for
 h-period's ahead: \[f_{t,h}=\phi_0+\phi_1 f_{t,h-1}\]
 
-Correspondingly, the 1-period ahead forecast error is given by:
-\[e_{t,1}=y_{t+1}- f_{t,1}=\epsilon_{t+1}\]
-
-The 2-period ahead forecast error is given by:
-
-\[e_{t,2}=y_{t+2}-f_{t,2}=\epsilon_{t+2}+\phi_1 \epsilon_{t+1} \] Hence,
-the h-period ahead forecast is given by:
-
-\[e_{t,h}=\epsilon_{t+h} + \phi_1 \epsilon_{t+h-1}\]
+Correspondingly, the h-period ahead forecast error is given by:
+\[e_{t,h}=y_{t+h}- f_{t,h}=\epsilon_{t+h}+\phi_1 e_{t,h-1}\]
 
 \BeginKnitrBlock{theorem}
 \protect\hypertarget{thm:unnamed-chunk-6}{}{\label{thm:unnamed-chunk-6} }The
