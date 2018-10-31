@@ -466,7 +466,7 @@ An invertible MA(1) model is given by:
 
 2. Constant unconditional variance of $y_t$:
 
-\[Var(y_t)=\sigma^2_y=\sigma^2_\epsilon(1+\theta_1^2)\])
+\[Var(y_t)=\sigma^2_y=\sigma^2_\epsilon(1+\theta_1^2)\]
 
 3. ACF function:
   \begin{equation*}
@@ -522,5 +522,151 @@ Here both MA and AR component affect the forecast. But now consider the 2-period
 Hence, no role is played by the MA component in determining the 2-period ahead forecast. For any $h>1$ only the AR component affects the forecast from this model.
 
 
-## Testing for Unit root
+## Integrated ARMA or ARIMA(p,d,q)
+
+Thus far we have assumed that our data is stationary. However, often we may find that this assumption is not supported in practice. In such a case we need to tranform our data appropriately before estimating an ARMA model. The procedure can be summarized as follows:
+
+1. Determine whether there is a unit root in data or not. Presence of unit root indicates non-stationarity. We will use Augmented Dickey-Fuller (ADF) test for this purpose.
+
+2. If data is non-stationary, then we need to appropriately transform our data to make it stationary. 
+
+3. Once we have obtained a stationary transformation of our original data, we can proceed and estimate the ARMA model as before.
+
+## Trend Stationary vs Difference Stationary Time Series
+
+There are two types of time series we often encounter in real world:
+
+1. Trend-stationary: a time-series variable is non-stationary becuase it has a deterministic trend. Once we detrend our data then it will become stationary. In this case the appropriate transformation is to estimate a trend model and then use the residual as the detrended stationary data. For example, suppose our data has a linear trend given by:
+
+\[y_t = \beta_0 +\beta_1 t +\epsilon_t\]
+
+Then the OLS residual from this model, $e_t=y_t-\hat{y_t}$ is the detrended $y_t$ which will be stationary. Hence, we will estimate an ARMA(p,q) model using this detrended variable.
+
+2. Difference-stationary: a time-series variable is non-stationary because it contains a stochastic trend. Here, the transformation requires us to difference the orignial data until we obtain a stationary time series. Let $d$ denote the minimum number of differences needed to obtain a stationary time series:
+
+\[\Delta_d \ y_t=(1-L)^d \ y_t\]
+
+In this case, we say that $y_t$ is intergrated of order $d$ or more formally, $y_t$ is an $I(d)$ process. Hence, for $d=1$ we obtain an $I(1)$ process implying that:
+
+\[\Delta_1 \ y_t=(1-L)^1 \ y_t=y_t-y_{t-1} \quad  \text{is stationary}\]
+
+In otherwords, the first difference of an I(1) process is stationary. Similarly for $d=2$, we obtain an $I(2)$ process where second difference will be stationary and so forth. 
+
+## Testing for a unit root
+
+Consider the following AR(1) model with no trend and intercept:
+
+\[y_t=\phi_1 y_{t-1} +\epsilon_t  \ quad ; \epsilon_t\sim WN(0,\sigma^2_\epsilon)\]
+
+We know that if $\phi_1=1$ we have a unit root in this data. Lets subtract $y_{t-1}$ from both sides and rewrite this model as:
+
+\[y_t-y_{t-1}= (\phi_1-1)y_{t-1}+\epsilon_t \]
+
+Define $\rho=phi_1-1$. Then, we get:
+\[\Delta y_t= \rho \ y_{t-1}+\epsilon_t \]
+
+We can now estimate the above model and carry out the following test known as the Dickey-Fuller (DF) test:
+
+\[H_0: \rho=0 \]
+\[H_A: \rho<0\]
+
+If the null hypothesis is not rejected, then we do not have sample evidence against the statement that $\rho=0 \Rightarrow \phi_1=1$. Hence, we conclude that there is no evidence against the statement that there is unit root in the data. In contrast, if we reject the null hypothesis, then we can conclude that there is no unit root and hence the data is stationary.
+
+The t- statistic is for the above test is denoted by $\tau_1$ and is given by:
+\[\tau_1 =\frac{\hat{\rho}}{se(\hat{\rho})}\]
+
+Under the null hypothesis this test statistic follows the DF-distribution and the critical values are provided in most statistical softwares. Given that this is a left-tail test, the decision rule is that if the test statistic is less than the critical value then we reject the null hypothesis.
+
+There are two issues we face when implementing this test in practice:
+
+1. First, the above procedure assumes that there is no intercept and trend in the data. In real world, we cannot make that assumption and must extend the test procedure to accomodate a non-zero intercept and trend. Hence, we have the following two additional versions of the DF test:
+    i. Constant and no trend model: Here our AR(1) model is
+      
+      \[\Delta y_t= \phi_0 + \rho \ y_{t-1}+\epsilon_t \]
+      
+      Now we can do two possible tests. The first test is that of the unit root:
+      
+      \[H_0: \rho=0 \]
+      \[H_A: \rho<0\]
+
+     The t statistic for this test is denoted by $\tau_2$ and is given by:
+    \[\tau_2 =\frac{\hat{\rho}}{se(\hat{\rho})}\]
+
+     If the test statisitic is less than the critical value, we reject the null. 
+       
+     The second test we can do is:
+    \[H_0: \rho=\phi_0=0 \]
+    \[H_A: Not \ H_0\]
+    The test statistic for this test is denoted by  $\phi_1$. If the test statistic      exceeds the critical value then we reject the null.
+
+    ii. Constant and linear trend model: Here our AR(1) model is
+    
+    \[\Delta y_t= \phi_0 + \beta \ t+ \rho \ y_{t-1}+\epsilon_t \]
+    
+    Now we can do three possible tests. The first test is that of the unit root;
+          \[H_0: \rho=0 \]
+           \[H_A: \rho<0\]
+    The t statistic for this test is denoted by $\tau_3$ and is given by:
+
+    \[\tau_3 =\frac{\hat{\rho}}{se(\hat{\rho})}\]
+
+    If the test statisitic is less than the critical value, we reject the null. 
+
+    The second test is:
+    \[H_0: \rho=\phi_0=\beta=0 \]
+           \[H_A: Not \ H_0\]
+    The test statistic for this test is denoted by  $\phi_2$. If the test statistic exceeds the critical value then we reject the null.
+
+    Finally the third test is: 
+           \[H_0: \rho=\beta=0 \]
+           \[H_A: Not \ H_0\]
+    The test statistic for this test is denoted by  $\phi_3$. If the test statistic      exceeds the critical value then we reject the null.
+
+2. Second, we only have allowed for AR(1). We need to extend the above testing procedure for higher order AR models. The Augmented DF (ADF) test allows for higher order lags in testing for a unit root. For example, the model with an intercept, trend, and $p$ lags is given by:
+ \[\Delta y_t= \phi_0 + \beta \ t+ \rho \ y_{t-1}+\sum_{i=2}^p\delta_i  y_{t-i}+\epsilon_t  \quad where \ \rho=\sum_{i=1}^p \phi_i-1\]
+   
+### Testing for unit root in USD/CAD exchange rate
+
+In this application we will test for unit root in US-Canada exchange rate. For this purpose we work with monthly data from Jan 1971 through Oct 2018. Below I show the results for 3 models using the **urca** package in R.
+
+```{r, echo=F}
+
+library(urca)
+library(quantmod)
+library(knitr)
+
+options("getSymbols.warning4.0"=FALSE)
+invisible(getSymbols('EXCAUS',src='FRED'))
+
+y=EXCAUS
+
+
+###3 adf test
+one=summary(ur.df(y,type="none",selectlags="AIC"))
+two=summary(ur.df(y,type="drift",selectlags="AIC"))
+three=summary(ur.df(y,type="trend",selectlags="AIC"))
+
+one; two; three
+```
+
+For the first model with no constant and trend, the test statistic $\tau_1= 0.2469$ and the 5\% critical value is -1.95. For the second model with a constant, the test statistics is $\tau_2= -1.9315$ and the 5\% critical value is -2.86. Finally, for the third model with a trend, the test statistic $\tau_3= -1.8839$ and the 5\% critical value is -3.41. In each, because the test statistic is greater than the critical value, we do not reject the null hypothesis and conclude there is unit root.
+
+## Box-Jenkins Method for estimating ARIMA(p,d,q)
+
+Box-Jenkins is a three-step procedure for finding the best fitting ARIMA(p,d,q) for a non-statinary time series.
+
+1. Model identification: here we determine the order of integration $d$, and the optimal number of AR and MA components, $p$ and $q$ respectively. 
+
+    i. To determine $d$, we conduct ADF test on successive differences of the original time series. The order of integration is the number times we difference our data to obtain stationarity.
+    ii. This is followed by estimating ARMA model for different combinations of $p$ and $q$. The optimal structure is chosen using eithr AIC or BIC.
+
+
+2. Parameter estimation: we estimate the identified model from the previous step using ML estimation.
+
+3. Model Evaluation: mostly showing that the residuals from the optimal model is a white noise process. We can do this by using the Breusch-Godfrey LM test of serial correlation for the residuals. We would want to find no serial correlation in the residuals from the final model.
+
+
+
+
+
 
