@@ -37,7 +37,7 @@ Hence, we now need a class of models where $Var(y_t|\omega_t)$ are not constant 
 
 ## Some stylized facts about stock market volatility
 
-Before proceeding with formally modeling the conditional variance of a time series, let us establish some stylized facts about financial assest, such as a stock. Below I plot the return for SP500 along with its ACF (see Figure 1A and 1B). Using squared returns as a proxy for variance, I also plot squared returns for SP500 and its ACF (see Figure 2A and 2B).
+Before proceeding with formally modeling the conditional variance of a time series, let us establish some stylized facts about financial assets, such as a stock. Below I plot the return for SP500 along with its ACF (see Figure 1A and 1B). Using squared returns as a proxy for variance, I also plot squared returns for SP500 and its ACF (see Figure 2A and 2B).
 
 ```{r ch7-figure1, message=FALSE, warning=FALSE, echo = FALSE, fig.cap = '', out.width='100%', fig.asp=.75, fig.align='center'}
 
@@ -65,13 +65,13 @@ acf(coredata(y2),main="Figure 2B: ACF of Squared SP500 Return")
 
 ```
 
-Focusing on the volatility, the plot of sqaured returns and its ACF establishes the following stylized facts:
+Focusing on the volatility, the plot of squared returns and its ACF establishes the following stylized facts:
 
-1. From Figure 2A, we observe that large values of squared returns cluster together, and small values of squared returns cluster together. That is periods of high volatility are followed by periods of high volatility and periods of low volatility are followed by periods of low volatility. This phenomenon is knownn as **volatility persistence** or **volatility clustering** in the fields of economics and finance.
+1. From Figure 2A, we observe that large values of squared returns cluster together, and small values of squared returns cluster together. That is periods of high volatility are followed by periods of high volatility and periods of low volatility are followed by periods of low volatility. This phenomenon is known as **volatility persistence** or **volatility clustering** in the fields of economics and finance.
 
 2. A more direct evidence for volatility persistence can be inferred from the ACF plot of squared returns. From Figure 2B, we observe a strong positive serial correlation in squared returns. 
 
-Hence, it is reasonable to assume that the variace of a financial time series may not be constant over time. Next we learn two  classes of models that have been suggested to model conditional variance of a time series.
+Hence, it is reasonable to assume that the variance of a financial time series may not be constant over time. Next we learn two  classes of models that have been suggested to model conditional variance of a time series.
 
 ## ARCH(q): Autoregressive Conditional Heteroscedasticiy of order $q$
 
@@ -99,7 +99,7 @@ i. Unconditional variance: The unconditional variance of $y_t$ is still constant
 
 ii. Volatility persistence: the persistence is given by $\alpha_1+\beta_1$.
 
-iii. Half-life measure: R is the number of peridos it takes for the estimated volatilty to converge to half of the unconditional variance of the time series.
+iii. Half-life measure: R is the number of periods it takes for the estimated volatility to converge to half of the unconditional variance of the time series.
 
 
 ## Extensions of standard GARCH model
@@ -157,7 +157,7 @@ plot(e,sigma3, main="Figure 3C: Asymmetric News Impact Curve-Positive news has b
 
 ### GJR-GARCH(1,1)
 
-Glosten, Jagannathan, and Runkle (1993) proposed a variation of the standard GARCH model that incorporates the asymmetry of the impact of news on volatility.  The resulting model is called GJR-GARCH and it addresses the first of the issues listed abov. Formally, the variance equation of the GJR-GARCH(1,1) is given by:
+Glosten, Jagannathan, and Runkle (1993) proposed a variation of the standard GARCH model that incorporates the asymmetry of the impact of news on volatility.  The resulting model is called GJR-GARCH and it addresses the first of the issues listed above. Formally, the variance equation of the GJR-GARCH(1,1) is given by:
 
 \[ \sigma_t^2=\omega+\alpha_1 \epsilon^2_{t-1}+\beta_1 \sigma^2_{t-1}+\gamma_1 D_{t-1}\epsilon^2_{t-1}\]
 
@@ -169,6 +169,6 @@ Exponential GARCH model by Nelson (1991) accounts for both the issues outlined a
 
 \[ln(\sigma^2_{t-1})=\omega+ \alpha_1 z_{t-1} +\gamma_1 (|z_{t-1}|-E|z_{t-1}|) +\beta_1\sigma^2_{t-1}\]
 
-where $z_t=\frac{\epsilon_t}{\sigma_t}$ is the standardized error term. Here, $\alpha_1$ captures the sign effect and $\gamma_1$ captures the size effect. 
+where $z_t=\frac{\epsilon_t}{\sigma_t}$ is the standardized error term. Here, $\alpha_1$ captures the sign effect and $\gamma_1$ captures the size effect. A common finding is that negative news and larger shocks have bigger effect on volatility. Accordingly, we often find in empirical applications of EGARCH that $\alpha_1<0$ and $\gamma_1>0$.
 
 
