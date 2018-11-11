@@ -660,10 +660,9 @@ Box-Jenkins is a three-step procedure for finding the best fitting ARIMA(p,d,q) 
     i. To determine $d$, we conduct ADF test on successive differences of the original time series. The order of integration is the number times we difference our data to obtain stationarity.
     ii. This is followed by estimating ARMA model for different combinations of $p$ and $q$. The optimal structure is chosen using eithr AIC or BIC.
 
-
 2. Parameter estimation: we estimate the identified model from the previous step using ML estimation.
 
-3. Model Evaluation: mostly showing that the residuals from the optimal model is a white noise process. We can do this by using the Breusch-Godfrey LM test of serial correlation for the residuals. We would want to find no serial correlation in the residuals from the final model.
+3. Model Evaluation: mostly showing that the residuals from the optimal model is a white noise process. We can do this by using the Breusch-Godfrey LM test of serial correlation for the residuals. If residuals  from the final model are white noise then there should be no serial correlation.
 
 
 
