@@ -85,7 +85,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-10-31}
+    \date{2018-11-11}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -1948,7 +1948,7 @@ An invertible MA(1) model is given by:
   Constant unconditional variance of \(y_t\):
 \end{enumerate}
 
-\[Var(y_t)=\sigma^2_y=\sigma^2_\epsilon(1+\theta_1^2)\])
+\[Var(y_t)=\sigma^2_y=\sigma^2_\epsilon(1+\theta_1^2)\]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -2022,8 +2022,637 @@ Hence, no role is played by the MA component in determining the 2-period
 ahead forecast. For any \(h>1\) only the AR component affects the
 forecast from this model.
 
-\hypertarget{testing-for-unit-root}{%
-\section{Testing for Unit root}\label{testing-for-unit-root}}
+\hypertarget{integrated-arma-or-arimapdq}{%
+\section{Integrated ARMA or
+ARIMA(p,d,q)}\label{integrated-arma-or-arimapdq}}
+
+Thus far we have assumed that our data is stationary. However, often we
+may find that this assumption is not supported in practice. In such a
+case we need to tranform our data appropriately before estimating an
+ARMA model. The procedure can be summarized as follows:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Determine whether there is a unit root in data or not. Presence of
+  unit root indicates non-stationarity. We will use Augmented
+  Dickey-Fuller (ADF) test for this purpose.
+\item
+  If data is non-stationary, then we need to appropriately transform our
+  data to make it stationary.
+\item
+  Once we have obtained a stationary transformation of our original
+  data, we can proceed and estimate the ARMA model as before.
+\end{enumerate}
+
+\hypertarget{trend-stationary-vs-difference-stationary-time-series}{%
+\section{Trend Stationary vs Difference Stationary Time
+Series}\label{trend-stationary-vs-difference-stationary-time-series}}
+
+There are two types of time series we often encounter in real world:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Trend-stationary: a time-series variable is non-stationary becuase it
+  has a deterministic trend. Once we detrend our data then it will
+  become stationary. In this case the appropriate transformation is to
+  estimate a trend model and then use the residual as the detrended
+  stationary data. For example, suppose our data has a linear trend
+  given by:
+\end{enumerate}
+
+\[y_t = \beta_0 +\beta_1 t +\epsilon_t\]
+
+Then the OLS residual from this model, \(e_t=y_t-\hat{y_t}\) is the
+detrended \(y_t\) which will be stationary. Hence, we will estimate an
+ARMA(p,q) model using this detrended variable.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Difference-stationary: a time-series variable is non-stationary
+  because it contains a stochastic trend. Here, the transformation
+  requires us to difference the orignial data until we obtain a
+  stationary time series. Let \(d\) denote the minimum number of
+  differences needed to obtain a stationary time series:
+\end{enumerate}
+
+\[\Delta_d \ y_t=(1-L)^d \ y_t\]
+
+In this case, we say that \(y_t\) is intergrated of order \(d\) or more
+formally, \(y_t\) is an \(I(d)\) process. Hence, for \(d=1\) we obtain
+an \(I(1)\) process implying that:
+
+\[\Delta_1 \ y_t=(1-L)^1 \ y_t=y_t-y_{t-1} \quad  \text{is stationary}\]
+
+In otherwords, the first difference of an I(1) process is stationary.
+Similarly for \(d=2\), we obtain an \(I(2)\) process where second
+difference will be stationary and so forth.
+
+\hypertarget{testing-for-a-unit-root}{%
+\section{Testing for a unit root}\label{testing-for-a-unit-root}}
+
+Consider the following AR(1) model with no trend and intercept:
+
+\[y_t=\phi_1 y_{t-1} +\epsilon_t  \ quad ; \epsilon_t\sim WN(0,\sigma^2_\epsilon)\]
+
+We know that if \(\phi_1=1\) we have a unit root in this data. Lets
+subtract \(y_{t-1}\) from both sides and rewrite this model as:
+
+\[y_t-y_{t-1}= (\phi_1-1)y_{t-1}+\epsilon_t \]
+
+Define \(\rho=phi_1-1\). Then, we get:
+\[\Delta y_t= \rho \ y_{t-1}+\epsilon_t \]
+
+We can now estimate the above model and carry out the following test
+known as the Dickey-Fuller (DF) test:
+
+\[H_0: \rho=0 \] \[H_A: \rho<0\]
+
+If the null hypothesis is not rejected, then we do not have sample
+evidence against the statement that \(\rho=0 \Rightarrow \phi_1=1\).
+Hence, we conclude that there is no evidence against the statement that
+there is unit root in the data. In contrast, if we reject the null
+hypothesis, then we can conclude that there is no unit root and hence
+the data is stationary.
+
+The t- statistic is for the above test is denoted by \(\tau_1\) and is
+given by: \[\tau_1 =\frac{\hat{\rho}}{se(\hat{\rho})}\]
+
+Under the null hypothesis this test statistic follows the
+DF-distribution and the critical values are provided in most statistical
+softwares. Given that this is a left-tail test, the decision rule is
+that if the test statistic is less than the critical value then we
+reject the null hypothesis.
+
+There are two issues we face when implementing this test in practice:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  First, the above procedure assumes that there is no intercept and
+  trend in the data. In real world, we cannot make that assumption and
+  must extend the test procedure to accomodate a non-zero intercept and
+  trend. Hence, we have the following two additional versions of the DF
+  test:
+
+  \begin{enumerate}
+  \def\labelenumii{\roman{enumii}.}
+  \tightlist
+  \item
+    Constant and no trend model: Here our AR(1) model is
+  \end{enumerate}
+
+  \[\Delta y_t= \phi_0 + \rho \ y_{t-1}+\epsilon_t \]
+
+  Now we can do two possible tests. The first test is that of the unit
+  root:
+
+  \[H_0: \rho=0 \] \[H_A: \rho<0\]
+
+  The t statistic for this test is denoted by \(\tau_2\) and is given
+  by: \[\tau_2 =\frac{\hat{\rho}}{se(\hat{\rho})}\]
+
+  If the test statisitic is less than the critical value, we reject the
+  null.
+
+  The second test we can do is: \[H_0: \rho=\phi_0=0 \]
+  \[H_A: Not \ H_0\] The test statistic for this test is denoted by
+  \(\phi_1\). If the test statistic exceeds the critical value then we
+  reject the null.
+
+  \begin{enumerate}
+  \def\labelenumii{\roman{enumii}.}
+  \setcounter{enumii}{1}
+  \tightlist
+  \item
+    Constant and linear trend model: Here our AR(1) model is
+  \end{enumerate}
+
+  \[\Delta y_t= \phi_0 + \beta \ t+ \rho \ y_{t-1}+\epsilon_t \]
+
+  Now we can do three possible tests. The first test is that of the unit
+  root; \[H_0: \rho=0 \] \[H_A: \rho<0\] The t statistic for this test
+  is denoted by \(\tau_3\) and is given by:
+
+  \[\tau_3 =\frac{\hat{\rho}}{se(\hat{\rho})}\]
+
+  If the test statisitic is less than the critical value, we reject the
+  null.
+
+  The second test is: \[H_0: \rho=\phi_0=\beta=0 \] \[H_A: Not \ H_0\]
+  The test statistic for this test is denoted by \(\phi_2\). If the test
+  statistic exceeds the critical value then we reject the null.
+
+  Finally the third test is: \[H_0: \rho=\beta=0 \] \[H_A: Not \ H_0\]
+  The test statistic for this test is denoted by \(\phi_3\). If the test
+  statistic exceeds the critical value then we reject the null.
+\item
+  Second, we only have allowed for AR(1). We need to extend the above
+  testing procedure for higher order AR models. The Augmented DF (ADF)
+  test allows for higher order lags in testing for a unit root. For
+  example, the model with an intercept, trend, and \(p\) lags is given
+  by:
+  \[\Delta y_t= \phi_0 + \beta \ t+ \rho \ y_{t-1}+\sum_{i=2}^p\delta_i  y_{t-i}+\epsilon_t  \quad where \ \rho=\sum_{i=1}^p \phi_i-1\]
+\end{enumerate}
+
+\hypertarget{testing-for-unit-root-in-usdcad-exchange-rate}{%
+\subsection{Testing for unit root in USD/CAD exchange
+rate}\label{testing-for-unit-root-in-usdcad-exchange-rate}}
+
+In this application we will test for unit root in US-Canada exchange
+rate. For this purpose we work with monthly data from Jan 1971 through
+Oct 2018. Below I show the results for 3 models using the \textbf{urca}
+package in R.
+
+\begin{verbatim}
+## 
+## ############################################### 
+## # Augmented Dickey-Fuller Test Unit Root Test # 
+## ############################################### 
+## 
+## Test regression none 
+## 
+## 
+## Call:
+## lm(formula = z.diff ~ z.lag.1 - 1 + z.diff.lag)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.069469 -0.008830  0.000389  0.010496  0.125022 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## z.lag.1    0.0001638  0.0005836   0.281    0.779    
+## z.diff.lag 0.2776268  0.0402298   6.901 1.38e-11 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.01718 on 571 degrees of freedom
+## Multiple R-squared:  0.07738,    Adjusted R-squared:  0.07415 
+## F-statistic: 23.94 on 2 and 571 DF,  p-value: 1.034e-10
+## 
+## 
+## Value of test-statistic is: 0.2807 
+## 
+## Critical values for test statistics: 
+##       1pct  5pct 10pct
+## tau1 -2.58 -1.95 -1.62
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## ############################################### 
+## # Augmented Dickey-Fuller Test Unit Root Test # 
+## ############################################### 
+## 
+## Test regression drift 
+## 
+## 
+## Call:
+## lm(formula = z.diff ~ z.lag.1 + 1 + z.diff.lag)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.067582 -0.009496 -0.000549  0.010039  0.123453 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  0.010515   0.005332   1.972   0.0491 *  
+## z.lag.1     -0.008304   0.004333  -1.917   0.0558 .  
+## z.diff.lag   0.280714   0.040159   6.990 7.71e-12 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.01714 on 570 degrees of freedom
+## Multiple R-squared:  0.08283,    Adjusted R-squared:  0.07961 
+## F-statistic: 25.74 on 2 and 570 DF,  p-value: 1.99e-11
+## 
+## 
+## Value of test-statistic is: -1.9165 1.9844 
+## 
+## Critical values for test statistics: 
+##       1pct  5pct 10pct
+## tau2 -3.43 -2.86 -2.57
+## phi1  6.43  4.59  3.78
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## ############################################### 
+## # Augmented Dickey-Fuller Test Unit Root Test # 
+## ############################################### 
+## 
+## Test regression trend 
+## 
+## 
+## Call:
+## lm(formula = z.diff ~ z.lag.1 + 1 + tt + z.diff.lag)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.067595 -0.009436 -0.000498  0.010001  0.123386 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  1.051e-02  5.337e-03   1.970   0.0493 *  
+## z.lag.1     -8.379e-03  4.454e-03  -1.881   0.0604 .  
+## tt           3.281e-07  4.451e-06   0.074   0.9413    
+## z.diff.lag   2.808e-01  4.021e-02   6.983  8.1e-12 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.01716 on 569 degrees of freedom
+## Multiple R-squared:  0.08283,    Adjusted R-squared:  0.078 
+## F-statistic: 17.13 on 3 and 569 DF,  p-value: 1.158e-10
+## 
+## 
+## Value of test-statistic is: -1.8813 1.3224 1.836 
+## 
+## Critical values for test statistics: 
+##       1pct  5pct 10pct
+## tau3 -3.96 -3.41 -3.12
+## phi2  6.09  4.68  4.03
+## phi3  8.27  6.25  5.34
+\end{verbatim}
+
+For the first model with no constant and trend, the test statistic
+\(\tau_1= 0.2469\) and the 5\% critical value is -1.95. For the second
+model with a constant, the test statistics is \(\tau_2= -1.9315\) and
+the 5\% critical value is -2.86. Finally, for the third model with a
+trend, the test statistic \(\tau_3= -1.8839\) and the 5\% critical value
+is -3.41. In each, because the test statistic is greater than the
+critical value, we do not reject the null hypothesis and conclude there
+is unit root.
+
+\hypertarget{box-jenkins-method-for-estimating-arimapdq}{%
+\section{Box-Jenkins Method for estimating
+ARIMA(p,d,q)}\label{box-jenkins-method-for-estimating-arimapdq}}
+
+Box-Jenkins is a three-step procedure for finding the best fitting
+ARIMA(p,d,q) for a non-statinary time series.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Model identification: here we determine the order of integration
+  \(d\), and the optimal number of AR and MA components, \(p\) and \(q\)
+  respectively.
+
+  \begin{enumerate}
+  \def\labelenumii{\roman{enumii}.}
+  \tightlist
+  \item
+    To determine \(d\), we conduct ADF test on successive differences of
+    the original time series. The order of integration is the number
+    times we difference our data to obtain stationarity.
+  \item
+    This is followed by estimating ARMA model for different combinations
+    of \(p\) and \(q\). The optimal structure is chosen using eithr AIC
+    or BIC.
+  \end{enumerate}
+\item
+  Parameter estimation: we estimate the identified model from the
+  previous step using ML estimation.
+\item
+  Model Evaluation: mostly showing that the residuals from the optimal
+  model is a white noise process. We can do this by using the
+  Breusch-Godfrey LM test of serial correlation for the residuals. If
+  residuals from the final model are white noise then there should be no
+  serial correlation.
+\end{enumerate}
+
+\hypertarget{modeling-volatility}{%
+\chapter{Modeling Volatility}\label{modeling-volatility}}
+
+Consider a stock market analyst who is interested in finding out whether
+to invest in a particular stock or not. What kind of variables will
+govern her choice? If we focus on modern portfolio theory (MPT), a
+benchmark model in finance, a rational investor only cares about two
+variables:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  expected return from a financial asset such as a stock
+\item
+  risk or volatility underlying this asset
+\end{enumerate}
+
+Let \(P_t\) denotes the adjusted closing price for a stock traded in the
+market. The continually compounded return of this stock is given by:
+
+\[y_t=[log(P_t)-log(P_{t-1})]\times 100\]
+
+According to the MPT as an investor you should care about:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(E(y_{t+h}|\Omega_t)\): this is the expected return on the asset,
+  given information at time t
+\item
+  \(Var(y_{t+h}|\Omega_t)\): this is the expected volatility or risk
+  underlying this asset, given the information at time t.
+\end{enumerate}
+
+Note that even though this example is using stock market as the
+motivation, the same is true for any other time series of interest. I
+use stock market as an example because here the variance has an
+intuitive appeal as risk underlying an asset.
+
+Thus far our discussion has focused on modeling the conditional mean of
+a given time series. For example, consider the following \(ARMA(1,1)\)
+model for the stock market return:
+
+\[y_t=\phi_0 + \phi_1 y_{t-1} + \theta_1 \epsilon_{t-1} + \epsilon_t ; \quad \epsilon_t\sim WN(0, \sigma^2_\epsilon )\]
+
+From this model, we can obtain the forecast for \(y_{t+h}\) as the
+conditional mean of \(y_t\) given the information available at time
+\(t\):
+
+\[f_{t,h}=E(y_{t+h}|\Omega_t)\]
+
+In this sense ARMA models are inherently models for the conditional mean
+of a stationary time series. Going back to our stock market example,
+this ARMA model can give us information about how the expected return on
+a stock will evolve over time.
+
+An important assumption we make in estimating this model is that the
+error term is homoscedastic, i.e, the error term has a constant variance
+across observations. However, often this assumption will not be
+satisfied in data. More importantly in some cases, such as our current
+example of stock market, making this assumption is conceptually
+incorrect. This is because in our example, assuming constant variance is
+equivalent to assuming constant risk underlying a stock. Such an
+assumption is clearly not desirable for an investor.
+
+Hence, we now need a class of models where \(Var(y_t|\omega_t)\) are not
+constant over time. Formally, our object of interest in this topic is
+the conditional variance of a time series, \(y_t\):
+
+\[\sigma_t^2=Var(y_t|\Omega_t)\]
+
+\hypertarget{some-stylized-facts-about-stock-market-volatility}{%
+\section{Some stylized facts about stock market
+volatility}\label{some-stylized-facts-about-stock-market-volatility}}
+
+Before proceeding with formally modeling the conditional variance of a
+time series, let us establish some stylized facts about financial
+assest, such as a stock. Below I plot the return for SP500 along with
+its ACF (see Figure 1A and 1B). Using squared returns as a proxy for
+variance, I also plot squared returns for SP500 and its ACF (see Figure
+2A and 2B).
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{bookdown-demo_files/figure-latex/ch7-figure1-1} 
+
+}
+
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{bookdown-demo_files/figure-latex/ch7-figure1-2} 
+
+}
+
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{bookdown-demo_files/figure-latex/ch7-figure1-3} 
+
+}
+
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{bookdown-demo_files/figure-latex/ch7-figure1-4} 
+
+}
+
+\end{figure}
+
+Focusing on the volatility, the plot of sqaured returns and its ACF
+establishes the following stylized facts:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  From Figure 2A, we observe that large values of squared returns
+  cluster together, and small values of squared returns cluster
+  together. That is periods of high volatility are followed by periods
+  of high volatility and periods of low volatility are followed by
+  periods of low volatility. This phenomenon is knownn as
+  \textbf{volatility persistence} or \textbf{volatility clustering} in
+  the fields of economics and finance.
+\item
+  A more direct evidence for volatility persistence can be inferred from
+  the ACF plot of squared returns. From Figure 2B, we observe a strong
+  positive serial correlation in squared returns.
+\end{enumerate}
+
+Hence, it is reasonable to assume that the variace of a financial time
+series may not be constant over time. Next we learn two classes of
+models that have been suggested to model conditional variance of a time
+series.
+
+\hypertarget{archq-autoregressive-conditional-heteroscedasticiy-of-order-q}{%
+\section{\texorpdfstring{ARCH(q): Autoregressive Conditional
+Heteroscedasticiy of order
+\(q\)}{ARCH(q): Autoregressive Conditional Heteroscedasticiy of order q}}\label{archq-autoregressive-conditional-heteroscedasticiy-of-order-q}}
+
+Engle (1982) proposed a non-linear model for the conditional variance of
+a stationary time series where past squared shocks affect current
+volatility. For simplicity, let us assume that we are not interested in
+modeling the mean of the time series. Hence, our model for the mean is a
+constant value, \(\mu\). Then, an \(ARCH(1)\) model can be specified as
+follows:
+
+\[\text{Mean Model:} \quad y_t = \mu +\epsilon_t \quad \text{where} \ \epsilon_t=\nu_t  \sigma_t \ \text{and} \ \nu_t\sim N(0,1)\]
+
+\[\text{Variance Model:} \quad  \sigma_t^2=\omega +\alpha_1 \epsilon_{t-1}^2 \text{where} \ \omega>0 \ \text{and} \ \alpha_1>0 \]
+
+In this model the unconditional variance of the time series is constant,
+but the conditional variance depends on the past squared error term. The
+variance model can be easily generalized to include \(q\) past shocks
+which gives us \(ARCH(q)\)
+
+\[\text{Variance Model:} \quad  \sigma_t^2=\omega +\alpha_1 \epsilon_{t-1}^2+\alpha_2 \epsilon_{t-2}^2 +\alpha_3 \epsilon_{t-3}^2 +...+ \alpha_q \epsilon_{t-q}^2 \]
+\[\text{where} \ \omega>0 \ \text{and} \ \alpha_i>0 \ \forall \ i\]
+
+\hypertarget{garchpq-generalized-autoregressive-conditional-heteroscedasicity-of-order-p-and-q}{%
+\section{\texorpdfstring{GARCH(p,q): Generalized Autoregressive
+Conditional Heteroscedasicity of order \(p\) and
+\(q\)}{GARCH(p,q): Generalized Autoregressive Conditional Heteroscedasicity of order p and q}}\label{garchpq-generalized-autoregressive-conditional-heteroscedasicity-of-order-p-and-q}}
+
+A generalization of the above ARCH model was proposed by Bolerslev
+(1986) where the conditional variance in the current period depend on
+past squared shocks as well as past observations of the conditional
+variance. This model is known as \(GARCH\) which stands for generalized
+ARCH model. Formally, the variance equation of a \(GARCH(1,1)\) is given
+by:
+
+\[\quad  \sigma_t^2=\omega +\alpha_1 \epsilon_{t-1}^2 +\beta_1 \sigma^2_{t-1} \quad \text{where} \ \omega>0, \ \alpha_1>0, \ \text{and} \ \beta_1>0 \]
+
+In practice most models of volatility now use some version of GARCH(1,1)
+as it provides a more parsimonious model of volatility when compared to
+an ARCH(q) model. Following are few important properties of a standard
+GARCH(1,1) model:
+
+\begin{enumerate}
+\def\labelenumi{\roman{enumi}.}
+\item
+  Unconditional variance: The unconditional variance of \(y_t\) is still
+  constant due to stationarity and is given by:
+  \[\sigma^2_y = \frac{\omega}{1-\alpha_1-\beta_1}\]
+\item
+  Volatility persistence: the persistence is given by
+  \(\alpha_1+\beta_1\).
+\item
+  Half-life measure: R is the number of peridos it takes for the
+  estimated volatilty to converge to half of the unconditional variance
+  of the time series.
+\end{enumerate}
+
+\hypertarget{extensions-of-standard-garch-model}{%
+\section{Extensions of standard GARCH
+model}\label{extensions-of-standard-garch-model}}
+
+There are two issues with the standard GARCH model that merits more
+discussion:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  In the standard GARCH framework, the effect of past shocks on
+  volatility is symmetric. That is whether the observed shock is
+  \textbf{negative} or \textbf{positive}, the effect on the volatility
+  is the same. However, in the financial market another stylized fact is
+  the asymmetric response of volatility to news. For instance, it is
+  quite common to find that negative news increases volatility more than
+  the reduction in volatility caused by positive news. One analytical
+  tool to illustrate this point is the \textbf{news impact curve} where
+  we plot the shock on the x-axis and estimated/predicted volatility
+  from our GARCH model on the y-axis. Below I plot three types of news
+  impact curves. In the first case, the curve is symmetric: negative and
+  positive shocks have identical effect on volatility. In the second
+  case, negative news has a bigger effect on volatility, and finally in
+  the third case, positive news has a bigger effect on volatility.
+\end{enumerate}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{bookdown-demo_files/figure-latex/ch7-figure2-1} 
+
+}
+
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{bookdown-demo_files/figure-latex/ch7-figure2-2} 
+
+}
+
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{bookdown-demo_files/figure-latex/ch7-figure2-3} 
+
+}
+
+\end{figure}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Because these models are models of variance which cannot be negative,
+  the estimation of these models imposes non-negativity condition on all
+  estimated parameters. For instance, in \(GARCH(1,1)\) we assume that
+  \(\omega, \alpha_1, \ \text{and} \ \beta_1\) are all positive.
+\end{enumerate}
+
+\hypertarget{gjr-garch11}{%
+\subsection{GJR-GARCH(1,1)}\label{gjr-garch11}}
+
+Glosten, Jagannathan, and Runkle (1993) proposed a variation of the
+standard GARCH model that incorporates the asymmetry of the impact of
+news on volatility. The resulting model is called GJR-GARCH and it
+addresses the first of the issues listed abov. Formally, the variance
+equation of the GJR-GARCH(1,1) is given by:
+
+\[ \sigma_t^2=\omega+\alpha_1 \epsilon^2_{t-1}+\beta_1 \sigma^2_{t-1}+\gamma_1 D_{t-1}\epsilon^2_{t-1}\]
+
+where \(D_{t-1}=1\) if \(\epsilon_{t-1}<0\) and \(0\) otherwise. Hence,
+now the effect of \(\epsilon^2_{t-1}\) on volatility is
+\(\alpha_1+\gamma_1\) for negative shocks and \(\alpha_1\) for positive
+shocks. The news impact curve from this model will be asymmetric.
+
+\hypertarget{exponential-garch-or-egarch11}{%
+\subsection{Exponential GARCH or
+EGARCH(1,1)}\label{exponential-garch-or-egarch11}}
+
+Exponential GARCH model by Nelson (1991) accounts for both the issues
+outlined above. It allows for asymmetric effects of shocks and also does
+not require the non-negativity constraints. More importantly, it also
+accounts for different effect of shocks of different magnitude, and
+hence provides an estimate of the \textbf{size effect}. Formally, the
+variance equation for EGARCH(1,1) is given by:
+
+\[ln(\sigma^2_{t-1})=\omega+ \alpha_1 z_{t-1} +\gamma_1 (|z_{t-1}|-E|z_{t-1}|) +\beta_1\sigma^2_{t-1}\]
+
+where \(z_t=\frac{\epsilon_t}{\sigma_t}\) is the standardized error
+term. Here, \(\alpha_1\) captures the sign effect and \(\gamma_1\)
+captures the size effect.
 
 \bibliography{book.bib,packages.bib}
 
