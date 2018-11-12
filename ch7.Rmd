@@ -37,7 +37,7 @@ Hence, we now need a class of models where $Var(y_t|\omega_t)$ are not constant 
 
 ## Some stylized facts about stock market volatility
 
-Before proceeding with formally modeling the conditional variance of a time series, let us establish some stylized facts about financial assets, such as a stock. Below I plot the return for SP500 along with its ACF (see Figure 1A and 1B). Using squared returns as a proxy for variance, I also plot squared returns for SP500 and its ACF (see Figure 2A and 2B).
+Before proceeding with formally modeling the conditional variance of a time series, let us establish some stylized facts about financial assets, such as a stock. Below I plot the daily return for SP500 along with its ACF (see Figure 1A and 1B). Using squared returns as a proxy for variance, I also plot squared returns for SP500 and its ACF (see Figure 2A and 2B).
 
 ```{r ch7-figure1, message=FALSE, warning=FALSE, echo = FALSE, fig.cap = '', out.width='100%', fig.asp=.75, fig.align='center'}
 
@@ -49,7 +49,7 @@ options("getSymbols.warning4.0"=FALSE)
 invisible(getSymbols('^GSPC',src='yahoo'))
 
 ###
-### gdp growth
+### return and return squared
 y=na.omit(diff(log(GSPC[,6]))*100)
 y2=y^2
 
@@ -170,5 +170,137 @@ Exponential GARCH model by Nelson (1991) accounts for both the issues outlined a
 \[ln(\sigma^2_{t-1})=\omega+ \alpha_1 z_{t-1} +\gamma_1 (|z_{t-1}|-E|z_{t-1}|) +\beta_1\sigma^2_{t-1}\]
 
 where $z_t=\frac{\epsilon_t}{\sigma_t}$ is the standardized error term. Here, $\alpha_1$ captures the sign effect and $\gamma_1$ captures the size effect. A common finding is that negative news and larger shocks have bigger effect on volatility. Accordingly, we often find in empirical applications of EGARCH that $\alpha_1<0$ and $\gamma_1>0$.
+
+
+## Application of GARCH model: Estimating volatility of SP500 return
+
+In this application, we will estimate the volatility underlying SP500 returns (Figure 1A and Figure 2A). The first step is to test whether squared returns have ARCH effects i.e, whether there is any evidence for time-varying volatility in our data. For this purpose we will use Engle's ARCH test. Consider our constant mean model:
+
+\[y_t=\mu +\epsilon_t\]
+
+We can estimate the above model by OLS and obtain residuals $e_t=y_t-\hat{y_t}$.  The test for ARCH effects is based on the idea that is there is conditional hetroscedasiticity in our data then the squared residuals will have serial correlation. The ARCH test involves estimating the following regression:
+
+\[e^2_t= \beta_0 +\beta_1 e^2_{t-1} + \beta_2 e^2_{t-2}+...+ \beta_p e^2_{t-p} + u_t\]
+
+Then, the test for ARCH effects is given by:
+
+\[H_0: \beta_1=\beta_2=...=\beta_p=0 \ \Rightarrow \text{no ARCH effects}\]
+\[ H_A: \text{Not} \ H_0\]
+
+In R, we use a package called **aTSA** to implement this test.The function is called **arch.test()**. Figure 7.1 below shows the results of this test for our data.
+
+```{r table1,warning=FALSE, message=FALSE, fig.cap="ARCH LM test", fig.pos='H'}
+library(aTSA)
+library(forecast)
+
+fit=arima(y, c(0,0,0))
+
+arch.test(fit)
+
+```
+
+We find strong evidence for ARCH effects in our data as the null hypothesis of no ARCH effects is rejected at different orders of serial correlation in squared residuals. Next we estimate three types of GARCH(1,1) models using the **rugarch** package. Tables 7.1A-7.1C below show the estimated models. The news impact  curve for these 3 classes of GARCH model are plotted in Figure 2-4 below. Finally, the estimated conditional volatility from the three models are plotted along with the return in Figures 5-7. We find that there is strong evidence for the sign effect with negative news having a bigger effect on volatility as indicated by the positive value for $\gamma_1$ in GJR-GARCH and negative value of $\alpha_1$ in EGARCH. Further, in the EGARCH model we find evidence for the size effect as indicated by positive value for $\gamma_1$. These findings are confirmed by the asymmetric news impact curves for the GJR-GARCH and EGARCH models.
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(rugarch)
+library(knitr)
+# Estimate GARCH(1,1)
+
+#
+# specify GARCH(1,1) model with only constant in mean equation
+garch11.spec = ugarchspec(variance.model = list(model="sGARCH",garchOrder=c(1,1)), 
+                          mean.model = list(armaOrder=c(0,0)))
+# Estimate GARCH(1,1)
+
+garch11.fit = ugarchfit(y, spec=garch11.spec)  
+
+invisible(slotNames(garch11.fit))
+invisible(names(garch11.fit@fit))
+invisible(names(garch11.fit@model))
+
+# Use it now as follows:
+res1=garch11.fit@fit$matcoef 
+
+
+
+#### estimating a GJR-garch(1,1)
+
+gjrgarch11.spec = ugarchspec(variance.model = list(model = 'gjrGARCH', garchOrder = c(1, 1)),  mean.model = list(armaOrder=c(0,0)), distribution = 'norm')
+gjrgarch11.fit = ugarchfit(gjrgarch11.spec,y, solver = 'hybrid')
+
+
+invisible(slotNames(gjrgarch11.fit))
+invisible(names(gjrgarch11.fit@fit))
+invisible(names(gjrgarch11.fit@model))
+
+# Use it now as follows:
+res2=gjrgarch11.fit@fit$matcoef 
+
+egarch11.spec = ugarchspec(variance.model = list(model = 'eGARCH', garchOrder = c(1, 1)),  mean.model = list(armaOrder=c(0,0)), distribution = 'norm')
+egarch11.fit = ugarchfit(egarch11.spec,y, solver = 'hybrid')
+
+invisible(slotNames(egarch11.fit))
+invisible(names(egarch11.fit@fit))
+invisible(names(egarch11.fit@model))
+
+# Use it now as follows:
+res3=egarch11.fit@fit$matcoef 
+
+
+kable(res1,digits=3, caption = "(A) Estimated GARCH(1,1)")
+kable(res2,digits=3, caption = "(B) Estimated GJR-GARCH(1,1)")
+kable(res3,digits=3, caption = "(C) Estimated EGARCH(1,1)")
+
+ni1 = newsimpact(z = NULL, garch11.fit)
+plot(ni1$zx, ni1$zy, ylab=ni1$yexpr, xlab=ni1$xexpr, type="l", main = "Figure 2: News Impact Curve for GARCH(1,1)")
+plot.new()
+ni2 = newsimpact(z = NULL, gjrgarch11.fit)
+plot(ni2$zx, ni2$zy, ylab=ni2$yexpr, xlab=ni2$xexpr, type="l", main = "Figure 3: News Impact Curve for GJR-GARCH(1,1)")
+plot.new()
+ni3 = newsimpact(z = NULL, egarch11.fit)
+plot(ni3$zx, ni3$zy, ylab=ni3$yexpr, xlab=ni3$xexpr, type="l", main = "Figure 4: News Impact Curve for EGARCH(1,1)")
+plot.new()
+par(col.main="#00000000")
+plot(garch11.fit,which=3)
+par(col.main='black')
+title("Figure 5: Estimated Conditional Volatility from GARCH(1,1)")
+plot.new()
+par(col.main="#00000000")
+plot(gjrgarch11.fit,which=3)
+par(col.main='black')
+title("Figure 6: Estimated Conditional Volatility from GJR-GARCH(1,1)")
+plot.new()
+par(col.main="#00000000")
+plot(egarch11.fit,which=3)
+par(col.main='black')
+title("Figure 7: Estimated Conditional Volatility from EGARCH(1,1)")
+
+```
+
+Finally, these models can also be used to forecast the volatility of SP500. Figure 8 below shows this forecast for the next 7 days from the EGARCH(1.1) model.
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(rugarch)
+
+egarch11.spec = ugarchspec(variance.model = list(model = 'eGARCH', garchOrder = c(1, 1)),  mean.model = list(armaOrder=c(0,0)), distribution = 'norm')
+egarch11.fit = ugarchfit(egarch11.spec,y, solver = 'hybrid')
+
+####news impact curve
+
+plot(egarch11.fit, which=12)
+
+##### forecast mean and volatility using egarch(1,1)
+
+f_sigma.t=ugarchforecast(egarch11.fit,n.ahead=12)
+par(col.main="#00000000")
+plot(f_sigma.t,which=3)
+par(col.main='black')
+title("Figure 8: Estimated Conditional Volatility from EGARCH(1,1)")
+
+
+```
+
 
 
