@@ -161,7 +161,11 @@ Glosten, Jagannathan, and Runkle (1993) proposed a variation of the standard GAR
 
 \[ \sigma_t^2=\omega+\alpha_1 \epsilon^2_{t-1}+\beta_1 \sigma^2_{t-1}+\gamma_1 D_{t-1}\epsilon^2_{t-1}\]
 
-where $D_{t-1}=1$ if $\epsilon_{t-1}<0$ and $0$ otherwise. Hence, now the effect of $\epsilon^2_{t-1}$ on volatility is $\alpha_1+\gamma_1$ for negative shocks and $\alpha_1$ for positive shocks. The news impact curve from this model will be asymmetric.
+where $D_{t-1}=1$ if $\epsilon_{t-1}<0$ and $0$ otherwise. Hence, now the effect of $\epsilon^2_{t-1}$ on volatility is $\alpha_1+\gamma_1$ for negative shocks and $\alpha_1$ for positive shocks. The news impact curve from this model will be asymmetric. The persistence from this model will also be affected by $\gamma_1$. Specfically for the GJR-GARCH(1,1) model, 
+
+1. Persistence: $\alpha_1+\beta_1 +\frac{\gamma_1}{2}
+
+2. Unconditional variance: \[\sigma^2_y = \frac{\omega}{1-\alpha_1-\beta_1-\frac{\gamma_1}{2}}\]
 
 ### Exponential GARCH or EGARCH(1,1)
 
@@ -169,8 +173,11 @@ Exponential GARCH model by Nelson (1991) accounts for both the issues outlined a
 
 \[ln(\sigma^2_{t-1})=\omega+ \alpha_1 z_{t-1} +\gamma_1 (|z_{t-1}|-E|z_{t-1}|) +\beta_1\sigma^2_{t-1}\]
 
-where $z_t=\frac{\epsilon_t}{\sigma_t}$ is the standardized error term. Here, $\alpha_1$ captures the sign effect and $\gamma_1$ captures the size effect. A common finding is that negative news and larger shocks have bigger effect on volatility. Accordingly, we often find in empirical applications of EGARCH that $\alpha_1<0$ and $\gamma_1>0$.
+where $z_t=\frac{\epsilon_t}{\sigma_t}$ is the standardized error term. Here, $\alpha_1$ captures the sign effect and $\gamma_1$ captures the size effect. A common finding is that negative news and larger shocks have bigger effect on volatility. Accordingly, we often find in empirical applications of EGARCH that $\alpha_1<0$ and $\gamma_1>0$. For this model, we have
 
+1. Persistence: $\beta_1$
+
+2. Unconditional variance: \[\sigma^2_y = \frac{\omega}{1-\beta_1}\]
 
 ## Application of GARCH model: Estimating volatility of SP500 return
 
@@ -199,7 +206,7 @@ arch.test(fit)
 
 ```
 
-We find strong evidence for ARCH effects in our data as the null hypothesis of no ARCH effects is rejected at different orders of serial correlation in squared residuals. Next we estimate three types of GARCH(1,1) models using the **rugarch** package. Tables 7.1A-7.1C below show the estimated models. The news impact  curve for these 3 classes of GARCH model are plotted in Figure 2-4 below. Finally, the estimated conditional volatility from the three models are plotted along with the return in Figures 5-7. We find that there is strong evidence for the sign effect with negative news having a bigger effect on volatility as indicated by the positive value for $\gamma_1$ in GJR-GARCH and negative value of $\alpha_1$ in EGARCH. Further, in the EGARCH model we find evidence for the size effect as indicated by positive value for $\gamma_1$. These findings are confirmed by the asymmetric news impact curves for the GJR-GARCH and EGARCH models.
+We find strong evidence for ARCH effects in our data as the null hypothesis of no ARCH effects is rejected at different orders of serial correlation in squared residuals. Next we estimate three types of GARCH(1,1) models using the **rugarch** package. Tables 7.1A-7.1D below show the estimated parameters of these three models. The news impact  curve for these 3 classes of GARCH model are plotted in Figure 2-4 below. Finally, the estimated conditional volatility from the three models are plotted along with the return in Figures 5-7. We find that there is strong evidence for the sign effect with negative news having a bigger effect on volatility as indicated by the positive value for $\gamma_1$ in GJR-GARCH and negative value of $\alpha_1$ in EGARCH. Further, in the EGARCH model we find evidence for the size effect as indicated by positive value for $\gamma_1$. These findings are confirmed by the asymmetric news impact curves for the GJR-GARCH and EGARCH models.
 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -251,6 +258,12 @@ res3=egarch11.fit@fit$matcoef
 kable(res1,digits=3, caption = "(A) Estimated GARCH(1,1)")
 kable(res2,digits=3, caption = "(B) Estimated GJR-GARCH(1,1)")
 kable(res3,digits=3, caption = "(C) Estimated EGARCH(1,1)")
+
+test=cbind(c(persistence(garch11.fit),uncvariance(garch11.fit),halflife(garch11.fit)), c(persistence(gjrgarch11.fit),uncvariance(gjrgarch11.fit),halflife(gjrgarch11.fit)), c(persistence(egarch11.fit), uncvariance(egarch11.fit),halflife(egarch11.fit)))
+
+row.names(test)=c("Persistence", "Unconditional Variance", "Half-life")
+kable(test, digits=3, caption="(D) Persistence, Unconditional Variance, and Half-life", col.names =c("GARCH(1,1)", "GJR-GARCH(1,1)", "EGARCH(1,1)"))
+
 
 ni1 = newsimpact(z = NULL, garch11.fit)
 plot(ni1$zx, ni1$zy, ylab=ni1$yexpr, xlab=ni1$xexpr, type="l", main = "Figure 2: News Impact Curve for GARCH(1,1)")
