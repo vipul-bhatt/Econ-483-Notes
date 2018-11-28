@@ -163,7 +163,7 @@ Glosten, Jagannathan, and Runkle (1993) proposed a variation of the standard GAR
 
 where $D_{t-1}=1$ if $\epsilon_{t-1}<0$ and $0$ otherwise. Hence, now the effect of $\epsilon^2_{t-1}$ on volatility is $\alpha_1+\gamma_1$ for negative shocks and $\alpha_1$ for positive shocks. The news impact curve from this model will be asymmetric. The persistence from this model will also be affected by $\gamma_1$. Specfically for the GJR-GARCH(1,1) model, 
 
-1. Persistence: $\alpha_1+\beta_1 +\frac{\gamma_1}{2}
+1. Persistence: $\alpha_1+\beta_1 +\frac{\gamma_1}{2}$
 
 2. Unconditional variance: \[\sigma^2_y = \frac{\omega}{1-\alpha_1-\beta_1-\frac{\gamma_1}{2}}\]
 
