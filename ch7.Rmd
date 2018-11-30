@@ -310,7 +310,7 @@ f_sigma.t=ugarchforecast(egarch11.fit,n.ahead=12)
 par(col.main="#00000000")
 plot(f_sigma.t,which=3)
 par(col.main='black')
-title("Figure 8: Estimated Conditional Volatility from EGARCH(1,1)")
+title("Figure 8: Forecasted Conditional Volatility from EGARCH(1,1)")
 
 
 ```
