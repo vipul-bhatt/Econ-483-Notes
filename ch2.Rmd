@@ -92,7 +92,7 @@ y_t=\beta_0 + \beta_1 x_{t-1} + \beta_2 x_{t-2} +\epsilon_t
 In this model the lag structure implies that any change in $x$ will persist for two periods in terms of its effect on $y$. In fact we now have to consider the *dynamic* effect of $x$ on $y$. Formally, there are two types of effects:
 
 1. *dynamic effect* of $x$ on $y$ given by:
-\[ \frac{\partial y_{t+s}}{\partial x_t} \quad s=0,1,2,... \]
+\[\frac{\partial y_{t+s}}{\partial x_t} \quad s=0,1,2,...\]
 
 In our example, the sequence of dynamic effects are:
 \begin{equation}
