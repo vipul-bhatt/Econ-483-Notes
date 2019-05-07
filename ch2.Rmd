@@ -171,7 +171,7 @@ suppressMessages(library(forecast))
 suppressMessages(library(timeSeries))
 suppressMessages(library(ggplot2))
 # cretae a data object frame 
-data=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/dlag.csv")
+data=read.csv("~/Dropbox/Ebooks/Econ-483-Notes/datafiles/dlag.csv")
 
 y=ts(data$y, start=1950, end=2014, frequency = 1)
 x1=ts(data$x1, start=1950, end=2014, frequency = 1)
@@ -241,7 +241,7 @@ suppressMessages(library(xts))
 suppressMessages(library(knitr))
 suppressMessages(library(dynlm))
 # cretae a data object frame 
-data=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/dlag.csv")
+data=read.csv("~/Dropbox/Ebooks/Econ-483-Notes/datafiles/dlag.csv")
 
 y=ts(data$y, start=1950, end=2014, frequency = 1)
 x1=ts(data$x1, start=1950, end=2014, frequency = 1)

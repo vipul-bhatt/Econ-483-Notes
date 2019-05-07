@@ -32,17 +32,27 @@ log(y_t)= log(B_t) + log(S_t) + log(C_t) + log(\epsilon_t)
 Most statistical software can implement these decomposition using data on a time series variable as input. Typically they combine cyclical component with irregular component and provide a three-way decomposition. In Figure \@ref(fig:ch3-figure1) I use R to decompose real GDP for the US into its components.
 
 ```{r ch3-figure1, echo = FALSE, fig.cap = 'Additive Decomposition of Retail Sales', out.width='80%', fig.asp=.75, fig.align='center'}
-suppressMessages(library(xts))
-suppressMessages(library(graphics))
-retail=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/retail.csv")
+suppressMessages(library(xts, warn.conflicts = FALSE, quietly=T))
+suppressMessages(library(quantmod, warn.conflicts = FALSE, quietly = T))
 
-# create time series objects for data 
-y1=ts(retail$y, start=c(1992,1), end=c(2018,6), frequency=12)
+# get data from fred stat
+options("getSymbols.warning4.0"=FALSE)
+invisible(getSymbols('RSXFSN',src='FRED'))
 
+### function to convert xts
+xts.to.ts <- function(X, freq = 12L) {
+  ts(as.numeric(X), 
+     start = c(.indexyear(X)[1] + 1900, .indexmon(X)[1] + 1),
+     freq = freq)
+}
+
+#### get data
+
+y1=xts.to.ts(log(RSXFSN))
 
 #### additive decomposition
 
-z=decompose(y1,type="additive")
+z=decompose(as.ts(y1),type="additive")
 plot(cbind(observed = z$random + 
     z$trend + z$seasonal, trend = z$trend, seasonal = z$seasonal, 
         random = z$random), main = "") 

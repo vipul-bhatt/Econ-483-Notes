@@ -6,19 +6,23 @@ A time series is a specific kind of data where observations of a variable are re
 Such data shows how a variable is changing over time. Depending on the variable of interest we can have data measured at different frequencies. Some commonly used frequencies are intra-day, daily, weekly, monthly, quarterly, semi-annual and annual. Figure \@ref(fig:ch1-figure1) below plots data for quarterly and monthly frequency. 
 
 ```{r ch1-figure1, echo = FALSE, fig.cap = 'Time Series at quarterly and monthly frequency', out.width='80%', fig.asp=.75, fig.align='center'}
-suppressMessages(library(xts))
-# cretae a data object frame called gdp that imports the csv file with data
-gdp= read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/gdp.csv")
-retail=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/retail.csv")
-# create time series objects for data 
-y1=ts(gdp$y,start=c(1947,1), end=c(2018,1), frequency=4)
-y2=ts(retail$y, start=c(1992,1), end=c(2018,6), frequency=12)
+
+suppressMessages(library(xts, warn.conflicts = FALSE, quietly=T))
+suppressMessages(library(quantmod, warn.conflicts = FALSE, quietly = T))
+
+# get data from fred stat
+options("getSymbols.warning4.0"=FALSE)
+invisible(getSymbols('GDPC1',src='FRED'))
+invisible(getSymbols('RSXFSN',src='FRED'))
+
+y1=GDPC1
+y2=RSXFSN
 
 # plot data over time
 
 par(mfrow=c(2,1))
 plot.xts(as.xts(y1),yaxis.right=F, main="Real GDP (Billions of 2009 Dollars)")
-plot.xts(as.xts(y2),yaxis.right=F, main="Retail Sales (Billions of Dollars)")
+plot.xts(as.xts(y2),yaxis.right=F, main="Advance Retail Sales (Millions of Dollars)")
 
 
 ```

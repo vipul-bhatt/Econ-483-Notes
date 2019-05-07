@@ -15,12 +15,17 @@ In this note we will focus on estimating and forecasting deterministic trend mod
 Whether or not there is deterministic trend in the data can be typically gleaned by simply plotting the time series over time. For example, Figure \@ref(fig: ch5-figure1) below plots real GDP for the US at quarterly frequency. We can observe a positive time trend with real GDP increasing with time. In this section we will learn to *fit* a function that captures this relationship accurately.
 
 ```{r ch5-figure1, echo = FALSE, fig.cap = 'Real GDP (2012 Chained Billions of Dollars)', out.width='80%', fig.asp=.75, fig.align='center'}
-suppressMessages(library(xts))
-# cretae a data object frame called gdp that imports the csv file with data
-gdp=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/gdp.csv")
+suppressMessages(library(xts, warn.conflicts = FALSE, quietly=T))
+suppressMessages(library(quantmod, warn.conflicts = FALSE, quietly = T))
+suppressMessages(library(forecast, warn.conflicts = FALSE, quietly=T))
+
+
+# get data from fred stat
+options("getSymbols.warning4.0"=FALSE)
+invisible(getSymbols('GDPC1',src='FRED'))
 
 # create time series objects for data 
-y1=ts(gdp$y,start=c(1947,1), end=c(2018,1), frequency=4)
+y1=GDPC1
 
 plot.xts(as.xts(y1), main="")
 ```
@@ -83,6 +88,16 @@ suppressMessages(library(xts))
 suppressMessages(library(knitr))
 # cretae a data object frame called gdp that imports the csv file with data
 # generate time variable-
+### function to convert xts
+xts.to.ts <- function(X, freq = 12L) {
+  ts(as.numeric(X), 
+     start = c(.indexyear(X)[1] + 1900, .indexmon(X)[1] + 1),
+     freq = freq)
+}
+
+#### get data
+
+y1=xts.to.ts(y1)
 
 t=1:1:length(y1)
 
@@ -175,11 +190,17 @@ We now focus on the *seasonal* component of a time series, i.e., that is periodi
 In Figure \@ref(fig:ch5-figure4) we plot housing starts in the U.S. The data is at monthly frequency and we can see a clear seasonal pattern. Housing starts seem to increase in spring and summer months. This is followed by a decline in fall and winter months.
 
 ```{r ch5-figure4, echo = FALSE, fig.cap =  'Housing Starts in U.S.', out.width='80%', fig.asp=.75, fig.align='center'}
+suppressMessages(library(forecast))
 suppressMessages(library(timeSeries))
-suppressMessages(library(xts))
-hstart=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/hstarts.csv")
-### create time series object
-y=ts(hstart$y, start=c(2000,6), end=c(2018,6), frequency=12)
+suppressMessages(library(xts, warn.conflicts = FALSE, quietly=T))
+suppressMessages(library(quantmod, warn.conflicts = FALSE, quietly = T))
+
+# get data from fred stat
+options("getSymbols.warning4.0"=FALSE)
+invisible(getSymbols('HOUSTNSA',src='FRED'))
+
+y=HOUSTNSA
+
 plot.xts(as.xts(y),yaxis.right=F, main="")
 ```
 
@@ -206,8 +227,23 @@ y_t=\beta_0 + \sum_{i=2}^{12}\beta_i D_{it} + \epsilon_t
 \end{equation}
 
 Table \@ref(tab:ch5-table3) presents the estimation results for this exercise. In Figure \@ref(fig:ch5-figure5) we plot the forecast of housing starts for next 12 months using our estimated model, along with 95% confidence bands.
+
 ```{r ch5-table3, echo = FALSE}
+
 ##  estimate the final model
+
+### create time series object
+### function to convert xts
+xts.to.ts <- function(X, freq = 12L) {
+  ts(as.numeric(X), 
+     start = c(.indexyear(X)[1] + 1900, .indexmon(X)[1] + 1),
+     freq = freq)
+}
+
+#### get data
+
+y=xts.to.ts(y)
+
 fit= tslm(y ~ season)
 kable(summary(fit)$coefficients, align=rep("c",4), booktabs=TRUE, caption='Regression Results', digits=c(3,3,3,3))
 

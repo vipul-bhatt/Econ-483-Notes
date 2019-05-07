@@ -638,7 +638,17 @@ library(knitr)
 options("getSymbols.warning4.0"=FALSE)
 invisible(getSymbols('EXCAUS',src='FRED'))
 
-y=EXCAUS
+### function to convert xts
+xts.to.ts <- function(X, freq = 12L) {
+  ts(as.numeric(X), 
+     start = c(.indexyear(X)[1] + 1900, .indexmon(X)[1] + 1),
+     freq = freq)
+}
+
+#### get data
+
+y=xts.to.ts(EXCAUS)
+
 
 
 ###3 adf test

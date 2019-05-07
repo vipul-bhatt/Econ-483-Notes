@@ -74,15 +74,31 @@ The h-period ahead forecast is given by:
    
 ## Application
 
-We use R to implement a 12-period ahead forecast for new housing starts for the U.S. The data is at monthly frequency from June 2000 through June 2018. The resulting forecasts are plotted in Figure \@ref(fig:ch4-figure1).
+We use R to implement a 12-period ahead forecast for new housing starts for the U.S. The data is at monthly frequency from Jan 1959 through March 2019. The resulting forecasts are plotted in Figure \@ref(fig:ch4-figure1).
 
 ```{r ch4-figure1, echo = FALSE, fig.cap = 'Forecast of Housing Starts: Three Smoothing Methods', out.width='80%', fig.asp=.75, fig.align='center'}
 suppressMessages(library(forecast))
 suppressMessages(library(timeSeries))
+suppressMessages(library(xts, warn.conflicts = FALSE, quietly=T))
+suppressMessages(library(quantmod, warn.conflicts = FALSE, quietly = T))
 
-hstart=read.csv("/Users/home-mac/Documents/Econ-483-Notes/datafiles/hstarts.csv")
+# get data from fred stat
+options("getSymbols.warning4.0"=FALSE)
+invisible(getSymbols('HOUSTNSA',src='FRED'))
+
+
 ### create time series object
-y=ts(hstart$y, start=c(2000,6), end=c(2018,6), frequency=12)
+### function to convert xts
+xts.to.ts <- function(X, freq = 12L) {
+  ts(as.numeric(X), 
+     start = c(.indexyear(X)[1] + 1900, .indexmon(X)[1] + 1),
+     freq = freq)
+}
+
+#### get data
+
+y=xts.to.ts(HOUSTNSA)
+
 
 ### simple exponential smoothing
 s_exp1=HoltWinters(y,beta=FALSE, gamma=FALSE)

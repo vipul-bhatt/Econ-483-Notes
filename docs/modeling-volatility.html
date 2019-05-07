@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Applied Time Series Analysis</title>
+  <title>Chapter 7 Modeling Volatility | Applied Time Series Analysis</title>
   <meta name="description" content="Lecture notes for Applied Time Series Analysis">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Applied Time Series Analysis" />
+  <meta property="og:title" content="Chapter 7 Modeling Volatility | Applied Time Series Analysis />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Applied Time Series Analysis" />
+  <meta name="twitter:title" content="Chapter 7 Modeling Volatility | Applied Time Series Analysis />
   
   <meta name="twitter:description" content="Lecture notes for Applied Time Series Analysis" />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Vipul Bhatt">
 
 
-<meta name="date" content="2018-11-30">
+<meta name="date" content="2019-05-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -50,26 +51,20 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { display: inline-block; min-height: 1.25em; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
+code.sourceCode { white-space: pre; }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -77,40 +72,38 @@ pre.numberSource a.sourceLine::before
     color: #aaaaaa;
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; color: initial; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
+code span.bn { color: #40a070; } /* BaseN */
 code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
+code span.ch { color: #4070a0; } /* Char */
 code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.ot { color: #007020; } /* Other */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.fu { color: #06287e; } /* Function */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code span.cn { color: #880000; } /* Constant */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.im { } /* Import */
+code span.va { color: #19177c; } /* Variable */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.op { color: #666666; } /* Operator */
+code span.bu { } /* BuiltIn */
+code span.ex { } /* Extension */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.at { color: #7d9029; } /* Attribute */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -330,31 +323,31 @@ However, in the financial market another stylized fact is the asymmetric respons
 <p><span class="math display">\[H_0: \beta_1=\beta_2=...=\beta_p=0 \ \Rightarrow \text{no ARCH effects}\]</span>
 <span class="math display">\[ H_A: \text{Not} \ H_0\]</span></p>
 <p>In R, we use a package called <strong>aTSA</strong> to implement this test.The function is called <strong>arch.test()</strong>. Figure 7.1 below shows the results of this test for our data.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(aTSA)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">library</span>(forecast)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">fit=<span class="kw">arima</span>(y, <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="kw">arch.test</span>(fit)</a></code></pre></div>
+<pre class="sourceCode r" id="cb8"><code class="sourceCode r"><span class="kw">library</span>(aTSA)
+<span class="kw">library</span>(forecast)
+
+fit=<span class="kw">arima</span>(y, <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))
+
+<span class="kw">arch.test</span>(fit)</code></pre>
 <pre><code>## ARCH heteroscedasticity test for residuals 
 ## alternative: heteroscedastic 
 ## 
 ## Portmanteau-Q test: 
 ##      order   PQ p.value
-## [1,]     4 1049       0
-## [2,]     8 2208       0
-## [3,]    12 3471       0
-## [4,]    16 4053       0
-## [5,]    20 4744       0
-## [6,]    24 5358       0
+## [1,]     4 1074       0
+## [2,]     8 2267       0
+## [3,]    12 3556       0
+## [4,]    16 4150       0
+## [5,]    20 4857       0
+## [6,]    24 5482       0
 ## Lagrange-Multiplier test: 
 ##      order   LM p.value
-## [1,]     4 2101       0
-## [2,]     8  665       0
-## [3,]    12  384       0
-## [4,]    16  259       0
-## [5,]    20  204       0
-## [6,]    24  162       0</code></pre>
+## [1,]     4 2193       0
+## [2,]     8  692       0
+## [3,]    12  402       0
+## [4,]    16  272       0
+## [5,]    20  215       0
+## [6,]    24  170       0</code></pre>
 <div class="figure"><span id="fig:table1"></span>
 <img src="bookdown-demo_files/figure-html/table1-1.png" alt="ARCH LM test" width="672" />
 <p class="caption">
@@ -376,30 +369,30 @@ Figure 7.1: ARCH LM test
 <tbody>
 <tr class="odd">
 <td>mu</td>
-<td align="right">0.065</td>
+<td align="right">0.068</td>
 <td align="right">0.014</td>
-<td align="right">4.615</td>
+<td align="right">4.916</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td>omega</td>
 <td align="right">0.026</td>
 <td align="right">0.004</td>
-<td align="right">6.415</td>
+<td align="right">6.653</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td>alpha1</td>
-<td align="right">0.129</td>
+<td align="right">0.132</td>
 <td align="right">0.013</td>
-<td align="right">9.706</td>
+<td align="right">10.049</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td>beta1</td>
-<td align="right">0.852</td>
-<td align="right">0.014</td>
-<td align="right">62.916</td>
+<td align="right">0.848</td>
+<td align="right">0.013</td>
+<td align="right">63.704</td>
 <td align="right">0</td>
 </tr>
 </tbody>
@@ -418,16 +411,16 @@ Figure 7.1: ARCH LM test
 <tbody>
 <tr class="odd">
 <td>mu</td>
-<td align="right">0.027</td>
+<td align="right">0.029</td>
 <td align="right">0.014</td>
-<td align="right">1.912</td>
-<td align="right">0.056</td>
+<td align="right">2.108</td>
+<td align="right">0.035</td>
 </tr>
 <tr class="even">
 <td>omega</td>
 <td align="right">0.027</td>
 <td align="right">0.003</td>
-<td align="right">7.755</td>
+<td align="right">7.975</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="odd">
@@ -441,14 +434,14 @@ Figure 7.1: ARCH LM test
 <td>beta1</td>
 <td align="right">0.864</td>
 <td align="right">0.013</td>
-<td align="right">64.519</td>
+<td align="right">66.157</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="odd">
 <td>gamma1</td>
-<td align="right">0.221</td>
-<td align="right">0.024</td>
-<td align="right">9.022</td>
+<td align="right">0.219</td>
+<td align="right">0.023</td>
+<td align="right">9.348</td>
 <td align="right">0.000</td>
 </tr>
 </tbody>
@@ -467,37 +460,37 @@ Figure 7.1: ARCH LM test
 <tbody>
 <tr class="odd">
 <td>mu</td>
-<td align="right">0.030</td>
-<td align="right">0.011</td>
-<td align="right">2.797</td>
-<td align="right">0.005</td>
+<td align="right">0.031</td>
+<td align="right">0.014</td>
+<td align="right">2.293</td>
+<td align="right">0.022</td>
 </tr>
 <tr class="even">
 <td>omega</td>
 <td align="right">0.000</td>
-<td align="right">0.003</td>
-<td align="right">0.031</td>
-<td align="right">0.975</td>
+<td align="right">0.004</td>
+<td align="right">-0.117</td>
+<td align="right">0.907</td>
 </tr>
 <tr class="odd">
 <td>alpha1</td>
 <td align="right">-0.178</td>
-<td align="right">0.014</td>
-<td align="right">-12.982</td>
+<td align="right">0.013</td>
+<td align="right">-13.380</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="even">
 <td>beta1</td>
 <td align="right">0.969</td>
 <td align="right">0.004</td>
-<td align="right">264.951</td>
+<td align="right">265.865</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="odd">
 <td>gamma1</td>
-<td align="right">0.160</td>
+<td align="right">0.158</td>
 <td align="right">0.015</td>
-<td align="right">10.784</td>
+<td align="right">10.878</td>
 <td align="right">0.000</td>
 </tr>
 </tbody>
@@ -515,21 +508,21 @@ Figure 7.1: ARCH LM test
 <tbody>
 <tr class="odd">
 <td>Persistence</td>
-<td align="right">0.981</td>
+<td align="right">0.980</td>
 <td align="right">0.974</td>
 <td align="right">0.969</td>
 </tr>
 <tr class="even">
 <td>Unconditional Variance</td>
-<td align="right">1.349</td>
-<td align="right">1.055</td>
-<td align="right">1.003</td>
+<td align="right">1.336</td>
+<td align="right">1.026</td>
+<td align="right">0.987</td>
 </tr>
 <tr class="odd">
 <td>Half-life</td>
-<td align="right">35.893</td>
-<td align="right">26.756</td>
-<td align="right">21.675</td>
+<td align="right">34.759</td>
+<td align="right">26.085</td>
+<td align="right">21.911</td>
 </tr>
 </tbody>
 </table>
@@ -565,7 +558,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -575,6 +568,10 @@ gitbook.start({
 "size": 2
 },
 "edit": null,
+"history": {
+"link": null,
+"text": null
+},
 "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
 "toc": {
 "collapse": "subsection"
@@ -589,7 +586,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;
