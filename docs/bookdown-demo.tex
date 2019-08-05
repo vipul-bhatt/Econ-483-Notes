@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-05-07}
+    \date{2019-08-05}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -253,7 +253,7 @@ e_t=\alpha_0 + \alpha_1 X_{1t}+ \rho_1 e_{t-1}+\rho_2 e_{t-2}+...+ \rho_p e_{t-p
 \label{eq:bg1}
 \end{equation}
 
-where we replacr the error term with the OLS residuals (denoted by \(e\)). The LM test statistic is given by:
+where we replace the error term with the OLS residuals (denoted by \(e\)). The LM test statistic is given by:
 
 \[ LM  = N\times R^2_{BG}  \sim \chi^2_p  \]
 
@@ -262,7 +262,7 @@ If the test statistic value is greater than the critical value then we reject th
 \hypertarget{white-noise-process}{%
 \section{White Noise Process}\label{white-noise-process}}
 
-A time series is a \emph{white noise} process is it has zero mean, constant and finite variance, and is serially uncorrelated. Formally, \(y_t\) is a white noise process if:
+A time series is a \emph{white noise} process if it has zero mean, constant and finite variance, and is serially uncorrelated. Formally, \(y_t\) is a white noise process if:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -496,7 +496,7 @@ The above equation can be used to compute the optimal forecast. Suppose, we are 
 \section{Scenario Analysis and Conditional Forecasts}\label{scenario-analysis-and-conditional-forecasts}}
 
 One way to use a regression model to produce forecasts is called
-\emph{scenario analysis} where we produce a different forecast for the dependent under each possible scenario about the future values of the independent variables. For example, what will be the forecast for inflation if the Federal Reserve Bank raises the interest rate? Would our forecast differ depending on the size of the increase in the interest rate?
+\emph{scenario analysis} where we produce a different forecast for the dependent variable under each possible scenario about the future values of the independent variables. For example, what will be the forecast for inflation if the Federal Reserve Bank raises the interest rate? Would our forecast differ depending on the size of the increase in the interest rate?
 
 \hypertarget{unconditional-forecasts}{%
 \section{Unconditional Forecasts}\label{unconditional-forecasts}}
@@ -660,7 +660,7 @@ x2 & 0.4204833 & 0.3643054 & 1.154205 & 0.2528456\\
 \end{tabular}
 \end{table}
 
-Next, we forecast of investment expenditure under three different scenarios:
+Next, we compute forecast of investment expenditure under three different scenarios:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -774,7 +774,7 @@ A given time series can have four possible components:
 \item
   Season: denoted by \(S_t\) are \emph{periodic} fluctuations over \emph{seasons}. The period of the season is fixed and known. For example, rise in non-durable sales during Christmas.
 \item
-  Cycle: denoted by \(C_t\) are \emph{non-periodic} are fluctuations in that they occur regularly but over periods that are not fixed in duration.
+  Cycle: denoted by \(C_t\) are \emph{non-periodic} fluctuations in that they occur regularly but over periods that are not fixed in duration.
 \item
   Irregular: denoted by \(\epsilon_t\) are random fluctuations, typically modeled as a white noise process.
 \end{enumerate}
@@ -787,12 +787,12 @@ We can decompose any given time series into its components. There are two ways t
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Additive Decomposition: Here it is assumed that all four components are added to obtain the underlying timer series:
+  Additive Decomposition: Here it is assumed that all four components are added to obtain the underlying time series:
   \begin{equation}
   y_t= B_t+S_t+C_t +\epsilon_t
   \end{equation}
 \item
-  Multiplicative Decomposition: Here it is assumed that all four components are multiplied to obtain the underlying timer series:
+  Multiplicative Decomposition: Here it is assumed that all four components are multiplied to obtain the underlying time series:
   \begin{equation}
   y_t= B_t \times S_t \times C_t \times \epsilon_t
   \end{equation}
@@ -1044,10 +1044,10 @@ We will now fit a polynomial trend to the US real GDP data that was presented in
 \toprule
 order & AIC & BIC\\
 \midrule
-1 & 4792.049 & 4803.048\\
-2 & 4190.018 & 4204.684\\
-3 & 4158.636 & 4176.968\\
-4 & 4070.138 & 4092.136\\
+1 & 4813.417 & 4824.426\\
+2 & 4199.200 & 4213.879\\
+3 & 4169.934 & 4188.283\\
+4 & 4089.930 & 4111.949\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1068,11 +1068,11 @@ The estimated trend model is presented in Table \ref{tab:ch5-table2}.
 \toprule
   & Estimate & Std. Error & t value & Pr(>|t|)\\
 \midrule
-(Intercept) & 1752.959 & 82.098 & 21.352 & 0\\
-trend & 40.238 & 3.908 & 10.296 & 0\\
-I(trend\textasciicircum{}2) & -0.286 & 0.055 & -5.236 & 0\\
-I(trend\textasciicircum{}3) & 0.003 & 0.000 & 9.281 & 0\\
-I(trend\textasciicircum{}4) & 0.000 & 0.000 & -10.219 & 0\\
+(Intercept) & 1769.417 & 82.765 & 21.379 & 0\\
+trend & 38.885 & 3.927 & 9.903 & 0\\
+I(trend\textasciicircum{}2) & -0.262 & 0.055 & -4.779 & 0\\
+I(trend\textasciicircum{}3) & 0.002 & 0.000 & 8.758 & 0\\
+I(trend\textasciicircum{}4) & 0.000 & 0.000 & -9.651 & 0\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1114,7 +1114,7 @@ In Figure \ref{fig:ch5-figure4} we plot housing starts in the U.S. The data is a
 \caption{Housing Starts in U.S.}\label{fig:ch5-figure4}
 \end{figure}
 
-One option to deal with seasonality is to either obtain seasonally adjusted data from the source itself. Alternatively, we can use decomposition method and appropriately filter out the seasonal component. However, if our objective is to explicitly model the seasonal component of a time series then we must work with non-seasonally adjusted data.
+One option to deal with seasonality is to obtain seasonally adjusted data (or deseasonalized data) from the source itself. Alternatively, we can use decomposition method and appropriately filter out the seasonal component. However, if our objective is to explicitly model the seasonal component of a time series then we must work with non-seasonally adjusted data.
 
 \hypertarget{regression-model-with-seasonal-dummy-variables}{%
 \subsection{Regression Model with Seasonal Dummy Variables}\label{regression-model-with-seasonal-dummy-variables}}
@@ -1148,20 +1148,20 @@ Table \ref{tab:ch5-table3} presents the estimation results for this exercise. In
 \toprule
   & Estimate & Std. Error & t value & Pr(>|t|)\\
 \midrule
-(Intercept) & 86.925 & 4.328 & 20.082 & 0.000\\
-season2 & 2.941 & 6.121 & 0.480 & 0.631\\
-season3 & 31.936 & 6.121 & 5.217 & 0.000\\
-season4 & 48.499 & 6.147 & 7.890 & 0.000\\
-season5 & 53.734 & 6.147 & 8.742 & 0.000\\
+(Intercept) & 86.925 & 4.322 & 20.111 & 0.000\\
+season2 & 2.938 & 6.113 & 0.481 & 0.631\\
+season3 & 32.016 & 6.113 & 5.238 & 0.000\\
+season4 & 48.190 & 6.113 & 7.884 & 0.000\\
+season5 & 53.369 & 6.113 & 8.731 & 0.000\\
 \addlinespace
-season6 & 52.697 & 6.147 & 8.573 & 0.000\\
-season7 & 46.960 & 6.147 & 7.640 & 0.000\\
-season8 & 44.849 & 6.147 & 7.296 & 0.000\\
-season9 & 38.210 & 6.147 & 6.216 & 0.000\\
-season10 & 42.242 & 6.147 & 6.872 & 0.000\\
+season6 & 52.334 & 6.113 & 8.562 & 0.000\\
+season7 & 46.960 & 6.138 & 7.651 & 0.000\\
+season8 & 44.849 & 6.138 & 7.307 & 0.000\\
+season9 & 38.210 & 6.138 & 6.225 & 0.000\\
+season10 & 42.242 & 6.138 & 6.882 & 0.000\\
 \addlinespace
-season11 & 21.104 & 6.147 & 3.433 & 0.001\\
-season12 & 4.797 & 6.147 & 0.780 & 0.435\\
+season11 & 21.104 & 6.138 & 3.438 & 0.001\\
+season12 & 4.797 & 6.138 & 0.782 & 0.435\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1563,8 +1563,8 @@ Rearranging terms, we get the \(AR(\infty)\) representation for an invertible MA
 \protect\hypertarget{def:unnamed-chunk-9}{}{\label{def:unnamed-chunk-9} }An MA process is invertible if it can be represented as a stationary \(AR(\infty)\).
 \EndKnitrBlock{definition}
 
-\hypertarget{properties-of-an-invetible-ma1}{%
-\subsection{Properties of an invetible MA(1)}\label{properties-of-an-invetible-ma1}}
+\hypertarget{properties-of-an-invertible-ma1}{%
+\subsection{Properties of an invertible MA(1)}\label{properties-of-an-invertible-ma1}}
 
 An invertible MA(1) model is given by:
 
@@ -1606,6 +1606,8 @@ Like before, the h-period ahead forecast is the conditional expected value of th
 
 Then, the 1-period ahead forecast is given by:
 
+\[f_{t,1}=E(y_{t+1}|\Omega_t)=\theta_0+ \theta_1 \epsilon_{t-1}\]
+
 The h-period ahead forecast for \(h>1\) is given by:
 \[f_{t,h}=E(y_{t+h}|\Omega_t)=\theta_0\]
 
@@ -1614,7 +1616,7 @@ In general, for an MA(q) model, the forecast for \(h>q\) is the long run mean \(
 \hypertarget{armap-q}{%
 \section{ARMA(p, q)}\label{armap-q}}
 
-An ARMA model simply combines both AR and MA components to model the dynamics of a time series. Formula,
+An ARMA model simply combines both AR and MA components to model the dynamics of a time series. Formally,
 
 \begin{equation}
    y_t = \phi_0 +\phi_1 y_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
@@ -1799,21 +1801,21 @@ In this application we will test for unit root in US-Canada exchange rate. For t
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.069547 -0.008871  0.000358  0.010441  0.124996 
+## -0.069464 -0.008830  0.000404  0.010505  0.125045 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)    
-## z.lag.1    0.0001959  0.0005796   0.338    0.736    
-## z.diff.lag 0.2758988  0.0400346   6.892 1.45e-11 ***
+## z.lag.1    0.0001469  0.0005785   0.254      0.8    
+## z.diff.lag 0.2765247  0.0399989   6.913 1.25e-11 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.01717 on 577 degrees of freedom
-## Multiple R-squared:  0.07658,    Adjusted R-squared:  0.07337 
-## F-statistic: 23.92 on 2 and 577 DF,  p-value: 1.043e-10
+## Residual standard error: 0.01717 on 579 degrees of freedom
+## Multiple R-squared:  0.07663,    Adjusted R-squared:  0.07344 
+## F-statistic: 24.02 on 2 and 579 DF,  p-value: 9.476e-11
 ## 
 ## 
-## Value of test-statistic is: 0.3379 
+## Value of test-statistic is: 0.2539 
 ## 
 ## Critical values for test statistics: 
 ##       1pct  5pct 10pct
@@ -1834,22 +1836,22 @@ In this application we will test for unit root in US-Canada exchange rate. For t
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.067687 -0.009468 -0.000592  0.010039  0.123436 
+## -0.067568 -0.009509 -0.000594  0.010042  0.123449 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  0.010401   0.005319   1.955   0.0510 .  
-## z.lag.1     -0.008173   0.004319  -1.892   0.0589 .  
-## z.diff.lag   0.279076   0.039970   6.982 8.04e-12 ***
+## (Intercept)  0.010629   0.005316   1.999    0.046 *  
+## z.lag.1     -0.008403   0.004315  -1.947    0.052 .  
+## z.diff.lag   0.279730   0.039928   7.006 6.85e-12 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.01713 on 576 degrees of freedom
-## Multiple R-squared:  0.08169,    Adjusted R-squared:  0.0785 
-## F-statistic: 25.62 on 2 and 576 DF,  p-value: 2.192e-11
+## Residual standard error: 0.01713 on 578 degrees of freedom
+## Multiple R-squared:  0.08219,    Adjusted R-squared:  0.07901 
+## F-statistic: 25.88 on 2 and 578 DF,  p-value: 1.72e-11
 ## 
 ## 
-## Value of test-statistic is: -1.8924 1.9691 
+## Value of test-statistic is: -1.9475 2.0313 
 ## 
 ## Critical values for test statistics: 
 ##       1pct  5pct 10pct
@@ -1871,23 +1873,23 @@ In this application we will test for unit root in US-Canada exchange rate. For t
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.067715 -0.009336 -0.000484  0.009933  0.123282 
+## -0.067576 -0.009493 -0.000608  0.009987  0.123400 
 ## 
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  1.040e-02  5.324e-03   1.954   0.0512 .  
-## z.lag.1     -8.356e-03  4.448e-03  -1.879   0.0608 .  
-## tt           7.638e-07  4.386e-06   0.174   0.8618    
-## z.diff.lag   2.793e-01  4.002e-02   6.978 8.25e-12 ***
+## (Intercept)  1.063e-02  5.321e-03   1.998   0.0462 *  
+## z.lag.1     -8.462e-03  4.447e-03  -1.903   0.0575 .  
+## tt           2.430e-07  4.366e-06   0.056   0.9556    
+## z.diff.lag   2.798e-01  3.998e-02   6.999  7.2e-12 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.01714 on 575 degrees of freedom
-## Multiple R-squared:  0.08174,    Adjusted R-squared:  0.07695 
-## F-statistic: 17.06 on 3 and 575 DF,  p-value: 1.257e-10
+## Residual standard error: 0.01714 on 577 degrees of freedom
+## Multiple R-squared:  0.08219,    Adjusted R-squared:  0.07742 
+## F-statistic: 17.22 on 3 and 577 DF,  p-value: 1.005e-10
 ## 
 ## 
-## Value of test-statistic is: -1.8787 1.3206 1.8027 
+## Value of test-statistic is: -1.903 1.3529 1.8946 
 ## 
 ## Critical values for test statistics: 
 ##       1pct  5pct 10pct
@@ -1910,11 +1912,10 @@ Box-Jenkins is a three-step procedure for finding the best fitting ARIMA(p,d,q) 
 
   \begin{enumerate}
   \def\labelenumii{\roman{enumii}.}
-  \tightlist
   \item
     To determine \(d\), we conduct ADF test on successive differences of the original time series. The order of integration is the number times we difference our data to obtain stationarity.
   \item
-    This is followed by estimating ARMA model for different combinations of \(p\) and \(q\). The optimal structure is chosen using eithr AIC or BIC.
+    This is followed by estimating ARMA model for different combinations of \(p\) and \(q\). The optimal structure is chosen using either AIC or BIC.
   \end{enumerate}
 \item
   Parameter estimation: we estimate the identified model from the previous step using ML estimation.
@@ -2128,7 +2129,7 @@ In this application, we will estimate the volatility underlying SP500 returns (F
 
 \[y_t=\mu +\epsilon_t\]
 
-We can estimate the above model by OLS and obtain residuals \(e_t=y_t-\hat{y_t}\). The test for ARCH effects is based on the idea that is there is conditional hetroscedasiticity in our data then the squared residuals will have serial correlation. The ARCH test involves estimating the following regression:
+We can estimate the above model by OLS and obtain residuals \(e_t=y_t-\hat{y_t}\). The test for ARCH effects is based on the idea that if there is conditional hetroscedasiticity in our data then the squared residuals will have serial correlation. The ARCH test involves estimating the following regression:
 
 \[e^2_t= \beta_0 +\beta_1 e^2_{t-1} + \beta_2 e^2_{t-2}+...+ \beta_p e^2_{t-p} + u_t\]
 
@@ -2156,20 +2157,20 @@ In R, we use a package called \textbf{aTSA} to implement this test.The function 
 ## 
 ## Portmanteau-Q test: 
 ##      order   PQ p.value
-## [1,]     4 1074       0
-## [2,]     8 2267       0
-## [3,]    12 3556       0
-## [4,]    16 4150       0
-## [5,]    20 4857       0
-## [6,]    24 5482       0
+## [1,]     4 1097       0
+## [2,]     8 2316       0
+## [3,]    12 3632       0
+## [4,]    16 4240       0
+## [5,]    20 4964       0
+## [6,]    24 5603       0
 ## Lagrange-Multiplier test: 
 ##      order   LM p.value
-## [1,]     4 2193       0
-## [2,]     8  692       0
-## [3,]    12  402       0
-## [4,]    16  272       0
-## [5,]    20  215       0
-## [6,]    24  170       0
+## [1,]     4 2240       0
+## [2,]     8  707       0
+## [3,]    12  411       0
+## [4,]    16  278       0
+## [5,]    20  219       0
+## [6,]    24  174       0
 \end{verbatim}
 
 \begin{figure}
@@ -2188,13 +2189,13 @@ We find strong evidence for ARCH effects in our data as the null hypothesis of n
 \hline
   &  Estimate &  Std. Error &  t value & Pr(>|t|)\\
 \hline
-mu & 0.068 & 0.014 & 4.916 & 0\\
+mu & 0.067 & 0.014 & 4.910 & 0\\
 \hline
-omega & 0.026 & 0.004 & 6.653 & 0\\
+omega & 0.027 & 0.004 & 6.789 & 0\\
 \hline
-alpha1 & 0.132 & 0.013 & 10.049 & 0\\
+alpha1 & 0.133 & 0.013 & 10.157 & 0\\
 \hline
-beta1 & 0.848 & 0.013 & 63.704 & 0\\
+beta1 & 0.847 & 0.013 & 64.141 & 0\\
 \hline
 \end{tabular}
 \end{table}
@@ -2207,15 +2208,15 @@ beta1 & 0.848 & 0.013 & 63.704 & 0\\
 \hline
   &  Estimate &  Std. Error &  t value & Pr(>|t|)\\
 \hline
-mu & 0.029 & 0.014 & 2.108 & 0.035\\
+mu & 0.028 & 0.014 & 2.075 & 0.038\\
 \hline
-omega & 0.027 & 0.003 & 7.975 & 0.000\\
+omega & 0.027 & 0.003 & 8.124 & 0.000\\
 \hline
 alpha1 & 0.000 & 0.013 & 0.000 & 1.000\\
 \hline
-beta1 & 0.864 & 0.013 & 66.157 & 0.000\\
+beta1 & 0.863 & 0.013 & 66.454 & 0.000\\
 \hline
-gamma1 & 0.219 & 0.023 & 9.348 & 0.000\\
+gamma1 & 0.220 & 0.023 & 9.477 & 0.000\\
 \hline
 \end{tabular}
 \end{table}
@@ -2228,15 +2229,15 @@ gamma1 & 0.219 & 0.023 & 9.348 & 0.000\\
 \hline
   &  Estimate &  Std. Error &  t value & Pr(>|t|)\\
 \hline
-mu & 0.031 & 0.014 & 2.293 & 0.022\\
+mu & 0.031 & 0.009 & 3.325 & 0.001\\
 \hline
-omega & 0.000 & 0.004 & -0.117 & 0.907\\
+omega & -0.001 & 0.003 & -0.226 & 0.821\\
 \hline
-alpha1 & -0.178 & 0.013 & -13.380 & 0.000\\
+alpha1 & -0.179 & 0.013 & -13.650 & 0.000\\
 \hline
-beta1 & 0.969 & 0.004 & 265.865 & 0.000\\
+beta1 & 0.968 & 0.003 & 277.066 & 0.000\\
 \hline
-gamma1 & 0.158 & 0.015 & 10.878 & 0.000\\
+gamma1 & 0.158 & 0.015 & 10.911 & 0.000\\
 \hline
 \end{tabular}
 \end{table}
@@ -2249,11 +2250,11 @@ gamma1 & 0.158 & 0.015 & 10.878 & 0.000\\
 \hline
   & GARCH(1,1) & GJR-GARCH(1,1) & EGARCH(1,1)\\
 \hline
-Persistence & 0.980 & 0.974 & 0.969\\
+Persistence & 0.980 & 0.973 & 0.968\\
 \hline
-Unconditional Variance & 1.336 & 1.026 & 0.987\\
+Unconditional Variance & 1.321 & 1.023 & 0.978\\
 \hline
-Half-life & 34.759 & 26.085 & 21.911\\
+Half-life & 33.799 & 25.678 & 21.493\\
 \hline
 \end{tabular}
 \end{table}

@@ -6,7 +6,7 @@ A given time series can have four possible components:
 
 2. Season: denoted by $S_t$ are *periodic* fluctuations over *seasons*. The period of the season is fixed and known. For example, rise in non-durable sales during Christmas.
 
-3. Cycle: denoted by $C_t$ are *non-periodic* are fluctuations in that they occur regularly but over periods that are not fixed in duration.
+3. Cycle: denoted by $C_t$ are *non-periodic* fluctuations in that they occur regularly but over periods that are not fixed in duration.
 
 4. Irregular: denoted by $\epsilon_t$ are random fluctuations, typically modeled as a white noise process.
 
@@ -14,12 +14,12 @@ A given time series can have four possible components:
 
 We can decompose any given time series into its components. There are two ways to accomplish this:
 
-1. Additive Decomposition: Here it is assumed that all four components are added to obtain the underlying timer series:
+1. Additive Decomposition: Here it is assumed that all four components are added to obtain the underlying time series:
 \begin{equation}
 y_t= B_t+S_t+C_t +\epsilon_t
 \end{equation}
 
-2. Multiplicative Decomposition: Here it is assumed that all four components are multiplied to obtain the underlying timer series:
+2. Multiplicative Decomposition: Here it is assumed that all four components are multiplied to obtain the underlying time series:
 \begin{equation}
 y_t= B_t \times S_t \times C_t \times \epsilon_t
 \end{equation}

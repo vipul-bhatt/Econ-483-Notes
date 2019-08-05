@@ -185,7 +185,7 @@ In this application, we will estimate the volatility underlying SP500 returns (F
 
 \[y_t=\mu +\epsilon_t\]
 
-We can estimate the above model by OLS and obtain residuals $e_t=y_t-\hat{y_t}$.  The test for ARCH effects is based on the idea that is there is conditional hetroscedasiticity in our data then the squared residuals will have serial correlation. The ARCH test involves estimating the following regression:
+We can estimate the above model by OLS and obtain residuals $e_t=y_t-\hat{y_t}$.  The test for ARCH effects is based on the idea that if there is conditional hetroscedasiticity in our data then the squared residuals will have serial correlation. The ARCH test involves estimating the following regression:
 
 \[e^2_t= \beta_0 +\beta_1 e^2_{t-1} + \beta_2 e^2_{t-2}+...+ \beta_p e^2_{t-p} + u_t\]
 

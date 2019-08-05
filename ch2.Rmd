@@ -36,7 +36,7 @@ The above equation can be used to compute the optimal forecast. Suppose, we are 
 ## Scenario Analysis and Conditional Forecasts
 
 One way to use a regression model to produce forecasts is called
- *scenario analysis* where we produce a different forecast for the dependent under each possible scenario about the future values of the independent variables. For example, what will be the forecast for inflation if the Federal Reserve Bank raises the interest rate? Would our forecast differ depending on the size of the increase in the interest rate?
+ *scenario analysis* where we produce a different forecast for the dependent variable under each possible scenario about the future values of the independent variables. For example, what will be the forecast for inflation if the Federal Reserve Bank raises the interest rate? Would our forecast differ depending on the size of the increase in the interest rate?
 
 ## Unconditional Forecasts
 
@@ -187,7 +187,7 @@ kable(summary(fit)$coefficients, booktabs=TRUE, caption='A Multiple Regression M
 
 ```
 
-Next, we forecast of investment expenditure under three different scenarios:
+Next, we compute forecast of investment expenditure under three different scenarios:
 
 1. For next 3 years, both output and capital stock remain at the average of last 3 years.
 

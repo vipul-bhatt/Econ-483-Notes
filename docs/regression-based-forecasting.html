@@ -25,7 +25,7 @@
 <meta name="author" content="Vipul Bhatt">
 
 
-<meta name="date" content="2019-05-07">
+<meta name="date" content="2019-08-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -185,7 +185,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#moving-average-ma-model"><i class="fa fa-check"></i><b>6.4</b> Moving Average (MA) Model</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#invertibility-of-an-ma-process"><i class="fa fa-check"></i><b>6.4.1</b> Invertibility of an MA process</a></li>
-<li class="chapter" data-level="6.4.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#properties-of-an-invetible-ma1"><i class="fa fa-check"></i><b>6.4.2</b> Properties of an invetible MA(1)</a></li>
+<li class="chapter" data-level="6.4.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#properties-of-an-invertible-ma1"><i class="fa fa-check"></i><b>6.4.2</b> Properties of an invertible MA(1)</a></li>
 <li class="chapter" data-level="6.4.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#forecast-based-on-maq"><i class="fa fa-check"></i><b>6.4.3</b> Forecast based on MA(q)</a></li>
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="modeling-cycle.html"><a href="modeling-cycle.html#armap-q"><i class="fa fa-check"></i><b>6.5</b> ARMA(p, q)</a></li>
@@ -251,7 +251,7 @@ E(y_t|\Omega_t)=E(y_{t}|X_{1t}, X_{2t}, X_{3t},...,X_{Kt})
 <div id="scenario-analysis-and-conditional-forecasts" class="section level2">
 <h2><span class="header-section-number">2.1</span> Scenario Analysis and Conditional Forecasts</h2>
 <p>One way to use a regression model to produce forecasts is called
-<em>scenario analysis</em> where we produce a different forecast for the dependent under each possible scenario about the future values of the independent variables. For example, what will be the forecast for inflation if the Federal Reserve Bank raises the interest rate? Would our forecast differ depending on the size of the increase in the interest rate?</p>
+<em>scenario analysis</em> where we produce a different forecast for the dependent variable under each possible scenario about the future values of the independent variables. For example, what will be the forecast for inflation if the Federal Reserve Bank raises the interest rate? Would our forecast differ depending on the size of the increase in the interest rate?</p>
 </div>
 <div id="unconditional-forecasts" class="section level2">
 <h2><span class="header-section-number">2.2</span> Unconditional Forecasts</h2>
@@ -327,6 +327,7 @@ y_t=\beta_0 + \beta_1 x_{t-1} + \beta_2 x_{t-2} +\epsilon_t
 </ol>
 <p><span class="math display">\[ BIC= MSE \times T^{\frac{k}{T}} \]</span></p>
 <p>Lower values of either AIC or BIC indicates greater accuracy. So we select a model with lower value of either of these two criteria. Note that the penalty imposed by BIC is harsher and hence it will typically select a more parsimonious model (Figure <a href="regression-based-forecasting.html#fig:ch2-figure1">2.1</a>).</p>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.5.2</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:ch2-figure1"></span>
 <img src="bookdown-demo_files/figure-html/ch2-figure1-1.png" alt="Penalty Factor of AIC and BIC" width="80%" />
 <p class="caption">
@@ -345,6 +346,7 @@ y_t= \beta_0 + \beta_1 x_{1t}+ \beta_2 x_{2t}+\epsilon_t
 \end{equation}\]</span></p>
 <p>We can estimate the above model using OLS and then conduct scenario-based forecasting. For ease of interpretation, we will convert all variables in natural logarithms.</p>
 <p>Table <a href="regression-based-forecasting.html#tab:ch2-table1">2.1</a> below presents the estimated coefficients of our regression model. Higher output and capital stock leads to greater investment expenditure.</p>
+<pre><code>## Warning: package &#39;knitr&#39; was built under R version 3.5.2</code></pre>
 <table>
 <caption><span id="tab:ch2-table1">Table 2.1: </span>A Multiple Regression Model of Investment Expenditure</caption>
 <thead>
@@ -380,7 +382,7 @@ y_t= \beta_0 + \beta_1 x_{1t}+ \beta_2 x_{2t}+\epsilon_t
 </tr>
 </tbody>
 </table>
-<p>Next, we forecast of investment expenditure under three different scenarios:</p>
+<p>Next, we compute forecast of investment expenditure under three different scenarios:</p>
 <ol style="list-style-type: decimal">
 <li><p>For next 3 years, both output and capital stock remain at the average of last 3 years.</p></li>
 <li><p>For next 3 years, both output and capital stock remain at 1% above the average of last 3 years.</p></li>

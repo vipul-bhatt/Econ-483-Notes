@@ -25,7 +25,7 @@
 <meta name="author" content="Vipul Bhatt">
 
 
-<meta name="date" content="2019-05-07">
+<meta name="date" content="2019-08-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -185,7 +185,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#moving-average-ma-model"><i class="fa fa-check"></i><b>6.4</b> Moving Average (MA) Model</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#invertibility-of-an-ma-process"><i class="fa fa-check"></i><b>6.4.1</b> Invertibility of an MA process</a></li>
-<li class="chapter" data-level="6.4.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#properties-of-an-invetible-ma1"><i class="fa fa-check"></i><b>6.4.2</b> Properties of an invetible MA(1)</a></li>
+<li class="chapter" data-level="6.4.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#properties-of-an-invertible-ma1"><i class="fa fa-check"></i><b>6.4.2</b> Properties of an invertible MA(1)</a></li>
 <li class="chapter" data-level="6.4.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#forecast-based-on-maq"><i class="fa fa-check"></i><b>6.4.3</b> Forecast based on MA(q)</a></li>
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="modeling-cycle.html"><a href="modeling-cycle.html#armap-q"><i class="fa fa-check"></i><b>6.5</b> ARMA(p, q)</a></li>
@@ -232,18 +232,18 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <ol style="list-style-type: decimal">
 <li><p>Trend: denoted by <span class="math inline">\(B_t\)</span> captures the long run behavior of the time series of interest.</p></li>
 <li><p>Season: denoted by <span class="math inline">\(S_t\)</span> are <em>periodic</em> fluctuations over <em>seasons</em>. The period of the season is fixed and known. For example, rise in non-durable sales during Christmas.</p></li>
-<li><p>Cycle: denoted by <span class="math inline">\(C_t\)</span> are <em>non-periodic</em> are fluctuations in that they occur regularly but over periods that are not fixed in duration.</p></li>
+<li><p>Cycle: denoted by <span class="math inline">\(C_t\)</span> are <em>non-periodic</em> fluctuations in that they occur regularly but over periods that are not fixed in duration.</p></li>
 <li><p>Irregular: denoted by <span class="math inline">\(\epsilon_t\)</span> are random fluctuations, typically modeled as a white noise process.</p></li>
 </ol>
 <div id="decomposing-a-time-series" class="section level2">
 <h2><span class="header-section-number">3.1</span> Decomposing a time series</h2>
 <p>We can decompose any given time series into its components. There are two ways to accomplish this:</p>
 <ol style="list-style-type: decimal">
-<li><p>Additive Decomposition: Here it is assumed that all four components are added to obtain the underlying timer series:
+<li><p>Additive Decomposition: Here it is assumed that all four components are added to obtain the underlying time series:
 <span class="math display">\[\begin{equation}
 y_t= B_t+S_t+C_t +\epsilon_t
 \end{equation}\]</span></p></li>
-<li><p>Multiplicative Decomposition: Here it is assumed that all four components are multiplied to obtain the underlying timer series:
+<li><p>Multiplicative Decomposition: Here it is assumed that all four components are multiplied to obtain the underlying time series:
 <span class="math display">\[\begin{equation}
 y_t= B_t \times S_t \times C_t \times \epsilon_t
 \end{equation}\]</span></p></li>

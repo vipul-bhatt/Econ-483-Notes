@@ -204,7 +204,7 @@ y=HOUSTNSA
 plot.xts(as.xts(y),yaxis.right=F, main="")
 ```
 
-One option to deal with seasonality is to either obtain seasonally adjusted data from the source itself. Alternatively, we can use decomposition method and appropriately filter out the seasonal component. However, if our objective is to explicitly model the seasonal component of a time series then we must work with non-seasonally adjusted data.
+One option to deal with seasonality is to obtain seasonally adjusted data (or deseasonalized data) from the source itself. Alternatively, we can use decomposition method and appropriately filter out the seasonal component. However, if our objective is to explicitly model the seasonal component of a time series then we must work with non-seasonally adjusted data.
 
 ### Regression Model with Seasonal Dummy Variables
 

@@ -454,7 +454,7 @@ Rearranging terms, we get the $AR(\infty)$ representation for an invertible MA(1
 An MA process is invertible if it can be represented as a stationary $AR(\infty)$.
 ```
 
-### Properties of an invetible MA(1)
+### Properties of an invertible MA(1)
 
 An invertible MA(1) model is given by:
 
@@ -487,6 +487,7 @@ Like before, the h-period ahead forecast is the conditional expected value of th
 
 Then, the 1-period ahead forecast is given by:
 
+ \[f_{t,1}=E(y_{t+1}|\Omega_t)=\theta_0+ \theta_1 \epsilon_{t-1}\]
 
 The h-period ahead forecast for $h>1$ is given by:
  \[f_{t,h}=E(y_{t+h}|\Omega_t)=\theta_0\]
@@ -496,7 +497,7 @@ In general, for an MA(q) model, the forecast for $h>q$ is the long run mean $\th
 
 ## ARMA(p, q)
   
-An ARMA model simply combines both AR and MA components to model the dynamics of a time series. Formula,
+An ARMA model simply combines both AR and MA components to model the dynamics of a time series. Formally,
   
    \begin{equation}
    y_t = \phi_0 +\phi_1 y_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
@@ -668,7 +669,8 @@ Box-Jenkins is a three-step procedure for finding the best fitting ARIMA(p,d,q) 
 1. Model identification: here we determine the order of integration $d$, and the optimal number of AR and MA components, $p$ and $q$ respectively. 
 
     i. To determine $d$, we conduct ADF test on successive differences of the original time series. The order of integration is the number times we difference our data to obtain stationarity.
-    ii. This is followed by estimating ARMA model for different combinations of $p$ and $q$. The optimal structure is chosen using eithr AIC or BIC.
+    
+    ii. This is followed by estimating ARMA model for different combinations of $p$ and $q$. The optimal structure is chosen using either AIC or BIC.
 
 2. Parameter estimation: we estimate the identified model from the previous step using ML estimation.
 
