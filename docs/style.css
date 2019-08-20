@@ -12,3 +12,15 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+.rmdNote {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  background: #F8F9F9 5px center/3em no-repeat;
+  background-image: url("images/icons/note.png");
+  border-color: #A93226;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: thin;
+
+}

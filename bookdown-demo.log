@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.1.21)  5 AUG 2019 11:48
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.1.21)  20 AUG 2019 09:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1107,19 +1107,117 @@ Underfull \hbox (badness 10000) in paragraph at lines 2266--2267
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [66]
-No file bookdown-demo.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2271.
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [67] [68]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2271.
+Appendix A.
+[69
+
+]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-16-1.pdf>
+[70]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-17-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[71] [72] [73]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-22-1.pdf>
+File: bookdown-demo_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-23-1.pdf>
+[74] [75]
+Underfull \hbox (badness 10000) in paragraph at lines 2590--2591
+
+ []
+
+[76] [77] [78
+
+]
+Appendix B.
+[79] [80]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-39-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-39-1.pdf>
+[81] [82]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-41-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-41-1.pdf>
+File: bookdown-demo_files/figure-latex/unnamed-chunk-42-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-42-1.pdf>
+[83] [84] [85] [86]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-49-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-49-1.pdf>
+[87] [88]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-50-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-50-1.pdf>
+File: bookdown-demo_files/figure-latex/unnamed-chunk-51-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-51-1.pdf>
+[89] [90] [91]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-52-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-52-1.pdf>
+File: bookdown-demo_files/figure-latex/unnamed-chunk-53-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-53-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[92]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-54-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-54-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[93]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-54-2.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-54-2.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[94]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-55-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-55-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[95]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-55-2.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-55-2.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[96]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-55-3.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-55-3.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[97] [98] [99] [100] [101] [102] [103] [104] [105] [106] [107]
+No file bookdown-demo.bbl.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3619.
+[108]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3619.
 (./bookdown-demo.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 2271.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2271.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 3619.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3619.
 
 Package rerunfilecheck Info: File `bookdown-demo.out' has not changed.
-(rerunfilecheck)             Checksum: F420F77A53CE9A4B31616D376DED099F.
+(rerunfilecheck)             Checksum: 56AA20860D73786A63BC1C0ED4D68BC8.
 
 LaTeX Warning: There were undefined references.
 
@@ -1128,12 +1226,12 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 24372 strings out of 494476
- 450689 string characters out of 6165662
- 596956 words of memory out of 5000000
- 28014 multiletter control sequences out of 15000+600000
+ 24518 strings out of 494476
+ 456353 string characters out of 6165662
+ 602552 words of memory out of 5000000
+ 28143 multiletter control sequences out of 15000+600000
  549106 words of font info for 63 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 45i,11n,68p,1027b,525s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 45i,11n,68p,1027b,557s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on bookdown-demo.pdf (68 pages).
+Output written on bookdown-demo.pdf (108 pages).

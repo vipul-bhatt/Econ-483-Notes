@@ -1,0 +1,1244 @@
+# (APPENDIX) Appendix {-}
+#  Review of Differential Calculus and Optimization 
+
+Given that all students must have taken a course in calculus before enrolling for this class, it is assumed that everyone in the class is comfortable with concepts such as derivatives, partial derivatives, and optimization. In this chapter, I will provide a brief review of some concepts that are most pertinent for Econometrics. I strongly encourage that you read your lecture notes for Calculus if you find it difficult to follow the material presented in this chapter.
+
+## Derivative of a single variable function 
+
+```{definition, name="Derivative of a function"}
+Consider the following function, $y=f(x)$. The *derivative* of this function measures the rate of change in $y$ caused by a change in $x$. 
+
+```
+There are two alternative notations for the derivative of $y$ with respect to $x$: $f'(x)$ or $\displaystyle{\frac{dy}{dx}}$.
+
+The derivative of a function is very closely related to the concept of *slope* of a function. Let $\Delta$ denotes change in  a variable. Then, by definition, the slope of $y$ with respect to $x$ is given by: 
+
+\[slope=\frac{\Delta y}{\Delta x}\]
+
+The derivative of $y$ with respect to $x$ is the limit value of the slope as $\Delta x \rightarrow 0$. Hence,
+ \[\frac{dy}{dx} \ or \ f'(x)=\lim_{\Delta x \to 0} \left( \frac{\Delta y}{\Delta x}\right) \]
+
+### Rules of Differentiation
+
+1. Derivative of a constant is $0$. 
+
+2. Derivative of a function multiplied by a constant is constant times the derivative of the function:
+
+\[\frac{d}{dx} [\ a\times f(x)]=a\times f'(x)\] 
+
+where it is assumed that $a$ is an constant.
+
+3. Addition  rule:
+
+\[ \frac{d}{dx} [f(x)+ g(x)]=f'(x)+ g'(x) \]
+ 
+4. Subtraction  rule:
+
+\[ \frac{d}{dx} [f(x)- g(x)]=f'(x)-g'(x) \]
+
+5. Product rule:
+
+\[ \frac{d}{dx} [f(x)\times g(x)]= f(x) \times g'(x) + g(x)\times f'(x)\]
+
+6. Quotient rule:
+
+\[ \frac{d}{dx} \left[\frac{f(x)}{g(x)}\right]=\frac{f'(x) \times g(x) - g'(x) \times f(x)}{g(x)^2}\]
+
+7. Chain rule:
+
+\[ \frac{d}{dx} [f(g(x))] = f'(g(x)) \times g'(x)\]
+
+8. Derivative of some common functions:
+
+    a. Power function: $f(x)=x^a$. Then,
+       \[f'(x)=a \times x^{a-1}\]
+       
+    b. Natural log function: $f(x)=ln(x)$. Then,
+     \[f'(x) = \frac{1}{x}\]
+     
+    
+    c. Exponential function: $f(x)=e^x$
+    \[f'(x)=e^x\]
+
+
+## Second derivative and non-linearity
+
+```{definition, name="Second derivative of a function"}
+Consider the following function, $y=f(x)$. The *second derivative* of this function measures the change in the rate of change of this function. Formally it is denoted by $f''(x)$ or $\displaystyle{\frac{d^2y}{dx^2}}$.
+
+```
+
+The second derivative measures the *curvature* of the function and hence can be used to distinguish a *linear* function from a *non-linear* function. By definition, a linear function has a constant slope implying the its second derivative must be zero. 
+
+```{example}
+For example, consider the following linear function:
+  
+\[f(x) = mx +b\]
+
+Here$f'(x)=m$ and $f''(x)=0$.
+
+```
+
+
+A non-linear function will have a non-zero second derivative. There are only two possibilities:
+
+1. $f''(x)<0$. In this case we have a concave relationship. An example from economics is the production function where the relationship between output and input is concave.
+
+```{r,echo=FALSE}
+x <- (rep(1:50))
+y=x^0.15
+plot(x,y, type="l", main="Production Function", xlab="Labor", ylab="Labor")
+```
+
+2. $f''(x)>$. In this case we have a convex relationship. An example from economics is the marginal cost function where the relationship between cost of production and level of output can be convex.
+
+```{r, echo=FALSE}
+x <- seq(1,50,0.5)
+y=2*x^2+0.5
+plot(x,y, type="l", main="Marginal Cost Function", xlab="Output", ylab="Cost")
+```
+
+
+## Partial derivatives: Multi-variable functions
+
+*Ceteris paribus* aka *holding other things equal* is one of the key concepts used in Economic analysis. A *partial derivative* is a mathematical counterpart of this assumption.
+
+```{definition, name="Partial Derivative"}
+Consider a function of n-variables given by $y=f(x_1,x_2, x_3,...,x_n)$. Then, there are n partial derivatives of this function that can be obtained by taking derivative with respect to one of the $x$-variables, holding all other constant. Formally, the partial derivative of $y$ with respect to $x_i$ is denoted by $\displaystyle{f_{x_i} \text{or} \frac{\partial y}{\partial x_i}}$.
+
+```{example}
+Consider the following 3-variable function:
+  
+  \[y=ln(x_1)+x_1\times x_2+3x_2^2 + x_1 \times x_3 + ln(x_3)\]
+
+Then we can compute three partial derivatives of this function:
+  
++ Partial derivative of $y$ with respect to $x_1$, treating $x_2$ and $x_3$ as constants:
+  \[\frac{\partial y}{\partial x_1} = \frac{1}{x_1} + x_2+x_3\]
+
++ Partial derivative of $y$ with respect to $x_2$, treating $x_1$ and $x_3$ as constants:
+  \[\frac{\partial y}{\partial x_2} = x_1+6x_2\]
+
++ Partial derivative of $y$ with respect to $x_3$, treating $x_1$ and $x_2$ as constants:
+  \[\frac{\partial y}{\partial x_3} = x_1+ \frac{1}{x_3}\]
+
+```
+
+
+```{example, name="Cobb-Douglas Production Function"}
+One of the most used functional form for the production function is the Cobb-Douglas production function. Suppose you have two inputs: labor (L) and capital (K). Let Y denotes output. Then, the Cobb-Douglas production function is given by:
+
+  
+  \[Y=L^{\beta_1}K^{\beta_2}\]
+
+
+Now, output can change because we change our labor input or our capital input. In each case, we are thinking about a change in output caused by change in one input, holding the other input constant. This is exactly what a partial derivative captures! In what follows next we will use two mathematical concepts to further our understanding of economics of production:
+  
+1. Change in natural logs of a variable approximates percent change in that variable. Formally, $\Delta ln(x) \times 100 \approx \text{\% change in x}$.  Hence, it is often useful to express economic relationships in natural logs. The Cobb-Douglas production function in natural logs is given by:
+
+ \[ln(Y)=\beta_1 \times ln(L) + \beta_2 \times ln(K) \]
+
+2. The partial derivative of the above equation gives us **elasticity of output** with respect to each input.
+
+    a. Output elasticity of Labor:
+      \[\frac{\% \ \text{change in Y}}{\% \ \text{change in L}} = \frac{\partial ln(Y) \times 100}{ \partial ln(L) \times 100}=\beta_1\]
+
+    b. Output elasticity of Capital:
+      \[\frac{\% \ \text{change in Y}}{\% \ \text{change in K}} = \frac{\partial ln(Y) \times 100}{ \partial ln(K) \times 100}=\beta_2\]
+
+
+Note that we can also infer whether production is subject to increasing, decreasing, or constant returns to scale from the numerical values assigned to $\beta_1$ and $\beta_2$. Returns to scale is simply the sum of output elasiticities with respect to labor and capital:
+  
+  \[\text{Returns to scale}= \frac{\% \ \text{change in Y}}{\% \  \text{change in L}}+\frac{\% \ \text{change in Y}}{\% \ \text{change in K}}=\beta_1+\beta_2\]
+
+Hence, we obtain constant returns to scale as long as $\beta_1+\beta_2=1$. We get decreasing returns to scale if $\beta_1+\beta_2<1$. Finally, increasing returns to scale require $\beta_1+\beta_2>1$.
+
+```
+
+
+
+## Optimization
+
+In Economics it is often assumed that rational individuals *optimize*. For instance, firms seek to maximize profits (or minimize costs) and households seek to maximize utility. Mathematically, this is equivalent to finding **extreme** values of an **objective function**. 
+
+```{example}
+Consider a firm that is choosing a level of output $(q)$ to maximize its profits. By definition, profits are total revenue $R(q)$ minus total cost $C(q)$. The resulting profit function $\pi(q)$ is the firm's objective function and $q$ is the control variable:
+
+\[\pi(q)=R(q)- C(q)\]
+
+The firm will choose a value of $q$ that will maximize its profits. Mathematically, this can be written as:
+
+\[ \max_{q} \pi(q)\]
+```
+
+One way to solve this problem, is to assume a functional form for profits and evaluate this function for all possible values of $q$. Then, select the value of $q$ that yields highest value for profits. This approach is called **numerical optimization** and is often used for complicated objective functions. But in many cases, we can use calculus and obtain an *analytical* solution for the optimization problem.
+
+Formally, suppose the objective function is denoted by $f(x)$ and assume that this function is continuous and twice differentiable. Then,
+
+1. $x^*$ is a maximizer if $f(x^*)\geq f(x)$ for all $x\neq x^*$.  Note that at this point the slope of the tangent to the function is $0$, i.e., $f'(x^*)=0$. This is the **first order condition (foc)** for obtaining a maximum. The graph below illustrates the maximum of a generic function. Note that the slope of the function changes sign from positive to negative around $x^*$. This will give us the **second order condition** for obtaining a maximum.
+
+```{r, echo=F}
+x <- seq(1,99,1)
+y=150*x-1.5*x^2
+
+plot(x,y,type="l", main="Maximum of a concave function", ylab="f(x)", ylim=c(0,4500))
+segments(x0=20,y0=max(y),x1=80,y1=max(y),col="red")
+xmax <- which.max(y)
+segments(x0=x[xmax],y0=par("usr")[3],x1=x[xmax],y1=max(y),col="red", lty="dotted")
+
+```
+
+
+2.  $x^*$ is a minimizer if $f(x^*)\leq f(x)$ for all $x\neq x^*$.  Note that at this point the slope of the tangent to the function is $0$, i.e., $f'(x^*)=0$. This is the **first order condition (foc)** for obtaining a minimum. The graph below illustrates the minimum of a generic function. Note that the slope of the function changes sign from negative to positive around $x^*$. This will give us the **second order condition** for obtaining a minimum.
+
+```{r, echo=F}
+x <- seq(-70,30,1)
+y=-1500+50*x+1.5*x^2
+
+
+plot(x,y,type="l", main="Minimum of a convex function", ylab="f(x)", ylim=c(-3000, 2500))
+segments(x0=-40,y0=min(y),x1=10,y1=min(y),col="red")
+xmin <- which.min(y)
+segments(x0=x[xmin],y0=min(y),x1=x[xmin],y1=par("usr")[3],col="red",lty="dotted")
+
+
+
+```
+
+Note for a maximum,  Similarly, . We can now outline the steps for computing a maximum or minimum of a given function.
+
+1. First-order condition: Compute the first derivative of the function and equate it to 0. The solution to this equation gives us $x^*$:
+
+\[ f'(x^*) = 0\]
+
+2. Second-order condition: Compute the second derivative of the function and evaluate it at $x^*$.
+
+    a. If $f''(x^*) < 0$, then $x^*$ is a maxmizer.
+    
+    b. If $f''(x^*) > 0$, then $x^*$ is a minimizer.
+
+
+```{example, name="Single variable optimization example"}
+
+Consider a firm that produces a single good $q$ and sells it at a price of $10 per unit. The cost of production is given by:
+  \[C(q)=2q+ 5+0.1q^2\]
+At what level of output would profits be maximized?
+```
+
+```{solution}
+The profit of a firm is revenue minus cost:
+  
+  \[\pi(q)= R(q) -C(q)= 5q-2q-5-0.1q^2=2q-5-0.1q^2\]
+
+Hence, we want to solve the following problem:
+  \[\max_{q} \pi(q)\]
+
+The first order condition is given by:
+  
+  \[\pi'(q)=0 \Rightarrow 2-0.2q=0 \rightarrow q^*=10 \]
+
+The second order condition is given by:
+\[\pi''(q)=-0.2<0\]
+
+Hence, $q^*=10$ maximizes the profits. The maximum level of profits is given by $\pi(q^*)=2\times 10-5=0.1\times 10=5$.
+
+  
+```
+
+
+Note that the above process can be easily applied to multivariable functions. In that case there will be one first order condition for every control variable. 
+
+```{example, name="Multi-variable optimization example"}
+
+Consider a two-variable function:
+  
+\[f(x_1,x_2)=2x_1x_2 + \frac{100}{x_1} - 4x_2^2\]
+    
+Solve the following minimization problem:
+
+  \[\min_{x_1,x_2} f(x_1,x_2)\]
+
+
+```
+
+
+```{solution}
+Now we have two first order conditions:
+
+  \[f_{x_1}(x_1,x_2) = 0 \Rightarrow 2x_2 -\frac{100}{x_1^2}=0\]  
+   \[f_{x_2}(x_1,x_2) = 0 \Rightarrow 2x_1 -8x_2=0\]  
+
+So we have two equations in two unknowns. You can show that $x_1*=5.84$ and $x_2^*=1.46$. The minimum of this function is given by $f(x_1^*,x_2^*)=2\times 5.84*1.46+\frac{100}{5.84} - 4\times 1.46^2=25.65$.
+  
+```
+
+## Problems{-}
+
+
+
+```{exercise}
+Compute the derivative of the following functions.
+
+a. $f(x)=2x^2$
+  
+b. $f(x)=2x^2+ ln(x)$
+  
+c. $f(x)=e^{ax}$
+  
+d. $f(x)= (2x+x^2)^3$
+  
+e. $f(x)= ln(5x+x^2)$
+  
+f. $f(x)= \displaystyle{\frac{x+ln(x)}{x^3}}$
+
+```
+
+```{exercise}
+Compute the second derivative of each function given in Exercise 2.1.
+```
+
+```{exercise}
+
+Compute the partial derivative for each variable for the following functions:
+  
+a. $f(x_1,x_2,x_3)=4x_1^3x_2-e^{x_3}x_1+3 x_2$
+
+b. $\displaystyle{f(x_1,x_2)=\frac{2x_1 +3x_2}{4x_1^3-7x_1x_2}}$
+
+c. $\displaystyle{f(x, y)= ln(y^2)-ln(x)+2 ln\left(\frac{x}{y}\right)}$
+
+d. $f(x,y)=2x^{0.4} y^{0.8}+2x$
+
+```
+
+```{exercise}
+Solve the following optimization problems. In each case compute the maximizer(s) (or minimizer(s)) for the function as well as the optimum value of the function.
+
+a. $\displaystyle{\max_x f(x) = 3ln(x) - 0.5x+4}$
+
+
+b. $\displaystyle{\min_{x,y} f(x,y) = 2xy+\frac{2000}{x}+\frac{2000}{y}}$
+  
+
+c. $\displaystyle{\max_x f(x) = ax^{0.5} - bx+4}$
+
+```
+
+
+
+# Review of Probability and Statistics 
+
+Given that all students must have taken a course in statistics before enrolling for this class, it is assumed that everyone in the class is comfortable with concepts such probability, expected value, measures of central tendency, hypothesis testing etc. In this chapter, I will provide a brief review of some concepts that are most pertinent for Econometrics. I strongly encourage that you read your lecture notes for Statistics if you find it difficult to follow the material presented in this chapter.
+
+## Probability 
+
+We begin with a brief review of probability thoery. To define probability we first need to develop an understanding of what we mean by *experiment*, *sample space*, and *event* in statistics.
+
+```{definition, name="Experiment"}
+An experiment is a process with an uncertain observable outcome. e.g. Toss of a coin can have two possible outcomes, heads or tails.
+
+```
+
+```{definition, name="Sample Space"}
+The sample space is the set of all possible outcomes of an experiment. I will denote it by $S$.  If we toss a coin then $S=\{Heads,Tails\}$.
+
+```
+
+```{definition, name="Event"}
+An event is a subset of the sample space. I will denote it by $E$. If we toss a coin and Heads shows up then $E={Heads}$.
+
+```
+
+Now, we can define probability, which is a function that assigns a numerical value to the chance of an event occuring among all possible events in the sample space.
+
+
+```{definition, name="Probability"}
+
+A function $P$ is called a probability function if:
+  
+1. For any given event, $E$, $0 \leq P(E)< \leq 1$.
+2. Suppose there are N possible events in S, i.e., $S=\{E_1, E_2, E_3,..,E_N\}$. Then,
+\[P(E_1)+P(E_2)+P(E_3)+...+P(E_N)=1\]
+3. Consider an event E. Then,
+
+\[P(\lnot E) = 1 -P(E) \]
+
+3. If we have two disjoint events $A$ and $B$, then:
+
+    a. $P(A \cup B)= P(A) + P(B)$
+    b. $P(A \cap B)=0$
+
+4. If we have two non-disjoint events $A$ and $B$, then:
+  
+    a. $P(A \cup B)= P(A) + P(B)-P(A \cap B)$
+    b. $P(A \cap B)= P(A) \times P(B|A)$
+  
+
+5. If we have two independent events $A$ and $B$, then:
+  \[P(A \cap B) = P(A) \times P(B)\]
+
+6. Bayes rule:
+
+\[P(A|B)=\frac{P(A) \times P(B|A)}{P(B)}\]
+
+where $\displaystyle{P(B)= P(B|A)\times P(A) + P(B|\lnot A) \times P(\lnot A)}$
+
+```
+
+One such probability function is:
+\begin{align}
+P(E) = \frac{\text{Number of  outcomes  in  E}}{\text{Number  of  outcomes  in  S}}
+\end{align}
+
+
+```{example}
+Consider a fair six-sided dice. The probability of obtaining an odd number if this dice is rolled once is given by 0.5. To see this, note that the event here is obtaining an odd number when a dice is rolled. Hence, $E=\{1,3,5\}$. Also, $S=\{1,2,3,4,5,6\}$. Using this, we get:
+  \begin{equation}
+P(E)=\frac{3}{6}=0.5
+\end{equation}
+
+```
+
+## Random Variable
+
+One of the most important applications of statistics is to resolve the randomness that is inherent in most economic choices. For example, the outcome of your college major is a random variable with many possible values. Most economic variables can be thought of as **random variables** that have many possible values which are unknown until they are realized. We will begin by formally defining a random variable.
+
+```{definition, name="Random Variable"}
+A random variable is a numerical representation of outcomes of an experiment. For example, in the example of a toss of a coin, suppose you win \$10 if heads shows and you lose \$5 if tails shows. In this case, tossing the coin was the experiment, and winnings from this game is the random variable with two possible values: \$10 and -\$5.
+
+```
+
+There are two types of random variables. 
+
+1. Discrete random variable: takes finite number of values. e.g. GPA points earned in Econ 385.
+
+2. Continuous random variable: can take any value on the number line. e.g. GDP in the last quarter of 2019.
+
+
+## Probability distribution 
+
+By definition a random variable can take many *possible values*. In statistics a function that provides the probabilties of different realizations of a random varuable is called its **probability distribution**.   
+
+### Probability distribution of a discrete random variable
+
+For a discrete random variable the probability distribution is simply the list of all possible values this variable can and their corresponding probabilities. Let $X$ be a discrete random variable with $n$ possible values give by $\{x_1,x_2,x_3,..,x_n\}$. Let $p_i$ denotes that probability that $X=x_i$. Then, the probability distribution function of this random variable is given by:
+  
+|    X    |   p(X)  |
+|:-------:|:-------:|
+|  $x_1$  |  $p_1$  |
+|  $x_2$  |  $p_2$  |
+|  $x_3$  |  $p_3$  |
+| $\vdots$ | $\vdots$ |
+|  $x_n$  |  $p_n$  |
+  
+
+
+```{example, name="Grade Distribution"}
+A typical grade distribution is an example of a discrete random variable. Consider the following grade distribution:
+
+  |   GPA   |   Percent of Students  |
+|:-------:|:-------:|
+|  $0$  |  $10\%$  |
+|  $1$  |  $20\%$  |
+|  $2$  |  $40\%$  |
+| $3$ | $20\%$ |
+|  $4$  |  $10\%$  |
+
+```
+Note that every GPA point corresponds to a letter grade.  From the perspective of the student, $X$ is the random variable that is his letter grade, and the above distribution gives the probability of obtaining a particular letter grade. We can plot this simple probability distribution as follows:
+
+```{r, echo=F, fig.cap="Probability Distribution of Letter Grades"}
+ 
+data=data.frame(grade=as.factor(c("A","B","B","C","C","C","C","D","D","F")))
+freq=table(data)
+# get percentage list
+percent <- as.vector(freq)/nrow(data)
+
+# add percent
+d=cbind(freq,percent)
+
+barplot(d[,2],ylab="Probability",xlab="Letter Grade")
+
+```
+
+We can use the probability distribution of a discrete random variable in two different ways.
+
+1. We can compute the probability of the random variable taking an exact value. This is known as the **probability mass function (p.m.f)** and is denoted by $f(x)$:
+
+\[f(x)=P(X=x)\]
+
+For example, the probability of obtaining a letter grade of C or $P(X=2)$ is 0.4 or 40%. 
+
+2. We can also infer the probability that a discrete random variable will be less than or equal to a certain value by cumulatively adding the probabilities. Formally, we can compute the **cumulative probability distribution (c.d.f)** which is denoted by $F(x)$:
+
+\[F(x)=P(X\leq X)\]
+
+Going back to our grade distribution example, we can add the column of cumulative probabilities to obtain the $c.d.f$:
+
+  |   Grade   |   Percent of Students| $F(x)$  |
+|:-------:|:-------:|:-------:|   
+|  $0$  |  $10\%$  |   $10\%$        |
+|  $1$  |  $20\%$  | $30\%$         |
+|  $2$  |  $40\%$  | $70\%$         |
+| $3$ | $20\%$ |   $90\%$           |
+|  $4$  |  $10\%$  |   $100\%$       |
+
+So for example, we can infer that the probability of obtaining the letter grade of C or lower i.e, $P(X\leq 2)$ is 0.7 or 70% which is obtained by adding the probabilities of obtaining letter grades of C, D, and F, respectively.
+
+```{example, name="Bernoulli Random Variable"}
+When a random variable is binary then we call it a **Bernoulli** random variable and its probability distrubition is called **Bernoulli** distribution. Consider a random variable that can only take two values, say, $0$ or $1$. It is common to think of these two values as coding a set criterion with $1$ typically assigned if the criterion is met and $0$ is assigned for failing to meet the criterion. For example, $X$ could be whether you will get a job right after graduation. If you do then $X=1$ and if you do not then $X=0$. Let $p$ denotes the probability that you will get a job. Then, the $p.m.f.$ of the Bernoulli distribution is given by:
+  
+  \[f(x)=\begin{cases}
+    p & if \ X=1\\
+    1-p & if \ X=0
+     \end{cases}\]
+
+The $c.d.f$ of the Bernoulli distribution is given by:
+
+  \[F(x)=\begin{cases}
+    0 & if \quad X < 0\\
+    1-p & if \quad 0\leq X<1\\
+    p & if \quad  X\geq 1
+     \end{cases}\]
+
+```
+
+### Probability distribution of a continuous random variable
+
+In economics a large majority of variables of interest in theory are continous random variables. For example, the change in the price of Apple stock between two time periods is the return on Apple stock. If you are a trader in the NYSE then the stock return on Apple is a continuous random variable that can take any value on an interval. In such a case we cannot obtain the probability of the random  variable taking an exact value. But we can only compute the probability that this random variable will fall in a given interval. So at best we can determine the probability that GDP growth for the US next quarter will be between say 1/% and 2%. This probability is obtained by computing the area under the **probability density function (p.d.f)**.  Let $X$ denote a continuous random variable and $f(x)$ denotes the p.d.f. Then,
+
+1. The probability that $X$ takes value over the interval $\{a,b\}$ is given by:
+
+\[P(a\leq X \leq b)=\int_a^bf(x) \ dx\]
+
+
+2. The c.d.f  (the probability that $X\leq x$) is given by:
+
+\[F(x)=P(X\leq x)=\int_{-\infty}^xf(x) \ dx\]
+
+
+Below I plot the empirical c.d.f for Apple's stock return. Let $X$ denotes this stock return.  From Fig 3.2 we can infer that $P(X\leq 0)=0.47$ and $P(X\leq 3)=0.95$.
+
+```{r, echo=F, message=F,warning=F, fig.cap="Empirical c.d.f of daily Apple Stock Return (2007-2019)"}
+
+suppressMessages(library(xts))
+suppressMessages(library(quantmod))
+suppressWarnings(library(quantmod))
+# get data from fred stat
+options("getSymbols.warning4.0"=FALSE)
+invisible(getSymbols('AAPL',src='yahoo'))
+
+###
+### daily return
+
+x = na.omit(periodReturn(AAPL,period='daily',type='log'))*100
+
+
+x=as.numeric(x)
+cdf.x=ecdf(x)
+
+plot(cdf.x, ylab="Probability",yaxt="n", xaxt="n", ylim=c(0,1), main="", xlab="Daily Apple Stock Return (%)")
+axis(1, at = seq(floor(par("usr")[1]), floor(par("usr")[2]),by=3), las=1)
+axis(2, at=round(cdf.x(0),2), las=1,col.axis="red")
+axis(2, at=round(cdf.x(3),2), las=1, col.axis="red")
+axis(2, at=seq(0,1, by=0.2), las=1)
+segments(x0=par("usr")[1], # Value from x (initial)
+         x1=0, # Value to x (final)
+         y0=cdf.x(0), # Value from y (initial)
+         y1=cdf.x(0), # Value to y (final)
+         col='red')
+segments(x0=0, # Value from x (initial)
+         x1=0, # Value to x (final)
+         y0=cdf.x(0), # Value from y (initial)
+         y1=0, # Value to y (final)
+         col='red')
+segments(x0=par("usr")[1], # Value from x (initial)
+         x1=3, # Value to x (final)
+         y0=cdf.x(3), # Value from y (initial)
+         y1=cdf.x(3), # Value to y (final)
+         col='red')
+segments(x0=3, # Value from x (initial)
+         x1=3, # Value to x (final)
+         y0=cdf.x(3), # Value from y (initial)
+         y1=0, # Value to y (final)
+         col='red')
+
+```
+
+
+Figure 3.3 below presents the *p.d.f* of the daily stock return that corresponds to the *c.d.f* plotted in Figure 3.2. Using this we can work the probability of stock returns falling in any given interval. For instance, the probability that Apple stock return will fall between 0 and 3% is the area under the p.d.f. between these two values. Figure 3.3 higlights this area and we can see that this probability is equal to 0.47.
+
+
+```{r, echo=F, message=F,warning=F, fig.cap="Empirical p.d.f of daily Apple Stock Return (2007-2019)"}
+
+suppressMessages(library(xts))
+suppressMessages(library(quantmod))
+suppressWarnings(library(quantmod))
+# get data from fred stat
+options("getSymbols.warning4.0"=FALSE)
+invisible(getSymbols('AAPL',src='yahoo'))
+
+###
+### monthly
+
+x = na.omit(periodReturn(AAPL,period='daily',type='log'))*100
+
+
+x=as.numeric(x)
+pdf.x=density(x,bw = 1)
+test=as.data.frame(cbind(pdf.x$x, pdf.x$y))
+plot(pdf.x, main="", xlab="Daily Apple Stock Return (%)")
+axis(1, at=round(test[round(test$V1,2) ==2.97 , "V1"],0), las=1,col.axis="red")
+segments(x0=0, # Value from x (initial)
+         x1=0, # Value to x (final)
+         y0=0, # Value from y (initial)
+         y1=max(pdf.x$y), # Value to y (final)
+         col='red')
+segments(x0=2.97084475, # Value from x (initial)
+         x1=2.97084475, # Value to x (final)
+         y0=0, # Value from y (initial)
+         y1=test[round(test$V1,2) ==2.97 , "V2"], # Value to y (final)
+         col='red')
+x1 <- min(which(pdf.x$x >= 0))  
+x2 <- max(which(pdf.x$x <  3))
+with(pdf.x, polygon(x=c(x[c(x1,x1:x2,x2)]), y= c(0, y[x1:x2], 0), col="skyblue"))
+
+x=3
+y=0.07
+new.x<-10
+new.y<-0.17 
+arrows(x, y, new.x, new.y, lty="dashed")
+text(x=10, y=0.18, expression(paste("P(0<x<=3%)=0.47")))
+text(x=1.3, y=0.05, "0.47")
+
+
+```
+
+## Moments of a probability distribution function
+
+The information contained in a probability distribution can be meaningfully summarized into measures that are called **moments** of that distribution. There are three moments we often use in economics:
+
+1. Center of the distribution: this is first moment of a given probability distribution and it gives us the most likely value of the random variable. It can be measured by mean, median or mode. We will use mean as a measure of the center of the distribution.
+
+2. Width of the distribution: this is the second moment and it measures the average distance from mean under a given probability distribution. We will use standard deviation as a measure of the width of the distribution.
+
+3. Shape of the distribution: this feature relates to role played by **tail events** , i.e., events that have very low probability of happening under a given probability distribution.  Two relevant measures are Skewness and Kurtosis
+
+    
+### First moment of a probability distribution: Expected value
+
+What is the most likely value of a random variable? To answer that we often compute **expected value** of the random variable which gives us the center (or peak) of the underlying probability distribution. We will use **E** to denote expected value. So $E(X)$ is the expected value of a random variable and we will use $\mu_X$ to denote the mean or average value of $X$.
+
+```{definition, name="Expected Value"}
+Consider a discrete random variable $X$ that can take $n$ possible values and has the following probabilty distrubution:
+  
+|    X    |   p(X)  |
+|:-------:|:-------:|
+|  $x_1$  |  $p_1$  |
+|  $x_2$  |  $p_2$  |
+|  $x_3$  |  $p_3$  |
+| $\vdots$ | $\vdots$ |
+|  $x_n$  |  $p_n$  |
+  
+Then, the expected value of $X$ is given by:
+  
+  \[E(X)= x_1 p_1 + x_2 p_2+...+ x_n p_n = \sum_{i=1}^n y_ip_i\]
+```
+
+Hence, expected value is a probability-weighted average of all possible values of a random variable. 
+```{example}
+Suppose you toss a fair coin and receive \$10 if tails shows and receive 0 if heads shows. What is the expected value of the winnings from a single toss of this coin?
+```
+
+```{solution}
+Let $X$ denotes winnings from this game. It can take a value of \$10 with a probability of 0.5 and 0 with a probability of half. So the expected value of X is:
+  
+  \[E(X) = x_1 p_1+x_2 p_2=10\times 0.5 + 0\times 0.5=\$5\]
+```
+
+```{example}
+Suppose you can invest \$10,000 in a mutual fund after 1 year can earn a return of 10%
+ with a probability of 0.1 or a return of 2% with a probability of 0.5 or a loss of 5% with a probability of 0.4. What is the expected return of investing \$10,000 in this mutual fund?
+```
+
+```{solution}
+Let $X$ denotes expected return in dollars. It can take 3 possible values: \$1000 with a probability of 0.1, \$200 with a probability of 0.5, and -\$400 with a probability of 0.4 The expected value is given by:
+  
+  \[E(X) = 1000\times 0.1 + 200 \times 0.5 - 400 \times 0.4=\$40 \]
+```
+
+As mentioned earlier, the first moment of the probability distribution (i.e., the expected value) gives us the most likely value of the random variable. How useful is this knowledge will depend on   how far any realiaztion of the random variable can be from its expected value. The average distance from the average measures the width of the distribution. Wider the distribution, less useful is the knowledge of the expected value.
+
+### Second moment of the distribution.
+
+To determine the width or *dispersion* of a probability distribution we use **variance** or **standard deviation**. The variance is the expected value of the squared deviation  of each realization of the random variable from its average.  We will denote the variance by $Var(X)$ or $\sigma^2_X$:
+
+\[Var(x)= \sigma^2_X=E[(X-\mu_x)^2]= (x_1-\mu_X)^2 \times p_1+(x_2-\mu_X)^2 \times p_2+...+ (x_n-\mu_X)^2 \times p_n =\sum_{i=1}^n (x_i-\mu_x)^2p_i\]
+
+The standard deviation is simply the square root of the variance and is in the same units as the random variable. This allows easy comparison of the width and the center of the distribution. We will denote standard deviation by $\sigma_X$.
+
+```{example}
+Using the mutual fund example, the variance will measure **riskiness** of the investment. It is given by:
+
+  \[Var(X)=(1000-40)^2\times 0.1 + (200-40)^2 \times 0.5 - (400-40)^2 \times 0.4=53120\]
+
+Because variance is in square units and hence hard to interpret, we can easily compute the standard deviation as the square root  of the variance:
+  
+  \[\sigma_X=\sqrt{53120}=\$230.47\]
+  
+Hence, even though the average return from this investment is \$40, you can be \$230 above or below this average.
+```
+
+How much can we say about a random variable if we only know its mean and the standard deviation? That depends on the type of distribution the random variable follows. One of the most commonly used distribution in statistic is the **Normal Distribution** or the **Gaussian Distribution**. A random variable that follows normal distribution has a bell-shaped probability distribution with a given mean and standard deviation. One of the most useful features of such a distribution is that knowledge of the first two moments alone is sufficient to characterize the entire probability distribution.  Figure 3.4 below shows a normal distribution with a mean of 5 and a standard deviation of 2.
+
+```{r, echo=F, fig.align='center', fig.cap="Normal distribution with mean=5 and s.d.=2"}
+x<-seq(-10,10,.1)
+plot(x,dnorm(x, 5,2), xlim=c(0,10), col='red', lwd=3, ylab="Desnity", main="", xlab="", type="l")
+abline(v=8.92,lty="dashed")
+abline(v=1.08,lty="dashed")
+abline(v=5,lty="dashed")
+mtext("Mean")
+mtext("Mean + 1.96 S.D.", at=8.92)
+mtext("Mean - 1.96 S.D.", at=1.08)
+mtext("95% Probablity", at=5, line=-10, cex=1.5)
+```
+
+Key features of the normal distribution that are very useful for us:
+
+a. 95\% of the values fall within 1.96 times the standard deviation of the mean:
+
+\[P(\mu_X -1.96\sigma_X \leq X \leq \mu_X + 1.96\sigma_X)=0.95\]
+
+b. Tail events (low probability events) on either side of the mean are equally unlikely. 
+
+c. Central limit theorem: The distribution of sample means calculated from repeated random sampling from a given population approaches a normal distribution as the sample size approaches $\infty$.
+
+
+### Third and Fourth Moments: Skewness and Kurtosis
+In many cases, the distribution of a random variable is not normal and in such cases higher moments provide useful information about the shape of such probability distribution. The shape of the probability distribution plays an important role in many economic and financial applications. There are two measures of shape that are of interest:
+
+
+1. **Skewness**: this is the third moment of the distribution and it measures how skewed a distribution is. The formula for skewness is given by:
+
+\[Skewness=\frac{E[(X-\mu_X)^3]}{\sigma^2_X}\]
+
+
+A normal distribution has a skweness of zero. There are two possible types of skewed distributions:
+
+
+a. A positively skewed distribution will have a long right tail implying lower probability of very large values relative to the mean.
+        
+b. A neagtively skewed distribution will have a long left tail implying  lower probablity of very small values relative to the mean.
+
+Figure 3.5 shows three probability distributions. For the left-skewed distribution, a longer left tail indicates low probability of obtaining values  below the mean. Similarly, for the right-skewed distribution, a longer right tail indicates low probability of obtaining a value above the mean. For a normal distribution, the probability of obtaining a value above the mean is the same as the probability of obtaining a value below the mean.
+
+
+
+```{r, echo=F, fig.width=4, fig.height=7, fig.align='center', fig.cap="Skewness of a Probablity distribution"}
+N <- 10000
+x <- rgeom(N, 0.3)
+par(mfrow=c(3,1))
+curve(dnorm(x), xlim=c(-3,3), col='red', lwd=3, main="Normal
+Distribution (Skewness=0)", ylab="Density", xlab="X")
+plot(density(x,bw=1), col='red', lwd=3, main="Right-skewed distribution (Skewness>0)", ylab="Density", xlab="X")
+plot(density(-1*x,bw=1), col='red', lwd=3, main="Left-skewed distribution (Skewness<0)", ylab="Density", xlab="X")
+```
+
+    
+2. Kurtosis: this is the fourth moment of the distribution that captures the peakedness of the distribution (or thickness of the tail), i.e., how many observations fall on the extreme ends of a given probability distribution. As a result it tells us the role played by extreme values in driving the variance of a random variable. The formula is given by:
+
+\[Kurtosis=\frac{E[(X-\mu_X)^4]}{\sigma^4_X}\]
+
+A normal distribution has a Kurtosis of 3. A value that is above or below 3 will give us excess or deficient Kurtosis. Two possiblities are:
+
+a. Leptokurtic distribution: has a Kurtosis value greater than three. Such a distribution will have fat tails compared to a normal distribution indicating greater area under the tails.
+        
+b. Platykurtic distribution: has a Kurtosis value less than 3. Such a distribution will have thin tails compared to a normal distribution.
+
+```{r, echo=F, fig.align='center', fig.cap="Kurtosis of a Probablity distribution"}
+fs = function(x,epsilon,delta) dnorm(sinh(delta*asinh(x)-epsilon))*delta*cosh(delta*asinh(x)-epsilon)/sqrt(1+x^2)
+vec = seq(-5,5,0.1)
+
+plot(vec,fs(vec,0,0.75),type="l",xlim=c(-3,3),ylim=c(0,0.5), ylab="Density", xlab="X", col="blue")
+points(vec,fs(vec,0,1),type="l", lty=2, col="black")
+points(vec,fs(vec,0,1.25),type="l",col="red")
+legend(par('usr')[2], par('usr')[4], bty = "n", xjust=1,
+       c('platykurtic', 'normal', 'leptokurtic'),
+       lwd=c(3,3,3),
+       lty=c(1,2,1),
+       col=c('blue', 'black', 'red'))
+
+```
+
+Fig 3.6 shows three types of distribution based on their Kurtosis. The leptokurtic distribution has a Kurtosis value of greater than 3 and is more **heavy-tailed**  or **peaked** than a norma distribution.
+
+
+
+## Useful probability distributions
+
+Using the normal distribution we can derive a few useful probability distributions that are utilized in hypothesis testing.
+
+1. Standard Normal Distribution: A random variable that follows normal distribution with a mean of 0 and standard deviation of 1. 
+
+
+2. Chi-square distribution: is obtained by squaring and adding indpendent standard normal distribution. For example, is $X$ and $Y$ are two standard normal random variables, then $Z=X^2 + Y^2$ follows a Chi-square distribution with two degrees of freedom.
+
+3. F-distribution: is obtained by taking a ratio of two chi-square distribution. For example, if $X$ is Chi-square with $v_1$ degrees of freedom and $Y$ is a Chi-quare with $v_2$ degress of freedom, then $\displaystyle{Z=\frac{X}{Y}}$ follows F-distribution with $v_1$ and $v_2$ degrees of freddom.
+
+4. t-distribution: Student's t-distribution is obtained by taking a ratio of a standard normal and the square root of a Chi-square random variable. For example, if $X$ is a standard normal and $Y$ is a Chi-square with $m$ degrees of freedom, then $Z=\displaystyle\frac{X}{\sqrt{Y/m}}$ follows t-distribution with $m$ degrees of freedom. t-distribution has fatter tails when compared to normal.
+
+```{r, echo=F,fig.align='center',fig.width=5, fig.height=5}
+curve(dnorm(x,0,1), xlab="X", ylab="Density", xlim=c(-3,3), col='red', lwd=3, main="Standard Normal Distribution")
+
+```
+```{r, echo=F,fig.align='center',fig.width=5, fig.height=5}
+curve(dchisq(x,3), xlab="X", ylab="Density", xlim=c(0,5), col='red', lwd=3)
+abline(h=0,lty=3)
+abline(v=0,lty=3)
+title(main="Chi-squared with three degree of freedom")
+```
+
+```{r, echo=F,fig.align='center',fig.width=5, fig.height=5}
+
+curve(df(x,3,6), xlab="X", ylab="Density", xlim=c(0,2), ylim=c(0,.8), col='black')
+curve(df(x,6,6), add=T, lwd=3, col='red')
+title(main="F Distributions")
+legend(par('usr')[2], par('usr')[4], bty = "n", xjust=1,
+       c('df=(3,6)', 'df=(6,6)'),
+       lwd=c(1,1,3,1,3,1,3),
+       lty=c(1,1,1,1,1,1,1),
+       col=c('black', 'red'))
+```
+
+```{r, echo=F,fig.align='center',fig.width=5, fig.height=5}
+curve( dt(x,2), xlab="X", ylab="Density", xlim=c(-3,3), ylim=c(0,.4), col='red', lwd=2 )
+curve( dt(x,5), add=T, col='orange', lwd=2 )
+curve( dnorm(x), add=T, lwd=3, lty=3 )
+title(main="Student T distributions")
+legend(par('usr')[2], par('usr')[4], bty = "n", xjust=1,
+       c('df=2', 'df=5', 'Normal'),
+              lwd=c(1,1,3,1,3,1,3),
+       lty=c(2,1,1,1,1,1,1),
+       col=c('red', 'orange', par("fg")))
+```
+
+## Joint Probability Distribution
+
+In economics, often we are interested in the relationship between a pair of variables. For example, how does interest rate affects consumption spending? Or how does education affect wages? In order to statistically answer such questions, we need to understand the meaning of statistical relationship between two or more variables.  One way to move forward is to assume that both variables jointly follow some given probability distribution which can be used to infer their relationship with one another.
+
+For simplicity, I will use the discrete random variables case but the concepts covered can be easily extended for the continuous random variables case.
+
+
+Let $X$ and $Y$ denote two random variables of interest, both from a common probablity distribution denoted by $F(x,y)$. This function gives us the probability that $X$ and  $Y$ simultaneously take on certain values:
+
+\[F(x,y)=P(X=x, Y=y)\]
+
+
+```{example}
+
+Suppose you are an investment banker and you are considering investment into two assets: a stock listed in NYSE ($X$) and a cotton futures ($Y$) listed in Chicago Mercantile Exchange. Suppose $X$ can take three possible values: 2/%, 3/%, or 4/%. Similarly $Y$ can take three possible values given by 6/%,4/%, or 1/%. The value will depend on the state of the economy. Suppose there are three possiblities for the economy next year: boom, expansion, and status quo. The joint probability distribution for $X$ and $Y$ is given by:
+  
+  
+  |   State of Economy         | X/Y |   6  |   4  |  1  | Total |
+|:----------:|:---:|:----:|:----:|:---:|:-----:|
+|  Recession |  2  | 0.15 |  0.2 | 0.1 |  0.45 |
+|  Expansion |  3  |  0.1 |  0.1 | 0.2 |  0.4  |
+| Status quo |  4  |  0.1 | 0.05 |  0  |  0.15 |
+|            |   **Total**  | 0.35 | 0.35 | 0.3 |   1   |
+
+
+```
+
+So in a recession, the probability of obtaining a return of 2/% on the stock and 6/% return on the commodity, i.e, $P(X=2,Y=6)$, is 0.15.
+Using the above joint probabity distribution of $X$ and $Y$ we can compute two related distributions for each random variable:
+
+1. Marginal distribution: For each random variable, we can extract its own probability distribution from the joint probability distribution. This is done by simply adding probabilities of all possible outcomes for a particular value of a given random variable. For example, the marginal distribution for $X$ is given by:
+
+\[P(X=x)=\sum_{i=1}^nP(X=x, Y=y_i)\]
+
+Hence, in our example, the marginal distribution of $X$ is given by the last column, called Total in the table. For $Y$ it is the row called Total.  We can use the marginal distribution to compute the unconditional expected value of each random variable. For example,
+
+
+\[E(Y) = 6 \times P(Y=6) + 4 \times P(Y=4)+1 \times P(Y=1)=3.8\]
+
+2. Conditional distribution: For each random variable, we can also compute its probability distribution conditional on the other variable taking on a specific value. For exampl,e the conditional distribution of $Y$ given that $X=x$ is given by:
+
+\[ P(Y=y|X=x) =\frac{P(X=x,Y=y)}{P(X=x)}\]
+
+From our example, what is the probability of obtaining 4\% return on commodity under status quo if the return on the stock is 4\%? So here we are interested in finding out:
+
+\[ P(Y=4|X=4) =\frac{P(X=4,Y=4)}{P(X=4)}= \frac{0.05}{0.15}=0.33\]
+
+To see this, note that from the table  that P(X=4, Y=4) under status quo is given by 0.05. Also, using the definition of marginal distribution, we know that P(X=4)=0.15. 
+
+The  conditional distribution of a random variable is a first step toward understanding the statistical relationship between two or more random variables. Just like the probability distribution of a random variable has a mean and a variance, the conditional distribution can similarly be characterized by conditional mean and conditional variance:
+
+1. Conditional expected value ($E(Y|X)$): Using the conditional distribution we can now compute  the expected value of a random variable, given the value of another random variable. This is denoted by $E(Y|X)$ and can be computed as follows:
+
+\[E(Y|X)=y_1 \times P(Y=y_1|X=x) + y_2 \times P(Y=y_2|X=x)+...+ y_n \times P(Y=y_n|X=x)\]
+
+
+As we can see, this expected value will be a function of $X$. Depending on the realization of $X$ our expectation of $Y$ would change. In economics, we can imagine many such examples. For example, given our education level our expected wage will change. Similarly, given expenditure on advertising, expected sales will change. Hence, conditional expected value goes a long way in establishing statistical relationship between economic variables.
+
+Going back to our example, let us compute the expected return on the commodity $Y$ conditional on the information that the return on $X$ is 3\%:
+
+\[E(Y|X) = 6 \times P(Y=6|X=3) + 4 \times P(Y=4|X=3) + 1 \times P(Y=1|X=3)\]
+
+Here, $P(Y=6|X=3)= \displaystyle\frac{0.1}{0.4}=0.25$, $P(Y=4|X=3)= \displaystyle\frac{0.1}{0.4}=0.25$ and $P(Y=1|X=3)= \displaystyle\frac{0.1}{0.2}=0.5$. Hence, $E(Y|X=3)=3\%$.  Contrast this to the uncondtional expected value of $Y$ of 3.8\% we computed earlier.
+
+
+2. Conditional variance ($Var(Y|X)$): Now even the variance of a random variable can be affected by another random variable. Here, we are interested in deviations of the random variable from its conditional mean:
+
+\begin{align}
+Var(Y|X) = (y_1 -E(Y|X))^2 \times P(Y=y_1|X=x) + (y_2 -E(Y|X))^2\times P(Y=y_2|X=x)+...\\ \nonumber
++ (y_n -E(Y|X))^2 \times P(Y=y_n|X=x)
+\end{align}
+
+
+## Measures of statistical association
+
+We can now define two measures of statistical relationship. The first one is called **Covariance** and the second is **Correlation**.
+
+1. Covariance  is a measure of association that captures how deviations from mean of one random variable are related  to deviations of another random variable to its respective mean. For example, if your hours of study are above average, then what is your test score relative to average? Formally,
+
+\[Cov(X,Y) = E(Y-\mu_Y)(Y-\mu_X)\]
+
+If the above number is positive, then there is a positive relationship between $X$ and $Y$. That is, when $X$ is above its mean then $Y$ is also above its mean. If the number is negative then there is a negative relationship between $X$ and $Y$.
+
+Note that because $X$ and $Y$ are often in different units of measurement, the number we obtain for covariance has no meaning or implication for the strength of the relationship between two variables. 
+
+2. Correlation: is the value of covariance that is standardized by dividing this number by standard deviations of each random variable:
+
+\[Cor(X,Y) = \frac{Cov(X,Y)}{\sigma_X \times \sigma_Y }\]
+
+This number is unit free and falls between $-1$ and $1$. The sign of the correlation tell us about the direction of the relationship whereas the value of the correlation gives information about the strength of the relationship. A higher absolute value indicates stronger statistical relationship between two variables.
+
+### Rules of expectation and variances
+
+Here are some useful rules that are useful for our purpose:
+
+1. $E(\beta)=\beta$ and $Var(\beta)=0$ where $\beta$ denotes a constant. 
+2. $E(\beta X)= \beta E(X)$ and $Var(\beta X)= \beta^2 Var(X)$ where $\beta$ denotes a constant.
+
+3. Consider two random variables $X$ and $Y$, and let $a$ and $b$ denotes two constants. Then,
+
+    3.1. $E(aX+bY)=aE(X)+bE(Y)$ 
+    
+    3.2. $E(aX-bY)=aE(X)-bE(Y)$ 
+    
+    3.3. $Var(aX+bY)=a^2 Var(X)+b^2 Var(Y)+2abCor(X,Y)\sqrt{Var(X)}\sqrt{Var(Y)}$
+    
+    3.4. $Var(aX-bY)=a^ 2Var(X)+b^2 Var(Y)-2abCor(X,Y)\sqrt{Var(X)}\sqrt{Var(Y)}$ 
+  
+
+## Sampling and Estimation
+
+An important distinction in statistics is between the population of interest and a sample of this population that we usually work with. Due to feasibility of data collection and cost both in terms of time and money, most real world analysis is based on a sample that is a subset of the population of interes. For example, to study how business major affects starting salary, the relevant population is all business majors from a graduating class in the U.S. in a given year. In practice however, we will most likely use a sample of this population, for example all business majors from JMU. How useful an analysis based on a sample is depends on how representative the chosen sample is of the entire population.
+
+For our purpose, lack of data on population means that the true probablity distribution of a random variable is unknown and hence the true values of mean, variance, covarinace etc are also unknown to us. Statistics provides a way of using samples to **estimate** relevant moments of the probability distribution. The approach we take is as follows:
+
+1. Consider the unknown moments of the true probability distribution as ** population parameters** that we would like to estimate.
+
+2. Draw a representative sample from the population. In simple random sampling we draw $n$ obeservations at random so that each member of the population is equally likely to be included in the sample. We can also use other complex sampling schemes where certain groups of population are more likely to be selected in the sample than others. Two examples:
+
+    a. Suppose we are interested in finding out starting salary of CoB majors at JMU. The population will be every graduating student for a given year. However, we may work with a sample of students, where we draw randomly from every major ensuring that all graduating students have equal probability of selection.
+    
+     b. Suppose we are interested in finding out usage of food stamps in Harrisonburg area. The population of interest will be all residents of Harrisonburg who use food stample. However, we may work with a sample where a certain demographic group is more likely to be part of the sample (and hence is *oversampled*).
+    
+    
+3. Use the sample to compute sample estimates for each population parameter of interest. For example for expected value we can use sample mean as an estimator, for variance we can use sample variance as an estimator and so on. There are following key differences between population parameters and their sample estimates:
+
+    a. Population parameters are true but unknown values that we are interested in measuring. In contrast, sample estimates can be computed using our sample data.
+    
+    b. Population parameters are fixed whereas sample estimates change as we change our sample. For example, if we compute mean starting salary of business majors from JMU we get one number. If use data from UVA we get another number for mean starting salary.
+    
+    c. Because different samples give us different sample estimates for the same population parameter, we need to ensure that our sample estimator from one sample data is reliable.
+    
+4. Sampling distribution: Hypothetically, we can draw many samples from the same population and compute sample estimate for each sample. This will give us a distribution of for the sample estimate which will have its own mean and variance.  We can use this sampling distribution to:
+
+    a. Establish reliablity of the sample estimator. Specifically any sample estimator should be unbiased and efficient. More on this in the next section.
+    b. Statsitically test hypotheses about the true population parameter 
+### Unbiasedness and efficiency
+
+Let $\theta$ denote a population parameter of interest. For example, it can be the mean of the random variable of interest. Let $\widehat{\theta}$ denotes a sample estimator of $\theta$ that can be computed using sample data. Then,
+
+1. $\widehat{\theta}$ is an **unbiased** estimator of $\theta$ if:
+
+
+\[E(\widehat{\theta})=\theta\]
+
+The idea here is that if we repeatedly draw a sample from the same population and compute $\widehat{\theta}$ for each such sample, the average of these estimators must be equal to the true population parameter for unbiasedness. In otherwords, the center of the sampling distribution is at the true population parameter value.
+
+We can now define **bias** of an estimator as follows:
+
+\[Bias(\widehat{\theta}) = E(\widehat{\theta})-\theta\]
+
+For an unbiased estimator, $Bias(\widehat{\theta})=0$. If $Bias(\widehat{\theta})>0$ then we have an over-estimate and if $Bias(\widehat{\theta})<0$ then we have an under-estimate.
+
+2. Efficiency:  Unbiasedness ensure that the average of sample estimator is equal to the true population parameter. But if the standard deviation of the sample estimator is too high, then knowing that the average is close to the true value is not very useful. In statistics, we call such an estimator unbiased but **imprecise or inefficient**. To be efficient the standard deviation (or variance) of the sample estimator should be as small as possible. Between two unbiased estimators, a more efficient estimator will have a lower variance.
+
+
+```{example}
+Suppose we have a random sample with $n$ observations: $\{x_1,x_2,...,x_n\}$ drawn from a population with a mean of $\mu_x$. Sample mean is defined as:
+  
+\[\overline{X}=\frac{\sum_{i=1}^N x_i}{N}\]
+
+The expected value of the sample mean is given by:
+  
+  \[E(\overline{X})=E\left(\frac{\sum_{i=1}^N x_i}{N}\right)\]
+
+Using properties of the expected value, we get:
+  
+  
+  \[E(\overline{X})=\frac{E(x_1)+E(x_2)+...+ E(x_N)}{N}\]
+
+
+Note that because this is a random sample from the same population with a mean of $mu_x$, we get $E(x_1)=E(x_2)=..=E(x_n)=\mu_x$. Hence,
+
+  \[E(\overline{X})=\frac{\overbrace{\mu_x+\mu_x+...+\mu_x}^{\text{N terms}} }{N}=\mu_x\]
+
+As a result the sample mean is an unbiased estimator of the population mean. However, there are many other possible unbiased estimators of the population mean. We can show that among all other unbiased estimator of the population mean, sample mean has the lowest variance and hence is most efficient estimator as well.
+
+
+```
+
+
+```{definition, name="Best Unbiased Estimator (BUE)"}
+Let $\theta$ denote a population parameter of interest. Then, an sample estimator denoted by $\hat{\theta}$ is the \underline{best unbiased estimator} of $\theta$ if the following two conditions are satisfied:
+
+1. $\hat{theta}$ is an unbiased estimator, i.e., $E(\hat{\theta})=\theta$. In this case the sampling distribution is centered at the true value of the parameter.
+
+2.  $\hat{\theta}$ is an efficient estimator, i.e., $Var(\hat{\theta})< Var(\hat{\theta_A})$ for any other unbiased estimator denoted by $\hat{\theta_A}$. In this case the width of the sampling distribution around the mean is smallest possible.
+
+```
+
+## Hypothesis testing
+
+An important part of any statistical analysis is testing various hypotheses about population parameters of interest. This is known as \emph{statistical inference} and here we use the sampling distribution of the estimator to formally test whether the corresponding population of interest takes a certain value or not. This is important because even with an best unbiased estimator we do not know the true value of the population parameter of interest. In this section we will look at two types of hypotheses testing procedures that are most relevant for Econometrics. The procedure for any statistical test more or less consists of the following steps:
+
+1. Formulate a hypothesis of interest. This typically manifest as a restriction on the value of a population parameter (or a combination of multiple parameters). The goal is to test whether there is support for this restriction in our sample or not. There are two types of hypotheses that we must formulate:
+
+    1.1. Null Hypothesis ($H_0$): A null hypothesis is the statement about the population parameter we assume to be true until we find evidence otherwise. For example, we can test whether the population mean of starting salary for CoB majors is \$60,000. Formally, 
+    
+    \[H_0: \mu_X = 60,000\]
+    
+    Note that the null hypothesis statement is an equality condition.
+    
+    
+    1.2. Alternative Hypothesis ($H_A$): This is the logical counterpart of the null hypothesis and here we specify. There are two types of alternative hypothesis we can specify:
+    
+    
+    a. Two-sided alternative: Here, the alternative hypothesis statement allows for both sides of the inequality. Going back to our example of starting salary, a two-sided alternative will be:
+        
+           
+          \[H_A: \mu_X \neq 60,000\]
+   
+           
+
+    b. One-sided alternative: Here, we either use a greater or less than sign for the alternative hypothesis. So for example, we can speficy the following one-sided alternative:
+        
+         
+          \[H_A: \mu_X > 60,000\]
+   
+
+2. Compute the relevant test statistic that is a function of the sample data. The formula for the test statistic is a function of the sample estimator and the value of the population parameter(s) we assumed in the null hypothesis.
+
+
+3. The test statistic is assumed to follow a certain probability distribution under the assumption that the null hypothesis is correct. The tails of this distribution summarizes values of the test statistic that are less likely to realize.  Such a value of the test statistic provides us a threshold level, called the \textbf{critical value}, beyond which the test statistic values are less likely to realize if our hypothesis is true. The decision rule for rejecting or not rejecting the null hypothesis is based on the comparison between the computed test statistic and the associated critical value.
+
+Note that there is always a measure of uncertainty in any hypothesis testing: we may end up making a wrong decision. There are two types of errors we can make here:
+
+1. **Type I** error: here we reject $H_0$ when it is true. The probability of this type of error is denoted by $\alpha$ and is called the **level of significance** of a test.
+
+2. **Type II** error: here we do reject $H_0$ when it is false. The probability of this type of error is related to the **power** of a test.
+
+Ideally we would like to minimize the probability of both types of errors but we cannot do that because reducing one error comes at the cost of increasing the other. As a result, we first specificy an **acceptable** level of significance (type one error probability) and then try to minimize the probability of type two error (or maximize the power of the test). It is common to assume a level of signficance of 5\% or $\alpha=0.05$. So here we are willing to tolerate a 5\% chance of falsely rejecting the null hypothesis. 
+
+Once we have fixed the level of significance, we can use the distribution table of the test-statistic to obtain the corresponding critical value(s).
+
+### Testing a restriction on a single population parameter
+
+Here our goal is to develop tests for testing statements about a single population parameter of interest. So for example, we can either test a statement about a population mean or a population variance.
+
+```{example, name="t-test for population mean"} 
+
+Suppose you are interested in measuring mean hourly wage of males aged 25-35. Accordingly, we collect a sample of 100 workers from the population of male in this age group with a mean of $\mu_X$ and a standard deviation of $\sigma_X$. The sample mean is $\hat{\mu}_X=\$25$ and the sample standard deviation is $\hat{\sigma}_X=\$7$. Now, suppose we want to test the following hypothesis:
+
+\[H_0: \mu_X=27\]
+
+\[H_0: \mu_X \neq 27\]
+
+The test statistic is given by the *t-statistic* where:
+
+\[t=\frac{\hat{\mu}_X-\mu_X}{s.e.(\hat{\mu}_X)} \]
+
+where $s.e.(\hat{\mu}_X)=\displaystyle \frac{\hat{\sigma}_X}{\sqrt{N}}$ is the standard error of sample mean and N denotes sample size.
+
+If the null hypothesis is true, this test statistic follows **t-distribution** with N-1 degrees of freedom. Using the t-distribution table we can then compute the critical value which is used in formulating the decision rule. Let $t_c$ denote this critical value from the distribution table. Then,
+
+\[|t|>t_c \quad \Rightarrow  \text{reject $H_0$} \]
+
+\[|t|<t_c \quad \Rightarrow  \text{do not reject $H_0$} \]
+
+In our example, $N=100$, and 
+
+\[t=\frac{25-27}{\frac{7}{\sqrt{100}}}=-2.86\]
+
+
+The degrees of freedom is $N-1=99$ and at 5\% level of significance the critical value from the t-distribution table is $t_c=1.98$. Because |t| is larger than the critical value, we reject the null hypothesis. Hence, we find evidence against the statement that the mean hourly wage of male workers is \$25.
+
+
+Note that an alternative way of testing hypothesis like this is to use the **p-value** rule. The underlying idea is to find out the largest significance level at which we will fail to reject the null hypothesis. This value is called the p-value and most statistical softwares report this value. The decision-rule is then greatly simplified:
+  
+  \[\text{If p-value is less than the chosen level of significance (value of $\alpha$) then reject $H_0$.}\]
+
+In our case, the p-value is 0.0053. Because we chose $\alpha=0.05$, according to the p-value rule we will reject the null hypothesis.
+
+```
+
+```{example, name="Chi-square test for population variance"} 
+Using the same example, we also test a statement about the population variance. Suppose we want to test whether the variance of the hourly wage is 52. 
+
+\[H_0: \sigma^2_X=52\]
+
+\[H_0: \sigma^2_X >52 \]
+
+The test statistic is given by the *V-statistic* where:
+  \[V=\frac{(N-1)\times \hat{\sigma^2_X}}{\sigma^2_X}\]
+ 
+If the null hypothesis is true, this test statistic follows **Chi-square distribution** with N-1 degrees of freedom. Using the distribution table we can then compute the critical value which is used in formulating the decision rule. Let $V_c$ denote this critical value from the distribution table. Then,
+
+\[V>V_c \quad \Rightarrow  \text{reject $H_0$} \]
+
+\[V<V_c \quad \Rightarrow  \text{do not reject $H_0$} \]
+ 
+
+In our example, 
+
+\[V=\frac{(100-1)\times 7^2}{52}=93.29\]
+
+
+The degrees of freedom is $N-1=99$ and at 5\% level of significance the critical value from the Chi-square distribution table is $V_c=43.77$. Because $V$ is larger than the critical value, we reject the null hypothesis. Hence, we find evidence against the statement that the variance of the hourly wage of male workers is 52.  
+```
+
+### Testing a restriction on multiple population parameter
+
+Often we are interested in testing a restriction that is a linear combination of two or more population means. Similarly, we maybe interested in comparing the variance of two different populations. In such cases we need to develop statistical tests that allow for comparison between parameters of different populations with given means and variances.
+
+```{example, name="t-test for comparing population mean of two populations"} 
+Suppose you are interested in comparing mean weekly hours studied by Econ majors (X) and non-Econ majors in the college of business. For this purpose, you collect a sample of 25 econ majors and a sample of 30 non-econ majors. The sample mean of weekly hours studied by econ majors is  10 hours with a standard deviation of 4 hours. The sample mean of weekly hours studied by non-econ majors is 8 hours with a standard deviation of 2 hours. Also suppose that the covariance between weekly hours studied by econ and non-econ majors is 0.12. Test whether mean weekly hours studied by econ majors is more than the mean weekly hours studied by non-Econ majors. 
+
+Let $X$ denote hours studied, $N_X$ denotes sample size, $\hat{\mu}_X$, and $\hat{\sigma}_X$ denote sample mean and standard deviation, respectively for econ majors. Similarly, let $Y$ denote hours studied, $N_Y$ denotes sample size, $\hat{\mu}_Y$, and $\hat{\sigma}_Y$ denote sample mean and standard deviation, respectively for non-econ majors.
+
+
+The first step, as usual, is to formulate the null and the alternative hypotheses:
+
+  \[H_0= \mu_X - \mu_Y = 0\]
+  \[H_A= \mu_X - \mu_Y > 0\]
+
+The next step is to compute the relevant test statistic, which in this case is the t-ratio given by:
+  
+
+  \[t= \frac{(\hat{\mu_X}-\hat{\mu_Y})-0}{s.e.(\hat{\mu_X}-\hat{\mu_Y})}\]  
+  
+Using the properties of variance, we get:
+  \[s.e.(\hat{\mu_X}-\hat{\mu_Y})=\sqrt{Var(\hat{\mu_X})+Var(\hat{\mu_Y})-2 \times Cor(X,Y)\times s.e.(\hat{\mu_X}) \times s.e.(\hat{\mu_Y})}=0.84\]
+
+So, $t=\displaystyle \frac{10-8}{0.84}=2.38$
+  
+  
+  The sample size here is $N_X+N_Y=55$. Using 5\% level of significance and degrees of freedom of 53, the critical value from the t-distribution table for the one-sided alternative is 1.67. Because the |t| is more than 1.67, we reject the null hypothesis. We find evidence for econ majors studying more on average than non-econ majors in our sample.
+```
+
+```{example, name="F-test for comparing population variance of two populations"}
+Often we may be interested in comparing the variability between two populations. Using our previous example, we may want to test whether variability in hours studied is bigger for econ majors versus non-econ majors. This can be tested by comparing the ratio of two variances against the value of 1. As before, we start by formulating the null and the alternative hypotheses:
+
+\[H_0: \sigma^2_X/sigma^2_Y = 1\]
+\[H_0: \sigma^2_X/sigma^2_Y > 1\]
+
+The corresponding test statistic is the F-ratio:
+  
+\[F = \frac{\hat{\sigma^2_X}}{\hat{\sigma^2_Y}}=\frac{4^2}{2^2}=4\]
+
+
+If the null hypothesis is true, the above test statistic follows F-distribution with $N_x-1$ degrees of freedom for the numerator and $N_y-1$ degrees of freedom for the denominator. At 5\% level of significance, the critical value for $\nu_1=24$ and $\nu_2=29$  from the F-distribution table is 3. Because the computed F-ratio exceeds the critical value we reject the null hypothesis.
+
+
+
+```
+
+
+### Confidence interval and Hypothesis testing
+
+One issue with using a sample to estimate population parameters is that by definition a sample estimator will be different for different samples. Thus, sample mean provides no information about how close this estimator is to the true population mean. This uncertainty in estimation can be summarized by computing the standard deviation, with higher value of standar deviation indicating greater uncertainty about the true population parameter.  A better measure of this uncertainty is the **confidence interval**.
+
+```{definition, name="Confidence Interval"}
+Suppose we draw a random sample $\{x_1, x_2,...,x_N\}$  from a normally distributed population with mean of $\mu_X$ and a standard deviation of $\sigma_X$. Let $\hat{\mu_X}$ denotes the sample mean and $\hat{\sigma_X}$ denotes sample standard deviation. Then, the 95\% confidence interval for $\hat{\mu_X}$ is given by:
+  
+  \[\left[\hat{\mu_X}-t_{c,2-sided} \times \frac{\hat{\sigma_X}}{\sqrt{N}},\hat{\mu_X}+t_{c,2-sided} \times \frac{\hat{\sigma_X}}{\sqrt{N}} \right]\]
+
+where $t_{c,2-sided}$ is the critical value that can be obtained from the t-distribution table for a given level of signicance and degrees of freedom. For example, for a 95\% confidence interval we will use 5\% level of significance.
+```
+
+```{example}
+Suppose N=20, $\hat{\mu_X}=5$, and $\hat{\sigma_X}=2$. Then, the 95\% confidence interval for $\hat{\mu_X}$ is given by:
+  
+  \[\left[5-2.093 \times \frac{2}{\sqrt{20}}, 5+2.093 \times \frac{2}{\sqrt{20}} \right]=[4.06,5.94]\]
+
+Hence, before we drew our sample from the population, there is a 95\% chance that the true population parameter ($\mu_X$) will fall between 4.12 and 5.94.  Note that:
+  
+1. Wider the confidence interval, greater is the uncertainty about the true value of the population mean. 
+
+2. We can use the confidence interval to conduct hypothesis testing for a **two-sided** alternative hypothesis. If the null hypothesis value does not fall in the confidence interval, then with 95\% confidence (or at 5\% level of significance) we can reject the null hypothesis. For example,  consider the following test:
+  
+\[H_0: \mu_X=3.8\]
+\[H_A: \mu_X\neq 3.8\]
+
+Because 3.8 is not in the confidence interval we will reject the null hypothesis at 5\% level of significance. Note that we will obtain the same conclusion if we were to compute the t-ratio and compare it with the corresponding critical value from the t-distribution table.
+
+
+
+```
+
+## Problems{-}
+
+```{exercise}
+Suppose you roll a 6-sided fair dice. If an odd number shows you win \$10. If either 2 or 4 shows you lose \$5. If 6 shows, you neither gain nor lose anything.
+
+a. Denote the winnings from this game as $X$. Tabulate the probability distribiution of the random variable $X$.
+
+b. Compute the expected value and the standard deviation for $X$.
+
+```
+
+```{exercise}
+
+Consider a population with a mean of $\mu$ and variance of $\sigma^2$. Suppose you draw a random sample $X_1, X_2,..,X_N$.
+
+a. Show that $\hat{\mu_A}=0.25\times X_1 +0.25\times X_3+ 0.25 \times X_8 + 0.25 X_20$ is an unbiased estimator of $\mu$.
+
+b. Show that $\hat{\mu_B}=0.1\times X_1 +0.1\times X_3+ 0.5 \times X_8+0.3 \times X_11$ is an unbiased estimator of $\mu$.
+
+c. Now compute variance of $\hat{\mu_A}$ and $\hat{\mu_B}$. Which one is more efficient estimator of $\mu$.
+
+```
+
+```{exercise}
+Suppose you collect a random sample of 100 observations and find that sample mean is -25 and sample variance is 350. 
+
+a. Test whether the population mean is -22.
+
+b. Test whether the population variance is 400.
+
+```
+
+```{exercise}
+Suppose you are interested in comparing performance of  two different mutual funds, $X$ and $Y$. Let $\mu_X$  and $mu_Y$ denote unknown population mean returns on investment in $X$ and $Y$, respectively. Suppose you collect past 20 months data for both mutual funds and find that sample mean for fund $X$ is 2\% with a standard deviation of 0.5\%. In contrast, the sample mean for fund $Y$ is 5\% with a standard deviation of 2\%. Suppose that the correlation between returns on these two funds is 0.2.
+
+a. Test whether mean return on $Y$ is greater than that on $X$.
+
+b. Test whether variance of $Y$ is greater than that of $X$.
+
+c. Compute the 95\% confidence interval for $\hat{\mu_X}$. Using the confidence interval, what can you say about the population mean return for fund $X$?
+
+```
