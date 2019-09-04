@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Regression-based Forecasting | Applied Time Series Analysis</title>
-  <meta name="description" content="Lecture notes for Applied Time Series Analysis">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Lecture notes for Applied Time Series Analysis" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Regression-based Forecasting | Applied Time Series Analysis />
+  <meta property="og:title" content="Chapter 2 Regression-based Forecasting | Applied Time Series Analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -17,19 +16,19 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Regression-based Forecasting | Applied Time Series Analysis />
+  <meta name="twitter:title" content="Chapter 2 Regression-based Forecasting | Applied Time Series Analysis" />
   
   <meta name="twitter:description" content="Lecture notes for Applied Time Series Analysis" />
   
 
-<meta name="author" content="Vipul Bhatt">
+<meta name="author" content="Vipul Bhatt" />
 
 
-<meta name="date" content="2019-08-20">
+<meta name="date" content="2019-09-04" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 <link rel="prev" href="intro.html">
@@ -51,20 +50,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; min-height: 1.25em; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
 @media print {
 code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -72,38 +77,40 @@ pre.numberSource a.sourceLine::before
     color: #aaaaaa;
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
 @media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
+a.sourceLine::before { text-decoration: underline; }
 }
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
 code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -264,13 +271,13 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <div id="regression-based-forecasting" class="section level1">
 <h1><span class="header-section-number">Chapter 2</span> Regression-based Forecasting</h1>
 <p>One way to compute the conditional expectation is the linear regression model. Here, our information set contains data on all relevant explanatory variables available at the time of forecast, i.e,</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 \Omega_t={X_{1t}, X_{2t},...X_{Kt}}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>Hence, we get the following equality:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 E(y_t|\Omega_t)=E(y_{t}|X_{1t}, X_{2t}, X_{3t},...,X_{Kt})
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>The right hand side of the above equation is the multiple regression model of the form:
 <span class="math display">\[\begin{equation}
  y_{t}=\beta_0+\beta_1 X_{1t}+\beta_2 X_{2t}+..+\beta_K X_{Kt}+\epsilon_t
@@ -304,17 +311,17 @@ E(y_t|\Omega_t)=E(y_{t}|X_{1t}, X_{2t}, X_{3t},...,X_{Kt})
 <div id="distributed-lag-regression-models" class="section level2">
 <h2><span class="header-section-number">2.4</span> Distributed Lag Regression Models</h2>
 <p>Consider the following simple regression model:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 y_t= \beta_0 +\beta_1 x_t + \epsilon_t
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>Here, if want to forecast <span class="math inline">\(y_{t+1}\)</span> then we must either consider different scenarios for <span class="math inline">\(x_{t+1}\)</span> or independently forecast <span class="math inline">\(x_{t+1}\)</span> first, and then use it to compute forecast for <span class="math inline">\(y_{t+1}\)</span>. An alternative is to estimate the following lagged regression model:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 y_t= \beta_0 +\beta_1 x_{t-1} + \epsilon_t
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>Note that by estimating the above model we get the following predicted value equation for <span class="math inline">\(t+1\)</span>:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 \widehat{y_{t+1}}=\widehat{\beta_0}+\widehat{\beta_1}x_{t}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>Hence, we can easily produce 1-period ahead forecast from this model. In order to produce forecast farther into future we would need to add more lags of the independent variable to the model. A generalized model of this kind is called <em>distributed lag model</em> and is given by:
 <span class="math display">\[\begin{equation}
 y_t= \beta_0 +\sum_{s=1}^p\beta_s x_{t-s} + \epsilon_t
@@ -362,7 +369,6 @@ y_t=\beta_0 + \beta_1 x_{t-1} + \beta_2 x_{t-2} +\epsilon_t
 </ol>
 <p><span class="math display">\[ BIC= MSE \times T^{\frac{k}{T}} \]</span></p>
 <p>Lower values of either AIC or BIC indicates greater accuracy. So we select a model with lower value of either of these two criteria. Note that the penalty imposed by BIC is harsher and hence it will typically select a more parsimonious model (Figure <a href="regression-based-forecasting.html#fig:ch2-figure1">2.1</a>).</p>
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.5.2</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:ch2-figure1"></span>
 <img src="bookdown-demo_files/figure-html/ch2-figure1-1.png" alt="Penalty Factor of AIC and BIC" width="80%" />
 <p class="caption">
@@ -381,7 +387,6 @@ y_t= \beta_0 + \beta_1 x_{1t}+ \beta_2 x_{2t}+\epsilon_t
 \end{equation}\]</span></p>
 <p>We can estimate the above model using OLS and then conduct scenario-based forecasting. For ease of interpretation, we will convert all variables in natural logarithms.</p>
 <p>Table <a href="regression-based-forecasting.html#tab:ch2-table1">2.1</a> below presents the estimated coefficients of our regression model. Higher output and capital stock leads to greater investment expenditure.</p>
-<pre><code>## Warning: package &#39;knitr&#39; was built under R version 3.5.2</code></pre>
 <table>
 <caption><span id="tab:ch2-table1">Table 2.1: </span>A Multiple Regression Model of Investment Expenditure</caption>
 <thead>
@@ -434,13 +439,11 @@ Figure 2.2: Investment outlook for next 3 years
 <div id="a-distributed-lag-model-of-investment-expenditure" class="section level3">
 <h3><span class="header-section-number">2.5.2</span> A Distributed Lag Model of Investment Expenditure</h3>
 <p>In this application we will estimate a distributed lag model for investment expenditure. The idea here is that it takes time for investment to respond to output and capital stock changes. The model specification we want to estimate is:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 y_t= \beta_0 + \sum_{i=1}^p\beta_i x_{1t-i}+\sum_{i=1}^p\alpha_i x_{2t-i}+\epsilon_t
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>where <span class="math inline">\(y\)</span> denotes real investment expenditure of the private sector, <span class="math inline">\(x_1\)</span> denotes output of the private sector, and <span class="math inline">\(x_2\)</span> denotes capital stock of the private sector.</p>
 <p>We estimate our model by first selecting the optimal lag order for each independent variable, and selecting the one with lowest value for AIC/BIC. From @(tab:ch2-table2) we find that the lowest BIC occurs at lag=2. Hence, we estimate a model with two lags for each independent variable in our model.</p>
-<pre><code>## Error in library(dynlm): there is no package called &#39;dynlm&#39;</code></pre>
-<pre><code>## Error in dynlm(formula = y ~ L(x1, 1:k) + L(x2, 1:k)): could not find function &quot;dynlm&quot;</code></pre>
 <table>
 <caption><span id="tab:ch2-table2">Table 2.2: </span>Optimal Order of the lags</caption>
 <thead>
@@ -453,23 +456,23 @@ y_t= \beta_0 + \sum_{i=1}^p\beta_i x_{1t-i}+\sum_{i=1}^p\alpha_i x_{2t-i}+\epsil
 <tbody>
 <tr class="odd">
 <td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
+<td align="center">-98.42469</td>
+<td align="center">-89.72714</td>
 </tr>
 <tr class="even">
 <td align="center">2</td>
-<td align="center">0</td>
-<td align="center">0</td>
+<td align="center">-127.36043</td>
+<td align="center">-114.31411</td>
 </tr>
 <tr class="odd">
 <td align="center">3</td>
-<td align="center">0</td>
-<td align="center">0</td>
+<td align="center">-129.95355</td>
+<td align="center">-112.55845</td>
 </tr>
 <tr class="even">
 <td align="center">4</td>
-<td align="center">0</td>
-<td align="center">0</td>
+<td align="center">-127.49885</td>
+<td align="center">-105.75498</td>
 </tr>
 </tbody>
 </table>
@@ -477,16 +480,63 @@ y_t= \beta_0 + \sum_{i=1}^p\beta_i x_{1t-i}+\sum_{i=1}^p\alpha_i x_{2t-i}+\epsil
 <span class="math display">\[\begin{equation}
 y_t= \beta_0 + \sum_{i=1}^2\beta_i x_{1t-i}+\sum_{i=1}^2\alpha_i x_{2t-i}
 \end{equation}\]</span></p>
-<p>The results of our estimation are presented below in Table <a href="#tab:ch2-table3"><strong>??</strong></a></p>
-<pre><code>## Error in dynlm(formula = y ~ L(x1, 1:2) + L(x2, 1:2)): could not find function &quot;dynlm&quot;</code></pre>
-<pre><code>## Error in summary(final): object &#39;final&#39; not found</code></pre>
+<p>The results of our estimation are presented below in Table <a href="regression-based-forecasting.html#tab:ch2-table3">2.3</a></p>
+<table>
+<caption><span id="tab:ch2-table3">Table 2.3: </span>Distributed Lag Model of Investment Expenditure</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Estimated Coefficients</th>
+<th align="center">Std. Error</th>
+<th align="center">t-ratio</th>
+<th align="center">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(Intercept)</td>
+<td align="center">-6.541336</td>
+<td align="center">0.8300877</td>
+<td align="center">-7.880295</td>
+<td align="center">0.0000000</td>
+</tr>
+<tr class="even">
+<td>L(x1, 1:2)1</td>
+<td align="center">10.932987</td>
+<td align="center">1.9354346</td>
+<td align="center">5.648854</td>
+<td align="center">0.0000005</td>
+</tr>
+<tr class="odd">
+<td>L(x1, 1:2)2</td>
+<td align="center">-9.769632</td>
+<td align="center">1.9286226</td>
+<td align="center">-5.065601</td>
+<td align="center">0.0000044</td>
+</tr>
+<tr class="even">
+<td>L(x2, 1:2)1</td>
+<td align="center">2.545657</td>
+<td align="center">0.7735580</td>
+<td align="center">3.290842</td>
+<td align="center">0.0017028</td>
+</tr>
+<tr class="odd">
+<td>L(x2, 1:2)2</td>
+<td align="center">-2.189088</td>
+<td align="center">0.7904689</td>
+<td align="center">-2.769354</td>
+<td align="center">0.0075309</td>
+</tr>
+</tbody>
+</table>
 <ol style="list-style-type: decimal">
 <li><p>Using our estimated model we can easily compute the dynamic effect as well as the long run effect of each independent variable on the dependent variable.</p></li>
 <li><p>Given the lag structure of our estimated model, we can also produce forecasts for <span class="math inline">\(y_{t+1}\)</span> by computing the following equation:</p></li>
 </ol>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 f_{t,1}=\widehat{y_{t+1}}=\hat{\beta_0}+\hat{\beta_1}x_{1t} + \hat{\beta_2}x_{1t-1}+ \hat{\alpha_1}x_{2t}+\hat{\alpha_2}x_{2t-1}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 
 </div>
 </div>
