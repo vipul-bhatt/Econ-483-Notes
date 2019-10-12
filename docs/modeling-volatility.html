@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html >
+
 <head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 7 Modeling Volatility | Applied Time Series Analysis</title>
-  <meta name="description" content="Lecture notes for Applied Time Series Analysis" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 8 Modeling Volatility | Applied Time Series Analysis</title>
+  <meta name="description" content="Lecture notes for Applied Time Series Analysis">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 7 Modeling Volatility | Applied Time Series Analysis" />
+  <meta property="og:title" content="Chapter 8 Modeling Volatility | Applied Time Series Analysis />
   <meta property="og:type" content="book" />
   
   
@@ -16,22 +17,22 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 Modeling Volatility | Applied Time Series Analysis" />
+  <meta name="twitter:title" content="Chapter 8 Modeling Volatility | Applied Time Series Analysis />
   
   <meta name="twitter:description" content="Lecture notes for Applied Time Series Analysis" />
   
 
-<meta name="author" content="Vipul Bhatt" />
+<meta name="author" content="Vipul Bhatt">
 
 
-<meta name="date" content="2019-09-04" />
+<meta name="date" content="2019-10-12">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="modeling-cycle.html">
+<link rel="prev" href="vector-autoregression-var-model.html">
 <link rel="next" href="review-of-differential-calculus-and-optimization.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,26 +51,20 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { display: inline-block; min-height: 1.25em; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
+code.sourceCode { white-space: pre; }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -77,40 +72,38 @@ pre.numberSource a.sourceLine::before
     color: #aaaaaa;
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; color: initial; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
+code span.bn { color: #40a070; } /* BaseN */
 code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
+code span.ch { color: #4070a0; } /* Char */
 code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.ot { color: #007020; } /* Other */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.fu { color: #06287e; } /* Function */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code span.cn { color: #880000; } /* Constant */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.im { } /* Import */
+code span.va { color: #19177c; } /* Variable */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.op { color: #666666; } /* Operator */
+code span.bu { } /* BuiltIn */
+code span.ex { } /* Extension */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.at { color: #7d9029; } /* Attribute */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -203,15 +196,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6.9" data-path="modeling-cycle.html"><a href="modeling-cycle.html#box-jenkins-method-for-estimating-arimapdq"><i class="fa fa-check"></i><b>6.9</b> Box-Jenkins Method for estimating ARIMA(p,d,q)</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>7</b> Modeling Volatility</a><ul>
-<li class="chapter" data-level="7.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#some-stylized-facts-about-stock-market-volatility"><i class="fa fa-check"></i><b>7.1</b> Some stylized facts about stock market volatility</a></li>
-<li class="chapter" data-level="7.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#archq-autoregressive-conditional-heteroscedasticiy-of-order-q"><i class="fa fa-check"></i><b>7.2</b> ARCH(q): Autoregressive Conditional Heteroscedasticiy of order <span class="math inline">\(q\)</span></a></li>
-<li class="chapter" data-level="7.3" data-path="modeling-volatility.html"><a href="modeling-volatility.html#garchpq-generalized-autoregressive-conditional-heteroscedasicity-of-order-p-and-q"><i class="fa fa-check"></i><b>7.3</b> GARCH(p,q): Generalized Autoregressive Conditional Heteroscedasicity of order <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span></a></li>
-<li class="chapter" data-level="7.4" data-path="modeling-volatility.html"><a href="modeling-volatility.html#extensions-of-standard-garch-model"><i class="fa fa-check"></i><b>7.4</b> Extensions of standard GARCH model</a><ul>
-<li class="chapter" data-level="7.4.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#gjr-garch11"><i class="fa fa-check"></i><b>7.4.1</b> GJR-GARCH(1,1)</a></li>
-<li class="chapter" data-level="7.4.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#exponential-garch-or-egarch11"><i class="fa fa-check"></i><b>7.4.2</b> Exponential GARCH or EGARCH(1,1)</a></li>
+<li class="chapter" data-level="7" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression (VAR) Model</a><ul>
+<li class="chapter" data-level="7.1" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#reduced-form-var"><i class="fa fa-check"></i><b>7.1</b> Reduced-form VAR</a></li>
+<li class="chapter" data-level="7.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#structural-var"><i class="fa fa-check"></i><b>7.2</b> Structural VAR</a></li>
+<li class="chapter" data-level="7.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#cholesky-decomposition-and-recursive-var-model"><i class="fa fa-check"></i><b>7.3</b> Cholesky Decomposition and Recursive VAR model</a></li>
+<li class="chapter" data-level="7.4" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function-forecast-error-variance-decomposition-and-granger-causality"><i class="fa fa-check"></i><b>7.4</b> Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function"><i class="fa fa-check"></i><b>7.4.1</b> Impulse response function</a></li>
+<li class="chapter" data-level="7.4.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#forecase-error-variance-decomposition"><i class="fa fa-check"></i><b>7.4.2</b> Forecase Error Variance Decomposition</a></li>
+<li class="chapter" data-level="7.4.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#granger-causality"><i class="fa fa-check"></i><b>7.4.3</b> Granger causality</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="modeling-volatility.html"><a href="modeling-volatility.html#application-of-garch-model-estimating-volatility-of-sp500-return"><i class="fa fa-check"></i><b>7.5</b> Application of GARCH model: Estimating volatility of SP500 return</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a><ul>
+<li class="chapter" data-level="8.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#some-stylized-facts-about-stock-market-volatility"><i class="fa fa-check"></i><b>8.1</b> Some stylized facts about stock market volatility</a></li>
+<li class="chapter" data-level="8.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#archq-autoregressive-conditional-heteroscedasticiy-of-order-q"><i class="fa fa-check"></i><b>8.2</b> ARCH(q): Autoregressive Conditional Heteroscedasticiy of order <span class="math inline">\(q\)</span></a></li>
+<li class="chapter" data-level="8.3" data-path="modeling-volatility.html"><a href="modeling-volatility.html#garchpq-generalized-autoregressive-conditional-heteroscedasicity-of-order-p-and-q"><i class="fa fa-check"></i><b>8.3</b> GARCH(p,q): Generalized Autoregressive Conditional Heteroscedasicity of order <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span></a></li>
+<li class="chapter" data-level="8.4" data-path="modeling-volatility.html"><a href="modeling-volatility.html#extensions-of-standard-garch-model"><i class="fa fa-check"></i><b>8.4</b> Extensions of standard GARCH model</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#gjr-garch11"><i class="fa fa-check"></i><b>8.4.1</b> GJR-GARCH(1,1)</a></li>
+<li class="chapter" data-level="8.4.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#exponential-garch-or-egarch11"><i class="fa fa-check"></i><b>8.4.2</b> Exponential GARCH or EGARCH(1,1)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="modeling-volatility.html"><a href="modeling-volatility.html#application-of-garch-model-estimating-volatility-of-sp500-return"><i class="fa fa-check"></i><b>8.5</b> Application of GARCH model: Estimating volatility of SP500 return</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html"><i class="fa fa-check"></i><b>A</b> Review of Differential Calculus and Optimization</a><ul>
@@ -269,7 +272,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="modeling-volatility" class="section level1">
-<h1><span class="header-section-number">Chapter 7</span> Modeling Volatility</h1>
+<h1><span class="header-section-number">Chapter 8</span> Modeling Volatility</h1>
 <p>Consider a stock market analyst who is interested in finding out whether to invest in a particular stock or not. What kind of variables will govern her choice? If we focus on modern portfolio theory (MPT), a benchmark model in finance, a rational investor only cares about two variables:</p>
 <ol style="list-style-type: decimal">
 <li>expected return from a financial asset such as a stock</li>
@@ -292,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Hence, we now need a class of models where <span class="math inline">\(Var(y_t|\omega_t)\)</span> are not constant over time. Formally, our object of interest in this topic is the conditional variance of a time series, <span class="math inline">\(y_t\)</span>:</p>
 <p><span class="math display">\[\sigma_t^2=Var(y_t|\Omega_t)\]</span></p>
 <div id="some-stylized-facts-about-stock-market-volatility" class="section level2">
-<h2><span class="header-section-number">7.1</span> Some stylized facts about stock market volatility</h2>
+<h2><span class="header-section-number">8.1</span> Some stylized facts about stock market volatility</h2>
 <p>Before proceeding with formally modeling the conditional variance of a time series, let us establish some stylized facts about financial assets, such as a stock. Below I plot the daily return for SP500 along with its ACF (see Figure 1A and 1B). Using squared returns as a proxy for variance, I also plot squared returns for SP500 and its ACF (see Figure 2A and 2B).</p>
 <p><img src="bookdown-demo_files/figure-html/ch7-figure1-1.png" width="100%" style="display: block; margin: auto;" /><img src="bookdown-demo_files/figure-html/ch7-figure1-2.png" width="100%" style="display: block; margin: auto;" /><img src="bookdown-demo_files/figure-html/ch7-figure1-3.png" width="100%" style="display: block; margin: auto;" /><img src="bookdown-demo_files/figure-html/ch7-figure1-4.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>Focusing on the volatility, the plot of squared returns and its ACF establishes the following stylized facts:</p>
@@ -303,7 +306,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Hence, it is reasonable to assume that the variance of a financial time series may not be constant over time. Next we learn two classes of models that have been suggested to model conditional variance of a time series.</p>
 </div>
 <div id="archq-autoregressive-conditional-heteroscedasticiy-of-order-q" class="section level2">
-<h2><span class="header-section-number">7.2</span> ARCH(q): Autoregressive Conditional Heteroscedasticiy of order <span class="math inline">\(q\)</span></h2>
+<h2><span class="header-section-number">8.2</span> ARCH(q): Autoregressive Conditional Heteroscedasticiy of order <span class="math inline">\(q\)</span></h2>
 <p>Engle (1982) proposed a non-linear model for the conditional variance of a stationary time series where past squared shocks affect current volatility. For simplicity, let us assume that we are not interested in modeling the mean of the time series. Hence, our model for the mean is a constant value, <span class="math inline">\(\mu\)</span>. Then, an <span class="math inline">\(ARCH(1)\)</span> model can be specified as follows:</p>
 <p><span class="math display">\[\text{Mean Model:} \quad y_t = \mu +\epsilon_t \quad \text{where} \ \epsilon_t=\nu_t  \sigma_t \ \text{and} \ \nu_t\sim N(0,1)\]</span></p>
 <p><span class="math display">\[\text{Variance Model:} \quad  \sigma_t^2=\omega +\alpha_1 \epsilon_{t-1}^2 \text{where} \ \omega&gt;0 \ \text{and} \ \alpha_1&gt;0 \]</span></p>
@@ -312,7 +315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="math display">\[\text{where} \ \omega&gt;0 \ \text{and} \ \alpha_i&gt;0 \ \forall \ i\]</span></p>
 </div>
 <div id="garchpq-generalized-autoregressive-conditional-heteroscedasicity-of-order-p-and-q" class="section level2">
-<h2><span class="header-section-number">7.3</span> GARCH(p,q): Generalized Autoregressive Conditional Heteroscedasicity of order <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span></h2>
+<h2><span class="header-section-number">8.3</span> GARCH(p,q): Generalized Autoregressive Conditional Heteroscedasicity of order <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span></h2>
 <p>A generalization of the above ARCH model was proposed by Bolerslev (1986) where the conditional variance in the current period depend on past squared shocks as well as past observations of the conditional variance. This model is known as <span class="math inline">\(GARCH\)</span> which stands for generalized ARCH model. Formally, the variance equation of a <span class="math inline">\(GARCH(1,1)\)</span> is given by:</p>
 <p><span class="math display">\[\quad  \sigma_t^2=\omega +\alpha_1 \epsilon_{t-1}^2 +\beta_1 \sigma^2_{t-1} \quad \text{where} \ \omega&gt;0, \ \alpha_1&gt;0, \ \text{and} \ \beta_1&gt;0 \]</span></p>
 <p>In practice most models of volatility now use some version of GARCH(1,1) as it provides a more parsimonious model of volatility when compared to an ARCH(q) model. Following are few important properties of a standard GARCH(1,1) model:</p>
@@ -324,7 +327,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 </div>
 <div id="extensions-of-standard-garch-model" class="section level2">
-<h2><span class="header-section-number">7.4</span> Extensions of standard GARCH model</h2>
+<h2><span class="header-section-number">8.4</span> Extensions of standard GARCH model</h2>
 <p>There are two issues with the standard GARCH model that merits more discussion:</p>
 <ol style="list-style-type: decimal">
 <li>In the standard GARCH framework, the effect of past shocks on volatility is symmetric. That is whether the observed shock is <strong>negative</strong> or <strong>positive</strong>, the effect on the volatility is the same.
@@ -335,7 +338,7 @@ However, in the financial market another stylized fact is the asymmetric respons
 <li>Because these models are models of variance which cannot be negative, the estimation of these models imposes non-negativity condition on all estimated parameters. For instance, in <span class="math inline">\(GARCH(1,1)\)</span> we assume that <span class="math inline">\(\omega, \alpha_1, \ \text{and} \ \beta_1\)</span> are all positive.</li>
 </ol>
 <div id="gjr-garch11" class="section level3">
-<h3><span class="header-section-number">7.4.1</span> GJR-GARCH(1,1)</h3>
+<h3><span class="header-section-number">8.4.1</span> GJR-GARCH(1,1)</h3>
 <p>Glosten, Jagannathan, and Runkle (1993) proposed a variation of the standard GARCH model that incorporates the asymmetry of the impact of news on volatility. The resulting model is called GJR-GARCH and it addresses the first of the issues listed above. Formally, the variance equation of the GJR-GARCH(1,1) is given by:</p>
 <p><span class="math display">\[ \sigma_t^2=\omega+\alpha_1 \epsilon^2_{t-1}+\beta_1 \sigma^2_{t-1}+\gamma_1 D_{t-1}\epsilon^2_{t-1}\]</span></p>
 <p>where <span class="math inline">\(D_{t-1}=1\)</span> if <span class="math inline">\(\epsilon_{t-1}&lt;0\)</span> and <span class="math inline">\(0\)</span> otherwise. Hence, now the effect of <span class="math inline">\(\epsilon^2_{t-1}\)</span> on volatility is <span class="math inline">\(\alpha_1+\gamma_1\)</span> for negative shocks and <span class="math inline">\(\alpha_1\)</span> for positive shocks. The news impact curve from this model will be asymmetric. The persistence from this model will also be affected by <span class="math inline">\(\gamma_1\)</span>. Specfically for the GJR-GARCH(1,1) model,</p>
@@ -345,7 +348,7 @@ However, in the financial market another stylized fact is the asymmetric respons
 </ol>
 </div>
 <div id="exponential-garch-or-egarch11" class="section level3">
-<h3><span class="header-section-number">7.4.2</span> Exponential GARCH or EGARCH(1,1)</h3>
+<h3><span class="header-section-number">8.4.2</span> Exponential GARCH or EGARCH(1,1)</h3>
 <p>Exponential GARCH model by Nelson (1991) accounts for both the issues outlined above. It allows for asymmetric effects of shocks and also does not require the non-negativity constraints. More importantly, it also accounts for different effect of shocks of different magnitude, and hence provides an estimate of the <strong>size effect</strong>. Formally, the variance equation for EGARCH(1,1) is given by:</p>
 <p><span class="math display">\[ln(\sigma^2_{t-1})=\omega+ \alpha_1 z_{t-1} +\gamma_1 (|z_{t-1}|-E|z_{t-1}|) +\beta_1\sigma^2_{t-1}\]</span></p>
 <p>where <span class="math inline">\(z_t=\frac{\epsilon_t}{\sigma_t}\)</span> is the standardized error term. Here, <span class="math inline">\(\alpha_1\)</span> captures the sign effect and <span class="math inline">\(\gamma_1\)</span> captures the size effect. A common finding is that negative news and larger shocks have bigger effect on volatility. Accordingly, we often find in empirical applications of EGARCH that <span class="math inline">\(\alpha_1&lt;0\)</span> and <span class="math inline">\(\gamma_1&gt;0\)</span>. For this model, we have</p>
@@ -356,7 +359,7 @@ However, in the financial market another stylized fact is the asymmetric respons
 </div>
 </div>
 <div id="application-of-garch-model-estimating-volatility-of-sp500-return" class="section level2">
-<h2><span class="header-section-number">7.5</span> Application of GARCH model: Estimating volatility of SP500 return</h2>
+<h2><span class="header-section-number">8.5</span> Application of GARCH model: Estimating volatility of SP500 return</h2>
 <p>In this application, we will estimate the volatility underlying SP500 returns (Figure 1A and Figure 2A). The first step is to test whether squared returns have ARCH effects i.e, whether there is any evidence for time-varying volatility in our data. For this purpose we will use Engle’s ARCH test. Consider our constant mean model:</p>
 <p><span class="math display">\[y_t=\mu +\epsilon_t\]</span></p>
 <p>We can estimate the above model by OLS and obtain residuals <span class="math inline">\(e_t=y_t-\hat{y_t}\)</span>. The test for ARCH effects is based on the idea that if there is conditional hetroscedasiticity in our data then the squared residuals will have serial correlation. The ARCH test involves estimating the following regression:</p>
@@ -365,17 +368,40 @@ However, in the financial market another stylized fact is the asymmetric respons
 <p><span class="math display">\[H_0: \beta_1=\beta_2=...=\beta_p=0 \ \Rightarrow \text{no ARCH effects}\]</span>
 <span class="math display">\[ H_A: \text{Not} \ H_0\]</span></p>
 <p>In R, we use a package called <strong>aTSA</strong> to implement this test.The function is called <strong>arch.test()</strong>. Figure 7.1 below shows the results of this test for our data.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(aTSA)</code></pre>
-<pre><code>## Error in library(aTSA): there is no package called &#39;aTSA&#39;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(forecast)
+<pre class="sourceCode r" id="cb7"><code class="sourceCode r"><span class="kw">library</span>(aTSA)
+<span class="kw">library</span>(forecast)
 
 fit=<span class="kw">arima</span>(y, <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))
 
 <span class="kw">arch.test</span>(fit)</code></pre>
-<pre><code>## Error in arch.test(fit): could not find function &quot;arch.test&quot;</code></pre>
+<pre><code>## ARCH heteroscedasticity test for residuals 
+## alternative: heteroscedastic 
+## 
+## Portmanteau-Q test: 
+##      order   PQ p.value
+## [1,]     4 1110       0
+## [2,]     8 2345       0
+## [3,]    12 3675       0
+## [4,]    16 4289       0
+## [5,]    20 5018       0
+## [6,]    24 5663       0
+## Lagrange-Multiplier test: 
+##      order   LM p.value
+## [1,]     4 2276       0
+## [2,]     8  718       0
+## [3,]    12  418       0
+## [4,]    16  283       0
+## [5,]    20  223       0
+## [6,]    24  177       0</code></pre>
+<div class="figure"><span id="fig:table1"></span>
+<img src="bookdown-demo_files/figure-html/table1-1.png" alt="ARCH LM test" width="672" />
+<p class="caption">
+Figure 8.1: ARCH LM test
+</p>
+</div>
 <p>We find strong evidence for ARCH effects in our data as the null hypothesis of no ARCH effects is rejected at different orders of serial correlation in squared residuals. Next we estimate three types of GARCH(1,1) models using the <strong>rugarch</strong> package. Tables 7.1A-7.1D below show the estimated parameters of these three models. The news impact curve for these 3 classes of GARCH model are plotted in Figure 2-4 below. Finally, the estimated conditional volatility from the three models are plotted along with the return in Figures 5-7. We find that there is strong evidence for the sign effect with negative news having a bigger effect on volatility as indicated by the positive value for <span class="math inline">\(\gamma_1\)</span> in GJR-GARCH and negative value of <span class="math inline">\(\alpha_1\)</span> in EGARCH. Further, in the EGARCH model we find evidence for the size effect as indicated by positive value for <span class="math inline">\(\gamma_1\)</span>. These findings are confirmed by the asymmetric news impact curves for the GJR-GARCH and EGARCH models.</p>
 <table>
-<caption><span id="tab:unnamed-chunk-11">Table 7.1: </span>(A) Estimated GARCH(1,1)</caption>
+<caption><span id="tab:unnamed-chunk-11">Table 8.1: </span>(A) Estimated GARCH(1,1)</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -390,34 +416,34 @@ fit=<span class="kw">arima</span>(y, <span class="kw">c</span>(<span class="dv">
 <td>mu</td>
 <td align="right">0.068</td>
 <td align="right">0.014</td>
-<td align="right">4.963</td>
+<td align="right">4.985</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td>omega</td>
 <td align="right">0.028</td>
 <td align="right">0.004</td>
-<td align="right">6.911</td>
+<td align="right">7.008</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td>alpha1</td>
-<td align="right">0.136</td>
+<td align="right">0.139</td>
 <td align="right">0.013</td>
-<td align="right">10.318</td>
+<td align="right">10.366</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td>beta1</td>
-<td align="right">0.844</td>
+<td align="right">0.840</td>
 <td align="right">0.013</td>
-<td align="right">64.112</td>
+<td align="right">63.130</td>
 <td align="right">0</td>
 </tr>
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-11">Table 7.1: </span>(B) Estimated GJR-GARCH(1,1)</caption>
+<caption><span id="tab:unnamed-chunk-11">Table 8.1: </span>(B) Estimated GJR-GARCH(1,1)</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -432,14 +458,14 @@ fit=<span class="kw">arima</span>(y, <span class="kw">c</span>(<span class="dv">
 <td>mu</td>
 <td align="right">0.028</td>
 <td align="right">0.014</td>
-<td align="right">2.075</td>
-<td align="right">0.038</td>
+<td align="right">2.063</td>
+<td align="right">0.039</td>
 </tr>
 <tr class="even">
 <td>omega</td>
 <td align="right">0.028</td>
 <td align="right">0.003</td>
-<td align="right">8.228</td>
+<td align="right">8.378</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="odd">
@@ -451,22 +477,22 @@ fit=<span class="kw">arima</span>(y, <span class="kw">c</span>(<span class="dv">
 </tr>
 <tr class="even">
 <td>beta1</td>
-<td align="right">0.862</td>
+<td align="right">0.858</td>
 <td align="right">0.013</td>
-<td align="right">66.605</td>
+<td align="right">66.416</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="odd">
 <td>gamma1</td>
-<td align="right">0.224</td>
-<td align="right">0.023</td>
-<td align="right">9.620</td>
+<td align="right">0.229</td>
+<td align="right">0.024</td>
+<td align="right">9.715</td>
 <td align="right">0.000</td>
 </tr>
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-11">Table 7.1: </span>(C) Estimated EGARCH(1,1)</caption>
+<caption><span id="tab:unnamed-chunk-11">Table 8.1: </span>(C) Estimated EGARCH(1,1)</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -479,43 +505,43 @@ fit=<span class="kw">arima</span>(y, <span class="kw">c</span>(<span class="dv">
 <tbody>
 <tr class="odd">
 <td>mu</td>
-<td align="right">0.031</td>
-<td align="right">0.015</td>
-<td align="right">2.073</td>
-<td align="right">0.038</td>
+<td align="right">0.030</td>
+<td align="right">0.014</td>
+<td align="right">2.198</td>
+<td align="right">0.028</td>
 </tr>
 <tr class="even">
 <td>omega</td>
-<td align="right">0.000</td>
+<td align="right">-0.001</td>
 <td align="right">0.004</td>
-<td align="right">-0.127</td>
-<td align="right">0.899</td>
+<td align="right">-0.200</td>
+<td align="right">0.841</td>
 </tr>
 <tr class="odd">
 <td>alpha1</td>
-<td align="right">-0.181</td>
+<td align="right">-0.183</td>
 <td align="right">0.013</td>
-<td align="right">-13.743</td>
+<td align="right">-13.859</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="even">
 <td>beta1</td>
-<td align="right">0.968</td>
+<td align="right">0.967</td>
 <td align="right">0.004</td>
-<td align="right">259.356</td>
+<td align="right">258.321</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="odd">
 <td>gamma1</td>
-<td align="right">0.159</td>
+<td align="right">0.162</td>
 <td align="right">0.015</td>
-<td align="right">10.967</td>
+<td align="right">10.971</td>
 <td align="right">0.000</td>
 </tr>
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-11">Table 7.1: </span>(D) Persistence, Unconditional Variance, and Half-life</caption>
+<caption><span id="tab:unnamed-chunk-11">Table 8.1: </span>(D) Persistence, Unconditional Variance, and Half-life</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -527,21 +553,21 @@ fit=<span class="kw">arima</span>(y, <span class="kw">c</span>(<span class="dv">
 <tbody>
 <tr class="odd">
 <td>Persistence</td>
-<td align="right">0.980</td>
-<td align="right">0.974</td>
-<td align="right">0.968</td>
+<td align="right">0.979</td>
+<td align="right">0.973</td>
+<td align="right">0.967</td>
 </tr>
 <tr class="even">
 <td>Unconditional Variance</td>
-<td align="right">1.376</td>
-<td align="right">1.045</td>
-<td align="right">0.985</td>
+<td align="right">1.372</td>
+<td align="right">1.051</td>
+<td align="right">0.978</td>
 </tr>
 <tr class="odd">
 <td>Half-life</td>
-<td align="right">34.197</td>
-<td align="right">25.834</td>
-<td align="right">21.182</td>
+<td align="right">33.087</td>
+<td align="right">25.242</td>
+<td align="right">20.712</td>
 </tr>
 </tbody>
 </table>
@@ -559,7 +585,7 @@ fit=<span class="kw">arima</span>(y, <span class="kw">c</span>(<span class="dv">
           </div>
         </div>
       </div>
-<a href="modeling-cycle.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="vector-autoregression-var-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="review-of-differential-calculus-and-optimization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

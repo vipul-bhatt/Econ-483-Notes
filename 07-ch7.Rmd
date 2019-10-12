@@ -1,319 +1,91 @@
-# Modeling Volatility
+# Vector Autoregression (VAR) Model
 
-Consider a stock market analyst who is interested in finding out whether to invest in a particular stock or not. What kind of variables will govern her choice? If we focus on modern portfolio theory (MPT), a benchmark model in finance, a rational investor only cares about two variables:
+Thus far our analysis has been limited to a univariate time series. Often one maybe interested in understanding the dynamics of multiple time series variables. Vector Autoregression (VAR) model is one of the most commonly used model for this purpose. Suppose you have $N$ time series variables in your sample Then a VAR model is a system of $N$ linear equations where each variable is modeled as a linear function of its own lags and current and past values of the remaining $N-1$ variables. In this sense a VAR model combines and extends the the AR model and distributed lag model we covered earlier. 
 
-1. expected return from a financial asset such as a stock
-2. risk or volatility underlying this asset
+There are two main ways we can specifiy a VAR model, each distinguished by the treatment of contemporaenous effects among variable included in the model. To make each type's main features salient, suppose that we have three variables in our model: inflation (denoted by $\pi$), unemployment (denoted by $u$), and the federal fund rate (denoted by $i$). In the remainded of this chapter will use this 3-variable system as our example.
 
-Let $P_t$ denotes the adjusted closing price for a stock traded in the market. The continually compounded return of this stock is given by:
 
-\[y_t=[log(P_t)-log(P_{t-1})]\times 100\]
 
-According to the MPT as an investor you should care about:
 
-1. $E(y_{t+h}|\Omega_t)$: this is the expected return on the asset, given information at time t
-2. $Var(y_{t+h}|\Omega_t)$: this is the expected volatility or risk underlying this asset, given the information at time t.
+## Reduced-form VAR
 
-Note that even though this example is using stock market as the motivation, the same is true for any other time series of interest. I use stock market as an example because here the variance has an intuitive appeal as risk underlying an asset.
+In a reduced-form VAR we abstract away from any contemporaneous linkages among variables in the model and hence in that sense take an **atheoretical** approach to estimating dynamic relationships among these variables. Specifically, we assume that  each variable in the model is a function of its own lags and lags of remaining variables in the system. For example, using our 3 variables, a reduced-form  VAR(1) is given by:
 
+\[\pi_t = a_{10} + a_{11} \pi_{t-1} + a_{12} u_{t-1} + a_{13} i_{t-1} + e_{1t}\]
+\[u_t = a_{20} + a_{21} \pi_{t-1} + a_{22} u_{t-1} + a_{23} i_{t-1} + e_{2t}\]
+\[i_t = a_{30} + a_{31} \pi_{t-1} + a_{32} u_{t-1} + a_{33} i_{t-1} + e_{3t}\]
 
-Thus far our discussion has focused on modeling the conditional mean of a given time series. For example, consider the following $ARMA(1,1)$ model for the stock market return:
+Note that:
 
-\[y_t=\phi_0 + \phi_1 y_{t-1} + \theta_1 \epsilon_{t-1} + \epsilon_t ; \quad \epsilon_t\sim WN(0, \sigma^2_\epsilon )\]
+a. The above system of 3-equations can easily be estimated as it only includes lagged data for each variable as independent variable, which by definition is pre-determined. Hence, we can estimate each equation separately by OLS.
 
-From this model, we can obtain the forecast for $y_{t+h}$ as the conditional mean of $y_t$ given the information available at time $t$:
+b. In the above example we use 1 lag for simplicity. In practice the number of lagged values to include in each equation can be determined using AIC or BIC.
 
-\[f_{t,h}=E(y_{t+h}|\Omega_t)\]
+c. Each equation will provide a forecast for that particular variable. Hence, in our example we can generate forecasts for all three variables in our model.
 
-In this sense ARMA models are inherently models for the conditional mean of a stationary time series. Going back to our stock market example, this ARMA model can give us information about how the expected return on a stock will evolve over time. 
+d. One important drawback of the reduced-form VAR is that it cannot be used for structural inference and policy analysis. For example, suppose we are want to find out what will be the effect of raising the ffr by 50 basis points on inflation and unemployment? To  answer this question, we need the shocks in each equation to be independent of each other. Only then, for example, we can say that $e_{3t}$ represents shock to the FFR alone. However, in the reduced-form VAR, because each variable is related to each other, shocks in each equation are also correlated to each other.
 
-An important assumption we make in estimating this model is that the error term is homoscedastic, i.e, the error term has a constant variance across observations. However, often this assumption will not be satisfied in data. More importantly in some cases, such as our current example of stock market, making this assumption is conceptually incorrect. This is because in our example, assuming constant variance is equivalent to assuming constant risk underlying a stock. Such an assumption is clearly not desirable for an investor. 
 
-Hence, we now need a class of models where $Var(y_t|\omega_t)$ are not constant over time. Formally, our object of interest in this topic is the conditional variance of a time series, $y_t$:
+## Structural VAR
 
-\[\sigma_t^2=Var(y_t|\Omega_t)\]
+The reduced-form VAR specified above is **atheoretical** in the sense that it does not impose any economic structure on the relationships between different variables. As a result a reduced-form model cannot be used to uncover causal relationships between correlated variables. A **structural VAR** model allows each variable to depend on past as well as current values of other variables in the system. As a result, a structural VAR adds contemporaneous linkages among variables included in the model. Continuing with our example, a structural version of the 3-variable VAR can be written as follows:
 
+\[\pi_t = \beta_{11} + \beta_{12} u_t + \beta_{13} i_t + \phi_{11} \pi_{t-1} + \phi_{12} u_{t-1} + \phi_{13} i_{t-1} + \epsilon_{1t}\]
+\[u_t = \beta_{21} + \beta_{22} \pi_t+ \beta_{23} i_t+\phi_{21} \pi_{t-1} + \phi_{22} u_{t-1} + \phi_{23} i_{t-1} + \epsilon_{2t}\]
+\[i_t = \beta_{31} + \beta_{32}\pi_t + \beta_{33}u_t+ \phi_{31} \pi_{t-1} + \phi_{32} u_{t-1} + \phi_{33} i_{t-1} + \epsilon_{3t}\]
 
+There are three key things to note here:
 
-## Some stylized facts about stock market volatility
+1. In each equation we now have contemporaneous linkages among variables. For example, in the first equation, $\beta_{12}$ and $\beta_{13}$ capture the effect of changes in period $t$ values of unemployment and ffr on the period $t$ value of inflation. 
 
-Before proceeding with formally modeling the conditional variance of a time series, let us establish some stylized facts about financial assets, such as a stock. Below I plot the daily return for SP500 along with its ACF (see Figure 1A and 1B). Using squared returns as a proxy for variance, I also plot squared returns for SP500 and its ACF (see Figure 2A and 2B).
+2. By definition the error terms are uncorrelated across equations and hence each error term can be interpreted as representing a pure shock to that particular variable. For example, $\epsilon_{3t}$ represents shocks to the ffr often caused by the monetary policy actions of the Fed.\
 
-```{r ch7-figure1, message=FALSE, warning=FALSE, echo = FALSE, fig.cap = '', out.width='100%', fig.asp=.75, fig.align='center'}
+3. OLS estimation of each equation separately would provide biased estimates as there is a simultaneity bias inherent in the specification of the structural VAR. For example, in the inflation equation, inflation depends on current period unemployment and interest rate. But, in the unemployment equation, unemployment depends on current period inflation and interest rate as well. This kind of reverse causality causes OLS estimator to be biased. 
 
-suppressMessages(library(xts))
-suppressMessages(library(quantmod))
-suppressWarnings(library(quantmod))
-# get data from fred stat
-options("getSymbols.warning4.0"=FALSE)
-invisible(getSymbols('^GSPC',src='yahoo'))
+Consequently, a structural VAR model cannot be estimated using OLS. In order to process we need to impose some kind of identifying restrictions on the structural VAR model to deal with the contemporaneous linkages among variables. Such restrictions often come from economic theory and may involve the entire model or a just a single equation. However, to conduct structural inference we have to use economic theory to afford structural interpretation to shocks of our VAR model.
 
-###
-### return and return squared
-y=na.omit(diff(log(GSPC[,6]))*100)
-y2=y^2
 
+## Cholesky Decomposition and Recursive VAR model
 
- 
-plot(y, main="Figure 1A: SP500 Return")
-plot.new()
-acf(coredata(y),main="Figure 1B: ACF of SP500 Return")
-plot.new()
-plot(y2, main="Figure 2A: Squared SP500  Return")
-plot.new()
-acf(coredata(y2),main="Figure 2B: ACF of Squared SP500 Return")
+One solution that falls in between the reduced-form VAR with no structural intepretation and the structural VAR with full set of contemporaneous linkages is the **recursive VAR** model. In this specification, the error term in each equation is assumed to be uncorrelated with the error term in the preceeding equations. This is accomplished by assuming some sort of **ordering** among variables in the VAR model so that only some variables contomporaneously affect others. For example, suppose we use the following ordering: inflation, unemployment, and the federal fund rate (ffr). This ordering will imply the following recursive  VAR model:
 
-```
+\[\pi_t = \beta_{11} + \phi_{11} \pi_{t-1} + \phi_{12} u_{t-1} + \phi_{13} i_{t-1} + \epsilon_{1t}\]
+\[u_t = \beta_{21} + \beta_{22} \pi_t+\phi_{21} \pi_{t-1} + \phi_{22} u_{t-1} + \phi_{23} i_{t-1} + \epsilon_{2t}\]
+\[i_t = \beta_{31} + \beta_{32}\pi_t + \beta_{33}u_t+ \phi_{31} \pi_{t-1} + \phi_{32} u_{t-1} + \phi_{33} i_{t-1} + \epsilon_{3t}\]
 
-Focusing on the volatility, the plot of squared returns and its ACF establishes the following stylized facts:
+Note that:
 
-1. From Figure 2A, we observe that large values of squared returns cluster together, and small values of squared returns cluster together. That is periods of high volatility are followed by periods of high volatility and periods of low volatility are followed by periods of low volatility. This phenomenon is known as **volatility persistence** or **volatility clustering** in the fields of economics and finance.
+1. The ordering we assumed: inflation, unemployment, and ffr, implies that the first variable (inflation) has no contemporaneous linkage with unemployment and ffr. The second variable (unemployment) is affected by contemporaneous inflation and the third variable (ffr) is affected by both contemporaneous inflation and unemployment. The main implication of this ordering is that $cor(\epsilon_{1t},\epsilon_{2t})=0$, $cor(\epsilon_{2t},\epsilon_{3t})=0$, and $cor(\epsilon_{1t},\epsilon_{3t})=0$. 
 
-2. A more direct evidence for volatility persistence can be inferred from the ACF plot of squared returns. From Figure 2B, we observe a strong positive serial correlation in squared returns. 
+2. In practical implementations of the recursive VAR model, it is common to first estimate the reduced-form VAR model using OLS for each equation separately. Then, we  decompose the covariance matrix to reduced-form residuals using  **Cholesky decomposition**  method to obtain uncorrelated error structure consistent with the recursive VAR model specified above. This can be used to investigate how shocks to one variable affect other variables in the system. 
 
-Hence, it is reasonable to assume that the variance of a financial time series may not be constant over time. Next we learn two  classes of models that have been suggested to model conditional variance of a time series.
+3. If we change the ordering, we will get different results. In a model with $N$ variables, there are N! possible orderings. So in our example, there are 3!= 6 possible alternative specifications for the VAR model. Hence, this approach requires us to judiciously choose the ordering of the variables.
 
-## ARCH(q): Autoregressive Conditional Heteroscedasticiy of order $q$
 
-Engle (1982) proposed a non-linear model for the conditional variance of a stationary time series where past squared shocks affect current volatility. For simplicity, let us assume that we are not interested in modeling the mean of the time series. Hence, our model for the mean is a constant value, $\mu$. Then, an $ARCH(1)$ model can be specified as follows:
+## Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality
 
-\[\text{Mean Model:} \quad y_t = \mu +\epsilon_t \quad \text{where} \ \epsilon_t=\nu_t  \sigma_t \ \text{and} \ \nu_t\sim N(0,1)\]
+In addition to estimating each equation and providing a forecast of all variables in the system, there are two additional outputs produced by a VAR model which can be used for both descriptive and inference purposes. This analysis requires us to either use a recursive VAR model or impose some restrictions based on economic theory so that each shock  can be interpreted as a shock to that particular variable. In this chapter we will use the recursive VAR structure when discussing impulse response functions and variance decomposition.
 
-\[\text{Variance Model:} \quad  \sigma_t^2=\omega +\alpha_1 \epsilon_{t-1}^2 \text{where} \ \omega>0 \ \text{and} \ \alpha_1>0 \]
+### Impulse response function
 
-In this model the unconditional variance of the time series is constant, but the conditional variance depends on the past squared error term. The variance model can be easily generalized to include $q$ past shocks which gives us $ARCH(q)$
+Suppose we are interested in finding out how shock to one variable in the system at time $t$ affects the dynamics of other variables. For example, suppose there is unanticipated increase in the ffr caused by the actions of the Fed. What would be the dynamic response of inflation and unemployment to this monetary policy shock? Using the recursive VAR, we can interpret the shock to the FFR (the last variable in our ordering) as a pure interest rate shock because it is by construction uncorrelated with shocks to inflation and unemployment. The **impuse response** produced by the VAR model traces out the response of current and future values of unemployment and inflation to one-unit increase in the error term of the ffr equation, holding error terms in inflation and unemployment equation at zero. We can study both the **impact effect** as well as the **cumulative effect** of such a shock to ffr on unemployment and inflation.
 
-\[\text{Variance Model:} \quad  \sigma_t^2=\omega +\alpha_1 \epsilon_{t-1}^2+\alpha_2 \epsilon_{t-2}^2 +\alpha_3 \epsilon_{t-3}^2 +...+ \alpha_q \epsilon_{t-q}^2 \]
-\[\text{where} \ \omega>0 \ \text{and} \ \alpha_i>0 \ \forall \ i\]
+### Forecase Error Variance Decomposition
 
-## GARCH(p,q): Generalized Autoregressive Conditional Heteroscedasicity of order $p$ and $q$
+Another useful output from an estimated VAR model is the **forecast error variance decomposition (fevd)**. Here, we can address the following question: following a shock to one of the variables in the VAR model what percentage of the variance in the forecast error of other variables in the model can be attributed to this particular shock? For example, what percentage of the forcast error variance of inflation can be attributed to the shock in inflation, shock in unemployment, and shock to ffr. In this sense the forecast error variance decomposition measures the amount of each variable in the VAR model contributes to the other variables in the autoregression.
 
-A generalization of the above ARCH model was proposed by Bolerslev (1986) where the conditional variance in the current period depend on past squared shocks as well as past observations of the conditional variance. This model is known as $GARCH$ which stands for generalized ARCH model. Formally, the variance equation of a $GARCH(1,1)$ is given by:
+### Granger causality
 
-\[\quad  \sigma_t^2=\omega +\alpha_1 \epsilon_{t-1}^2 +\beta_1 \sigma^2_{t-1} \quad \text{where} \ \omega>0, \ \alpha_1>0, \ \text{and} \ \beta_1>0 \]
+Another important analysis that one can conduct using a VAR model is **Granger-causality**. As a bi-variate concept, Granger causality means that lags of one variable improves our capacity to predict another variable. For example, if unemployment **Granger-causes** inflation, then lags of unemployment have non-zero coefficients in the reduced-form inflatuon equation. Formally, consider the following regression:
 
-In practice most models of volatility now use some version of GARCH(1,1) as it provides a more parsimonious model of volatility when compared to an ARCH(q) model. Following are few important properties of a standard GARCH(1,1) model:
+\[\pi_t=\beta_0 + \sum_{i=1}^{P} \beta_i u_{t-i} \sum_{i=1}^{P} \delta_i \pi_{t-i} + \epsilon_t\]
 
-i. Unconditional variance: The unconditional variance of $y_t$ is still constant due to stationarity and is given by:
-\[\sigma^2_y = \frac{\omega}{1-\alpha_1-\beta_1}\]
+To test whether unemployment Granger causes inflation we can conduct the following hypothesis test:
 
-ii. Volatility persistence: the persistence is given by $\alpha_1+\beta_1$.
+\[H_0: \beta_1=\beta_2=...=\beta_p=0\]
+\[H_A: \text{Not} \ H_0\]
 
-iii. Half-life measure: R is the number of periods it takes for the estimated volatility to converge to half of the unconditional variance of the time series.
-
-
-## Extensions of standard GARCH model
-
-There are two issues with the standard GARCH model that merits more discussion:
-
-1. In the standard GARCH framework, the effect of past shocks on volatility is symmetric. That is whether the observed shock is **negative** or **positive**, the effect on the volatility is the same.
-However, in the financial market another stylized fact is the asymmetric response of volatility to news. For instance, it is quite common to find that negative news increases volatility more than the reduction in volatility caused by positive news. One analytical tool to illustrate this point is the **news impact curve** where we plot the shock on the x-axis and estimated/predicted volatility from our GARCH model on the y-axis.  Below  I plot three types of news impact curves. In the first case, the curve is symmetric: negative and positive shocks have identical effect on volatility. In the second case, negative news has a bigger effect on volatility, and finally in the third case, positive news has a bigger effect on volatility.
-
-```{r ch7-figure2, message=FALSE, warning=FALSE, echo = FALSE, fig.cap = '', out.width='100%', fig.asp=.75, fig.align='center'}
-
-
-
-## simulate a GARCH process
-
-
-###3 true values
-a0 = 2;
-a1 = 0.04;
-b1 = 0.91;
-
-#total simulations of the model
-n=21;
-  z = rnorm(n);
-eps = rep(0, n);
-h = rep(0, n);
-for (i in 2:n) {
-  h[i] = a0 + a1 * eps[i-1]^2 + b1 * h[i-1]
-  eps[i] = z[i] * sqrt(h[i])
-}
-
-### news impact curve data
-
-
-e=rep(-10:10)
-dummy = as.numeric(e<0)
-gamma1=0.2
-gamma2=-0.008
-
-sigma1=a0+a1*e^2+b1*mean(h)
-sigma2=a0+a1*e^2+b1*mean(h)+gamma1*dummy*e^2
-sigma3=a0+a1*e^2+b1*mean(h)+gamma2*dummy*e^2
-
-
-
-plot(e,sigma1, main="Figure 3A: Symmetric News Impact Curve", type='l',ylab=expression(hat(sigma[t])), xlab=expression(epsilon[t-1]))
-plot.new()
-plot(e,sigma2, main="Figure 3B: Asymmetric News Impact Curve-Negative news has bigger effect", type='l',ylab=expression(hat(sigma[t])), xlab=expression(epsilon[t-1]))
-plot.new()
-plot(e,sigma3, main="Figure 3C: Asymmetric News Impact Curve-Positive news has bigger effect", type='l',ylab=expression(hat(sigma[t])), xlab=expression(epsilon[t-1]))
-```
-     
-
-2. Because these models are models of variance which cannot be negative, the estimation of these models imposes  non-negativity condition on all estimated parameters. For instance, in $GARCH(1,1)$ we assume that $\omega, \alpha_1, \ \text{and} \ \beta_1$ are all positive.
-
-### GJR-GARCH(1,1)
-
-Glosten, Jagannathan, and Runkle (1993) proposed a variation of the standard GARCH model that incorporates the asymmetry of the impact of news on volatility.  The resulting model is called GJR-GARCH and it addresses the first of the issues listed above. Formally, the variance equation of the GJR-GARCH(1,1) is given by:
-
-\[ \sigma_t^2=\omega+\alpha_1 \epsilon^2_{t-1}+\beta_1 \sigma^2_{t-1}+\gamma_1 D_{t-1}\epsilon^2_{t-1}\]
-
-where $D_{t-1}=1$ if $\epsilon_{t-1}<0$ and $0$ otherwise. Hence, now the effect of $\epsilon^2_{t-1}$ on volatility is $\alpha_1+\gamma_1$ for negative shocks and $\alpha_1$ for positive shocks. The news impact curve from this model will be asymmetric. The persistence from this model will also be affected by $\gamma_1$. Specfically for the GJR-GARCH(1,1) model, 
-
-1. Persistence: $\alpha_1+\beta_1 +\frac{\gamma_1}{2}$
-
-2. Unconditional variance: \[\sigma^2_y = \frac{\omega}{1-\alpha_1-\beta_1-\frac{\gamma_1}{2}}\]
-
-### Exponential GARCH or EGARCH(1,1)
-
-Exponential GARCH model by Nelson (1991) accounts for both the issues outlined above. It allows for asymmetric effects of shocks and also does not require the non-negativity constraints. More importantly, it also accounts for different effect of shocks of different magnitude, and hence provides an estimate of the **size effect**. Formally, the variance equation for EGARCH(1,1) is given by:
-
-\[ln(\sigma^2_{t-1})=\omega+ \alpha_1 z_{t-1} +\gamma_1 (|z_{t-1}|-E|z_{t-1}|) +\beta_1\sigma^2_{t-1}\]
-
-where $z_t=\frac{\epsilon_t}{\sigma_t}$ is the standardized error term. Here, $\alpha_1$ captures the sign effect and $\gamma_1$ captures the size effect. A common finding is that negative news and larger shocks have bigger effect on volatility. Accordingly, we often find in empirical applications of EGARCH that $\alpha_1<0$ and $\gamma_1>0$. For this model, we have
-
-1. Persistence: $\beta_1$
-
-2. Unconditional variance: \[\sigma^2_y = \frac{\omega}{1-\beta_1}\]
-
-## Application of GARCH model: Estimating volatility of SP500 return
-
-In this application, we will estimate the volatility underlying SP500 returns (Figure 1A and Figure 2A). The first step is to test whether squared returns have ARCH effects i.e, whether there is any evidence for time-varying volatility in our data. For this purpose we will use Engle's ARCH test. Consider our constant mean model:
-
-\[y_t=\mu +\epsilon_t\]
-
-We can estimate the above model by OLS and obtain residuals $e_t=y_t-\hat{y_t}$.  The test for ARCH effects is based on the idea that if there is conditional hetroscedasiticity in our data then the squared residuals will have serial correlation. The ARCH test involves estimating the following regression:
-
-\[e^2_t= \beta_0 +\beta_1 e^2_{t-1} + \beta_2 e^2_{t-2}+...+ \beta_p e^2_{t-p} + u_t\]
-
-Then, the test for ARCH effects is given by:
-
-\[H_0: \beta_1=\beta_2=...=\beta_p=0 \ \Rightarrow \text{no ARCH effects}\]
-\[ H_A: \text{Not} \ H_0\]
-
-In R, we use a package called **aTSA** to implement this test.The function is called **arch.test()**. Figure 7.1 below shows the results of this test for our data.
-
-```{r table1,warning=FALSE, message=FALSE, fig.cap="ARCH LM test", fig.pos='H'}
-library(aTSA)
-library(forecast)
-
-fit=arima(y, c(0,0,0))
-
-arch.test(fit)
-
-```
-
-We find strong evidence for ARCH effects in our data as the null hypothesis of no ARCH effects is rejected at different orders of serial correlation in squared residuals. Next we estimate three types of GARCH(1,1) models using the **rugarch** package. Tables 7.1A-7.1D below show the estimated parameters of these three models. The news impact  curve for these 3 classes of GARCH model are plotted in Figure 2-4 below. Finally, the estimated conditional volatility from the three models are plotted along with the return in Figures 5-7. We find that there is strong evidence for the sign effect with negative news having a bigger effect on volatility as indicated by the positive value for $\gamma_1$ in GJR-GARCH and negative value of $\alpha_1$ in EGARCH. Further, in the EGARCH model we find evidence for the size effect as indicated by positive value for $\gamma_1$. These findings are confirmed by the asymmetric news impact curves for the GJR-GARCH and EGARCH models.
-
-
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
-library(rugarch)
-library(knitr)
-# Estimate GARCH(1,1)
-
-#
-# specify GARCH(1,1) model with only constant in mean equation
-garch11.spec = ugarchspec(variance.model = list(model="sGARCH",garchOrder=c(1,1)), 
-                          mean.model = list(armaOrder=c(0,0)))
-# Estimate GARCH(1,1)
-
-garch11.fit = ugarchfit(y, spec=garch11.spec)  
-
-invisible(slotNames(garch11.fit))
-invisible(names(garch11.fit@fit))
-invisible(names(garch11.fit@model))
-
-# Use it now as follows:
-res1=garch11.fit@fit$matcoef 
-
-
-
-#### estimating a GJR-garch(1,1)
-
-gjrgarch11.spec = ugarchspec(variance.model = list(model = 'gjrGARCH', garchOrder = c(1, 1)),  mean.model = list(armaOrder=c(0,0)), distribution = 'norm')
-gjrgarch11.fit = ugarchfit(gjrgarch11.spec,y, solver = 'hybrid')
-
-
-invisible(slotNames(gjrgarch11.fit))
-invisible(names(gjrgarch11.fit@fit))
-invisible(names(gjrgarch11.fit@model))
-
-# Use it now as follows:
-res2=gjrgarch11.fit@fit$matcoef 
-
-egarch11.spec = ugarchspec(variance.model = list(model = 'eGARCH', garchOrder = c(1, 1)),  mean.model = list(armaOrder=c(0,0)), distribution = 'norm')
-egarch11.fit = ugarchfit(egarch11.spec,y, solver = 'hybrid')
-
-invisible(slotNames(egarch11.fit))
-invisible(names(egarch11.fit@fit))
-invisible(names(egarch11.fit@model))
-
-# Use it now as follows:
-res3=egarch11.fit@fit$matcoef 
-
-
-kable(res1,digits=3, caption = "(A) Estimated GARCH(1,1)")
-kable(res2,digits=3, caption = "(B) Estimated GJR-GARCH(1,1)")
-kable(res3,digits=3, caption = "(C) Estimated EGARCH(1,1)")
-
-test=cbind(c(persistence(garch11.fit),uncvariance(garch11.fit),halflife(garch11.fit)), c(persistence(gjrgarch11.fit),uncvariance(gjrgarch11.fit),halflife(gjrgarch11.fit)), c(persistence(egarch11.fit), uncvariance(egarch11.fit),halflife(egarch11.fit)))
-
-row.names(test)=c("Persistence", "Unconditional Variance", "Half-life")
-kable(test, digits=3, caption="(D) Persistence, Unconditional Variance, and Half-life", col.names =c("GARCH(1,1)", "GJR-GARCH(1,1)", "EGARCH(1,1)"))
-
-
-ni1 = newsimpact(z = NULL, garch11.fit)
-plot(ni1$zx, ni1$zy, ylab=ni1$yexpr, xlab=ni1$xexpr, type="l", main = "Figure 2: News Impact Curve for GARCH(1,1)")
-plot.new()
-ni2 = newsimpact(z = NULL, gjrgarch11.fit)
-plot(ni2$zx, ni2$zy, ylab=ni2$yexpr, xlab=ni2$xexpr, type="l", main = "Figure 3: News Impact Curve for GJR-GARCH(1,1)")
-plot.new()
-ni3 = newsimpact(z = NULL, egarch11.fit)
-plot(ni3$zx, ni3$zy, ylab=ni3$yexpr, xlab=ni3$xexpr, type="l", main = "Figure 4: News Impact Curve for EGARCH(1,1)")
-plot.new()
-par(col.main="#00000000")
-plot(garch11.fit,which=3)
-par(col.main='black')
-title("Figure 5: Estimated Conditional Volatility from GARCH(1,1)")
-plot.new()
-par(col.main="#00000000")
-plot(gjrgarch11.fit,which=3)
-par(col.main='black')
-title("Figure 6: Estimated Conditional Volatility from GJR-GARCH(1,1)")
-plot.new()
-par(col.main="#00000000")
-plot(egarch11.fit,which=3)
-par(col.main='black')
-title("Figure 7: Estimated Conditional Volatility from EGARCH(1,1)")
-
-```
-
-Finally, these models can also be used to forecast the volatility of SP500. Figure 8 below shows this forecast for the next 7 days from the EGARCH(1.1) model.
-
-
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
-library(rugarch)
-
-egarch11.spec = ugarchspec(variance.model = list(model = 'eGARCH', garchOrder = c(1, 1)),  mean.model = list(armaOrder=c(0,0)), distribution = 'norm')
-egarch11.fit = ugarchfit(egarch11.spec,y, solver = 'hybrid')
-
-####news impact curve
-
-plot(egarch11.fit, which=12)
-
-##### forecast mean and volatility using egarch(1,1)
-
-f_sigma.t=ugarchforecast(egarch11.fit,n.ahead=12)
-par(col.main="#00000000")
-plot(f_sigma.t,which=3)
-par(col.main='black')
-title("Figure 8: Forecasted Conditional Volatility from EGARCH(1,1)")
-
-
-```
+This is an F-test and rejection of the null hypothesis indicates unemployment Granger-causes inflation.
 
 
 

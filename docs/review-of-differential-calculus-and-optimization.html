@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html >
+
 <head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Review of Differential Calculus and Optimization | Applied Time Series Analysis</title>
-  <meta name="description" content="Lecture notes for Applied Time Series Analysis" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="description" content="Lecture notes for Applied Time Series Analysis">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="A Review of Differential Calculus and Optimization | Applied Time Series Analysis" />
+  <meta property="og:title" content="A Review of Differential Calculus and Optimization | Applied Time Series Analysis />
   <meta property="og:type" content="book" />
   
   
@@ -16,19 +17,19 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="A Review of Differential Calculus and Optimization | Applied Time Series Analysis" />
+  <meta name="twitter:title" content="A Review of Differential Calculus and Optimization | Applied Time Series Analysis />
   
   <meta name="twitter:description" content="Lecture notes for Applied Time Series Analysis" />
   
 
-<meta name="author" content="Vipul Bhatt" />
+<meta name="author" content="Vipul Bhatt">
 
 
-<meta name="date" content="2019-09-04" />
+<meta name="date" content="2019-10-12">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
 <link rel="prev" href="modeling-volatility.html">
@@ -50,26 +51,20 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { display: inline-block; min-height: 1.25em; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
+code.sourceCode { white-space: pre; }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -77,40 +72,38 @@ pre.numberSource a.sourceLine::before
     color: #aaaaaa;
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; color: initial; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
+code span.bn { color: #40a070; } /* BaseN */
 code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
+code span.ch { color: #4070a0; } /* Char */
 code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.ot { color: #007020; } /* Other */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.fu { color: #06287e; } /* Function */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code span.cn { color: #880000; } /* Constant */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.im { } /* Import */
+code span.va { color: #19177c; } /* Variable */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.op { color: #666666; } /* Operator */
+code span.bu { } /* BuiltIn */
+code span.ex { } /* Extension */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.at { color: #7d9029; } /* Attribute */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -203,15 +196,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6.9" data-path="modeling-cycle.html"><a href="modeling-cycle.html#box-jenkins-method-for-estimating-arimapdq"><i class="fa fa-check"></i><b>6.9</b> Box-Jenkins Method for estimating ARIMA(p,d,q)</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>7</b> Modeling Volatility</a><ul>
-<li class="chapter" data-level="7.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#some-stylized-facts-about-stock-market-volatility"><i class="fa fa-check"></i><b>7.1</b> Some stylized facts about stock market volatility</a></li>
-<li class="chapter" data-level="7.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#archq-autoregressive-conditional-heteroscedasticiy-of-order-q"><i class="fa fa-check"></i><b>7.2</b> ARCH(q): Autoregressive Conditional Heteroscedasticiy of order <span class="math inline">\(q\)</span></a></li>
-<li class="chapter" data-level="7.3" data-path="modeling-volatility.html"><a href="modeling-volatility.html#garchpq-generalized-autoregressive-conditional-heteroscedasicity-of-order-p-and-q"><i class="fa fa-check"></i><b>7.3</b> GARCH(p,q): Generalized Autoregressive Conditional Heteroscedasicity of order <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span></a></li>
-<li class="chapter" data-level="7.4" data-path="modeling-volatility.html"><a href="modeling-volatility.html#extensions-of-standard-garch-model"><i class="fa fa-check"></i><b>7.4</b> Extensions of standard GARCH model</a><ul>
-<li class="chapter" data-level="7.4.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#gjr-garch11"><i class="fa fa-check"></i><b>7.4.1</b> GJR-GARCH(1,1)</a></li>
-<li class="chapter" data-level="7.4.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#exponential-garch-or-egarch11"><i class="fa fa-check"></i><b>7.4.2</b> Exponential GARCH or EGARCH(1,1)</a></li>
+<li class="chapter" data-level="7" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression (VAR) Model</a><ul>
+<li class="chapter" data-level="7.1" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#reduced-form-var"><i class="fa fa-check"></i><b>7.1</b> Reduced-form VAR</a></li>
+<li class="chapter" data-level="7.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#structural-var"><i class="fa fa-check"></i><b>7.2</b> Structural VAR</a></li>
+<li class="chapter" data-level="7.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#cholesky-decomposition-and-recursive-var-model"><i class="fa fa-check"></i><b>7.3</b> Cholesky Decomposition and Recursive VAR model</a></li>
+<li class="chapter" data-level="7.4" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function-forecast-error-variance-decomposition-and-granger-causality"><i class="fa fa-check"></i><b>7.4</b> Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function"><i class="fa fa-check"></i><b>7.4.1</b> Impulse response function</a></li>
+<li class="chapter" data-level="7.4.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#forecase-error-variance-decomposition"><i class="fa fa-check"></i><b>7.4.2</b> Forecase Error Variance Decomposition</a></li>
+<li class="chapter" data-level="7.4.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#granger-causality"><i class="fa fa-check"></i><b>7.4.3</b> Granger causality</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="modeling-volatility.html"><a href="modeling-volatility.html#application-of-garch-model-estimating-volatility-of-sp500-return"><i class="fa fa-check"></i><b>7.5</b> Application of GARCH model: Estimating volatility of SP500 return</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a><ul>
+<li class="chapter" data-level="8.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#some-stylized-facts-about-stock-market-volatility"><i class="fa fa-check"></i><b>8.1</b> Some stylized facts about stock market volatility</a></li>
+<li class="chapter" data-level="8.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#archq-autoregressive-conditional-heteroscedasticiy-of-order-q"><i class="fa fa-check"></i><b>8.2</b> ARCH(q): Autoregressive Conditional Heteroscedasticiy of order <span class="math inline">\(q\)</span></a></li>
+<li class="chapter" data-level="8.3" data-path="modeling-volatility.html"><a href="modeling-volatility.html#garchpq-generalized-autoregressive-conditional-heteroscedasicity-of-order-p-and-q"><i class="fa fa-check"></i><b>8.3</b> GARCH(p,q): Generalized Autoregressive Conditional Heteroscedasicity of order <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span></a></li>
+<li class="chapter" data-level="8.4" data-path="modeling-volatility.html"><a href="modeling-volatility.html#extensions-of-standard-garch-model"><i class="fa fa-check"></i><b>8.4</b> Extensions of standard GARCH model</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#gjr-garch11"><i class="fa fa-check"></i><b>8.4.1</b> GJR-GARCH(1,1)</a></li>
+<li class="chapter" data-level="8.4.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#exponential-garch-or-egarch11"><i class="fa fa-check"></i><b>8.4.2</b> Exponential GARCH or EGARCH(1,1)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="modeling-volatility.html"><a href="modeling-volatility.html#application-of-garch-model-estimating-volatility-of-sp500-return"><i class="fa fa-check"></i><b>8.5</b> Application of GARCH model: Estimating volatility of SP500 return</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html"><i class="fa fa-check"></i><b>A</b> Review of Differential Calculus and Optimization</a><ul>

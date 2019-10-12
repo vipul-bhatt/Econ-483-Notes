@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Applied Time Series Analysis</title>
+  <title>Chapter 7 Vector Autoregression (VAR) Model | Applied Time Series Analysis</title>
   <meta name="description" content="Lecture notes for Applied Time Series Analysis">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Applied Time Series Analysis" />
+  <meta property="og:title" content="Chapter 7 Vector Autoregression (VAR) Model | Applied Time Series Analysis />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Applied Time Series Analysis" />
+  <meta name="twitter:title" content="Chapter 7 Vector Autoregression (VAR) Model | Applied Time Series Analysis />
   
   <meta name="twitter:description" content="Lecture notes for Applied Time Series Analysis" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="intro.html">
+<link rel="prev" href="modeling-cycle.html">
+<link rel="next" href="modeling-volatility.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -271,25 +271,82 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Applied Time Series Analysis</h1>
-<p class="author"><em>Vipul Bhatt</em></p>
-<p class="date"><em>2019-10-12</em></p>
+<div id="vector-autoregression-var-model" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Vector Autoregression (VAR) Model</h1>
+<p>Thus far our analysis has been limited to a univariate time series. Often one maybe interested in understanding the dynamics of multiple time series variables. Vector Autoregression (VAR) model is one of the most commonly used model for this purpose. Suppose you have <span class="math inline">\(N\)</span> time series variables in your sample Then a VAR model is a system of <span class="math inline">\(N\)</span> linear equations where each variable is modeled as a linear function of its own lags and current and past values of the remaining <span class="math inline">\(N-1\)</span> variables. In this sense a VAR model combines and extends the the AR model and distributed lag model we covered earlier.</p>
+<p>There are two main ways we can specifiy a VAR model, each distinguished by the treatment of contemporaenous effects among variable included in the model. To make each type’s main features salient, suppose that we have three variables in our model: inflation (denoted by <span class="math inline">\(\pi\)</span>), unemployment (denoted by <span class="math inline">\(u\)</span>), and the federal fund rate (denoted by <span class="math inline">\(i\)</span>). In the remainded of this chapter will use this 3-variable system as our example.</p>
+<div id="reduced-form-var" class="section level2">
+<h2><span class="header-section-number">7.1</span> Reduced-form VAR</h2>
+<p>In a reduced-form VAR we abstract away from any contemporaneous linkages among variables in the model and hence in that sense take an <strong>atheoretical</strong> approach to estimating dynamic relationships among these variables. Specifically, we assume that each variable in the model is a function of its own lags and lags of remaining variables in the system. For example, using our 3 variables, a reduced-form VAR(1) is given by:</p>
+<p><span class="math display">\[\pi_t = a_{10} + a_{11} \pi_{t-1} + a_{12} u_{t-1} + a_{13} i_{t-1} + e_{1t}\]</span>
+<span class="math display">\[u_t = a_{20} + a_{21} \pi_{t-1} + a_{22} u_{t-1} + a_{23} i_{t-1} + e_{2t}\]</span>
+<span class="math display">\[i_t = a_{30} + a_{31} \pi_{t-1} + a_{32} u_{t-1} + a_{33} i_{t-1} + e_{3t}\]</span></p>
+<p>Note that:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>The above system of 3-equations can easily be estimated as it only includes lagged data for each variable as independent variable, which by definition is pre-determined. Hence, we can estimate each equation separately by OLS.</p></li>
+<li><p>In the above example we use 1 lag for simplicity. In practice the number of lagged values to include in each equation can be determined using AIC or BIC.</p></li>
+<li><p>Each equation will provide a forecast for that particular variable. Hence, in our example we can generate forecasts for all three variables in our model.</p></li>
+<li><p>One important drawback of the reduced-form VAR is that it cannot be used for structural inference and policy analysis. For example, suppose we are want to find out what will be the effect of raising the ffr by 50 basis points on inflation and unemployment? To answer this question, we need the shocks in each equation to be independent of each other. Only then, for example, we can say that <span class="math inline">\(e_{3t}\)</span> represents shock to the FFR alone. However, in the reduced-form VAR, because each variable is related to each other, shocks in each equation are also correlated to each other.</p></li>
+</ol>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>These lecture notes are prepared for an upper level undergraduate course in time series econometrics. Every fall I teach a course on applied time series analysis at James Madison University. These notes borrow heavily from the teaching material that I have developed over several years of instruction of this course.</p>
-<p>One of my main objective is to develop a primer on time series analysis that is more accessible to undergraduate students than standard textbooks available in the market. Most of these textbooks in my opinion are densely written and assume advanced mathematical skills on the part of our students. Further, I have also struggled with their topic selection and organization. Often I end up not following the chapters in order and modify content (by adding or subtracting) to meet my students needs. Such changes causes confusion for some students and more importantly discourages optimal use of the textbook. Hence, this is an undertaking to develop a primer on time series that is accessible, follows a more logical sequencing of topics, and covers content that is most useful for undergraduate students in business and economics.</p>
-<p><em>Note: These notes have been prepared by me using various sources, published and unpublished. All errors that remain are mine.</em></p>
+<div id="structural-var" class="section level2">
+<h2><span class="header-section-number">7.2</span> Structural VAR</h2>
+<p>The reduced-form VAR specified above is <strong>atheoretical</strong> in the sense that it does not impose any economic structure on the relationships between different variables. As a result a reduced-form model cannot be used to uncover causal relationships between correlated variables. A <strong>structural VAR</strong> model allows each variable to depend on past as well as current values of other variables in the system. As a result, a structural VAR adds contemporaneous linkages among variables included in the model. Continuing with our example, a structural version of the 3-variable VAR can be written as follows:</p>
+<p><span class="math display">\[\pi_t = \beta_{11} + \beta_{12} u_t + \beta_{13} i_t + \phi_{11} \pi_{t-1} + \phi_{12} u_{t-1} + \phi_{13} i_{t-1} + \epsilon_{1t}\]</span>
+<span class="math display">\[u_t = \beta_{21} + \beta_{22} \pi_t+ \beta_{23} i_t+\phi_{21} \pi_{t-1} + \phi_{22} u_{t-1} + \phi_{23} i_{t-1} + \epsilon_{2t}\]</span>
+<span class="math display">\[i_t = \beta_{31} + \beta_{32}\pi_t + \beta_{33}u_t+ \phi_{31} \pi_{t-1} + \phi_{32} u_{t-1} + \phi_{33} i_{t-1} + \epsilon_{3t}\]</span></p>
+<p>There are three key things to note here:</p>
+<ol style="list-style-type: decimal">
+<li><p>In each equation we now have contemporaneous linkages among variables. For example, in the first equation, <span class="math inline">\(\beta_{12}\)</span> and <span class="math inline">\(\beta_{13}\)</span> capture the effect of changes in period <span class="math inline">\(t\)</span> values of unemployment and ffr on the period <span class="math inline">\(t\)</span> value of inflation.</p></li>
+<li><p>By definition the error terms are uncorrelated across equations and hence each error term can be interpreted as representing a pure shock to that particular variable. For example, <span class="math inline">\(\epsilon_{3t}\)</span> represents shocks to the ffr often caused by the monetary policy actions of the Fed.<br />
+</p></li>
+<li><p>OLS estimation of each equation separately would provide biased estimates as there is a simultaneity bias inherent in the specification of the structural VAR. For example, in the inflation equation, inflation depends on current period unemployment and interest rate. But, in the unemployment equation, unemployment depends on current period inflation and interest rate as well. This kind of reverse causality causes OLS estimator to be biased.</p></li>
+</ol>
+<p>Consequently, a structural VAR model cannot be estimated using OLS. In order to process we need to impose some kind of identifying restrictions on the structural VAR model to deal with the contemporaneous linkages among variables. Such restrictions often come from economic theory and may involve the entire model or a just a single equation. However, to conduct structural inference we have to use economic theory to afford structural interpretation to shocks of our VAR model.</p>
+</div>
+<div id="cholesky-decomposition-and-recursive-var-model" class="section level2">
+<h2><span class="header-section-number">7.3</span> Cholesky Decomposition and Recursive VAR model</h2>
+<p>One solution that falls in between the reduced-form VAR with no structural intepretation and the structural VAR with full set of contemporaneous linkages is the <strong>recursive VAR</strong> model. In this specification, the error term in each equation is assumed to be uncorrelated with the error term in the preceeding equations. This is accomplished by assuming some sort of <strong>ordering</strong> among variables in the VAR model so that only some variables contomporaneously affect others. For example, suppose we use the following ordering: inflation, unemployment, and the federal fund rate (ffr). This ordering will imply the following recursive VAR model:</p>
+<p><span class="math display">\[\pi_t = \beta_{11} + \phi_{11} \pi_{t-1} + \phi_{12} u_{t-1} + \phi_{13} i_{t-1} + \epsilon_{1t}\]</span>
+<span class="math display">\[u_t = \beta_{21} + \beta_{22} \pi_t+\phi_{21} \pi_{t-1} + \phi_{22} u_{t-1} + \phi_{23} i_{t-1} + \epsilon_{2t}\]</span>
+<span class="math display">\[i_t = \beta_{31} + \beta_{32}\pi_t + \beta_{33}u_t+ \phi_{31} \pi_{t-1} + \phi_{32} u_{t-1} + \phi_{33} i_{t-1} + \epsilon_{3t}\]</span></p>
+<p>Note that:</p>
+<ol style="list-style-type: decimal">
+<li><p>The ordering we assumed: inflation, unemployment, and ffr, implies that the first variable (inflation) has no contemporaneous linkage with unemployment and ffr. The second variable (unemployment) is affected by contemporaneous inflation and the third variable (ffr) is affected by both contemporaneous inflation and unemployment. The main implication of this ordering is that <span class="math inline">\(cor(\epsilon_{1t},\epsilon_{2t})=0\)</span>, <span class="math inline">\(cor(\epsilon_{2t},\epsilon_{3t})=0\)</span>, and <span class="math inline">\(cor(\epsilon_{1t},\epsilon_{3t})=0\)</span>.</p></li>
+<li><p>In practical implementations of the recursive VAR model, it is common to first estimate the reduced-form VAR model using OLS for each equation separately. Then, we decompose the covariance matrix to reduced-form residuals using <strong>Cholesky decomposition</strong> method to obtain uncorrelated error structure consistent with the recursive VAR model specified above. This can be used to investigate how shocks to one variable affect other variables in the system.</p></li>
+<li><p>If we change the ordering, we will get different results. In a model with <span class="math inline">\(N\)</span> variables, there are N! possible orderings. So in our example, there are 3!= 6 possible alternative specifications for the VAR model. Hence, this approach requires us to judiciously choose the ordering of the variables.</p></li>
+</ol>
+</div>
+<div id="impulse-response-function-forecast-error-variance-decomposition-and-granger-causality" class="section level2">
+<h2><span class="header-section-number">7.4</span> Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality</h2>
+<p>In addition to estimating each equation and providing a forecast of all variables in the system, there are two additional outputs produced by a VAR model which can be used for both descriptive and inference purposes. This analysis requires us to either use a recursive VAR model or impose some restrictions based on economic theory so that each shock can be interpreted as a shock to that particular variable. In this chapter we will use the recursive VAR structure when discussing impulse response functions and variance decomposition.</p>
+<div id="impulse-response-function" class="section level3">
+<h3><span class="header-section-number">7.4.1</span> Impulse response function</h3>
+<p>Suppose we are interested in finding out how shock to one variable in the system at time <span class="math inline">\(t\)</span> affects the dynamics of other variables. For example, suppose there is unanticipated increase in the ffr caused by the actions of the Fed. What would be the dynamic response of inflation and unemployment to this monetary policy shock? Using the recursive VAR, we can interpret the shock to the FFR (the last variable in our ordering) as a pure interest rate shock because it is by construction uncorrelated with shocks to inflation and unemployment. The <strong>impuse response</strong> produced by the VAR model traces out the response of current and future values of unemployment and inflation to one-unit increase in the error term of the ffr equation, holding error terms in inflation and unemployment equation at zero. We can study both the <strong>impact effect</strong> as well as the <strong>cumulative effect</strong> of such a shock to ffr on unemployment and inflation.</p>
+</div>
+<div id="forecase-error-variance-decomposition" class="section level3">
+<h3><span class="header-section-number">7.4.2</span> Forecase Error Variance Decomposition</h3>
+<p>Another useful output from an estimated VAR model is the <strong>forecast error variance decomposition (fevd)</strong>. Here, we can address the following question: following a shock to one of the variables in the VAR model what percentage of the variance in the forecast error of other variables in the model can be attributed to this particular shock? For example, what percentage of the forcast error variance of inflation can be attributed to the shock in inflation, shock in unemployment, and shock to ffr. In this sense the forecast error variance decomposition measures the amount of each variable in the VAR model contributes to the other variables in the autoregression.</p>
+</div>
+<div id="granger-causality" class="section level3">
+<h3><span class="header-section-number">7.4.3</span> Granger causality</h3>
+<p>Another important analysis that one can conduct using a VAR model is <strong>Granger-causality</strong>. As a bi-variate concept, Granger causality means that lags of one variable improves our capacity to predict another variable. For example, if unemployment <strong>Granger-causes</strong> inflation, then lags of unemployment have non-zero coefficients in the reduced-form inflatuon equation. Formally, consider the following regression:</p>
+<p><span class="math display">\[\pi_t=\beta_0 + \sum_{i=1}^{P} \beta_i u_{t-i} \sum_{i=1}^{P} \delta_i \pi_{t-i} + \epsilon_t\]</span></p>
+<p>To test whether unemployment Granger causes inflation we can conduct the following hypothesis test:</p>
+<p><span class="math display">\[H_0: \beta_1=\beta_2=...=\beta_p=0\]</span>
+<span class="math display">\[H_A: \text{Not} \ H_0\]</span></p>
+<p>This is an F-test and rejection of the null hypothesis indicates unemployment Granger-causes inflation.</p>
 
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="modeling-cycle.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="modeling-volatility.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
