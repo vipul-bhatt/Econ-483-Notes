@@ -25,7 +25,7 @@
 <meta name="author" content="Vipul Bhatt">
 
 
-<meta name="date" content="2019-10-12">
+<meta name="date" content="2019-10-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -205,6 +205,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="7.4.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#forecase-error-variance-decomposition"><i class="fa fa-check"></i><b>7.4.2</b> Forecase Error Variance Decomposition</a></li>
 <li class="chapter" data-level="7.4.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#granger-causality"><i class="fa fa-check"></i><b>7.4.3</b> Granger causality</a></li>
 </ul></li>
+<li class="chapter" data-level="7.5" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#application-effect-of-monetary-policy-on-inflation-and-unemployment"><i class="fa fa-check"></i><b>7.5</b> Application: Effect of monetary policy on inflation and unemployment</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a><ul>
 <li class="chapter" data-level="8.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#some-stylized-facts-about-stock-market-volatility"><i class="fa fa-check"></i><b>8.1</b> Some stylized facts about stock market volatility</a></li>
@@ -278,7 +279,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h2><span class="header-section-number">A.1</span> Derivative of a single variable function</h2>
 
 <div class="definition">
-<p><span id="def:unnamed-chunk-13" class="definition"><strong>Definition A.1  (Derivative of a function)  </strong></span>Consider the following function, <span class="math inline">\(y=f(x)\)</span>. The <em>derivative</em> of this function measures the rate of change in <span class="math inline">\(y\)</span> caused by a change in <span class="math inline">\(x\)</span>.</p>
+<p><span id="def:unnamed-chunk-16" class="definition"><strong>Definition A.1  (Derivative of a function)  </strong></span>Consider the following function, <span class="math inline">\(y=f(x)\)</span>. The <em>derivative</em> of this function measures the rate of change in <span class="math inline">\(y\)</span> caused by a change in <span class="math inline">\(x\)</span>.</p>
 </div>
 
 <p>There are two alternative notations for the derivative of <span class="math inline">\(y\)</span> with respect to <span class="math inline">\(x\)</span>: <span class="math inline">\(f&#39;(x)\)</span> or <span class="math inline">\(\displaystyle{\frac{dy}{dx}}\)</span>.</p>
@@ -331,13 +332,13 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h2><span class="header-section-number">A.2</span> Second derivative and non-linearity</h2>
 
 <div class="definition">
-<p><span id="def:unnamed-chunk-14" class="definition"><strong>Definition A.2  (Second derivative of a function)  </strong></span>Consider the following function, <span class="math inline">\(y=f(x)\)</span>. The <em>second derivative</em> of this function measures the change in the rate of change of this function. Formally it is denoted by <span class="math inline">\(f&#39;&#39;(x)\)</span> or <span class="math inline">\(\displaystyle{\frac{d^2y}{dx^2}}\)</span>.</p>
+<p><span id="def:unnamed-chunk-17" class="definition"><strong>Definition A.2  (Second derivative of a function)  </strong></span>Consider the following function, <span class="math inline">\(y=f(x)\)</span>. The <em>second derivative</em> of this function measures the change in the rate of change of this function. Formally it is denoted by <span class="math inline">\(f&#39;&#39;(x)\)</span> or <span class="math inline">\(\displaystyle{\frac{d^2y}{dx^2}}\)</span>.</p>
 </div>
 
 <p>The second derivative measures the <em>curvature</em> of the function and hence can be used to distinguish a <em>linear</em> function from a <em>non-linear</em> function. By definition, a linear function has a constant slope implying the its second derivative must be zero.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-15" class="example"><strong>Example A.1  </strong></span>For example, consider the following linear function:</p>
+<p><span id="exm:unnamed-chunk-18" class="example"><strong>Example A.1  </strong></span>For example, consider the following linear function:</p>
 <p><span class="math display">\[f(x) = mx +b\]</span></p>
 <p>Here<span class="math inline">\(f&#39;(x)=m\)</span> and <span class="math inline">\(f&#39;&#39;(x)=0\)</span>.</p>
 </div>
@@ -346,23 +347,23 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(f&#39;&#39;(x)&lt;0\)</span>. In this case we have a concave relationship. An example from economics is the production function where the relationship between output and input is concave.</li>
 </ol>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li><span class="math inline">\(f&#39;&#39;(x)&gt;\)</span>. In this case we have a convex relationship. An example from economics is the marginal cost function where the relationship between cost of production and level of output can be convex.</li>
 </ol>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 </div>
 <div id="partial-derivatives-multi-variable-functions" class="section level2">
 <h2><span class="header-section-number">A.3</span> Partial derivatives: Multi-variable functions</h2>
 <p><em>Ceteris paribus</em> aka <em>holding other things equal</em> is one of the key concepts used in Economic analysis. A <em>partial derivative</em> is a mathematical counterpart of this assumption.</p>
 
 <div class="definition">
-<p><span id="def:unnamed-chunk-18" class="definition"><strong>Definition A.3  (Partial Derivative)  </strong></span>Consider a function of n-variables given by <span class="math inline">\(y=f(x_1,x_2, x_3,...,x_n)\)</span>. Then, there are n partial derivatives of this function that can be obtained by taking derivative with respect to one of the <span class="math inline">\(x\)</span>-variables, holding all other constant. Formally, the partial derivative of <span class="math inline">\(y\)</span> with respect to <span class="math inline">\(x_i\)</span> is denoted by <span class="math inline">\(\displaystyle{f_{x_i} \text{or} \frac{\partial y}{\partial x_i}}\)</span>.</p>
+<p><span id="def:unnamed-chunk-21" class="definition"><strong>Definition A.3  (Partial Derivative)  </strong></span>Consider a function of n-variables given by <span class="math inline">\(y=f(x_1,x_2, x_3,...,x_n)\)</span>. Then, there are n partial derivatives of this function that can be obtained by taking derivative with respect to one of the <span class="math inline">\(x\)</span>-variables, holding all other constant. Formally, the partial derivative of <span class="math inline">\(y\)</span> with respect to <span class="math inline">\(x_i\)</span> is denoted by <span class="math inline">\(\displaystyle{f_{x_i} \text{or} \frac{\partial y}{\partial x_i}}\)</span>.</p>
 </div>
 
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-19" class="example"><strong>Example A.2  </strong></span>Consider the following 3-variable function:</p>
+<p><span id="exm:unnamed-chunk-22" class="example"><strong>Example A.2  </strong></span>Consider the following 3-variable function:</p>
 <p><span class="math display">\[y=ln(x_1)+x_1\times x_2+3x_2^2 + x_1 \times x_3 + ln(x_3)\]</span></p>
 <p>Then we can compute three partial derivatives of this function:</p>
 <ul>
@@ -377,7 +378,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-20" class="example"><strong>Example A.3  (Cobb-Douglas Production Function)  </strong></span>One of the most used functional form for the production function is the Cobb-Douglas production function. Suppose you have two inputs: labor (L) and capital (K). Let Y denotes output. Then, the Cobb-Douglas production function is given by:</p>
+<p><span id="exm:unnamed-chunk-23" class="example"><strong>Example A.3  (Cobb-Douglas Production Function)  </strong></span>One of the most used functional form for the production function is the Cobb-Douglas production function. Suppose you have two inputs: labor (L) and capital (K). Let Y denotes output. Then, the Cobb-Douglas production function is given by:</p>
 <p><span class="math display">\[Y=L^{\beta_1}K^{\beta_2}\]</span></p>
 <p>Now, output can change because we change our labor input or our capital input. In each case, we are thinking about a change in output caused by change in one input, holding the other input constant. This is exactly what a partial derivative captures! In what follows next we will use two mathematical concepts to further our understanding of economics of production:</p>
 <ol style="list-style-type: decimal">
@@ -404,7 +405,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <p>In Economics it is often assumed that rational individuals <em>optimize</em>. For instance, firms seek to maximize profits (or minimize costs) and households seek to maximize utility. Mathematically, this is equivalent to finding <strong>extreme</strong> values of an <strong>objective function</strong>.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-21" class="example"><strong>Example A.4  </strong></span>Consider a firm that is choosing a level of output <span class="math inline">\((q)\)</span> to maximize its profits. By definition, profits are total revenue <span class="math inline">\(R(q)\)</span> minus total cost <span class="math inline">\(C(q)\)</span>. The resulting profit function <span class="math inline">\(\pi(q)\)</span> is the firm’s objective function and <span class="math inline">\(q\)</span> is the control variable:</p>
+<p><span id="exm:unnamed-chunk-24" class="example"><strong>Example A.4  </strong></span>Consider a firm that is choosing a level of output <span class="math inline">\((q)\)</span> to maximize its profits. By definition, profits are total revenue <span class="math inline">\(R(q)\)</span> minus total cost <span class="math inline">\(C(q)\)</span>. The resulting profit function <span class="math inline">\(\pi(q)\)</span> is the firm’s objective function and <span class="math inline">\(q\)</span> is the control variable:</p>
 <p><span class="math display">\[\pi(q)=R(q)- C(q)\]</span></p>
 <p>The firm will choose a value of <span class="math inline">\(q\)</span> that will maximize its profits. Mathematically, this can be written as:</p>
 <span class="math display">\[ \max_{q} \pi(q)\]</span>
@@ -415,11 +416,11 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(x^*\)</span> is a maximizer if <span class="math inline">\(f(x^*)\geq f(x)\)</span> for all <span class="math inline">\(x\neq x^*\)</span>. Note that at this point the slope of the tangent to the function is <span class="math inline">\(0\)</span>, i.e., <span class="math inline">\(f&#39;(x^*)=0\)</span>. This is the <strong>first order condition (foc)</strong> for obtaining a maximum. The graph below illustrates the maximum of a generic function. Note that the slope of the function changes sign from positive to negative around <span class="math inline">\(x^*\)</span>. This will give us the <strong>second order condition</strong> for obtaining a maximum.</li>
 </ol>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li><span class="math inline">\(x^*\)</span> is a minimizer if <span class="math inline">\(f(x^*)\leq f(x)\)</span> for all <span class="math inline">\(x\neq x^*\)</span>. Note that at this point the slope of the tangent to the function is <span class="math inline">\(0\)</span>, i.e., <span class="math inline">\(f&#39;(x^*)=0\)</span>. This is the <strong>first order condition (foc)</strong> for obtaining a minimum. The graph below illustrates the minimum of a generic function. Note that the slope of the function changes sign from negative to positive around <span class="math inline">\(x^*\)</span>. This will give us the <strong>second order condition</strong> for obtaining a minimum.</li>
 </ol>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 <p>Note for a maximum, Similarly, . We can now outline the steps for computing a maximum or minimum of a given function.</p>
 <ol style="list-style-type: decimal">
 <li>First-order condition: Compute the first derivative of the function and equate it to 0. The solution to this equation gives us <span class="math inline">\(x^*\)</span>:</li>
@@ -434,7 +435,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </ol>
 
 <div class="example">
-<span id="exm:unnamed-chunk-24" class="example"><strong>Example A.5  (Single variable optimization example)  </strong></span>
+<span id="exm:unnamed-chunk-27" class="example"><strong>Example A.5  (Single variable optimization example)  </strong></span>
 Consider a firm that produces a single good <span class="math inline">\(q\)</span> and sells it at a price of $10 per unit. The cost of production is given by:
 <span class="math display">\[C(q)=2q+ 5+0.1q^2\]</span>
 At what level of output would profits be maximized?
@@ -456,7 +457,7 @@ At what level of output would profits be maximized?
 <p>Note that the above process can be easily applied to multivariable functions. In that case there will be one first order condition for every control variable.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-26" class="example"><strong>Example A.6  (Multi-variable optimization example)  </strong></span>
+<p><span id="exm:unnamed-chunk-29" class="example"><strong>Example A.6  (Multi-variable optimization example)  </strong></span>
 Consider a two-variable function:</p>
 <p><span class="math display">\[f(x_1,x_2)=2x_1x_2 + \frac{100}{x_1} - 4x_2^2\]</span></p>
 <p>Solve the following minimization problem:</p>
@@ -476,7 +477,7 @@ So we have two equations in two unknowns. You can show that <span class="math in
 <h2>Problems</h2>
 
 <div class="exercise">
-<p><span id="exr:unnamed-chunk-28" class="exercise"><strong>Exercise A.1  </strong></span>Compute the derivative of the following functions.</p>
+<p><span id="exr:unnamed-chunk-31" class="exercise"><strong>Exercise A.1  </strong></span>Compute the derivative of the following functions.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p><span class="math inline">\(f(x)=2x^2\)</span></p></li>
 <li><p><span class="math inline">\(f(x)=2x^2+ ln(x)\)</span></p></li>
@@ -489,12 +490,12 @@ So we have two equations in two unknowns. You can show that <span class="math in
 
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-29" class="exercise"><strong>Exercise A.2  </strong></span>Compute the second derivative of each function given in Exercise 2.1.
+<span id="exr:unnamed-chunk-32" class="exercise"><strong>Exercise A.2  </strong></span>Compute the second derivative of each function given in Exercise 2.1.
 </div>
 
 
 <div class="exercise">
-<p><span id="exr:unnamed-chunk-30" class="exercise"><strong>Exercise A.3  </strong></span>
+<p><span id="exr:unnamed-chunk-33" class="exercise"><strong>Exercise A.3  </strong></span>
 Compute the partial derivative for each variable for the following functions:</p>
 <ol style="list-style-type: lower-alpha">
 <li><p><span class="math inline">\(f(x_1,x_2,x_3)=4x_1^3x_2-e^{x_3}x_1+3 x_2\)</span></p></li>
@@ -506,7 +507,7 @@ Compute the partial derivative for each variable for the following functions:</p
 
 
 <div class="exercise">
-<p><span id="exr:unnamed-chunk-31" class="exercise"><strong>Exercise A.4  </strong></span>Solve the following optimization problems. In each case compute the maximizer(s) (or minimizer(s)) for the function as well as the optimum value of the function.</p>
+<p><span id="exr:unnamed-chunk-34" class="exercise"><strong>Exercise A.4  </strong></span>Solve the following optimization problems. In each case compute the maximizer(s) (or minimizer(s)) for the function as well as the optimum value of the function.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p><span class="math inline">\(\displaystyle{\max_x f(x) = 3ln(x) - 0.5x+4}\)</span></p></li>
 <li><p><span class="math inline">\(\displaystyle{\min_{x,y} f(x,y) = 2xy+\frac{2000}{x}+\frac{2000}{y}}\)</span></p></li>

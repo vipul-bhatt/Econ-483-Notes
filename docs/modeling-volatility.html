@@ -25,7 +25,7 @@
 <meta name="author" content="Vipul Bhatt">
 
 
-<meta name="date" content="2019-10-12">
+<meta name="date" content="2019-10-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -205,6 +205,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="7.4.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#forecase-error-variance-decomposition"><i class="fa fa-check"></i><b>7.4.2</b> Forecase Error Variance Decomposition</a></li>
 <li class="chapter" data-level="7.4.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#granger-causality"><i class="fa fa-check"></i><b>7.4.3</b> Granger causality</a></li>
 </ul></li>
+<li class="chapter" data-level="7.5" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#application-effect-of-monetary-policy-on-inflation-and-unemployment"><i class="fa fa-check"></i><b>7.5</b> Application: Effect of monetary policy on inflation and unemployment</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a><ul>
 <li class="chapter" data-level="8.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#some-stylized-facts-about-stock-market-volatility"><i class="fa fa-check"></i><b>8.1</b> Some stylized facts about stock market volatility</a></li>
@@ -368,7 +369,7 @@ However, in the financial market another stylized fact is the asymmetric respons
 <p><span class="math display">\[H_0: \beta_1=\beta_2=...=\beta_p=0 \ \Rightarrow \text{no ARCH effects}\]</span>
 <span class="math display">\[ H_A: \text{Not} \ H_0\]</span></p>
 <p>In R, we use a package called <strong>aTSA</strong> to implement this test.The function is called <strong>arch.test()</strong>. Figure 7.1 below shows the results of this test for our data.</p>
-<pre class="sourceCode r" id="cb7"><code class="sourceCode r"><span class="kw">library</span>(aTSA)
+<pre class="sourceCode r" id="cb10"><code class="sourceCode r"><span class="kw">library</span>(aTSA)
 <span class="kw">library</span>(forecast)
 
 fit=<span class="kw">arima</span>(y, <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))
@@ -401,7 +402,7 @@ Figure 8.1: ARCH LM test
 </div>
 <p>We find strong evidence for ARCH effects in our data as the null hypothesis of no ARCH effects is rejected at different orders of serial correlation in squared residuals. Next we estimate three types of GARCH(1,1) models using the <strong>rugarch</strong> package. Tables 7.1A-7.1D below show the estimated parameters of these three models. The news impact curve for these 3 classes of GARCH model are plotted in Figure 2-4 below. Finally, the estimated conditional volatility from the three models are plotted along with the return in Figures 5-7. We find that there is strong evidence for the sign effect with negative news having a bigger effect on volatility as indicated by the positive value for <span class="math inline">\(\gamma_1\)</span> in GJR-GARCH and negative value of <span class="math inline">\(\alpha_1\)</span> in EGARCH. Further, in the EGARCH model we find evidence for the size effect as indicated by positive value for <span class="math inline">\(\gamma_1\)</span>. These findings are confirmed by the asymmetric news impact curves for the GJR-GARCH and EGARCH models.</p>
 <table>
-<caption><span id="tab:unnamed-chunk-11">Table 8.1: </span>(A) Estimated GARCH(1,1)</caption>
+<caption><span id="tab:unnamed-chunk-14">Table 8.1: </span>(A) Estimated GARCH(1,1)</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -443,7 +444,7 @@ Figure 8.1: ARCH LM test
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-11">Table 8.1: </span>(B) Estimated GJR-GARCH(1,1)</caption>
+<caption><span id="tab:unnamed-chunk-14">Table 8.1: </span>(B) Estimated GJR-GARCH(1,1)</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -492,7 +493,7 @@ Figure 8.1: ARCH LM test
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-11">Table 8.1: </span>(C) Estimated EGARCH(1,1)</caption>
+<caption><span id="tab:unnamed-chunk-14">Table 8.1: </span>(C) Estimated EGARCH(1,1)</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -541,7 +542,7 @@ Figure 8.1: ARCH LM test
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-11">Table 8.1: </span>(D) Persistence, Unconditional Variance, and Half-life</caption>
+<caption><span id="tab:unnamed-chunk-14">Table 8.1: </span>(D) Persistence, Unconditional Variance, and Half-life</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -571,9 +572,9 @@ Figure 8.1: ARCH LM test
 </tr>
 </tbody>
 </table>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-11-1.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-11-2.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-11-3.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-11-4.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-11-5.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-11-6.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-14-1.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-14-2.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-14-3.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-14-4.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-14-5.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-14-6.png" width="672" /></p>
 <p>Finally, these models can also be used to forecast the volatility of SP500. Figure 8 below shows this forecast for the next 7 days from the EGARCH(1.1) model.</p>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-12-1.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-15-1.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
 
 </div>
 </div>

@@ -2,7 +2,7 @@
 
 Thus far our analysis has been limited to a univariate time series. Often one maybe interested in understanding the dynamics of multiple time series variables. Vector Autoregression (VAR) model is one of the most commonly used model for this purpose. Suppose you have $N$ time series variables in your sample Then a VAR model is a system of $N$ linear equations where each variable is modeled as a linear function of its own lags and current and past values of the remaining $N-1$ variables. In this sense a VAR model combines and extends the the AR model and distributed lag model we covered earlier. 
 
-There are two main ways we can specifiy a VAR model, each distinguished by the treatment of contemporaenous effects among variable included in the model. To make each type's main features salient, suppose that we have three variables in our model: inflation (denoted by $\pi$), unemployment (denoted by $u$), and the federal fund rate (denoted by $i$). In the remainded of this chapter will use this 3-variable system as our example.
+There are two main ways we can specify a VAR model, each distinguished by the treatment of contemporaneous effects among variable included in the model. To make each type's main features salient, suppose that we have three variables in our model: inflation (denoted by $\pi$), unemployment (denoted by $u$), and the federal fund rate (denoted by $i$). In the remainder of this chapter will use this 3-variable system as our example.
 
 
 
@@ -47,7 +47,7 @@ Consequently, a structural VAR model cannot be estimated using OLS. In order to 
 
 ## Cholesky Decomposition and Recursive VAR model
 
-One solution that falls in between the reduced-form VAR with no structural intepretation and the structural VAR with full set of contemporaneous linkages is the **recursive VAR** model. In this specification, the error term in each equation is assumed to be uncorrelated with the error term in the preceeding equations. This is accomplished by assuming some sort of **ordering** among variables in the VAR model so that only some variables contomporaneously affect others. For example, suppose we use the following ordering: inflation, unemployment, and the federal fund rate (ffr). This ordering will imply the following recursive  VAR model:
+One solution that falls in between the reduced-form VAR with no structural interpretation and the structural VAR with full set of contemporaneous linkages is the **recursive VAR** model. In this specification, the error term in each equation is assumed to be uncorrelated with the error term in the preceding equations. This is accomplished by assuming some sort of **ordering** among variables in the VAR model so that only some variables contemporaneously affect others. For example, suppose we use the following ordering: inflation, unemployment, and the federal fund rate (ffr). This ordering will imply the following recursive  VAR model:
 
 \[\pi_t = \beta_{11} + \phi_{11} \pi_{t-1} + \phi_{12} u_{t-1} + \phi_{13} i_{t-1} + \epsilon_{1t}\]
 \[u_t = \beta_{21} + \beta_{22} \pi_t+\phi_{21} \pi_{t-1} + \phi_{22} u_{t-1} + \phi_{23} i_{t-1} + \epsilon_{2t}\]
@@ -72,11 +72,11 @@ Suppose we are interested in finding out how shock to one variable in the system
 
 ### Forecase Error Variance Decomposition
 
-Another useful output from an estimated VAR model is the **forecast error variance decomposition (fevd)**. Here, we can address the following question: following a shock to one of the variables in the VAR model what percentage of the variance in the forecast error of other variables in the model can be attributed to this particular shock? For example, what percentage of the forcast error variance of inflation can be attributed to the shock in inflation, shock in unemployment, and shock to ffr. In this sense the forecast error variance decomposition measures the amount of each variable in the VAR model contributes to the other variables in the autoregression.
+Another useful output from an estimated VAR model is the **forecast error variance decomposition (fevd)**. Here, we can address the following question: following a shock to one of the variables in the VAR model what percentage of the variance in the forecast error of other variables in the model can be attributed to this particular shock? For example, what percentage of the forecast error variance of inflation can be attributed to the shock in inflation, shock in unemployment, and shock to ffr. In this sense the forecast error variance decomposition measures the amount of each variable in the VAR model contributes to the other variables in the autoregression.
 
 ### Granger causality
 
-Another important analysis that one can conduct using a VAR model is **Granger-causality**. As a bi-variate concept, Granger causality means that lags of one variable improves our capacity to predict another variable. For example, if unemployment **Granger-causes** inflation, then lags of unemployment have non-zero coefficients in the reduced-form inflatuon equation. Formally, consider the following regression:
+Another important analysis that one can conduct using a VAR model is **Granger-causality**. As a bi-variate concept, Granger causality means that lags of one variable improves our capacity to predict another variable. For example, if unemployment **Granger-causes** inflation, then lags of unemployment have non-zero coefficients in the reduced-form inflation equation. Formally, consider the following regression:
 
 \[\pi_t=\beta_0 + \sum_{i=1}^{P} \beta_i u_{t-i} \sum_{i=1}^{P} \delta_i \pi_{t-i} + \epsilon_t\]
 
@@ -87,5 +87,167 @@ To test whether unemployment Granger causes inflation we can conduct the followi
 
 This is an F-test and rejection of the null hypothesis indicates unemployment Granger-causes inflation.
 
+## Application: Effect of monetary policy on inflation and unemployment
+
+The Federal reserve bank (The Fed) in the U.S. has a dual mandate: to maintain low inflation and low unemployment. The monetary policy stance of the Fed is expressed in terms of the federal funds rate (ffr). In this section we learn how to estimate a VAR model with three variables: inflation ($\pi_t$), unemployment ($u_t$), and interest rate ($i_t$). For this purpose we will use quarterly data on these variables from 1960Q1 through 2019Q2. We will use the Fred Stat website and download data on these variables:
+
+1. Seasonally quarterly GDP deflator (GDPDEF):  https://fred.stlouisfed.org/series/GDPDEF ht
+We define inflation as follows:
+
+\[\pi_t = 400 \times ln\left(\frac{P_t}{P_{t-1}} \right)\]
+
+Here $P_t$ denotes GDP deflator for quarter $t$.
+
+2. Seasonally adjusted Civilian unemployment rate (UNRATE): https://fred.stlouisfed.org/series/UNRATE
+
+3. Effective federal funds rate (FEDFUNDS): https://fred.stlouisfed.org/series/FEDFUNDS
+
+
+The first step in any VAR analysis is to ensure that all variables in the model are stationary. Although not reported here, I find that inflation is stationary whereas unemployment and interest rate are first difference stationary. Accordingly, we will use inflation and first differences of unemployment and interest rate in our VAR analysis. The second step in the VAR analysis is to determine the optimal number of lags. Table \@ref(tab:ch7table1) presents different information criteria for up to 8 lags. Using SC criterion we select optimal lags to be 2.
+
+```{r echo=F, results='hide', warning=FALSE, message=FALSE}
+suppressMessages(library(xts, warn.conflicts = FALSE, quietly=T))
+suppressMessages(library(quantmod, warn.conflicts = FALSE, quietly = T))
+suppressMessages(library(urca, warn.conflicts = FALSE, quietly = T))
+suppressMessages(library(knitr, warn.conflicts = FALSE, quietly = T))
+suppressMessages(library(vars,warn.conflicts = FALSE, quietly = T))
+
+
+# get data from fred stat
+options("getSymbols.warning4.0"=FALSE)
+invisible(getSymbols('GDPDEF',src='FRED'))
+invisible(getSymbols('UNRATE',src='FRED'))
+invisible(getSymbols('FEDFUNDS',src='FRED'))
+
+
+### restrict sample size--start from 1980
+UNRATE=UNRATE['1960::']
+FEDFUNDS=FEDFUNDS['1960::']
+GDPDEF=GDPDEF['1959::']
+
+### convert monthly unemployment and ffr to quarterly
+
+### make ts objects first then use aggregate function
+xts.to.ts <- function(X, freq = 12L) {
+  ts(as.numeric(X), 
+     start = c(.indexyear(X)[1] + 1900, .indexmon(X)[1] + 1),
+     freq = freq)
+}
+
+ffr=xts.to.ts(FEDFUNDS)
+u=xts.to.ts(UNRATE)
+
+### subset to June 2019
+ffr=window(ffr, start=c(1960,1), end=c(2019,6))
+u=window(u, start=c(1960,1), end=c(2019,6))
+
+### aggregate to quarterly
+u=aggregate(u,nfrequency = 4, FUN = mean)
+ffr=aggregate(ffr,nfrequency = 4, FUN = mean)
+
+
+### compute inflation and restrict data from 1980Q1
+
+inf=400*diff(log(GDPDEF))
+inf=inf["1960::"]
+
+xts.to.ts1 <- function(X, freq = 4L) {
+  ts(as.numeric(X), 
+     start = c(.indexyear(X)[1] + 1900, .indexmon(X)[1] + 1),
+     freq = freq)
+}
+inf=xts.to.ts1(inf)
+
+##### test for stationarity using urdf
+summary(ur.df(inf,type="drift",selectlags="BIC"))
+summary(ur.df(u,type="drift",selectlags="BIC"))
+summary(ur.df(ffr,type="drif",selectlags="BIC"))
+
+
+yvector= ts.union(inf, u,ffr)
+
+#### select number of lages for each variable in the VAR
+
+kable(as.data.frame(VARselect(yvector,lag.max=8,type=c("const"))$criteria), digits=3)
+
+```
+
+<caption> (\#tab:ch7table1) Lag selection for VAR model </caption>  
+
+
+Hence, our reduced-form VAR model is given by:
+
+\[ \pi_t = a_{10} + a_{11} \pi_{t-1} + a_{12} u_{t-1} + a_{13} i_{t-1} + b_{11} \pi_{t-2} + b_{12} u_{t-2} + b_{13} i_{t-2} + e_{1t}\]
+\[ u_t = a_{20} + a_{21} \pi_{t-1} + a_{22} u_{t-1} + a_{23} i_{t-1}+ b_{21} \pi_{t-2} + b_{22} u_{t-2} + b_{23} i_{t-2} + e_{2t}\]
+\[ i_t = a_{30} + a_{31} \pi_{t-1} + a_{32} u_{t-1} + a_{33} i_{t-1}+ b_{31} \pi_{t-2} + b_{32} u_{t-2} + b_{33} i_{t-2}+ e_{3t}\]
+
+
+We can estimate the above model using OLS for each equation separately. It is a common practice to report the variance decomposition and impulse response from an estimated VAR model instead of reported the estimated coefficients for each equation. I will follow that convention and only report the analysis based on the estimated VAR model. The table below shows the results of Granger-causality test using optimal lag of 2. We find that inflation Granger-causes ffr and unemployment as indicated by a low p-value for the null hypothesis of no Granger-causality. Similarly, unemployment Granger-causes inflation and ffr. Finally, ffr also Granger-cause other two variables.
+
+
+
+```{r  echo=F, warning=FALSE, message=FALSE}
+suppressMessages(library(knitr, warn.conflicts = FALSE, quietly = T))
+suppressMessages(library(vars,warn.conflicts = FALSE, quietly = T))
+suppressMessages(library(forecast,warn.conflicts = FALSE, quietly = T))
+
+varmodel=VAR(yvector,p=2, type=c("const"))
+
+##### using Granger causality to understand ordering
+
+causality(varmodel,cause="inf")$Granger
+causality(varmodel,cause="u")$Granger
+causality(varmodel,cause="ffr")$Granger
+
+```
+
+
+Next we present the impulse responses for the recursive VAR structure where we use the following ordering: inflation, unemployment, and interest rate. For brevity, I only show the effect of an unexpected increase in ffr on all three variables as this shock propagates through the recursive VAR structure using the estimated coefficients from the reduced-form VAR model. From Figures 7.1  through 7.3 we observe a persistent positive effect of higher interest rate on both unemployment and inflation that fades over time.
+
+
+```{r ch7fig2, echo=F, warning=FALSE, message=FALSE, fig.align='center', fig.cap="Impulse Response Function "}
+
+impulse_inf=irf(varmodel,impulse="ffr", n.ahead=24, response=c("inf"))
+impulse_u=irf(varmodel,impulse="ffr", n.ahead=24, response=c("u"))
+impulse_ffr=irf(varmodel,impulse="ffr", n.ahead=24, response=c("ffr"))
+plot(impulse_inf)
+plot(impulse_u)
+plot(impulse_ffr)
+
+```
+
+Next we present the forecast error variance decomposition results that decomposes the variance in forecast error of a variable into own contribution and contribution of shocks to other variables. In Table below we show this analysis at 4 forecast horizons, namely, 1 period, 4 period, 8 period, and 12 periods. 
+They suggest considerable interaction among the variables. For example, at the 12-quarter
+horizon, 63 percent of the forecast error variance in for ffr can be attributed to the inflation and unemployment shocks in the recursive VAR. In contrast, only 15 percent of the forecast error variance for inflation comes from shocks to ffr and unemployment.
+
+```{r echo=F, warning=FALSE, message=FALSE}
+horizon=rbind(1,4,8,12)
+fd=fevd(varmodel,n.ahead=12)
+fd_inf=as.data.frame(rbind(fd$inf[1,],fd$inf[4,],fd$inf[8,],fd$inf[12,]))
+fd_u=as.data.frame(rbind(fd$u[1,],fd$u[4,],fd$u[8,],fd$u[12,]))
+fd_ffr=as.data.frame(rbind(fd$ffr[1,],fd$ffr[4,],fd$ffr[8,],fd$ffr[12,]))
+
+fd_inf=(cbind(horizon,fd_inf))
+fd_u=(cbind(horizon,fd_u))
+fd_ffr=(cbind(horizon,fd_ffr))
+kable(fd_inf, digits=3, caption=" Panel A-FEVD for Inflation")
+kable(fd_u, digits=3, caption="Panel B- FEVD for Unemployment")
+kable(fd_ffr, digits=3, caption="Panel C- FEVD for FFR")
+
+```
+
+
+Finally, we can use our reduced-form VAR estimation to produce forecasts for each variable in the model. 
+Figure \@ref(fig:ch7fig1) below provides forecast for next 8 quarters from 2019Q3 through 2021Q2. These forecasts can be compared with univariate forecast for each variable using ARIMA or some other method to assess the improvement in forecast accuracy due to estimating a VAR model.
+
+```{r ch7fig1, echo=F, warning=FALSE, message=FALSE, fig.align='center', fig.cap="Forecast for 2019Q3 through 2021Q2"}
+suppressMessages(library(knitr, warn.conflicts = FALSE, quietly = T))
+suppressMessages(library(vars,warn.conflicts = FALSE, quietly = T))
+suppressMessages(library(forecast,warn.conflicts = FALSE, quietly = T))
+
+fcast = forecast(varmodel, h = 8)
+plot(fcast,include=24)
+
+```
 
 

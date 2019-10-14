@@ -25,7 +25,7 @@
 <meta name="author" content="Vipul Bhatt">
 
 
-<meta name="date" content="2019-10-12">
+<meta name="date" content="2019-10-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -205,6 +205,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="7.4.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#forecase-error-variance-decomposition"><i class="fa fa-check"></i><b>7.4.2</b> Forecase Error Variance Decomposition</a></li>
 <li class="chapter" data-level="7.4.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#granger-causality"><i class="fa fa-check"></i><b>7.4.3</b> Granger causality</a></li>
 </ul></li>
+<li class="chapter" data-level="7.5" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#application-effect-of-monetary-policy-on-inflation-and-unemployment"><i class="fa fa-check"></i><b>7.5</b> Application: Effect of monetary policy on inflation and unemployment</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a><ul>
 <li class="chapter" data-level="8.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#some-stylized-facts-about-stock-market-volatility"><i class="fa fa-check"></i><b>8.1</b> Some stylized facts about stock market volatility</a></li>
@@ -279,23 +280,23 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <p>We begin with a brief review of probability thoery. To define probability we first need to develop an understanding of what we mean by <em>experiment</em>, <em>sample space</em>, and <em>event</em> in statistics.</p>
 
 <div class="definition">
-<p><span id="def:unnamed-chunk-32" class="definition"><strong>Definition B.1  (Experiment)  </strong></span>An experiment is a process with an uncertain observable outcome. e.g. Toss of a coin can have two possible outcomes, heads or tails.</p>
+<p><span id="def:unnamed-chunk-35" class="definition"><strong>Definition B.1  (Experiment)  </strong></span>An experiment is a process with an uncertain observable outcome. e.g. Toss of a coin can have two possible outcomes, heads or tails.</p>
 </div>
 
 
 <div class="definition">
-<p><span id="def:unnamed-chunk-33" class="definition"><strong>Definition B.2  (Sample Space)  </strong></span>The sample space is the set of all possible outcomes of an experiment. I will denote it by <span class="math inline">\(S\)</span>. If we toss a coin then <span class="math inline">\(S=\{Heads,Tails\}\)</span>.</p>
+<p><span id="def:unnamed-chunk-36" class="definition"><strong>Definition B.2  (Sample Space)  </strong></span>The sample space is the set of all possible outcomes of an experiment. I will denote it by <span class="math inline">\(S\)</span>. If we toss a coin then <span class="math inline">\(S=\{Heads,Tails\}\)</span>.</p>
 </div>
 
 
 <div class="definition">
-<p><span id="def:unnamed-chunk-34" class="definition"><strong>Definition B.3  (Event)  </strong></span>An event is a subset of the sample space. I will denote it by <span class="math inline">\(E\)</span>. If we toss a coin and Heads shows up then <span class="math inline">\(E={Heads}\)</span>.</p>
+<p><span id="def:unnamed-chunk-37" class="definition"><strong>Definition B.3  (Event)  </strong></span>An event is a subset of the sample space. I will denote it by <span class="math inline">\(E\)</span>. If we toss a coin and Heads shows up then <span class="math inline">\(E={Heads}\)</span>.</p>
 </div>
 
 <p>Now, we can define probability, which is a function that assigns a numerical value to the chance of an event occuring among all possible events in the sample space.</p>
 
 <div class="definition">
-<p><span id="def:unnamed-chunk-35" class="definition"><strong>Definition B.4  (Probability)  </strong></span>
+<p><span id="def:unnamed-chunk-38" class="definition"><strong>Definition B.4  (Probability)  </strong></span>
 A function <span class="math inline">\(P\)</span> is called a probability function if:</p>
 <ol style="list-style-type: decimal">
 <li>For any given event, <span class="math inline">\(E\)</span>, <span class="math inline">\(0 \leq P(E)&lt; \leq 1\)</span>.</li>
@@ -329,7 +330,7 @@ P(E) = \frac{\text{Number of  outcomes  in  E}}{\text{Number  of  outcomes  in  
 \end{align}\]</span></p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-36" class="example"><strong>Example B.1  </strong></span>Consider a fair six-sided dice. The probability of obtaining an odd number if this dice is rolled once is given by 0.5. To see this, note that the event here is obtaining an odd number when a dice is rolled. Hence, <span class="math inline">\(E=\{1,3,5\}\)</span>. Also, <span class="math inline">\(S=\{1,2,3,4,5,6\}\)</span>. Using this, we get:
+<p><span id="exm:unnamed-chunk-39" class="example"><strong>Example B.1  </strong></span>Consider a fair six-sided dice. The probability of obtaining an odd number if this dice is rolled once is given by 0.5. To see this, note that the event here is obtaining an odd number when a dice is rolled. Hence, <span class="math inline">\(E=\{1,3,5\}\)</span>. Also, <span class="math inline">\(S=\{1,2,3,4,5,6\}\)</span>. Using this, we get:
 <span class="math display">\[\begin{equation}
 P(E)=\frac{3}{6}=0.5
 \end{equation}\]</span></p>
@@ -341,7 +342,7 @@ P(E)=\frac{3}{6}=0.5
 <p>One of the most important applications of statistics is to resolve the randomness that is inherent in most economic choices. For example, the outcome of your college major is a random variable with many possible values. Most economic variables can be thought of as <strong>random variables</strong> that have many possible values which are unknown until they are realized. We will begin by formally defining a random variable.</p>
 
 <div class="definition">
-<p><span id="def:unnamed-chunk-37" class="definition"><strong>Definition B.5  (Random Variable)  </strong></span>A random variable is a numerical representation of outcomes of an experiment. For example, in the example of a toss of a coin, suppose you win $10 if heads shows and you lose $5 if tails shows. In this case, tossing the coin was the experiment, and winnings from this game is the random variable with two possible values: $10 and -$5.</p>
+<p><span id="def:unnamed-chunk-40" class="definition"><strong>Definition B.5  (Random Variable)  </strong></span>A random variable is a numerical representation of outcomes of an experiment. For example, in the example of a toss of a coin, suppose you win $10 if heads shows and you lose $5 if tails shows. In this case, tossing the coin was the experiment, and winnings from this game is the random variable with two possible values: $10 and -$5.</p>
 </div>
 
 <p>There are two types of random variables.</p>
@@ -388,7 +389,7 @@ P(E)=\frac{3}{6}=0.5
 </table>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-38" class="example"><strong>Example B.2  (Grade Distribution)  </strong></span>A typical grade distribution is an example of a discrete random variable. Consider the following grade distribution:</p>
+<p><span id="exm:unnamed-chunk-41" class="example"><strong>Example B.2  (Grade Distribution)  </strong></span>A typical grade distribution is an example of a discrete random variable. Consider the following grade distribution:</p>
 <table>
 <thead>
 <tr class="header">
@@ -422,8 +423,8 @@ P(E)=\frac{3}{6}=0.5
 </div>
 
 <p>Note that every GPA point corresponds to a letter grade. From the perspective of the student, <span class="math inline">\(X\)</span> is the random variable that is his letter grade, and the above distribution gives the probability of obtaining a particular letter grade. We can plot this simple probability distribution as follows:</p>
-<div class="figure"><span id="fig:unnamed-chunk-39"></span>
-<img src="bookdown-demo_files/figure-html/unnamed-chunk-39-1.png" alt="Probability Distribution of Letter Grades" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-42"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-42-1.png" alt="Probability Distribution of Letter Grades" width="672" />
 <p class="caption">
 Figure B.1: Probability Distribution of Letter Grades
 </p>
@@ -478,7 +479,7 @@ Figure B.1: Probability Distribution of Letter Grades
 <p>So for example, we can infer that the probability of obtaining the letter grade of C or lower i.e, <span class="math inline">\(P(X\leq 2)\)</span> is 0.7 or 70% which is obtained by adding the probabilities of obtaining letter grades of C, D, and F, respectively.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-40" class="example"><strong>Example B.3  (Bernoulli Random Variable)  </strong></span>When a random variable is binary then we call it a <strong>Bernoulli</strong> random variable and its probability distrubition is called <strong>Bernoulli</strong> distribution. Consider a random variable that can only take two values, say, <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>. It is common to think of these two values as coding a set criterion with <span class="math inline">\(1\)</span> typically assigned if the criterion is met and <span class="math inline">\(0\)</span> is assigned for failing to meet the criterion. For example, <span class="math inline">\(X\)</span> could be whether you will get a job right after graduation. If you do then <span class="math inline">\(X=1\)</span> and if you do not then <span class="math inline">\(X=0\)</span>. Let <span class="math inline">\(p\)</span> denotes the probability that you will get a job. Then, the <span class="math inline">\(p.m.f.\)</span> of the Bernoulli distribution is given by:</p>
+<p><span id="exm:unnamed-chunk-43" class="example"><strong>Example B.3  (Bernoulli Random Variable)  </strong></span>When a random variable is binary then we call it a <strong>Bernoulli</strong> random variable and its probability distrubition is called <strong>Bernoulli</strong> distribution. Consider a random variable that can only take two values, say, <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>. It is common to think of these two values as coding a set criterion with <span class="math inline">\(1\)</span> typically assigned if the criterion is met and <span class="math inline">\(0\)</span> is assigned for failing to meet the criterion. For example, <span class="math inline">\(X\)</span> could be whether you will get a job right after graduation. If you do then <span class="math inline">\(X=1\)</span> and if you do not then <span class="math inline">\(X=0\)</span>. Let <span class="math inline">\(p\)</span> denotes the probability that you will get a job. Then, the <span class="math inline">\(p.m.f.\)</span> of the Bernoulli distribution is given by:</p>
 <p><span class="math display">\[f(x)=\begin{cases}
     p &amp; if \ X=1\\
     1-p &amp; if \ X=0
@@ -504,15 +505,15 @@ Figure B.1: Probability Distribution of Letter Grades
 </ol>
 <p><span class="math display">\[F(x)=P(X\leq x)=\int_{-\infty}^xf(x) \ dx\]</span></p>
 <p>Below I plot the empirical c.d.f for Apple’s stock return. Let <span class="math inline">\(X\)</span> denotes this stock return. From Fig 3.2 we can infer that <span class="math inline">\(P(X\leq 0)=0.47\)</span> and <span class="math inline">\(P(X\leq 3)=0.95\)</span>.</p>
-<div class="figure"><span id="fig:unnamed-chunk-41"></span>
-<img src="bookdown-demo_files/figure-html/unnamed-chunk-41-1.png" alt="Empirical c.d.f of daily Apple Stock Return (2007-2019)" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-44"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-44-1.png" alt="Empirical c.d.f of daily Apple Stock Return (2007-2019)" width="672" />
 <p class="caption">
 Figure B.2: Empirical c.d.f of daily Apple Stock Return (2007-2019)
 </p>
 </div>
 <p>Figure 3.3 below presents the <em>p.d.f</em> of the daily stock return that corresponds to the <em>c.d.f</em> plotted in Figure 3.2. Using this we can work the probability of stock returns falling in any given interval. For instance, the probability that Apple stock return will fall between 0 and 3% is the area under the p.d.f. between these two values. Figure 3.3 higlights this area and we can see that this probability is equal to 0.47.</p>
-<div class="figure"><span id="fig:unnamed-chunk-42"></span>
-<img src="bookdown-demo_files/figure-html/unnamed-chunk-42-1.png" alt="Empirical p.d.f of daily Apple Stock Return (2007-2019)" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-45"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-45-1.png" alt="Empirical p.d.f of daily Apple Stock Return (2007-2019)" width="672" />
 <p class="caption">
 Figure B.3: Empirical p.d.f of daily Apple Stock Return (2007-2019)
 </p>
@@ -532,7 +533,7 @@ Figure B.3: Empirical p.d.f of daily Apple Stock Return (2007-2019)
 <p>What is the most likely value of a random variable? To answer that we often compute <strong>expected value</strong> of the random variable which gives us the center (or peak) of the underlying probability distribution. We will use <strong>E</strong> to denote expected value. So <span class="math inline">\(E(X)\)</span> is the expected value of a random variable and we will use <span class="math inline">\(\mu_X\)</span> to denote the mean or average value of <span class="math inline">\(X\)</span>.</p>
 
 <div class="definition">
-<p><span id="def:unnamed-chunk-43" class="definition"><strong>Definition B.6  (Expected Value)  </strong></span>Consider a discrete random variable <span class="math inline">\(X\)</span> that can take <span class="math inline">\(n\)</span> possible values and has the following probabilty distrubution:</p>
+<p><span id="def:unnamed-chunk-46" class="definition"><strong>Definition B.6  (Expected Value)  </strong></span>Consider a discrete random variable <span class="math inline">\(X\)</span> that can take <span class="math inline">\(n\)</span> possible values and has the following probabilty distrubution:</p>
 <table>
 <thead>
 <tr class="header">
@@ -570,7 +571,7 @@ Figure B.3: Empirical p.d.f of daily Apple Stock Return (2007-2019)
 Hence, expected value is a probability-weighted average of all possible values of a random variable.
 
 <div class="example">
-<span id="exm:unnamed-chunk-44" class="example"><strong>Example B.4  </strong></span>Suppose you toss a fair coin and receive $10 if tails shows and receive 0 if heads shows. What is the expected value of the winnings from a single toss of this coin?
+<span id="exm:unnamed-chunk-47" class="example"><strong>Example B.4  </strong></span>Suppose you toss a fair coin and receive $10 if tails shows and receive 0 if heads shows. What is the expected value of the winnings from a single toss of this coin?
 </div>
 
 
@@ -581,7 +582,7 @@ Hence, expected value is a probability-weighted average of all possible values o
 
 
 <div class="example">
-<span id="exm:unnamed-chunk-46" class="example"><strong>Example B.5  </strong></span>Suppose you can invest $10,000 in a mutual fund after 1 year can earn a return of 10%
+<span id="exm:unnamed-chunk-49" class="example"><strong>Example B.5  </strong></span>Suppose you can invest $10,000 in a mutual fund after 1 year can earn a return of 10%
 with a probability of 0.1 or a return of 2% with a probability of 0.5 or a loss of 5% with a probability of 0.4. What is the expected return of investing $10,000 in this mutual fund?
 </div>
 
@@ -600,7 +601,7 @@ with a probability of 0.1 or a return of 2% with a probability of 0.5 or a loss 
 <p>The standard deviation is simply the square root of the variance and is in the same units as the random variable. This allows easy comparison of the width and the center of the distribution. We will denote standard deviation by <span class="math inline">\(\sigma_X\)</span>.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-48" class="example"><strong>Example B.6  </strong></span>Using the mutual fund example, the variance will measure <strong>riskiness</strong> of the investment. It is given by:</p>
+<p><span id="exm:unnamed-chunk-51" class="example"><strong>Example B.6  </strong></span>Using the mutual fund example, the variance will measure <strong>riskiness</strong> of the investment. It is given by:</p>
 <p><span class="math display">\[Var(X)=(1000-40)^2\times 0.1 + (200-40)^2 \times 0.5 - (400-40)^2 \times 0.4=53120\]</span></p>
 <p>Because variance is in square units and hence hard to interpret, we can easily compute the standard deviation as the square root of the variance:</p>
 <p><span class="math display">\[\sigma_X=\sqrt{53120}=\$230.47\]</span></p>
@@ -608,8 +609,8 @@ Hence, even though the average return from this investment is $40, you can be $2
 </div>
 
 <p>How much can we say about a random variable if we only know its mean and the standard deviation? That depends on the type of distribution the random variable follows. One of the most commonly used distribution in statistic is the <strong>Normal Distribution</strong> or the <strong>Gaussian Distribution</strong>. A random variable that follows normal distribution has a bell-shaped probability distribution with a given mean and standard deviation. One of the most useful features of such a distribution is that knowledge of the first two moments alone is sufficient to characterize the entire probability distribution. Figure 3.4 below shows a normal distribution with a mean of 5 and a standard deviation of 2.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-49"></span>
-<img src="bookdown-demo_files/figure-html/unnamed-chunk-49-1.png" alt="Normal distribution with mean=5 and s.d.=2" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-52"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-52-1.png" alt="Normal distribution with mean=5 and s.d.=2" width="672" />
 <p class="caption">
 Figure B.4: Normal distribution with mean=5 and s.d.=2
 </p>
@@ -637,8 +638,8 @@ Figure B.4: Normal distribution with mean=5 and s.d.=2
 <li><p>A neagtively skewed distribution will have a long left tail implying lower probablity of very small values relative to the mean.</p></li>
 </ol>
 <p>Figure 3.5 shows three probability distributions. For the left-skewed distribution, a longer left tail indicates low probability of obtaining values below the mean. Similarly, for the right-skewed distribution, a longer right tail indicates low probability of obtaining a value above the mean. For a normal distribution, the probability of obtaining a value above the mean is the same as the probability of obtaining a value below the mean.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-50"></span>
-<img src="bookdown-demo_files/figure-html/unnamed-chunk-50-1.png" alt="Skewness of a Probablity distribution" width="384" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-53"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-53-1.png" alt="Skewness of a Probablity distribution" width="384" />
 <p class="caption">
 Figure B.5: Skewness of a Probablity distribution
 </p>
@@ -652,8 +653,8 @@ Figure B.5: Skewness of a Probablity distribution
 <li><p>Leptokurtic distribution: has a Kurtosis value greater than three. Such a distribution will have fat tails compared to a normal distribution indicating greater area under the tails.</p></li>
 <li><p>Platykurtic distribution: has a Kurtosis value less than 3. Such a distribution will have thin tails compared to a normal distribution.</p></li>
 </ol>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-51"></span>
-<img src="bookdown-demo_files/figure-html/unnamed-chunk-51-1.png" alt="Kurtosis of a Probablity distribution" width="672" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-54"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-54-1.png" alt="Kurtosis of a Probablity distribution" width="672" />
 <p class="caption">
 Figure B.6: Kurtosis of a Probablity distribution
 </p>
@@ -670,10 +671,10 @@ Figure B.6: Kurtosis of a Probablity distribution
 <li><p>F-distribution: is obtained by taking a ratio of two chi-square distribution. For example, if <span class="math inline">\(X\)</span> is Chi-square with <span class="math inline">\(v_1\)</span> degrees of freedom and <span class="math inline">\(Y\)</span> is a Chi-quare with <span class="math inline">\(v_2\)</span> degress of freedom, then <span class="math inline">\(\displaystyle{Z=\frac{X}{Y}}\)</span> follows F-distribution with <span class="math inline">\(v_1\)</span> and <span class="math inline">\(v_2\)</span> degrees of freddom.</p></li>
 <li><p>t-distribution: Student’s t-distribution is obtained by taking a ratio of a standard normal and the square root of a Chi-square random variable. For example, if <span class="math inline">\(X\)</span> is a standard normal and <span class="math inline">\(Y\)</span> is a Chi-square with <span class="math inline">\(m\)</span> degrees of freedom, then <span class="math inline">\(Z=\displaystyle\frac{X}{\sqrt{Y/m}}\)</span> follows t-distribution with <span class="math inline">\(m\)</span> degrees of freedom. t-distribution has fatter tails when compared to normal.</p></li>
 </ol>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-52-1.png" width="480" style="display: block; margin: auto;" />
-<img src="bookdown-demo_files/figure-html/unnamed-chunk-53-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-54-1.png" width="480" style="display: block; margin: auto;" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-54-2.png" width="480" style="display: block; margin: auto;" /></p>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-55-1.png" width="480" style="display: block; margin: auto;" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-55-2.png" width="480" style="display: block; margin: auto;" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-55-3.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-55-1.png" width="480" style="display: block; margin: auto;" />
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-56-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-57-1.png" width="480" style="display: block; margin: auto;" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-57-2.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-58-1.png" width="480" style="display: block; margin: auto;" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-58-2.png" width="480" style="display: block; margin: auto;" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-58-3.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="joint-probability-distribution" class="section level2">
 <h2><span class="header-section-number">B.6</span> Joint Probability Distribution</h2>
@@ -683,7 +684,7 @@ Figure B.6: Kurtosis of a Probablity distribution
 <p><span class="math display">\[F(x,y)=P(X=x, Y=y)\]</span></p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-56" class="example"><strong>Example B.7  </strong></span>
+<p><span id="exm:unnamed-chunk-59" class="example"><strong>Example B.7  </strong></span>
 Suppose you are an investment banker and you are considering investment into two assets: a stock listed in NYSE (<span class="math inline">\(X\)</span>) and a cotton futures (<span class="math inline">\(Y\)</span>) listed in Chicago Mercantile Exchange. Suppose <span class="math inline">\(X\)</span> can take three possible values: 2/%, 3/%, or 4/%. Similarly <span class="math inline">\(Y\)</span> can take three possible values given by 6/%,4/%, or 1/%. The value will depend on the state of the economy. Suppose there are three possiblities for the economy next year: boom, expansion, and status quo. The joint probability distribution for <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is given by:</p>
 <table>
 <thead>
@@ -831,7 +832,7 @@ Var(Y|X) = (y_1 -E(Y|X))^2 \times P(Y=y_1|X=x) + (y_2 -E(Y|X))^2\times P(Y=y_2|X
 </ol>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-57" class="example"><strong>Example B.8  </strong></span>Suppose we have a random sample with <span class="math inline">\(n\)</span> observations: <span class="math inline">\(\{x_1,x_2,...,x_n\}\)</span> drawn from a population with a mean of <span class="math inline">\(\mu_x\)</span>. Sample mean is defined as:</p>
+<p><span id="exm:unnamed-chunk-60" class="example"><strong>Example B.8  </strong></span>Suppose we have a random sample with <span class="math inline">\(n\)</span> observations: <span class="math inline">\(\{x_1,x_2,...,x_n\}\)</span> drawn from a population with a mean of <span class="math inline">\(\mu_x\)</span>. Sample mean is defined as:</p>
 <p><span class="math display">\[\overline{X}=\frac{\sum_{i=1}^N x_i}{N}\]</span></p>
 <p>The expected value of the sample mean is given by:</p>
 <p><span class="math display">\[E(\overline{X})=E\left(\frac{\sum_{i=1}^N x_i}{N}\right)\]</span></p>
@@ -844,7 +845,7 @@ Var(Y|X) = (y_1 -E(Y|X))^2 \times P(Y=y_1|X=x) + (y_2 -E(Y|X))^2\times P(Y=y_2|X
 
 
 <div class="definition">
-<p><span id="def:unnamed-chunk-58" class="definition"><strong>Definition B.7  (Best Unbiased Estimator (BUE))  </strong></span>Let <span class="math inline">\(\theta\)</span> denote a population parameter of interest. Then, an sample estimator denoted by <span class="math inline">\(\hat{\theta}\)</span> is the  of <span class="math inline">\(\theta\)</span> if the following two conditions are satisfied:</p>
+<p><span id="def:unnamed-chunk-61" class="definition"><strong>Definition B.7  (Best Unbiased Estimator (BUE))  </strong></span>Let <span class="math inline">\(\theta\)</span> denote a population parameter of interest. Then, an sample estimator denoted by <span class="math inline">\(\hat{\theta}\)</span> is the  of <span class="math inline">\(\theta\)</span> if the following two conditions are satisfied:</p>
 <ol style="list-style-type: decimal">
 <li><p><span class="math inline">\(\hat{theta}\)</span> is an unbiased estimator, i.e., <span class="math inline">\(E(\hat{\theta})=\theta\)</span>. In this case the sampling distribution is centered at the true value of the parameter.</p></li>
 <li><span class="math inline">\(\hat{\theta}\)</span> is an efficient estimator, i.e., <span class="math inline">\(Var(\hat{\theta})&lt; Var(\hat{\theta_A})\)</span> for any other unbiased estimator denoted by <span class="math inline">\(\hat{\theta_A}\)</span>. In this case the width of the sampling distribution around the mean is smallest possible.</li>
@@ -882,7 +883,7 @@ Var(Y|X) = (y_1 -E(Y|X))^2 \times P(Y=y_1|X=x) + (y_2 -E(Y|X))^2\times P(Y=y_2|X
 <p>Here our goal is to develop tests for testing statements about a single population parameter of interest. So for example, we can either test a statement about a population mean or a population variance.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-59" class="example"><strong>Example B.9  (t-test for population mean)  </strong></span>
+<p><span id="exm:unnamed-chunk-62" class="example"><strong>Example B.9  (t-test for population mean)  </strong></span>
 Suppose you are interested in measuring mean hourly wage of males aged 25-35. Accordingly, we collect a sample of 100 workers from the population of male in this age group with a mean of <span class="math inline">\(\mu_X\)</span> and a standard deviation of <span class="math inline">\(\sigma_X\)</span>. The sample mean is <span class="math inline">\(\hat{\mu}_X=\$25\)</span> and the sample standard deviation is <span class="math inline">\(\hat{\sigma}_X=\$7\)</span>. Now, suppose we want to test the following hypothesis:</p>
 <p><span class="math display">\[H_0: \mu_X=27\]</span></p>
 <p><span class="math display">\[H_0: \mu_X \neq 27\]</span></p>
@@ -902,7 +903,7 @@ Suppose you are interested in measuring mean hourly wage of males aged 25-35. Ac
 
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-60" class="example"><strong>Example B.10  (Chi-square test for population variance)  </strong></span>Using the same example, we also test a statement about the population variance. Suppose we want to test whether the variance of the hourly wage is 52.</p>
+<p><span id="exm:unnamed-chunk-63" class="example"><strong>Example B.10  (Chi-square test for population variance)  </strong></span>Using the same example, we also test a statement about the population variance. Suppose we want to test whether the variance of the hourly wage is 52.</p>
 <p><span class="math display">\[H_0: \sigma^2_X=52\]</span></p>
 <p><span class="math display">\[H_0: \sigma^2_X &gt;52 \]</span></p>
 <p>The test statistic is given by the <em>V-statistic</em> where:
@@ -921,7 +922,7 @@ The degrees of freedom is <span class="math inline">\(N-1=99\)</span> and at 5% 
 <p>Often we are interested in testing a restriction that is a linear combination of two or more population means. Similarly, we maybe interested in comparing the variance of two different populations. In such cases we need to develop statistical tests that allow for comparison between parameters of different populations with given means and variances.</p>
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-61" class="example"><strong>Example B.11  (t-test for comparing population mean of two populations)  </strong></span>Suppose you are interested in comparing mean weekly hours studied by Econ majors (X) and non-Econ majors in the college of business. For this purpose, you collect a sample of 25 econ majors and a sample of 30 non-econ majors. The sample mean of weekly hours studied by econ majors is 10 hours with a standard deviation of 4 hours. The sample mean of weekly hours studied by non-econ majors is 8 hours with a standard deviation of 2 hours. Also suppose that the covariance between weekly hours studied by econ and non-econ majors is 0.12. Test whether mean weekly hours studied by econ majors is more than the mean weekly hours studied by non-Econ majors.</p>
+<p><span id="exm:unnamed-chunk-64" class="example"><strong>Example B.11  (t-test for comparing population mean of two populations)  </strong></span>Suppose you are interested in comparing mean weekly hours studied by Econ majors (X) and non-Econ majors in the college of business. For this purpose, you collect a sample of 25 econ majors and a sample of 30 non-econ majors. The sample mean of weekly hours studied by econ majors is 10 hours with a standard deviation of 4 hours. The sample mean of weekly hours studied by non-econ majors is 8 hours with a standard deviation of 2 hours. Also suppose that the covariance between weekly hours studied by econ and non-econ majors is 0.12. Test whether mean weekly hours studied by econ majors is more than the mean weekly hours studied by non-Econ majors.</p>
 <p>Let <span class="math inline">\(X\)</span> denote hours studied, <span class="math inline">\(N_X\)</span> denotes sample size, <span class="math inline">\(\hat{\mu}_X\)</span>, and <span class="math inline">\(\hat{\sigma}_X\)</span> denote sample mean and standard deviation, respectively for econ majors. Similarly, let <span class="math inline">\(Y\)</span> denote hours studied, <span class="math inline">\(N_Y\)</span> denotes sample size, <span class="math inline">\(\hat{\mu}_Y\)</span>, and <span class="math inline">\(\hat{\sigma}_Y\)</span> denote sample mean and standard deviation, respectively for non-econ majors.</p>
 <p>The first step, as usual, is to formulate the null and the alternative hypotheses:</p>
 <p><span class="math display">\[H_0= \mu_X - \mu_Y = 0\]</span>
@@ -936,7 +937,7 @@ The sample size here is <span class="math inline">\(N_X+N_Y=55\)</span>. Using 5
 
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-62" class="example"><strong>Example B.12  (F-test for comparing population variance of two populations)  </strong></span>Often we may be interested in comparing the variability between two populations. Using our previous example, we may want to test whether variability in hours studied is bigger for econ majors versus non-econ majors. This can be tested by comparing the ratio of two variances against the value of 1. As before, we start by formulating the null and the alternative hypotheses:</p>
+<p><span id="exm:unnamed-chunk-65" class="example"><strong>Example B.12  (F-test for comparing population variance of two populations)  </strong></span>Often we may be interested in comparing the variability between two populations. Using our previous example, we may want to test whether variability in hours studied is bigger for econ majors versus non-econ majors. This can be tested by comparing the ratio of two variances against the value of 1. As before, we start by formulating the null and the alternative hypotheses:</p>
 <p><span class="math display">\[H_0: \sigma^2_X/sigma^2_Y = 1\]</span>
 <span class="math display">\[H_0: \sigma^2_X/sigma^2_Y &gt; 1\]</span></p>
 <p>The corresponding test statistic is the F-ratio:</p>
@@ -950,14 +951,14 @@ The sample size here is <span class="math inline">\(N_X+N_Y=55\)</span>. Using 5
 <p>One issue with using a sample to estimate population parameters is that by definition a sample estimator will be different for different samples. Thus, sample mean provides no information about how close this estimator is to the true population mean. This uncertainty in estimation can be summarized by computing the standard deviation, with higher value of standar deviation indicating greater uncertainty about the true population parameter. A better measure of this uncertainty is the <strong>confidence interval</strong>.</p>
 
 <div class="definition">
-<p><span id="def:unnamed-chunk-63" class="definition"><strong>Definition B.8  (Confidence Interval)  </strong></span>Suppose we draw a random sample <span class="math inline">\(\{x_1, x_2,...,x_N\}\)</span> from a normally distributed population with mean of <span class="math inline">\(\mu_X\)</span> and a standard deviation of <span class="math inline">\(\sigma_X\)</span>. Let <span class="math inline">\(\hat{\mu_X}\)</span> denotes the sample mean and <span class="math inline">\(\hat{\sigma_X}\)</span> denotes sample standard deviation. Then, the 95% confidence interval for <span class="math inline">\(\hat{\mu_X}\)</span> is given by:</p>
+<p><span id="def:unnamed-chunk-66" class="definition"><strong>Definition B.8  (Confidence Interval)  </strong></span>Suppose we draw a random sample <span class="math inline">\(\{x_1, x_2,...,x_N\}\)</span> from a normally distributed population with mean of <span class="math inline">\(\mu_X\)</span> and a standard deviation of <span class="math inline">\(\sigma_X\)</span>. Let <span class="math inline">\(\hat{\mu_X}\)</span> denotes the sample mean and <span class="math inline">\(\hat{\sigma_X}\)</span> denotes sample standard deviation. Then, the 95% confidence interval for <span class="math inline">\(\hat{\mu_X}\)</span> is given by:</p>
 <p><span class="math display">\[\left[\hat{\mu_X}-t_{c,2-sided} \times \frac{\hat{\sigma_X}}{\sqrt{N}},\hat{\mu_X}+t_{c,2-sided} \times \frac{\hat{\sigma_X}}{\sqrt{N}} \right]\]</span></p>
 where <span class="math inline">\(t_{c,2-sided}\)</span> is the critical value that can be obtained from the t-distribution table for a given level of signicance and degrees of freedom. For example, for a 95% confidence interval we will use 5% level of significance.
 </div>
 
 
 <div class="example">
-<p><span id="exm:unnamed-chunk-64" class="example"><strong>Example B.13  </strong></span>Suppose N=20, <span class="math inline">\(\hat{\mu_X}=5\)</span>, and <span class="math inline">\(\hat{\sigma_X}=2\)</span>. Then, the 95% confidence interval for <span class="math inline">\(\hat{\mu_X}\)</span> is given by:</p>
+<p><span id="exm:unnamed-chunk-67" class="example"><strong>Example B.13  </strong></span>Suppose N=20, <span class="math inline">\(\hat{\mu_X}=5\)</span>, and <span class="math inline">\(\hat{\sigma_X}=2\)</span>. Then, the 95% confidence interval for <span class="math inline">\(\hat{\mu_X}\)</span> is given by:</p>
 <p><span class="math display">\[\left[5-2.093 \times \frac{2}{\sqrt{20}}, 5+2.093 \times \frac{2}{\sqrt{20}} \right]=[4.06,5.94]\]</span></p>
 <p>Hence, before we drew our sample from the population, there is a 95% chance that the true population parameter (<span class="math inline">\(\mu_X\)</span>) will fall between 4.12 and 5.94. Note that:</p>
 <ol style="list-style-type: decimal">
@@ -975,7 +976,7 @@ where <span class="math inline">\(t_{c,2-sided}\)</span> is the critical value t
 <h2>Problems</h2>
 
 <div class="exercise">
-<p><span id="exr:unnamed-chunk-65" class="exercise"><strong>Exercise B.1  </strong></span>Suppose you roll a 6-sided fair dice. If an odd number shows you win $10. If either 2 or 4 shows you lose $5. If 6 shows, you neither gain nor lose anything.</p>
+<p><span id="exr:unnamed-chunk-68" class="exercise"><strong>Exercise B.1  </strong></span>Suppose you roll a 6-sided fair dice. If an odd number shows you win $10. If either 2 or 4 shows you lose $5. If 6 shows, you neither gain nor lose anything.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Denote the winnings from this game as <span class="math inline">\(X\)</span>. Tabulate the probability distribiution of the random variable <span class="math inline">\(X\)</span>.</p></li>
 <li>Compute the expected value and the standard deviation for <span class="math inline">\(X\)</span>.</li>
@@ -984,7 +985,7 @@ where <span class="math inline">\(t_{c,2-sided}\)</span> is the critical value t
 
 
 <div class="exercise">
-<p><span id="exr:unnamed-chunk-66" class="exercise"><strong>Exercise B.2  </strong></span>
+<p><span id="exr:unnamed-chunk-69" class="exercise"><strong>Exercise B.2  </strong></span>
 Consider a population with a mean of <span class="math inline">\(\mu\)</span> and variance of <span class="math inline">\(\sigma^2\)</span>. Suppose you draw a random sample <span class="math inline">\(X_1, X_2,..,X_N\)</span>.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Show that <span class="math inline">\(\hat{\mu_A}=0.25\times X_1 +0.25\times X_3+ 0.25 \times X_8 + 0.25 X_20\)</span> is an unbiased estimator of <span class="math inline">\(\mu\)</span>.</p></li>
@@ -995,7 +996,7 @@ Consider a population with a mean of <span class="math inline">\(\mu\)</span> an
 
 
 <div class="exercise">
-<p><span id="exr:unnamed-chunk-67" class="exercise"><strong>Exercise B.3  </strong></span>Suppose you collect a random sample of 100 observations and find that sample mean is -25 and sample variance is 350.</p>
+<p><span id="exr:unnamed-chunk-70" class="exercise"><strong>Exercise B.3  </strong></span>Suppose you collect a random sample of 100 observations and find that sample mean is -25 and sample variance is 350.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Test whether the population mean is -22.</p></li>
 <li>Test whether the population variance is 400.</li>
@@ -1004,7 +1005,7 @@ Consider a population with a mean of <span class="math inline">\(\mu\)</span> an
 
 
 <div class="exercise">
-<p><span id="exr:unnamed-chunk-68" class="exercise"><strong>Exercise B.4  </strong></span>Suppose you are interested in comparing performance of two different mutual funds, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Let <span class="math inline">\(\mu_X\)</span> and <span class="math inline">\(mu_Y\)</span> denote unknown population mean returns on investment in <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, respectively. Suppose you collect past 20 months data for both mutual funds and find that sample mean for fund <span class="math inline">\(X\)</span> is 2% with a standard deviation of 0.5%. In contrast, the sample mean for fund <span class="math inline">\(Y\)</span> is 5% with a standard deviation of 2%. Suppose that the correlation between returns on these two funds is 0.2.</p>
+<p><span id="exr:unnamed-chunk-71" class="exercise"><strong>Exercise B.4  </strong></span>Suppose you are interested in comparing performance of two different mutual funds, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Let <span class="math inline">\(\mu_X\)</span> and <span class="math inline">\(mu_Y\)</span> denote unknown population mean returns on investment in <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, respectively. Suppose you collect past 20 months data for both mutual funds and find that sample mean for fund <span class="math inline">\(X\)</span> is 2% with a standard deviation of 0.5%. In contrast, the sample mean for fund <span class="math inline">\(Y\)</span> is 5% with a standard deviation of 2%. Suppose that the correlation between returns on these two funds is 0.2.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Test whether mean return on <span class="math inline">\(Y\)</span> is greater than that on <span class="math inline">\(X\)</span>.</p></li>
 <li><p>Test whether variance of <span class="math inline">\(Y\)</span> is greater than that of <span class="math inline">\(X\)</span>.</p></li>

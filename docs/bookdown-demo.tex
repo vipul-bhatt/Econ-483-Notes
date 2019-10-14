@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2019-10-12}
+    \date{2019-10-13}
 
 \usepackage{booktabs}
 \usepackage{amsthm}
@@ -1929,7 +1929,7 @@ Box-Jenkins is a three-step procedure for finding the best fitting ARIMA(p,d,q) 
 
 Thus far our analysis has been limited to a univariate time series. Often one maybe interested in understanding the dynamics of multiple time series variables. Vector Autoregression (VAR) model is one of the most commonly used model for this purpose. Suppose you have \(N\) time series variables in your sample Then a VAR model is a system of \(N\) linear equations where each variable is modeled as a linear function of its own lags and current and past values of the remaining \(N-1\) variables. In this sense a VAR model combines and extends the the AR model and distributed lag model we covered earlier.
 
-There are two main ways we can specifiy a VAR model, each distinguished by the treatment of contemporaenous effects among variable included in the model. To make each type's main features salient, suppose that we have three variables in our model: inflation (denoted by \(\pi\)), unemployment (denoted by \(u\)), and the federal fund rate (denoted by \(i\)). In the remainded of this chapter will use this 3-variable system as our example.
+There are two main ways we can specify a VAR model, each distinguished by the treatment of contemporaneous effects among variable included in the model. To make each type's main features salient, suppose that we have three variables in our model: inflation (denoted by \(\pi\)), unemployment (denoted by \(u\)), and the federal fund rate (denoted by \(i\)). In the remainder of this chapter will use this 3-variable system as our example.
 
 \hypertarget{reduced-form-var}{%
 \section{Reduced-form VAR}\label{reduced-form-var}}
@@ -1980,7 +1980,7 @@ Consequently, a structural VAR model cannot be estimated using OLS. In order to 
 \hypertarget{cholesky-decomposition-and-recursive-var-model}{%
 \section{Cholesky Decomposition and Recursive VAR model}\label{cholesky-decomposition-and-recursive-var-model}}
 
-One solution that falls in between the reduced-form VAR with no structural intepretation and the structural VAR with full set of contemporaneous linkages is the \textbf{recursive VAR} model. In this specification, the error term in each equation is assumed to be uncorrelated with the error term in the preceeding equations. This is accomplished by assuming some sort of \textbf{ordering} among variables in the VAR model so that only some variables contomporaneously affect others. For example, suppose we use the following ordering: inflation, unemployment, and the federal fund rate (ffr). This ordering will imply the following recursive VAR model:
+One solution that falls in between the reduced-form VAR with no structural interpretation and the structural VAR with full set of contemporaneous linkages is the \textbf{recursive VAR} model. In this specification, the error term in each equation is assumed to be uncorrelated with the error term in the preceding equations. This is accomplished by assuming some sort of \textbf{ordering} among variables in the VAR model so that only some variables contemporaneously affect others. For example, suppose we use the following ordering: inflation, unemployment, and the federal fund rate (ffr). This ordering will imply the following recursive VAR model:
 
 \[\pi_t = \beta_{11} + \phi_{11} \pi_{t-1} + \phi_{12} u_{t-1} + \phi_{13} i_{t-1} + \epsilon_{1t}\]
 \[u_t = \beta_{21} + \beta_{22} \pi_t+\phi_{21} \pi_{t-1} + \phi_{22} u_{t-1} + \phi_{23} i_{t-1} + \epsilon_{2t}\]
@@ -2011,12 +2011,12 @@ Suppose we are interested in finding out how shock to one variable in the system
 \hypertarget{forecase-error-variance-decomposition}{%
 \subsection{Forecase Error Variance Decomposition}\label{forecase-error-variance-decomposition}}
 
-Another useful output from an estimated VAR model is the \textbf{forecast error variance decomposition (fevd)}. Here, we can address the following question: following a shock to one of the variables in the VAR model what percentage of the variance in the forecast error of other variables in the model can be attributed to this particular shock? For example, what percentage of the forcast error variance of inflation can be attributed to the shock in inflation, shock in unemployment, and shock to ffr. In this sense the forecast error variance decomposition measures the amount of each variable in the VAR model contributes to the other variables in the autoregression.
+Another useful output from an estimated VAR model is the \textbf{forecast error variance decomposition (fevd)}. Here, we can address the following question: following a shock to one of the variables in the VAR model what percentage of the variance in the forecast error of other variables in the model can be attributed to this particular shock? For example, what percentage of the forecast error variance of inflation can be attributed to the shock in inflation, shock in unemployment, and shock to ffr. In this sense the forecast error variance decomposition measures the amount of each variable in the VAR model contributes to the other variables in the autoregression.
 
 \hypertarget{granger-causality}{%
 \subsection{Granger causality}\label{granger-causality}}
 
-Another important analysis that one can conduct using a VAR model is \textbf{Granger-causality}. As a bi-variate concept, Granger causality means that lags of one variable improves our capacity to predict another variable. For example, if unemployment \textbf{Granger-causes} inflation, then lags of unemployment have non-zero coefficients in the reduced-form inflatuon equation. Formally, consider the following regression:
+Another important analysis that one can conduct using a VAR model is \textbf{Granger-causality}. As a bi-variate concept, Granger causality means that lags of one variable improves our capacity to predict another variable. For example, if unemployment \textbf{Granger-causes} inflation, then lags of unemployment have non-zero coefficients in the reduced-form inflation equation. Formally, consider the following regression:
 
 \[\pi_t=\beta_0 + \sum_{i=1}^{P} \beta_i u_{t-i} \sum_{i=1}^{P} \delta_i \pi_{t-i} + \epsilon_t\]
 
@@ -2026,6 +2026,165 @@ To test whether unemployment Granger causes inflation we can conduct the followi
 \[H_A: \text{Not} \ H_0\]
 
 This is an F-test and rejection of the null hypothesis indicates unemployment Granger-causes inflation.
+
+\hypertarget{application-effect-of-monetary-policy-on-inflation-and-unemployment}{%
+\section{Application: Effect of monetary policy on inflation and unemployment}\label{application-effect-of-monetary-policy-on-inflation-and-unemployment}}
+
+The Federal reserve bank (The Fed) in the U.S. has a dual mandate: to maintain low inflation and low unemployment. The monetary policy stance of the Fed is expressed in terms of the federal funds rate (ffr). In this section we learn how to estimate a VAR model with three variables: inflation (\(\pi_t\)), unemployment (\(u_t\)), and interest rate (\(i_t\)). For this purpose we will use quarterly data on these variables from 1960Q1 through 2019Q2. We will use the Fred Stat website and download data on these variables:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Seasonally quarterly GDP deflator (GDPDEF): \url{https://fred.stlouisfed.org/series/GDPDEF} ht
+  We define inflation as follows:
+\end{enumerate}
+
+\[\pi_t = 400 \times ln\left(\frac{P_t}{P_{t-1}} \right)\]
+
+Here \(P_t\) denotes GDP deflator for quarter \(t\).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  Seasonally adjusted Civilian unemployment rate (UNRATE): \url{https://fred.stlouisfed.org/series/UNRATE}
+\item
+  Effective federal funds rate (FEDFUNDS): \url{https://fred.stlouisfed.org/series/FEDFUNDS}
+\end{enumerate}
+
+The first step in any VAR analysis is to ensure that all variables in the model are stationary. Although not reported here, I find that inflation is stationary whereas unemployment and interest rate are first difference stationary. Accordingly, we will use inflation and first differences of unemployment and interest rate in our VAR analysis. The second step in the VAR analysis is to determine the optimal number of lags. Table \ref{tab:ch7table1} presents different information criteria for up to 8 lags. Using SC criterion we select optimal lags to be 2.
+
+\label{tab:ch7table1} Lag selection for VAR model
+
+Hence, our reduced-form VAR model is given by:
+
+\[ \pi_t = a_{10} + a_{11} \pi_{t-1} + a_{12} u_{t-1} + a_{13} i_{t-1} + b_{11} \pi_{t-2} + b_{12} u_{t-2} + b_{13} i_{t-2} + e_{1t}\]
+\[ u_t = a_{20} + a_{21} \pi_{t-1} + a_{22} u_{t-1} + a_{23} i_{t-1}+ b_{21} \pi_{t-2} + b_{22} u_{t-2} + b_{23} i_{t-2} + e_{2t}\]
+\[ i_t = a_{30} + a_{31} \pi_{t-1} + a_{32} u_{t-1} + a_{33} i_{t-1}+ b_{31} \pi_{t-2} + b_{32} u_{t-2} + b_{33} i_{t-2}+ e_{3t}\]
+
+We can estimate the above model using OLS for each equation separately. It is a common practice to report the variance decomposition and impulse response from an estimated VAR model instead of reported the estimated coefficients for each equation. I will follow that convention and only report the analysis based on the estimated VAR model. The table below shows the results of Granger-causality test using optimal lag of 2. We find that inflation Granger-causes ffr and unemployment as indicated by a low p-value for the null hypothesis of no Granger-causality. Similarly, unemployment Granger-causes inflation and ffr. Finally, ffr also Granger-cause other two variables.
+
+\begin{verbatim}
+## 
+##  Granger causality H0: inf do not Granger-cause u ffr
+## 
+## data:  VAR object varmodel
+## F-Test = 5.4331, df1 = 4, df2 = 687, p-value = 0.0002606
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Granger causality H0: u do not Granger-cause inf ffr
+## 
+## data:  VAR object varmodel
+## F-Test = 5.4764, df1 = 4, df2 = 687, p-value = 0.0002413
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##  Granger causality H0: ffr do not Granger-cause inf u
+## 
+## data:  VAR object varmodel
+## F-Test = 3.8411, df1 = 4, df2 = 687, p-value = 0.004271
+\end{verbatim}
+
+Next we present the impulse responses for the recursive VAR structure where we use the following ordering: inflation, unemployment, and interest rate. For brevity, I only show the effect of an unexpected increase in ffr on all three variables as this shock propagates through the recursive VAR structure using the estimated coefficients from the reduced-form VAR model. From Figures 7.1 through 7.3 we observe a persistent positive effect of higher interest rate on both unemployment and inflation that fades over time.
+
+\begin{figure}
+
+{\centering \includegraphics{bookdown-demo_files/figure-latex/ch7fig2-1} 
+
+}
+
+\caption{Impulse Response Function }\label{fig:ch7fig21}
+\end{figure}\begin{figure}
+
+{\centering \includegraphics{bookdown-demo_files/figure-latex/ch7fig2-2} 
+
+}
+
+\caption{Impulse Response Function }\label{fig:ch7fig22}
+\end{figure}\begin{figure}
+
+{\centering \includegraphics{bookdown-demo_files/figure-latex/ch7fig2-3} 
+
+}
+
+\caption{Impulse Response Function }\label{fig:ch7fig23}
+\end{figure}
+
+Next we present the forecast error variance decomposition results that decomposes the variance in forecast error of a variable into own contribution and contribution of shocks to other variables. In Table below we show this analysis at 4 forecast horizons, namely, 1 period, 4 period, 8 period, and 12 periods.
+They suggest considerable interaction among the variables. For example, at the 12-quarter
+horizon, 63 percent of the forecast error variance in for ffr can be attributed to the inflation and unemployment shocks in the recursive VAR. In contrast, only 15 percent of the forecast error variance for inflation comes from shocks to ffr and unemployment.
+
+\begin{table}[t]
+
+\caption{\label{tab:unnamed-chunk-13} Panel A-FEVD for Inflation}
+\centering
+\begin{tabular}{r|r|r|r}
+\hline
+horizon & inf & u & ffr\\
+\hline
+1 & 1.000 & 0.000 & 0.000\\
+\hline
+4 & 0.916 & 0.048 & 0.036\\
+\hline
+8 & 0.866 & 0.096 & 0.038\\
+\hline
+12 & 0.853 & 0.111 & 0.036\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+
+\caption{\label{tab:unnamed-chunk-13}Panel B- FEVD for Unemployment}
+\centering
+\begin{tabular}{r|r|r|r}
+\hline
+horizon & inf & u & ffr\\
+\hline
+1 & 0.001 & 0.999 & 0.000\\
+\hline
+4 & 0.001 & 0.995 & 0.004\\
+\hline
+8 & 0.008 & 0.961 & 0.031\\
+\hline
+12 & 0.038 & 0.885 & 0.077\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+
+\caption{\label{tab:unnamed-chunk-13}Panel C- FEVD for FFR}
+\centering
+\begin{tabular}{r|r|r|r}
+\hline
+horizon & inf & u & ffr\\
+\hline
+1 & 0.014 & 0.141 & 0.844\\
+\hline
+4 & 0.045 & 0.367 & 0.588\\
+\hline
+8 & 0.127 & 0.439 & 0.434\\
+\hline
+12 & 0.202 & 0.428 & 0.370\\
+\hline
+\end{tabular}
+\end{table}
+
+Finally, we can use our reduced-form VAR estimation to produce forecasts for each variable in the model.
+Figure \ref{fig:ch7fig1} below provides forecast for next 8 quarters from 2019Q3 through 2021Q2. These forecasts can be compared with univariate forecast for each variable using ARIMA or some other method to assess the improvement in forecast accuracy due to estimating a VAR model.
+
+\begin{verbatim}
+## Error in forecast(varmodel, h = 8): unused argument (h = 8)
+\end{verbatim}
+
+\begin{verbatim}
+## Error in plot(fcast, include = 24): object 'fcast' not found
+\end{verbatim}
 
 \hypertarget{modeling-volatility}{%
 \chapter{Modeling Volatility}\label{modeling-volatility}}
@@ -2287,7 +2446,7 @@ We find strong evidence for ARCH effects in our data as the null hypothesis of n
 
 \begin{table}[t]
 
-\caption{\label{tab:unnamed-chunk-11}(A) Estimated GARCH(1,1)}
+\caption{\label{tab:unnamed-chunk-14}(A) Estimated GARCH(1,1)}
 \centering
 \begin{tabular}{l|r|r|r|r}
 \hline
@@ -2306,7 +2465,7 @@ beta1 & 0.840 & 0.013 & 63.130 & 0\\
 
 \begin{table}[t]
 
-\caption{\label{tab:unnamed-chunk-11}(B) Estimated GJR-GARCH(1,1)}
+\caption{\label{tab:unnamed-chunk-14}(B) Estimated GJR-GARCH(1,1)}
 \centering
 \begin{tabular}{l|r|r|r|r}
 \hline
@@ -2327,7 +2486,7 @@ gamma1 & 0.229 & 0.024 & 9.715 & 0.000\\
 
 \begin{table}[t]
 
-\caption{\label{tab:unnamed-chunk-11}(C) Estimated EGARCH(1,1)}
+\caption{\label{tab:unnamed-chunk-14}(C) Estimated EGARCH(1,1)}
 \centering
 \begin{tabular}{l|r|r|r|r}
 \hline
@@ -2348,7 +2507,7 @@ gamma1 & 0.162 & 0.015 & 10.971 & 0.000\\
 
 \begin{table}[t]
 
-\caption{\label{tab:unnamed-chunk-11}(D) Persistence, Unconditional Variance, and Half-life}
+\caption{\label{tab:unnamed-chunk-14}(D) Persistence, Unconditional Variance, and Half-life}
 \centering
 \begin{tabular}{l|r|r|r}
 \hline
@@ -2363,11 +2522,11 @@ Half-life & 33.087 & 25.242 & 20.712\\
 \end{tabular}
 \end{table}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-11-1.pdf} \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-11-2.pdf} \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-11-3.pdf} \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-11-4.pdf} \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-11-5.pdf} \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-11-6.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-14-1.pdf} \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-14-2.pdf} \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-14-3.pdf} \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-14-4.pdf} \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-14-5.pdf} \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-14-6.pdf}
 
 Finally, these models can also be used to forecast the volatility of SP500. Figure 8 below shows this forecast for the next 7 days from the EGARCH(1.1) model.
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-12-1.pdf} \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-12-2.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-15-1.pdf} \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-15-2.pdf}
 
 \hypertarget{appendix-appendix}{%
 \appendix}
@@ -2382,7 +2541,7 @@ Given that all students must have taken a course in calculus before enrolling fo
 \section{Derivative of a single variable function}\label{derivative-of-a-single-variable-function}}
 
 \BeginKnitrBlock{definition}[Derivative of a function]
-\protect\hypertarget{def:unnamed-chunk-13}{}{\label{def:unnamed-chunk-13} \iffalse (Derivative of a function) \fi{} }Consider the following function, \(y=f(x)\). The \emph{derivative} of this function measures the rate of change in \(y\) caused by a change in \(x\).
+\protect\hypertarget{def:unnamed-chunk-16}{}{\label{def:unnamed-chunk-16} \iffalse (Derivative of a function) \fi{} }Consider the following function, \(y=f(x)\). The \emph{derivative} of this function measures the rate of change in \(y\) caused by a change in \(x\).
 \EndKnitrBlock{definition}
 
 There are two alternative notations for the derivative of \(y\) with respect to \(x\): \(f'(x)\) or \(\displaystyle{\frac{dy}{dx}}\).
@@ -2483,13 +2642,13 @@ where it is assumed that \(a\) is an constant.
 \section{Second derivative and non-linearity}\label{second-derivative-and-non-linearity}}
 
 \BeginKnitrBlock{definition}[Second derivative of a function]
-\protect\hypertarget{def:unnamed-chunk-14}{}{\label{def:unnamed-chunk-14} \iffalse (Second derivative of a function) \fi{} }Consider the following function, \(y=f(x)\). The \emph{second derivative} of this function measures the change in the rate of change of this function. Formally it is denoted by \(f''(x)\) or \(\displaystyle{\frac{d^2y}{dx^2}}\).
+\protect\hypertarget{def:unnamed-chunk-17}{}{\label{def:unnamed-chunk-17} \iffalse (Second derivative of a function) \fi{} }Consider the following function, \(y=f(x)\). The \emph{second derivative} of this function measures the change in the rate of change of this function. Formally it is denoted by \(f''(x)\) or \(\displaystyle{\frac{d^2y}{dx^2}}\).
 \EndKnitrBlock{definition}
 
 The second derivative measures the \emph{curvature} of the function and hence can be used to distinguish a \emph{linear} function from a \emph{non-linear} function. By definition, a linear function has a constant slope implying the its second derivative must be zero.
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-15}{}{\label{exm:unnamed-chunk-15} }For example, consider the following linear function:
+\protect\hypertarget{exm:unnamed-chunk-18}{}{\label{exm:unnamed-chunk-18} }For example, consider the following linear function:
 
 \[f(x) = mx +b\]
 
@@ -2505,7 +2664,7 @@ A non-linear function will have a non-zero second derivative. There are only two
   \(f''(x)<0\). In this case we have a concave relationship. An example from economics is the production function where the relationship between output and input is concave.
 \end{enumerate}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-16-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-19-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -2515,7 +2674,7 @@ A non-linear function will have a non-zero second derivative. There are only two
   \(f''(x)>\). In this case we have a convex relationship. An example from economics is the marginal cost function where the relationship between cost of production and level of output can be convex.
 \end{enumerate}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-17-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-20-1.pdf}
 
 \hypertarget{partial-derivatives-multi-variable-functions}{%
 \section{Partial derivatives: Multi-variable functions}\label{partial-derivatives-multi-variable-functions}}
@@ -2523,11 +2682,11 @@ A non-linear function will have a non-zero second derivative. There are only two
 \emph{Ceteris paribus} aka \emph{holding other things equal} is one of the key concepts used in Economic analysis. A \emph{partial derivative} is a mathematical counterpart of this assumption.
 
 \BeginKnitrBlock{definition}[Partial Derivative]
-\protect\hypertarget{def:unnamed-chunk-18}{}{\label{def:unnamed-chunk-18} \iffalse (Partial Derivative) \fi{} }Consider a function of n-variables given by \(y=f(x_1,x_2, x_3,...,x_n)\). Then, there are n partial derivatives of this function that can be obtained by taking derivative with respect to one of the \(x\)-variables, holding all other constant. Formally, the partial derivative of \(y\) with respect to \(x_i\) is denoted by \(\displaystyle{f_{x_i} \text{or} \frac{\partial y}{\partial x_i}}\).
+\protect\hypertarget{def:unnamed-chunk-21}{}{\label{def:unnamed-chunk-21} \iffalse (Partial Derivative) \fi{} }Consider a function of n-variables given by \(y=f(x_1,x_2, x_3,...,x_n)\). Then, there are n partial derivatives of this function that can be obtained by taking derivative with respect to one of the \(x\)-variables, holding all other constant. Formally, the partial derivative of \(y\) with respect to \(x_i\) is denoted by \(\displaystyle{f_{x_i} \text{or} \frac{\partial y}{\partial x_i}}\).
 \EndKnitrBlock{definition}
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-19}{}{\label{exm:unnamed-chunk-19} }Consider the following 3-variable function:
+\protect\hypertarget{exm:unnamed-chunk-22}{}{\label{exm:unnamed-chunk-22} }Consider the following 3-variable function:
 
 \[y=ln(x_1)+x_1\times x_2+3x_2^2 + x_1 \times x_3 + ln(x_3)\]
 
@@ -2547,7 +2706,7 @@ Then we can compute three partial derivatives of this function:
 \EndKnitrBlock{example}
 
 \BeginKnitrBlock{example}[Cobb-Douglas Production Function]
-\protect\hypertarget{exm:unnamed-chunk-20}{}{\label{exm:unnamed-chunk-20} \iffalse (Cobb-Douglas Production Function) \fi{} }One of the most used functional form for the production function is the Cobb-Douglas production function. Suppose you have two inputs: labor (L) and capital (K). Let Y denotes output. Then, the Cobb-Douglas production function is given by:
+\protect\hypertarget{exm:unnamed-chunk-23}{}{\label{exm:unnamed-chunk-23} \iffalse (Cobb-Douglas Production Function) \fi{} }One of the most used functional form for the production function is the Cobb-Douglas production function. Suppose you have two inputs: labor (L) and capital (K). Let Y denotes output. Then, the Cobb-Douglas production function is given by:
 
 \[Y=L^{\beta_1}K^{\beta_2}\]
 
@@ -2592,7 +2751,7 @@ Hence, we obtain constant returns to scale as long as \(\beta_1+\beta_2=1\). We 
 In Economics it is often assumed that rational individuals \emph{optimize}. For instance, firms seek to maximize profits (or minimize costs) and households seek to maximize utility. Mathematically, this is equivalent to finding \textbf{extreme} values of an \textbf{objective function}.
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-21}{}{\label{exm:unnamed-chunk-21} }Consider a firm that is choosing a level of output \((q)\) to maximize its profits. By definition, profits are total revenue \(R(q)\) minus total cost \(C(q)\). The resulting profit function \(\pi(q)\) is the firm's objective function and \(q\) is the control variable:
+\protect\hypertarget{exm:unnamed-chunk-24}{}{\label{exm:unnamed-chunk-24} }Consider a firm that is choosing a level of output \((q)\) to maximize its profits. By definition, profits are total revenue \(R(q)\) minus total cost \(C(q)\). The resulting profit function \(\pi(q)\) is the firm's objective function and \(q\) is the control variable:
 
 \[\pi(q)=R(q)- C(q)\]
 
@@ -2612,7 +2771,7 @@ Formally, suppose the objective function is denoted by \(f(x)\) and assume that 
   \(x^*\) is a maximizer if \(f(x^*)\geq f(x)\) for all \(x\neq x^*\). Note that at this point the slope of the tangent to the function is \(0\), i.e., \(f'(x^*)=0\). This is the \textbf{first order condition (foc)} for obtaining a maximum. The graph below illustrates the maximum of a generic function. Note that the slope of the function changes sign from positive to negative around \(x^*\). This will give us the \textbf{second order condition} for obtaining a maximum.
 \end{enumerate}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-22-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-25-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -2622,7 +2781,7 @@ Formally, suppose the objective function is denoted by \(f(x)\) and assume that 
   \(x^*\) is a minimizer if \(f(x^*)\leq f(x)\) for all \(x\neq x^*\). Note that at this point the slope of the tangent to the function is \(0\), i.e., \(f'(x^*)=0\). This is the \textbf{first order condition (foc)} for obtaining a minimum. The graph below illustrates the minimum of a generic function. Note that the slope of the function changes sign from negative to positive around \(x^*\). This will give us the \textbf{second order condition} for obtaining a minimum.
 \end{enumerate}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-23-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-26-1.pdf}
 
 Note for a maximum, Similarly, . We can now outline the steps for computing a maximum or minimum of a given function.
 
@@ -2651,7 +2810,7 @@ Note for a maximum, Similarly, . We can now outline the steps for computing a ma
 \end{enumerate}
 
 \BeginKnitrBlock{example}[Single variable optimization example]
-\protect\hypertarget{exm:unnamed-chunk-24}{}{\label{exm:unnamed-chunk-24} \iffalse (Single variable optimization example) \fi{} }
+\protect\hypertarget{exm:unnamed-chunk-27}{}{\label{exm:unnamed-chunk-27} \iffalse (Single variable optimization example) \fi{} }
 Consider a firm that produces a single good \(q\) and sells it at a price of \$10 per unit. The cost of production is given by:
 \[C(q)=2q+ 5+0.1q^2\]
 At what level of output would profits be maximized?
@@ -2678,7 +2837,7 @@ Hence, \(q^*=10\) maximizes the profits. The maximum level of profits is given b
 Note that the above process can be easily applied to multivariable functions. In that case there will be one first order condition for every control variable.
 
 \BeginKnitrBlock{example}[Multi-variable optimization example]
-\protect\hypertarget{exm:unnamed-chunk-26}{}{\label{exm:unnamed-chunk-26} \iffalse (Multi-variable optimization example) \fi{} }
+\protect\hypertarget{exm:unnamed-chunk-29}{}{\label{exm:unnamed-chunk-29} \iffalse (Multi-variable optimization example) \fi{} }
 Consider a two-variable function:
 
 \[f(x_1,x_2)=2x_1x_2 + \frac{100}{x_1} - 4x_2^2\]
@@ -2702,7 +2861,7 @@ So we have two equations in two unknowns. You can show that \(x_1*=5.84\) and \(
 \addcontentsline{toc}{section}{Problems}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-28}{}{\label{exr:unnamed-chunk-28} }Compute the derivative of the following functions.
+\protect\hypertarget{exr:unnamed-chunk-31}{}{\label{exr:unnamed-chunk-31} }Compute the derivative of the following functions.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
@@ -2722,11 +2881,11 @@ So we have two equations in two unknowns. You can show that \(x_1*=5.84\) and \(
 \EndKnitrBlock{exercise}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-29}{}{\label{exr:unnamed-chunk-29} }Compute the second derivative of each function given in Exercise 2.1.
+\protect\hypertarget{exr:unnamed-chunk-32}{}{\label{exr:unnamed-chunk-32} }Compute the second derivative of each function given in Exercise 2.1.
 \EndKnitrBlock{exercise}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-30}{}{\label{exr:unnamed-chunk-30} }
+\protect\hypertarget{exr:unnamed-chunk-33}{}{\label{exr:unnamed-chunk-33} }
 Compute the partial derivative for each variable for the following functions:
 
 \begin{enumerate}
@@ -2743,7 +2902,7 @@ Compute the partial derivative for each variable for the following functions:
 \EndKnitrBlock{exercise}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-31}{}{\label{exr:unnamed-chunk-31} }Solve the following optimization problems. In each case compute the maximizer(s) (or minimizer(s)) for the function as well as the optimum value of the function.
+\protect\hypertarget{exr:unnamed-chunk-34}{}{\label{exr:unnamed-chunk-34} }Solve the following optimization problems. In each case compute the maximizer(s) (or minimizer(s)) for the function as well as the optimum value of the function.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
@@ -2767,21 +2926,21 @@ Given that all students must have taken a course in statistics before enrolling 
 We begin with a brief review of probability thoery. To define probability we first need to develop an understanding of what we mean by \emph{experiment}, \emph{sample space}, and \emph{event} in statistics.
 
 \BeginKnitrBlock{definition}[Experiment]
-\protect\hypertarget{def:unnamed-chunk-32}{}{\label{def:unnamed-chunk-32} \iffalse (Experiment) \fi{} }An experiment is a process with an uncertain observable outcome. e.g.~Toss of a coin can have two possible outcomes, heads or tails.
+\protect\hypertarget{def:unnamed-chunk-35}{}{\label{def:unnamed-chunk-35} \iffalse (Experiment) \fi{} }An experiment is a process with an uncertain observable outcome. e.g.~Toss of a coin can have two possible outcomes, heads or tails.
 \EndKnitrBlock{definition}
 
 \BeginKnitrBlock{definition}[Sample Space]
-\protect\hypertarget{def:unnamed-chunk-33}{}{\label{def:unnamed-chunk-33} \iffalse (Sample Space) \fi{} }The sample space is the set of all possible outcomes of an experiment. I will denote it by \(S\). If we toss a coin then \(S=\{Heads,Tails\}\).
+\protect\hypertarget{def:unnamed-chunk-36}{}{\label{def:unnamed-chunk-36} \iffalse (Sample Space) \fi{} }The sample space is the set of all possible outcomes of an experiment. I will denote it by \(S\). If we toss a coin then \(S=\{Heads,Tails\}\).
 \EndKnitrBlock{definition}
 
 \BeginKnitrBlock{definition}[Event]
-\protect\hypertarget{def:unnamed-chunk-34}{}{\label{def:unnamed-chunk-34} \iffalse (Event) \fi{} }An event is a subset of the sample space. I will denote it by \(E\). If we toss a coin and Heads shows up then \(E={Heads}\).
+\protect\hypertarget{def:unnamed-chunk-37}{}{\label{def:unnamed-chunk-37} \iffalse (Event) \fi{} }An event is a subset of the sample space. I will denote it by \(E\). If we toss a coin and Heads shows up then \(E={Heads}\).
 \EndKnitrBlock{definition}
 
 Now, we can define probability, which is a function that assigns a numerical value to the chance of an event occuring among all possible events in the sample space.
 
 \BeginKnitrBlock{definition}[Probability]
-\protect\hypertarget{def:unnamed-chunk-35}{}{\label{def:unnamed-chunk-35} \iffalse (Probability) \fi{} }
+\protect\hypertarget{def:unnamed-chunk-38}{}{\label{def:unnamed-chunk-38} \iffalse (Probability) \fi{} }
 A function \(P\) is called a probability function if:
 
 \begin{enumerate}
@@ -2841,7 +3000,7 @@ P(E) = \frac{\text{Number of  outcomes  in  E}}{\text{Number  of  outcomes  in  
 \end{align}
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-36}{}{\label{exm:unnamed-chunk-36} }Consider a fair six-sided dice. The probability of obtaining an odd number if this dice is rolled once is given by 0.5. To see this, note that the event here is obtaining an odd number when a dice is rolled. Hence, \(E=\{1,3,5\}\). Also, \(S=\{1,2,3,4,5,6\}\). Using this, we get:
+\protect\hypertarget{exm:unnamed-chunk-39}{}{\label{exm:unnamed-chunk-39} }Consider a fair six-sided dice. The probability of obtaining an odd number if this dice is rolled once is given by 0.5. To see this, note that the event here is obtaining an odd number when a dice is rolled. Hence, \(E=\{1,3,5\}\). Also, \(S=\{1,2,3,4,5,6\}\). Using this, we get:
 \begin{equation}
 P(E)=\frac{3}{6}=0.5
 \end{equation}
@@ -2853,7 +3012,7 @@ P(E)=\frac{3}{6}=0.5
 One of the most important applications of statistics is to resolve the randomness that is inherent in most economic choices. For example, the outcome of your college major is a random variable with many possible values. Most economic variables can be thought of as \textbf{random variables} that have many possible values which are unknown until they are realized. We will begin by formally defining a random variable.
 
 \BeginKnitrBlock{definition}[Random Variable]
-\protect\hypertarget{def:unnamed-chunk-37}{}{\label{def:unnamed-chunk-37} \iffalse (Random Variable) \fi{} }A random variable is a numerical representation of outcomes of an experiment. For example, in the example of a toss of a coin, suppose you win \$10 if heads shows and you lose \$5 if tails shows. In this case, tossing the coin was the experiment, and winnings from this game is the random variable with two possible values: \$10 and -\$5.
+\protect\hypertarget{def:unnamed-chunk-40}{}{\label{def:unnamed-chunk-40} \iffalse (Random Variable) \fi{} }A random variable is a numerical representation of outcomes of an experiment. For example, in the example of a toss of a coin, suppose you win \$10 if heads shows and you lose \$5 if tails shows. In this case, tossing the coin was the experiment, and winnings from this game is the random variable with two possible values: \$10 and -\$5.
 \EndKnitrBlock{definition}
 
 There are two types of random variables.
@@ -2890,7 +3049,7 @@ X & p(X)\tabularnewline
 \end{longtable}
 
 \BeginKnitrBlock{example}[Grade Distribution]
-\protect\hypertarget{exm:unnamed-chunk-38}{}{\label{exm:unnamed-chunk-38} \iffalse (Grade Distribution) \fi{} }A typical grade distribution is an example of a discrete random variable. Consider the following grade distribution:
+\protect\hypertarget{exm:unnamed-chunk-41}{}{\label{exm:unnamed-chunk-41} \iffalse (Grade Distribution) \fi{} }A typical grade distribution is an example of a discrete random variable. Consider the following grade distribution:
 
 \begin{longtable}[]{@{}cc@{}}
 \toprule
@@ -2910,8 +3069,8 @@ Note that every GPA point corresponds to a letter grade. From the perspective of
 
 \begin{figure}
 \centering
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-39-1.pdf}
-\caption{\label{fig:unnamed-chunk-39}Probability Distribution of Letter Grades}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-42-1.pdf}
+\caption{\label{fig:unnamed-chunk-42}Probability Distribution of Letter Grades}
 \end{figure}
 
 We can use the probability distribution of a discrete random variable in two different ways.
@@ -2955,7 +3114,7 @@ Grade & Percent of Students & \(F(x)\)\tabularnewline
 So for example, we can infer that the probability of obtaining the letter grade of C or lower i.e, \(P(X\leq 2)\) is 0.7 or 70\% which is obtained by adding the probabilities of obtaining letter grades of C, D, and F, respectively.
 
 \BeginKnitrBlock{example}[Bernoulli Random Variable]
-\protect\hypertarget{exm:unnamed-chunk-40}{}{\label{exm:unnamed-chunk-40} \iffalse (Bernoulli Random Variable) \fi{} }When a random variable is binary then we call it a \textbf{Bernoulli} random variable and its probability distrubition is called \textbf{Bernoulli} distribution. Consider a random variable that can only take two values, say, \(0\) or \(1\). It is common to think of these two values as coding a set criterion with \(1\) typically assigned if the criterion is met and \(0\) is assigned for failing to meet the criterion. For example, \(X\) could be whether you will get a job right after graduation. If you do then \(X=1\) and if you do not then \(X=0\). Let \(p\) denotes the probability that you will get a job. Then, the \(p.m.f.\) of the Bernoulli distribution is given by:
+\protect\hypertarget{exm:unnamed-chunk-43}{}{\label{exm:unnamed-chunk-43} \iffalse (Bernoulli Random Variable) \fi{} }When a random variable is binary then we call it a \textbf{Bernoulli} random variable and its probability distrubition is called \textbf{Bernoulli} distribution. Consider a random variable that can only take two values, say, \(0\) or \(1\). It is common to think of these two values as coding a set criterion with \(1\) typically assigned if the criterion is met and \(0\) is assigned for failing to meet the criterion. For example, \(X\) could be whether you will get a job right after graduation. If you do then \(X=1\) and if you do not then \(X=0\). Let \(p\) denotes the probability that you will get a job. Then, the \(p.m.f.\) of the Bernoulli distribution is given by:
 
 \[f(x)=\begin{cases}
     p & if \ X=1\\
@@ -2999,16 +3158,16 @@ Below I plot the empirical c.d.f for Apple's stock return. Let \(X\) denotes thi
 
 \begin{figure}
 \centering
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-41-1.pdf}
-\caption{\label{fig:unnamed-chunk-41}Empirical c.d.f of daily Apple Stock Return (2007-2019)}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-44-1.pdf}
+\caption{\label{fig:unnamed-chunk-44}Empirical c.d.f of daily Apple Stock Return (2007-2019)}
 \end{figure}
 
 Figure 3.3 below presents the \emph{p.d.f} of the daily stock return that corresponds to the \emph{c.d.f} plotted in Figure 3.2. Using this we can work the probability of stock returns falling in any given interval. For instance, the probability that Apple stock return will fall between 0 and 3\% is the area under the p.d.f. between these two values. Figure 3.3 higlights this area and we can see that this probability is equal to 0.47.
 
 \begin{figure}
 \centering
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-42-1.pdf}
-\caption{\label{fig:unnamed-chunk-42}Empirical p.d.f of daily Apple Stock Return (2007-2019)}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-45-1.pdf}
+\caption{\label{fig:unnamed-chunk-45}Empirical p.d.f of daily Apple Stock Return (2007-2019)}
 \end{figure}
 
 \hypertarget{moments-of-a-probability-distribution-function}{%
@@ -3032,7 +3191,7 @@ The information contained in a probability distribution can be meaningfully summ
 What is the most likely value of a random variable? To answer that we often compute \textbf{expected value} of the random variable which gives us the center (or peak) of the underlying probability distribution. We will use \textbf{E} to denote expected value. So \(E(X)\) is the expected value of a random variable and we will use \(\mu_X\) to denote the mean or average value of \(X\).
 
 \BeginKnitrBlock{definition}[Expected Value]
-\protect\hypertarget{def:unnamed-chunk-43}{}{\label{def:unnamed-chunk-43} \iffalse (Expected Value) \fi{} }Consider a discrete random variable \(X\) that can take \(n\) possible values and has the following probabilty distrubution:
+\protect\hypertarget{def:unnamed-chunk-46}{}{\label{def:unnamed-chunk-46} \iffalse (Expected Value) \fi{} }Consider a discrete random variable \(X\) that can take \(n\) possible values and has the following probabilty distrubution:
 
 \begin{longtable}[]{@{}cc@{}}
 \toprule
@@ -3054,7 +3213,7 @@ Then, the expected value of \(X\) is given by:
 
 Hence, expected value is a probability-weighted average of all possible values of a random variable.
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-44}{}{\label{exm:unnamed-chunk-44} }Suppose you toss a fair coin and receive \$10 if tails shows and receive 0 if heads shows. What is the expected value of the winnings from a single toss of this coin?
+\protect\hypertarget{exm:unnamed-chunk-47}{}{\label{exm:unnamed-chunk-47} }Suppose you toss a fair coin and receive \$10 if tails shows and receive 0 if heads shows. What is the expected value of the winnings from a single toss of this coin?
 \EndKnitrBlock{example}
 
 \BeginKnitrBlock{solution}
@@ -3064,7 +3223,7 @@ Hence, expected value is a probability-weighted average of all possible values o
 \EndKnitrBlock{solution}
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-46}{}{\label{exm:unnamed-chunk-46} }Suppose you can invest \$10,000 in a mutual fund after 1 year can earn a return of 10\%
+\protect\hypertarget{exm:unnamed-chunk-49}{}{\label{exm:unnamed-chunk-49} }Suppose you can invest \$10,000 in a mutual fund after 1 year can earn a return of 10\%
 with a probability of 0.1 or a return of 2\% with a probability of 0.5 or a loss of 5\% with a probability of 0.4. What is the expected return of investing \$10,000 in this mutual fund?
 \EndKnitrBlock{example}
 
@@ -3086,7 +3245,7 @@ To determine the width or \emph{dispersion} of a probability distribution we use
 The standard deviation is simply the square root of the variance and is in the same units as the random variable. This allows easy comparison of the width and the center of the distribution. We will denote standard deviation by \(\sigma_X\).
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-48}{}{\label{exm:unnamed-chunk-48} }Using the mutual fund example, the variance will measure \textbf{riskiness} of the investment. It is given by:
+\protect\hypertarget{exm:unnamed-chunk-51}{}{\label{exm:unnamed-chunk-51} }Using the mutual fund example, the variance will measure \textbf{riskiness} of the investment. It is given by:
 
 \[Var(X)=(1000-40)^2\times 0.1 + (200-40)^2 \times 0.5 - (400-40)^2 \times 0.4=53120\]
 
@@ -3101,11 +3260,11 @@ How much can we say about a random variable if we only know its mean and the sta
 
 \begin{figure}
 
-{\centering \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-49-1} 
+{\centering \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-52-1} 
 
 }
 
-\caption{Normal distribution with mean=5 and s.d.=2}\label{fig:unnamed-chunk-49}
+\caption{Normal distribution with mean=5 and s.d.=2}\label{fig:unnamed-chunk-52}
 \end{figure}
 
 Key features of the normal distribution that are very useful for us:
@@ -3156,11 +3315,11 @@ Figure 3.5 shows three probability distributions. For the left-skewed distributi
 
 \begin{figure}
 
-{\centering \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-50-1} 
+{\centering \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-53-1} 
 
 }
 
-\caption{Skewness of a Probablity distribution}\label{fig:unnamed-chunk-50}
+\caption{Skewness of a Probablity distribution}\label{fig:unnamed-chunk-53}
 \end{figure}
 
 \begin{enumerate}
@@ -3185,11 +3344,11 @@ A normal distribution has a Kurtosis of 3. A value that is above or below 3 will
 
 \begin{figure}
 
-{\centering \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-51-1} 
+{\centering \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-54-1} 
 
 }
 
-\caption{Kurtosis of a Probablity distribution}\label{fig:unnamed-chunk-51}
+\caption{Kurtosis of a Probablity distribution}\label{fig:unnamed-chunk-54}
 \end{figure}
 
 Fig 3.6 shows three types of distribution based on their Kurtosis. The leptokurtic distribution has a Kurtosis value of greater than 3 and is more \textbf{heavy-tailed} or \textbf{peaked} than a norma distribution.
@@ -3211,19 +3370,19 @@ Using the normal distribution we can derive a few useful probability distributio
   t-distribution: Student's t-distribution is obtained by taking a ratio of a standard normal and the square root of a Chi-square random variable. For example, if \(X\) is a standard normal and \(Y\) is a Chi-square with \(m\) degrees of freedom, then \(Z=\displaystyle\frac{X}{\sqrt{Y/m}}\) follows t-distribution with \(m\) degrees of freedom. t-distribution has fatter tails when compared to normal.
 \end{enumerate}
 
-\begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-52-1} \end{center}
-
-\begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-53-1} \end{center}
-
-\begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-54-1} \end{center}
-
-\begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-54-2} \end{center}
-
 \begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-55-1} \end{center}
 
-\begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-55-2} \end{center}
+\begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-56-1} \end{center}
 
-\begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-55-3} \end{center}
+\begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-57-1} \end{center}
+
+\begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-57-2} \end{center}
+
+\begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-58-1} \end{center}
+
+\begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-58-2} \end{center}
+
+\begin{center}\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-58-3} \end{center}
 
 \hypertarget{joint-probability-distribution}{%
 \section{Joint Probability Distribution}\label{joint-probability-distribution}}
@@ -3237,7 +3396,7 @@ Let \(X\) and \(Y\) denote two random variables of interest, both from a common 
 \[F(x,y)=P(X=x, Y=y)\]
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-56}{}{\label{exm:unnamed-chunk-56} }
+\protect\hypertarget{exm:unnamed-chunk-59}{}{\label{exm:unnamed-chunk-59} }
 Suppose you are an investment banker and you are considering investment into two assets: a stock listed in NYSE (\(X\)) and a cotton futures (\(Y\)) listed in Chicago Mercantile Exchange. Suppose \(X\) can take three possible values: 2/\%, 3/\%, or 4/\%. Similarly \(Y\) can take three possible values given by 6/\%,4/\%, or 1/\%. The value will depend on the state of the economy. Suppose there are three possiblities for the economy next year: boom, expansion, and status quo. The joint probability distribution for \(X\) and \(Y\) is given by:
 
 \begin{longtable}[]{@{}cccccc@{}}
@@ -3445,7 +3604,7 @@ For an unbiased estimator, \(Bias(\widehat{\theta})=0\). If \(Bias(\widehat{\the
 \end{enumerate}
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-57}{}{\label{exm:unnamed-chunk-57} }Suppose we have a random sample with \(n\) observations: \(\{x_1,x_2,...,x_n\}\) drawn from a population with a mean of \(\mu_x\). Sample mean is defined as:
+\protect\hypertarget{exm:unnamed-chunk-60}{}{\label{exm:unnamed-chunk-60} }Suppose we have a random sample with \(n\) observations: \(\{x_1,x_2,...,x_n\}\) drawn from a population with a mean of \(\mu_x\). Sample mean is defined as:
 
 \[\overline{X}=\frac{\sum_{i=1}^N x_i}{N}\]
 
@@ -3465,7 +3624,7 @@ As a result the sample mean is an unbiased estimator of the population mean. How
 \EndKnitrBlock{example}
 
 \BeginKnitrBlock{definition}[Best Unbiased Estimator (BUE)]
-\protect\hypertarget{def:unnamed-chunk-58}{}{\label{def:unnamed-chunk-58} \iffalse (Best Unbiased Estimator (BUE)) \fi{} }Let \(\theta\) denote a population parameter of interest. Then, an sample estimator denoted by \(\hat{\theta}\) is the \underline{best unbiased estimator} of \(\theta\) if the following two conditions are satisfied:
+\protect\hypertarget{def:unnamed-chunk-61}{}{\label{def:unnamed-chunk-61} \iffalse (Best Unbiased Estimator (BUE)) \fi{} }Let \(\theta\) denote a population parameter of interest. Then, an sample estimator denoted by \(\hat{\theta}\) is the \underline{best unbiased estimator} of \(\theta\) if the following two conditions are satisfied:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -3531,7 +3690,7 @@ Once we have fixed the level of significance, we can use the distribution table 
 Here our goal is to develop tests for testing statements about a single population parameter of interest. So for example, we can either test a statement about a population mean or a population variance.
 
 \BeginKnitrBlock{example}[t-test for population mean]
-\protect\hypertarget{exm:unnamed-chunk-59}{}{\label{exm:unnamed-chunk-59} \iffalse (t-test for population mean) \fi{} }
+\protect\hypertarget{exm:unnamed-chunk-62}{}{\label{exm:unnamed-chunk-62} \iffalse (t-test for population mean) \fi{} }
 Suppose you are interested in measuring mean hourly wage of males aged 25-35. Accordingly, we collect a sample of 100 workers from the population of male in this age group with a mean of \(\mu_X\) and a standard deviation of \(\sigma_X\). The sample mean is \(\hat{\mu}_X=\$25\) and the sample standard deviation is \(\hat{\sigma}_X=\$7\). Now, suppose we want to test the following hypothesis:
 
 \[H_0: \mu_X=27\]
@@ -3564,7 +3723,7 @@ In our case, the p-value is 0.0053. Because we chose \(\alpha=0.05\), according 
 \EndKnitrBlock{example}
 
 \BeginKnitrBlock{example}[Chi-square test for population variance]
-\protect\hypertarget{exm:unnamed-chunk-60}{}{\label{exm:unnamed-chunk-60} \iffalse (Chi-square test for population variance) \fi{} }Using the same example, we also test a statement about the population variance. Suppose we want to test whether the variance of the hourly wage is 52.
+\protect\hypertarget{exm:unnamed-chunk-63}{}{\label{exm:unnamed-chunk-63} \iffalse (Chi-square test for population variance) \fi{} }Using the same example, we also test a statement about the population variance. Suppose we want to test whether the variance of the hourly wage is 52.
 
 \[H_0: \sigma^2_X=52\]
 
@@ -3592,7 +3751,7 @@ The degrees of freedom is \(N-1=99\) and at 5\% level of significance the critic
 Often we are interested in testing a restriction that is a linear combination of two or more population means. Similarly, we maybe interested in comparing the variance of two different populations. In such cases we need to develop statistical tests that allow for comparison between parameters of different populations with given means and variances.
 
 \BeginKnitrBlock{example}[t-test for comparing population mean of two populations]
-\protect\hypertarget{exm:unnamed-chunk-61}{}{\label{exm:unnamed-chunk-61} \iffalse (t-test for comparing population mean of two populations) \fi{} }Suppose you are interested in comparing mean weekly hours studied by Econ majors (X) and non-Econ majors in the college of business. For this purpose, you collect a sample of 25 econ majors and a sample of 30 non-econ majors. The sample mean of weekly hours studied by econ majors is 10 hours with a standard deviation of 4 hours. The sample mean of weekly hours studied by non-econ majors is 8 hours with a standard deviation of 2 hours. Also suppose that the covariance between weekly hours studied by econ and non-econ majors is 0.12. Test whether mean weekly hours studied by econ majors is more than the mean weekly hours studied by non-Econ majors.
+\protect\hypertarget{exm:unnamed-chunk-64}{}{\label{exm:unnamed-chunk-64} \iffalse (t-test for comparing population mean of two populations) \fi{} }Suppose you are interested in comparing mean weekly hours studied by Econ majors (X) and non-Econ majors in the college of business. For this purpose, you collect a sample of 25 econ majors and a sample of 30 non-econ majors. The sample mean of weekly hours studied by econ majors is 10 hours with a standard deviation of 4 hours. The sample mean of weekly hours studied by non-econ majors is 8 hours with a standard deviation of 2 hours. Also suppose that the covariance between weekly hours studied by econ and non-econ majors is 0.12. Test whether mean weekly hours studied by econ majors is more than the mean weekly hours studied by non-Econ majors.
 
 Let \(X\) denote hours studied, \(N_X\) denotes sample size, \(\hat{\mu}_X\), and \(\hat{\sigma}_X\) denote sample mean and standard deviation, respectively for econ majors. Similarly, let \(Y\) denote hours studied, \(N_Y\) denotes sample size, \(\hat{\mu}_Y\), and \(\hat{\sigma}_Y\) denote sample mean and standard deviation, respectively for non-econ majors.
 
@@ -3614,7 +3773,7 @@ The sample size here is \(N_X+N_Y=55\). Using 5\% level of significance and degr
 \EndKnitrBlock{example}
 
 \BeginKnitrBlock{example}[F-test for comparing population variance of two populations]
-\protect\hypertarget{exm:unnamed-chunk-62}{}{\label{exm:unnamed-chunk-62} \iffalse (F-test for comparing population variance of two populations) \fi{} }Often we may be interested in comparing the variability between two populations. Using our previous example, we may want to test whether variability in hours studied is bigger for econ majors versus non-econ majors. This can be tested by comparing the ratio of two variances against the value of 1. As before, we start by formulating the null and the alternative hypotheses:
+\protect\hypertarget{exm:unnamed-chunk-65}{}{\label{exm:unnamed-chunk-65} \iffalse (F-test for comparing population variance of two populations) \fi{} }Often we may be interested in comparing the variability between two populations. Using our previous example, we may want to test whether variability in hours studied is bigger for econ majors versus non-econ majors. This can be tested by comparing the ratio of two variances against the value of 1. As before, we start by formulating the null and the alternative hypotheses:
 
 \[H_0: \sigma^2_X/sigma^2_Y = 1\]
 \[H_0: \sigma^2_X/sigma^2_Y > 1\]
@@ -3632,7 +3791,7 @@ If the null hypothesis is true, the above test statistic follows F-distribution 
 One issue with using a sample to estimate population parameters is that by definition a sample estimator will be different for different samples. Thus, sample mean provides no information about how close this estimator is to the true population mean. This uncertainty in estimation can be summarized by computing the standard deviation, with higher value of standar deviation indicating greater uncertainty about the true population parameter. A better measure of this uncertainty is the \textbf{confidence interval}.
 
 \BeginKnitrBlock{definition}[Confidence Interval]
-\protect\hypertarget{def:unnamed-chunk-63}{}{\label{def:unnamed-chunk-63} \iffalse (Confidence Interval) \fi{} }Suppose we draw a random sample \(\{x_1, x_2,...,x_N\}\) from a normally distributed population with mean of \(\mu_X\) and a standard deviation of \(\sigma_X\). Let \(\hat{\mu_X}\) denotes the sample mean and \(\hat{\sigma_X}\) denotes sample standard deviation. Then, the 95\% confidence interval for \(\hat{\mu_X}\) is given by:
+\protect\hypertarget{def:unnamed-chunk-66}{}{\label{def:unnamed-chunk-66} \iffalse (Confidence Interval) \fi{} }Suppose we draw a random sample \(\{x_1, x_2,...,x_N\}\) from a normally distributed population with mean of \(\mu_X\) and a standard deviation of \(\sigma_X\). Let \(\hat{\mu_X}\) denotes the sample mean and \(\hat{\sigma_X}\) denotes sample standard deviation. Then, the 95\% confidence interval for \(\hat{\mu_X}\) is given by:
 
 \[\left[\hat{\mu_X}-t_{c,2-sided} \times \frac{\hat{\sigma_X}}{\sqrt{N}},\hat{\mu_X}+t_{c,2-sided} \times \frac{\hat{\sigma_X}}{\sqrt{N}} \right]\]
 
@@ -3640,7 +3799,7 @@ where \(t_{c,2-sided}\) is the critical value that can be obtained from the t-di
 \EndKnitrBlock{definition}
 
 \BeginKnitrBlock{example}
-\protect\hypertarget{exm:unnamed-chunk-64}{}{\label{exm:unnamed-chunk-64} }Suppose N=20, \(\hat{\mu_X}=5\), and \(\hat{\sigma_X}=2\). Then, the 95\% confidence interval for \(\hat{\mu_X}\) is given by:
+\protect\hypertarget{exm:unnamed-chunk-67}{}{\label{exm:unnamed-chunk-67} }Suppose N=20, \(\hat{\mu_X}=5\), and \(\hat{\sigma_X}=2\). Then, the 95\% confidence interval for \(\hat{\mu_X}\) is given by:
 
 \[\left[5-2.093 \times \frac{2}{\sqrt{20}}, 5+2.093 \times \frac{2}{\sqrt{20}} \right]=[4.06,5.94]\]
 
@@ -3665,7 +3824,7 @@ Because 3.8 is not in the confidence interval we will reject the null hypothesis
 \addcontentsline{toc}{section}{Problems}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-65}{}{\label{exr:unnamed-chunk-65} }Suppose you roll a 6-sided fair dice. If an odd number shows you win \$10. If either 2 or 4 shows you lose \$5. If 6 shows, you neither gain nor lose anything.
+\protect\hypertarget{exr:unnamed-chunk-68}{}{\label{exr:unnamed-chunk-68} }Suppose you roll a 6-sided fair dice. If an odd number shows you win \$10. If either 2 or 4 shows you lose \$5. If 6 shows, you neither gain nor lose anything.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
@@ -3677,7 +3836,7 @@ Because 3.8 is not in the confidence interval we will reject the null hypothesis
 \EndKnitrBlock{exercise}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-66}{}{\label{exr:unnamed-chunk-66} }
+\protect\hypertarget{exr:unnamed-chunk-69}{}{\label{exr:unnamed-chunk-69} }
 Consider a population with a mean of \(\mu\) and variance of \(\sigma^2\). Suppose you draw a random sample \(X_1, X_2,..,X_N\).
 
 \begin{enumerate}
@@ -3692,7 +3851,7 @@ Consider a population with a mean of \(\mu\) and variance of \(\sigma^2\). Suppo
 \EndKnitrBlock{exercise}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-67}{}{\label{exr:unnamed-chunk-67} }Suppose you collect a random sample of 100 observations and find that sample mean is -25 and sample variance is 350.
+\protect\hypertarget{exr:unnamed-chunk-70}{}{\label{exr:unnamed-chunk-70} }Suppose you collect a random sample of 100 observations and find that sample mean is -25 and sample variance is 350.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
@@ -3704,7 +3863,7 @@ Consider a population with a mean of \(\mu\) and variance of \(\sigma^2\). Suppo
 \EndKnitrBlock{exercise}
 
 \BeginKnitrBlock{exercise}
-\protect\hypertarget{exr:unnamed-chunk-68}{}{\label{exr:unnamed-chunk-68} }Suppose you are interested in comparing performance of two different mutual funds, \(X\) and \(Y\). Let \(\mu_X\) and \(mu_Y\) denote unknown population mean returns on investment in \(X\) and \(Y\), respectively. Suppose you collect past 20 months data for both mutual funds and find that sample mean for fund \(X\) is 2\% with a standard deviation of 0.5\%. In contrast, the sample mean for fund \(Y\) is 5\% with a standard deviation of 2\%. Suppose that the correlation between returns on these two funds is 0.2.
+\protect\hypertarget{exr:unnamed-chunk-71}{}{\label{exr:unnamed-chunk-71} }Suppose you are interested in comparing performance of two different mutual funds, \(X\) and \(Y\). Let \(\mu_X\) and \(mu_Y\) denote unknown population mean returns on investment in \(X\) and \(Y\), respectively. Suppose you collect past 20 months data for both mutual funds and find that sample mean for fund \(X\) is 2\% with a standard deviation of 0.5\%. In contrast, the sample mean for fund \(Y\) is 5\% with a standard deviation of 2\%. Suppose that the correlation between returns on these two funds is 0.2.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}

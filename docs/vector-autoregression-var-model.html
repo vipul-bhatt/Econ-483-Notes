@@ -25,7 +25,7 @@
 <meta name="author" content="Vipul Bhatt">
 
 
-<meta name="date" content="2019-10-12">
+<meta name="date" content="2019-10-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -205,6 +205,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="7.4.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#forecase-error-variance-decomposition"><i class="fa fa-check"></i><b>7.4.2</b> Forecase Error Variance Decomposition</a></li>
 <li class="chapter" data-level="7.4.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#granger-causality"><i class="fa fa-check"></i><b>7.4.3</b> Granger causality</a></li>
 </ul></li>
+<li class="chapter" data-level="7.5" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#application-effect-of-monetary-policy-on-inflation-and-unemployment"><i class="fa fa-check"></i><b>7.5</b> Application: Effect of monetary policy on inflation and unemployment</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a><ul>
 <li class="chapter" data-level="8.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#some-stylized-facts-about-stock-market-volatility"><i class="fa fa-check"></i><b>8.1</b> Some stylized facts about stock market volatility</a></li>
@@ -274,7 +275,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <div id="vector-autoregression-var-model" class="section level1">
 <h1><span class="header-section-number">Chapter 7</span> Vector Autoregression (VAR) Model</h1>
 <p>Thus far our analysis has been limited to a univariate time series. Often one maybe interested in understanding the dynamics of multiple time series variables. Vector Autoregression (VAR) model is one of the most commonly used model for this purpose. Suppose you have <span class="math inline">\(N\)</span> time series variables in your sample Then a VAR model is a system of <span class="math inline">\(N\)</span> linear equations where each variable is modeled as a linear function of its own lags and current and past values of the remaining <span class="math inline">\(N-1\)</span> variables. In this sense a VAR model combines and extends the the AR model and distributed lag model we covered earlier.</p>
-<p>There are two main ways we can specifiy a VAR model, each distinguished by the treatment of contemporaenous effects among variable included in the model. To make each type’s main features salient, suppose that we have three variables in our model: inflation (denoted by <span class="math inline">\(\pi\)</span>), unemployment (denoted by <span class="math inline">\(u\)</span>), and the federal fund rate (denoted by <span class="math inline">\(i\)</span>). In the remainded of this chapter will use this 3-variable system as our example.</p>
+<p>There are two main ways we can specify a VAR model, each distinguished by the treatment of contemporaneous effects among variable included in the model. To make each type’s main features salient, suppose that we have three variables in our model: inflation (denoted by <span class="math inline">\(\pi\)</span>), unemployment (denoted by <span class="math inline">\(u\)</span>), and the federal fund rate (denoted by <span class="math inline">\(i\)</span>). In the remainder of this chapter will use this 3-variable system as our example.</p>
 <div id="reduced-form-var" class="section level2">
 <h2><span class="header-section-number">7.1</span> Reduced-form VAR</h2>
 <p>In a reduced-form VAR we abstract away from any contemporaneous linkages among variables in the model and hence in that sense take an <strong>atheoretical</strong> approach to estimating dynamic relationships among these variables. Specifically, we assume that each variable in the model is a function of its own lags and lags of remaining variables in the system. For example, using our 3 variables, a reduced-form VAR(1) is given by:</p>
@@ -306,7 +307,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </div>
 <div id="cholesky-decomposition-and-recursive-var-model" class="section level2">
 <h2><span class="header-section-number">7.3</span> Cholesky Decomposition and Recursive VAR model</h2>
-<p>One solution that falls in between the reduced-form VAR with no structural intepretation and the structural VAR with full set of contemporaneous linkages is the <strong>recursive VAR</strong> model. In this specification, the error term in each equation is assumed to be uncorrelated with the error term in the preceeding equations. This is accomplished by assuming some sort of <strong>ordering</strong> among variables in the VAR model so that only some variables contomporaneously affect others. For example, suppose we use the following ordering: inflation, unemployment, and the federal fund rate (ffr). This ordering will imply the following recursive VAR model:</p>
+<p>One solution that falls in between the reduced-form VAR with no structural interpretation and the structural VAR with full set of contemporaneous linkages is the <strong>recursive VAR</strong> model. In this specification, the error term in each equation is assumed to be uncorrelated with the error term in the preceding equations. This is accomplished by assuming some sort of <strong>ordering</strong> among variables in the VAR model so that only some variables contemporaneously affect others. For example, suppose we use the following ordering: inflation, unemployment, and the federal fund rate (ffr). This ordering will imply the following recursive VAR model:</p>
 <p><span class="math display">\[\pi_t = \beta_{11} + \phi_{11} \pi_{t-1} + \phi_{12} u_{t-1} + \phi_{13} i_{t-1} + \epsilon_{1t}\]</span>
 <span class="math display">\[u_t = \beta_{21} + \beta_{22} \pi_t+\phi_{21} \pi_{t-1} + \phi_{22} u_{t-1} + \phi_{23} i_{t-1} + \epsilon_{2t}\]</span>
 <span class="math display">\[i_t = \beta_{31} + \beta_{32}\pi_t + \beta_{33}u_t+ \phi_{31} \pi_{t-1} + \phi_{32} u_{t-1} + \phi_{33} i_{t-1} + \epsilon_{3t}\]</span></p>
@@ -326,18 +327,197 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </div>
 <div id="forecase-error-variance-decomposition" class="section level3">
 <h3><span class="header-section-number">7.4.2</span> Forecase Error Variance Decomposition</h3>
-<p>Another useful output from an estimated VAR model is the <strong>forecast error variance decomposition (fevd)</strong>. Here, we can address the following question: following a shock to one of the variables in the VAR model what percentage of the variance in the forecast error of other variables in the model can be attributed to this particular shock? For example, what percentage of the forcast error variance of inflation can be attributed to the shock in inflation, shock in unemployment, and shock to ffr. In this sense the forecast error variance decomposition measures the amount of each variable in the VAR model contributes to the other variables in the autoregression.</p>
+<p>Another useful output from an estimated VAR model is the <strong>forecast error variance decomposition (fevd)</strong>. Here, we can address the following question: following a shock to one of the variables in the VAR model what percentage of the variance in the forecast error of other variables in the model can be attributed to this particular shock? For example, what percentage of the forecast error variance of inflation can be attributed to the shock in inflation, shock in unemployment, and shock to ffr. In this sense the forecast error variance decomposition measures the amount of each variable in the VAR model contributes to the other variables in the autoregression.</p>
 </div>
 <div id="granger-causality" class="section level3">
 <h3><span class="header-section-number">7.4.3</span> Granger causality</h3>
-<p>Another important analysis that one can conduct using a VAR model is <strong>Granger-causality</strong>. As a bi-variate concept, Granger causality means that lags of one variable improves our capacity to predict another variable. For example, if unemployment <strong>Granger-causes</strong> inflation, then lags of unemployment have non-zero coefficients in the reduced-form inflatuon equation. Formally, consider the following regression:</p>
+<p>Another important analysis that one can conduct using a VAR model is <strong>Granger-causality</strong>. As a bi-variate concept, Granger causality means that lags of one variable improves our capacity to predict another variable. For example, if unemployment <strong>Granger-causes</strong> inflation, then lags of unemployment have non-zero coefficients in the reduced-form inflation equation. Formally, consider the following regression:</p>
 <p><span class="math display">\[\pi_t=\beta_0 + \sum_{i=1}^{P} \beta_i u_{t-i} \sum_{i=1}^{P} \delta_i \pi_{t-i} + \epsilon_t\]</span></p>
 <p>To test whether unemployment Granger causes inflation we can conduct the following hypothesis test:</p>
 <p><span class="math display">\[H_0: \beta_1=\beta_2=...=\beta_p=0\]</span>
 <span class="math display">\[H_A: \text{Not} \ H_0\]</span></p>
 <p>This is an F-test and rejection of the null hypothesis indicates unemployment Granger-causes inflation.</p>
-
 </div>
+</div>
+<div id="application-effect-of-monetary-policy-on-inflation-and-unemployment" class="section level2">
+<h2><span class="header-section-number">7.5</span> Application: Effect of monetary policy on inflation and unemployment</h2>
+<p>The Federal reserve bank (The Fed) in the U.S. has a dual mandate: to maintain low inflation and low unemployment. The monetary policy stance of the Fed is expressed in terms of the federal funds rate (ffr). In this section we learn how to estimate a VAR model with three variables: inflation (<span class="math inline">\(\pi_t\)</span>), unemployment (<span class="math inline">\(u_t\)</span>), and interest rate (<span class="math inline">\(i_t\)</span>). For this purpose we will use quarterly data on these variables from 1960Q1 through 2019Q2. We will use the Fred Stat website and download data on these variables:</p>
+<ol style="list-style-type: decimal">
+<li>Seasonally quarterly GDP deflator (GDPDEF): <a href="https://fred.stlouisfed.org/series/GDPDEF" class="uri">https://fred.stlouisfed.org/series/GDPDEF</a> ht
+We define inflation as follows:</li>
+</ol>
+<p><span class="math display">\[\pi_t = 400 \times ln\left(\frac{P_t}{P_{t-1}} \right)\]</span></p>
+<p>Here <span class="math inline">\(P_t\)</span> denotes GDP deflator for quarter <span class="math inline">\(t\)</span>.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Seasonally adjusted Civilian unemployment rate (UNRATE): <a href="https://fred.stlouisfed.org/series/UNRATE" class="uri">https://fred.stlouisfed.org/series/UNRATE</a></p></li>
+<li><p>Effective federal funds rate (FEDFUNDS): <a href="https://fred.stlouisfed.org/series/FEDFUNDS" class="uri">https://fred.stlouisfed.org/series/FEDFUNDS</a></p></li>
+</ol>
+<p>The first step in any VAR analysis is to ensure that all variables in the model are stationary. Although not reported here, I find that inflation is stationary whereas unemployment and interest rate are first difference stationary. Accordingly, we will use inflation and first differences of unemployment and interest rate in our VAR analysis. The second step in the VAR analysis is to determine the optimal number of lags. Table <a href="vector-autoregression-var-model.html#tab:ch7table1">7.1</a> presents different information criteria for up to 8 lags. Using SC criterion we select optimal lags to be 2.</p>
+<caption>
+<span id="tab:ch7table1">Table 7.1: </span> Lag selection for VAR model
+</caption>
+<p>Hence, our reduced-form VAR model is given by:</p>
+<p><span class="math display">\[ \pi_t = a_{10} + a_{11} \pi_{t-1} + a_{12} u_{t-1} + a_{13} i_{t-1} + b_{11} \pi_{t-2} + b_{12} u_{t-2} + b_{13} i_{t-2} + e_{1t}\]</span>
+<span class="math display">\[ u_t = a_{20} + a_{21} \pi_{t-1} + a_{22} u_{t-1} + a_{23} i_{t-1}+ b_{21} \pi_{t-2} + b_{22} u_{t-2} + b_{23} i_{t-2} + e_{2t}\]</span>
+<span class="math display">\[ i_t = a_{30} + a_{31} \pi_{t-1} + a_{32} u_{t-1} + a_{33} i_{t-1}+ b_{31} \pi_{t-2} + b_{32} u_{t-2} + b_{33} i_{t-2}+ e_{3t}\]</span></p>
+<p>We can estimate the above model using OLS for each equation separately. It is a common practice to report the variance decomposition and impulse response from an estimated VAR model instead of reported the estimated coefficients for each equation. I will follow that convention and only report the analysis based on the estimated VAR model. The table below shows the results of Granger-causality test using optimal lag of 2. We find that inflation Granger-causes ffr and unemployment as indicated by a low p-value for the null hypothesis of no Granger-causality. Similarly, unemployment Granger-causes inflation and ffr. Finally, ffr also Granger-cause other two variables.</p>
+<pre><code>## 
+##  Granger causality H0: inf do not Granger-cause u ffr
+## 
+## data:  VAR object varmodel
+## F-Test = 5.4331, df1 = 4, df2 = 687, p-value = 0.0002606</code></pre>
+<pre><code>## 
+##  Granger causality H0: u do not Granger-cause inf ffr
+## 
+## data:  VAR object varmodel
+## F-Test = 5.4764, df1 = 4, df2 = 687, p-value = 0.0002413</code></pre>
+<pre><code>## 
+##  Granger causality H0: ffr do not Granger-cause inf u
+## 
+## data:  VAR object varmodel
+## F-Test = 3.8411, df1 = 4, df2 = 687, p-value = 0.004271</code></pre>
+<p>Next we present the impulse responses for the recursive VAR structure where we use the following ordering: inflation, unemployment, and interest rate. For brevity, I only show the effect of an unexpected increase in ffr on all three variables as this shock propagates through the recursive VAR structure using the estimated coefficients from the reduced-form VAR model. From Figures 7.1 through 7.3 we observe a persistent positive effect of higher interest rate on both unemployment and inflation that fades over time.</p>
+<div class="figure" style="text-align: center"><span id="fig:ch7fig21"></span>
+<img src="bookdown-demo_files/figure-html/ch7fig2-1.png" alt="Impulse Response Function " width="672" />
+<p class="caption">
+Figure 7.1: Impulse Response Function
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:ch7fig22"></span>
+<img src="bookdown-demo_files/figure-html/ch7fig2-2.png" alt="Impulse Response Function " width="672" />
+<p class="caption">
+Figure 7.2: Impulse Response Function
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:ch7fig23"></span>
+<img src="bookdown-demo_files/figure-html/ch7fig2-3.png" alt="Impulse Response Function " width="672" />
+<p class="caption">
+Figure 7.3: Impulse Response Function
+</p>
+</div>
+<p>Next we present the forecast error variance decomposition results that decomposes the variance in forecast error of a variable into own contribution and contribution of shocks to other variables. In Table below we show this analysis at 4 forecast horizons, namely, 1 period, 4 period, 8 period, and 12 periods.
+They suggest considerable interaction among the variables. For example, at the 12-quarter
+horizon, 63 percent of the forecast error variance in for ffr can be attributed to the inflation and unemployment shocks in the recursive VAR. In contrast, only 15 percent of the forecast error variance for inflation comes from shocks to ffr and unemployment.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-13">Table 7.2: </span> Panel A-FEVD for Inflation</caption>
+<thead>
+<tr class="header">
+<th align="right">horizon</th>
+<th align="right">inf</th>
+<th align="right">u</th>
+<th align="right">ffr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1.000</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.916</td>
+<td align="right">0.048</td>
+<td align="right">0.036</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">0.866</td>
+<td align="right">0.096</td>
+<td align="right">0.038</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">0.853</td>
+<td align="right">0.111</td>
+<td align="right">0.036</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption><span id="tab:unnamed-chunk-13">Table 7.2: </span>Panel B- FEVD for Unemployment</caption>
+<thead>
+<tr class="header">
+<th align="right">horizon</th>
+<th align="right">inf</th>
+<th align="right">u</th>
+<th align="right">ffr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0.001</td>
+<td align="right">0.999</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.001</td>
+<td align="right">0.995</td>
+<td align="right">0.004</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">0.008</td>
+<td align="right">0.961</td>
+<td align="right">0.031</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">0.038</td>
+<td align="right">0.885</td>
+<td align="right">0.077</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption><span id="tab:unnamed-chunk-13">Table 7.2: </span>Panel C- FEVD for FFR</caption>
+<thead>
+<tr class="header">
+<th align="right">horizon</th>
+<th align="right">inf</th>
+<th align="right">u</th>
+<th align="right">ffr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0.014</td>
+<td align="right">0.141</td>
+<td align="right">0.844</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.045</td>
+<td align="right">0.367</td>
+<td align="right">0.588</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">0.127</td>
+<td align="right">0.439</td>
+<td align="right">0.434</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">0.202</td>
+<td align="right">0.428</td>
+<td align="right">0.370</td>
+</tr>
+</tbody>
+</table>
+<p>Finally, we can use our reduced-form VAR estimation to produce forecasts for each variable in the model.
+Figure <a href="vector-autoregression-var-model.html#fig:ch7fig1">7.4</a> below provides forecast for next 8 quarters from 2019Q3 through 2021Q2. These forecasts can be compared with univariate forecast for each variable using ARIMA or some other method to assess the improvement in forecast accuracy due to estimating a VAR model.</p>
+<div class="figure" style="text-align: center"><span id="fig:ch7fig1"></span>
+<img src="bookdown-demo_files/figure-html/ch7fig1-1.png" alt="Forecast for 2019Q3 through 2021Q2" width="672" />
+<p class="caption">
+Figure 7.4: Forecast for 2019Q3 through 2021Q2
+</p>
+</div>
+
 </div>
 </div>
             </section>

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.1.21)  12 OCT 2019 13:50
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2019.1.21)  13 OCT 2019 22:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -694,13 +694,19 @@ Package: amsthm 2017/10/31 v2.20.4
 \c@exercise=\count306
 (./bookdown-demo.aux
 
-LaTeX Warning: Label `tab:unnamed-chunk-11' multiply defined.
+LaTeX Warning: Label `tab:unnamed-chunk-13' multiply defined.
 
 
-LaTeX Warning: Label `tab:unnamed-chunk-11' multiply defined.
+LaTeX Warning: Label `tab:unnamed-chunk-13' multiply defined.
 
 
-LaTeX Warning: Label `tab:unnamed-chunk-11' multiply defined.
+LaTeX Warning: Label `tab:unnamed-chunk-14' multiply defined.
+
+
+LaTeX Warning: Label `tab:unnamed-chunk-14' multiply defined.
+
+
+LaTeX Warning: Label `tab:unnamed-chunk-14' multiply defined.
 
 )
 \openout1 = `bookdown-demo.aux'.
@@ -1006,11 +1012,29 @@ Overfull \hbox (111.30731pt too wide) has occurred while \output is active
 OSITION, AND GRANGER CAUSALITY \TU/lmr/m/n/10 51
  []
 
-[51] [52]
-Chapter 8.
-[53
+[51]
+Underfull \hbox (badness 2245) in paragraph at lines 2051--2053
+[]\TU/lmr/m/n/10 Seasonally adjusted Civilian unemployment rate (UNRATE): []$[]
+[][][][] [] [] [] [][][][] [] [][][][][][][][][][] [] [][][] [] [][][][][][] []
+
+ []
+
+[52]
+File: bookdown-demo_files/figure-latex/ch7fig2-1.pdf Graphic file (type pdf)
+<use bookdown-demo_files/figure-latex/ch7fig2-1.pdf>
+File: bookdown-demo_files/figure-latex/ch7fig2-2.pdf Graphic file (type pdf)
+<use bookdown-demo_files/figure-latex/ch7fig2-2.pdf>
+File: bookdown-demo_files/figure-latex/ch7fig2-3.pdf Graphic file (type pdf)
+<use bookdown-demo_files/figure-latex/ch7fig2-3.pdf>
+
+LaTeX Warning: Reference `fig:ch7fig1' on page 53 undefined on input line 2179.
+
+
+[53] [54] [55] [56] [57] [58
 
 ]
+Chapter 8.
+[59]
 File: bookdown-demo_files/figure-latex/ch7-figure1-1.pdf Graphic file (type pdf
 )
 <use bookdown-demo_files/figure-latex/ch7-figure1-1.pdf>
@@ -1023,10 +1047,10 @@ File: bookdown-demo_files/figure-latex/ch7-figure1-3.pdf Graphic file (type pdf
 File: bookdown-demo_files/figure-latex/ch7-figure1-4.pdf Graphic file (type pdf
 )
 <use bookdown-demo_files/figure-latex/ch7-figure1-4.pdf>
-[54] [55] [56] [57]
+[60] [61] [62] [63]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 2121.
-[58]
+(Font)              <14.4> on input line 2280.
+[64]
 File: bookdown-demo_files/figure-latex/ch7-figure2-1.pdf Graphic file (type pdf
 )
 <use bookdown-demo_files/figure-latex/ch7-figure2-1.pdf>
@@ -1036,199 +1060,199 @@ File: bookdown-demo_files/figure-latex/ch7-figure2-2.pdf Graphic file (type pdf
 File: bookdown-demo_files/figure-latex/ch7-figure2-3.pdf Graphic file (type pdf
 )
 <use bookdown-demo_files/figure-latex/ch7-figure2-3.pdf>
-[59] [60] [61] [62]
+[65] [66] [67] [68]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 2249.
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 2408.
 File: bookdown-demo_files/figure-latex/table1-1.pdf Graphic file (type pdf)
 <use bookdown-demo_files/figure-latex/table1-1.pdf>
-File: bookdown-demo_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (typ
+File: bookdown-demo_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-11-1.pdf>
-File: bookdown-demo_files/figure-latex/unnamed-chunk-11-2.pdf Graphic file (typ
+<use bookdown-demo_files/figure-latex/unnamed-chunk-14-1.pdf>
+File: bookdown-demo_files/figure-latex/unnamed-chunk-14-2.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-11-2.pdf>
-File: bookdown-demo_files/figure-latex/unnamed-chunk-11-3.pdf Graphic file (typ
+<use bookdown-demo_files/figure-latex/unnamed-chunk-14-2.pdf>
+File: bookdown-demo_files/figure-latex/unnamed-chunk-14-3.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-11-3.pdf>
-File: bookdown-demo_files/figure-latex/unnamed-chunk-11-4.pdf Graphic file (typ
+<use bookdown-demo_files/figure-latex/unnamed-chunk-14-3.pdf>
+File: bookdown-demo_files/figure-latex/unnamed-chunk-14-4.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-11-4.pdf>
-File: bookdown-demo_files/figure-latex/unnamed-chunk-11-5.pdf Graphic file (typ
+<use bookdown-demo_files/figure-latex/unnamed-chunk-14-4.pdf>
+File: bookdown-demo_files/figure-latex/unnamed-chunk-14-5.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-11-5.pdf>
-File: bookdown-demo_files/figure-latex/unnamed-chunk-11-6.pdf Graphic file (typ
+<use bookdown-demo_files/figure-latex/unnamed-chunk-14-5.pdf>
+File: bookdown-demo_files/figure-latex/unnamed-chunk-14-6.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-11-6.pdf>
+<use bookdown-demo_files/figure-latex/unnamed-chunk-14-6.pdf>
 
-Underfull \hbox (badness 10000) in paragraph at lines 2366--2367
+Underfull \hbox (badness 10000) in paragraph at lines 2525--2526
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2366--2367
+Underfull \hbox (badness 10000) in paragraph at lines 2525--2526
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2366--2367
+Underfull \hbox (badness 10000) in paragraph at lines 2525--2526
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2366--2367
+Underfull \hbox (badness 10000) in paragraph at lines 2525--2526
 []
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2366--2367
+Underfull \hbox (badness 10000) in paragraph at lines 2525--2526
 []
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[63] [64]
+[69] [70]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[65]
+[71]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[66]
+[72]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[67]
+[73]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[68]
+[74]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[69]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-12-1.pdf Graphic file (typ
+[75]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-12-1.pdf>
-File: bookdown-demo_files/figure-latex/unnamed-chunk-12-2.pdf Graphic file (typ
+<use bookdown-demo_files/figure-latex/unnamed-chunk-15-1.pdf>
+File: bookdown-demo_files/figure-latex/unnamed-chunk-15-2.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-12-2.pdf>
+<use bookdown-demo_files/figure-latex/unnamed-chunk-15-2.pdf>
 
-Underfull \hbox (badness 10000) in paragraph at lines 2370--2371
+Underfull \hbox (badness 10000) in paragraph at lines 2529--2530
 [][]
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[70]
+[76]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[71] [72]
+[77] [78]
 Appendix A.
-[73
+[79
 
 ]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (typ
+File: bookdown-demo_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-16-1.pdf>
-[74]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (typ
+<use bookdown-demo_files/figure-latex/unnamed-chunk-19-1.pdf>
+[80]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-17-1.pdf>
+<use bookdown-demo_files/figure-latex/unnamed-chunk-20-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[75] [76] [77]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (typ
+[81] [82] [83]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-25-1.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-22-1.pdf>
-File: bookdown-demo_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (typ
+<use bookdown-demo_files/figure-latex/unnamed-chunk-25-1.pdf>
+File: bookdown-demo_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-23-1.pdf>
-[78] [79]
-Underfull \hbox (badness 10000) in paragraph at lines 2694--2695
+<use bookdown-demo_files/figure-latex/unnamed-chunk-26-1.pdf>
+[84] [85]
+Underfull \hbox (badness 10000) in paragraph at lines 2853--2854
 
  []
 
-[80] [81] [82
+[86] [87] [88
 
 ]
 Appendix B.
-[83] [84]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-39-1.pdf Graphic file (typ
-e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-39-1.pdf>
-[85] [86]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-41-1.pdf Graphic file (typ
-e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-41-1.pdf>
+[89] [90]
 File: bookdown-demo_files/figure-latex/unnamed-chunk-42-1.pdf Graphic file (typ
 e pdf)
 <use bookdown-demo_files/figure-latex/unnamed-chunk-42-1.pdf>
-[87] [88] [89] [90]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-49-1.pdf Graphic file (typ
-e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-49-1.pdf>
 [91] [92]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-50-1.pdf Graphic file (typ
+File: bookdown-demo_files/figure-latex/unnamed-chunk-44-1.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-50-1.pdf>
-File: bookdown-demo_files/figure-latex/unnamed-chunk-51-1.pdf Graphic file (typ
+<use bookdown-demo_files/figure-latex/unnamed-chunk-44-1.pdf>
+File: bookdown-demo_files/figure-latex/unnamed-chunk-45-1.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-51-1.pdf>
-[93] [94] [95]
+<use bookdown-demo_files/figure-latex/unnamed-chunk-45-1.pdf>
+[93] [94] [95] [96]
 File: bookdown-demo_files/figure-latex/unnamed-chunk-52-1.pdf Graphic file (typ
 e pdf)
 <use bookdown-demo_files/figure-latex/unnamed-chunk-52-1.pdf>
+[97] [98]
 File: bookdown-demo_files/figure-latex/unnamed-chunk-53-1.pdf Graphic file (typ
 e pdf)
 <use bookdown-demo_files/figure-latex/unnamed-chunk-53-1.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[96]
 File: bookdown-demo_files/figure-latex/unnamed-chunk-54-1.pdf Graphic file (typ
 e pdf)
 <use bookdown-demo_files/figure-latex/unnamed-chunk-54-1.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[97]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-54-2.pdf Graphic file (typ
-e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-54-2.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[98]
+[99] [100] [101]
 File: bookdown-demo_files/figure-latex/unnamed-chunk-55-1.pdf Graphic file (typ
 e pdf)
 <use bookdown-demo_files/figure-latex/unnamed-chunk-55-1.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[99]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-55-2.pdf Graphic file (typ
+File: bookdown-demo_files/figure-latex/unnamed-chunk-56-1.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-55-2.pdf>
+<use bookdown-demo_files/figure-latex/unnamed-chunk-56-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[100]
-File: bookdown-demo_files/figure-latex/unnamed-chunk-55-3.pdf Graphic file (typ
+[102]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-57-1.pdf Graphic file (typ
 e pdf)
-<use bookdown-demo_files/figure-latex/unnamed-chunk-55-3.pdf>
+<use bookdown-demo_files/figure-latex/unnamed-chunk-57-1.pdf>
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[101] [102] [103] [104] [105] [106] [107] [108] [109] [110] [111]
+[103]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-57-2.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-57-2.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[104]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-58-1.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-58-1.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[105]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-58-2.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-58-2.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[106]
+File: bookdown-demo_files/figure-latex/unnamed-chunk-58-3.pdf Graphic file (typ
+e pdf)
+<use bookdown-demo_files/figure-latex/unnamed-chunk-58-3.pdf>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[107] [108] [109] [110] [111] [112] [113] [114] [115] [116] [117]
 No file bookdown-demo.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3723.
-[112]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3723.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3882.
+[118]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3882.
 (./bookdown-demo.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 3723.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3723.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 3882.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3882.
 
 Package rerunfilecheck Info: File `bookdown-demo.out' has not changed.
-(rerunfilecheck)             Checksum: BEFBEA454ED00B36F98A99AFD25CCF64.
+(rerunfilecheck)             Checksum: 55EB19DB5EACB193A0D90EDB35AD10A5.
 
 LaTeX Warning: There were undefined references.
 
@@ -1237,12 +1261,12 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 24527 strings out of 494476
- 456651 string characters out of 6165662
- 603689 words of memory out of 5000000
- 28152 multiletter control sequences out of 15000+600000
+ 24547 strings out of 494476
+ 457369 string characters out of 6165662
+ 604232 words of memory out of 5000000
+ 28169 multiletter control sequences out of 15000+600000
  549106 words of font info for 63 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  45i,11n,68p,1027b,557s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on bookdown-demo.pdf (112 pages).
+Output written on bookdown-demo.pdf (118 pages).
