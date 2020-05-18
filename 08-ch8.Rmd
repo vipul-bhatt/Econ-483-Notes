@@ -99,7 +99,7 @@ i. Unconditional variance: The unconditional variance of $y_t$ is still constant
 
 ii. Volatility persistence: the persistence is given by $\alpha_1+\beta_1$.
 
-iii. Half-life measure: R is the number of periods it takes for the estimated volatility to converge to half of the unconditional variance of the time series.
+iii. Half-life measure: is the number of periods it takes for the estimated volatility to converge to half of the unconditional variance of the time series.
 
 
 ## Extensions of standard GARCH model
