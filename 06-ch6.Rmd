@@ -12,8 +12,10 @@ Before we consider these time series model in details it is useful to discuss ce
 ## Stationarity and Autocorrelation
 
 ### Covariance Stationary Time Series
-```{definition, d7, name='Covariance Stationary Time Series'}
-```
+
+::: {.definition}
+(Covariance Stationary Time Series)
+:::
 A time series $\{y_t\}$ is said to be a *covariance stationary process* if:
  
 1. $E(y_t)=\mu_y \quad \forall \quad t$
@@ -187,8 +189,7 @@ acf(ar1.sim, lag.max=10, main="")
 ```
 
 ### Partial Autocorrelation
-```{definition, d9, name='Partial Auto Correlation Function (PACF)'}
-```
+
 The ACF captures the relationship between the current period value of a time series and all of its past observations. It includes both direct as well as indirect effects of the past observations on the current period value. Often times it is of interest to measure the direct relationship between the current and past observations, **partialing** out all indirect effects. The *partial autocorrelation function  (PACF)* for a stationary time series $y_t$ at lag $s$ is the direct correlation between $y_t$ and $y_{t-s}$, after filtering out the linear influence of  $y_{t-1},\ldots,y_{t-s-1}$ on $y_t$. Figure \@ref(fig:ch6-figure4) below shows the PACF for a stationary time series where only one lag directly affects the time series in the current period.
  
 ```{r ch6-figure4, echo = FALSE, fig.cap = 'PACF for a Stationary Time Series', out.width='80%', fig.asp=.75, fig.align='center'}
@@ -675,9 +676,5 @@ Box-Jenkins is a three-step procedure for finding the best fitting ARIMA(p,d,q) 
 2. Parameter estimation: we estimate the identified model from the previous step using ML estimation.
 
 3. Model Evaluation: mostly showing that the residuals from the optimal model is a white noise process. We can do this by using the Breusch-Godfrey LM test of serial correlation for the residuals. If residuals  from the final model are white noise then there should be no serial correlation.
-
-
-
-
 
 

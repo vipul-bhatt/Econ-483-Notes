@@ -138,8 +138,8 @@ ffr=xts.to.ts(FEDFUNDS)
 u=xts.to.ts(UNRATE)
 
 ### subset to June 2019
-ffr=window(ffr, start=c(1960,1), end=c(2019,6))
-u=window(u, start=c(1960,1), end=c(2019,6))
+#ffr=window(ffr, start=c(1960,1), end=c(2019,6))
+#u=window(u, start=c(1960,1), end=c(2019,6))
 
 ### aggregate to quarterly
 u=aggregate(u,nfrequency = 4, FUN = mean)
@@ -165,7 +165,7 @@ summary(ur.df(ffr,type="drif",selectlags="BIC"))
 
 
 yvector= ts.union(inf, u,ffr)
-
+yvector=na.omit(yvector)
 #### select number of lages for each variable in the VAR
 
 kable(as.data.frame(VARselect(yvector,lag.max=8,type=c("const"))$criteria), digits=3)

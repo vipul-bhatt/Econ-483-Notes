@@ -1,46 +1,46 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Regression-based Forecasting | Applied Time Series Analysis</title>
-  <meta name="description" content="Lecture notes for Applied Time Series Analysis">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Lecture notes for Applied Time Series Analysis" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Regression-based Forecasting | Applied Time Series Analysis />
+  <meta property="og:title" content="Chapter 2 Regression-based Forecasting | Applied Time Series Analysis" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Lecture notes for Applied Time Series Analysis" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Regression-based Forecasting | Applied Time Series Analysis />
+  <meta name="twitter:title" content="Chapter 2 Regression-based Forecasting | Applied Time Series Analysis" />
   
   <meta name="twitter:description" content="Lecture notes for Applied Time Series Analysis" />
   
 
-<meta name="author" content="Vipul Bhatt">
+<meta name="author" content="Vipul Bhatt" />
 
 
-<meta name="date" content="2019-10-13">
+<meta name="date" content="2024-01-15" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="intro.html">
-<link rel="next" href="components-of-a-time-series.html">
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="components-of-a-time-series.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -48,23 +48,34 @@
 
 
 
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -72,38 +83,45 @@ pre.numberSource a.sourceLine::before
     color: #aaaaaa;
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
 code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -123,7 +141,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a><ul>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#time-series"><i class="fa fa-check"></i><b>1.1</b> Time Series</a></li>
 <li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#serial-correlation"><i class="fa fa-check"></i><b>1.2</b> Serial Correlation</a></li>
 <li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#testing-for-serial-correlion"><i class="fa fa-check"></i><b>1.3</b> Testing for Serial Correlion</a></li>
@@ -131,59 +150,62 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#important-elements-of-forecasting"><i class="fa fa-check"></i><b>1.5</b> Important Elements of Forecasting</a></li>
 <li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#loss-function-and-optimal-forecast"><i class="fa fa-check"></i><b>1.6</b> Loss Function and Optimal Forecast</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html"><i class="fa fa-check"></i><b>2</b> Regression-based Forecasting</a><ul>
+<li class="chapter" data-level="2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html"><i class="fa fa-check"></i><b>2</b> Regression-based Forecasting</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#scenario-analysis-and-conditional-forecasts"><i class="fa fa-check"></i><b>2.1</b> Scenario Analysis and Conditional Forecasts</a></li>
 <li class="chapter" data-level="2.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#unconditional-forecasts"><i class="fa fa-check"></i><b>2.2</b> Unconditional Forecasts</a></li>
 <li class="chapter" data-level="2.3" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#some-practical-issues"><i class="fa fa-check"></i><b>2.3</b> Some practical issues</a></li>
-<li class="chapter" data-level="2.4" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#distributed-lag-regression-models"><i class="fa fa-check"></i><b>2.4</b> Distributed Lag Regression Models</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#dynamic-effect-of-x-on-y"><i class="fa fa-check"></i><b>2.4.1</b> Dynamic Effect of X on Y</a></li>
-<li class="chapter" data-level="2.4.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#model-selection-criterion"><i class="fa fa-check"></i><b>2.4.2</b> Model Selection Criterion</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#application-a-model-of-investment-expenditure"><i class="fa fa-check"></i><b>2.5</b> Application: A Model of Investment Expenditure</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#a-multiple-regression-model-of-invesment-expenditure"><i class="fa fa-check"></i><b>2.5.1</b> A Multiple Regression Model of Invesment Expenditure</a></li>
-<li class="chapter" data-level="2.5.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#a-distributed-lag-model-of-investment-expenditure"><i class="fa fa-check"></i><b>2.5.2</b> A Distributed Lag Model of Investment Expenditure</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html"><i class="fa fa-check"></i><b>3</b> Components of a Time Series</a><ul>
+<li class="chapter" data-level="3" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html"><i class="fa fa-check"></i><b>3</b> Components of a Time Series</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html#decomposing-a-time-series"><i class="fa fa-check"></i><b>3.1</b> Decomposing a time series</a></li>
 <li class="chapter" data-level="3.2" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html#uses-of-decomposition-of-a-time-series"><i class="fa fa-check"></i><b>3.2</b> Uses of Decomposition of a time series</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="smoothing-methods.html"><a href="smoothing-methods.html"><i class="fa fa-check"></i><b>4</b> Smoothing Methods</a><ul>
+<li class="chapter" data-level="4" data-path="smoothing-methods.html"><a href="smoothing-methods.html"><i class="fa fa-check"></i><b>4</b> Smoothing Methods</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="smoothing-methods.html"><a href="smoothing-methods.html#moving-average-method"><i class="fa fa-check"></i><b>4.1</b> Moving Average Method</a></li>
 <li class="chapter" data-level="4.2" data-path="smoothing-methods.html"><a href="smoothing-methods.html#simple-exponential-smoothing"><i class="fa fa-check"></i><b>4.2</b> Simple Exponential Smoothing</a></li>
 <li class="chapter" data-level="4.3" data-path="smoothing-methods.html"><a href="smoothing-methods.html#holt-winters-smoothing"><i class="fa fa-check"></i><b>4.3</b> Holt-Winters Smoothing</a></li>
 <li class="chapter" data-level="4.4" data-path="smoothing-methods.html"><a href="smoothing-methods.html#holt-winters-smoothing-with-seasonality"><i class="fa fa-check"></i><b>4.4</b> Holt-Winters Smoothing with Seasonality</a></li>
 <li class="chapter" data-level="4.5" data-path="smoothing-methods.html"><a href="smoothing-methods.html#application"><i class="fa fa-check"></i><b>4.5</b> Application</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html"><i class="fa fa-check"></i><b>5</b> Modeling Trend and Seasonal Components</a><ul>
-<li class="chapter" data-level="5.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#trend-estimation"><i class="fa fa-check"></i><b>5.1</b> Trend Estimation</a><ul>
+<li class="chapter" data-level="5" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html"><i class="fa fa-check"></i><b>5</b> Modeling Trend and Seasonal Components</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#trend-estimation"><i class="fa fa-check"></i><b>5.1</b> Trend Estimation</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#parametrizing-a-deterministic-trend"><i class="fa fa-check"></i><b>5.1.1</b> Parametrizing a deterministic trend</a></li>
 <li class="chapter" data-level="5.1.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#uses-of-the-deterministic-trend-model"><i class="fa fa-check"></i><b>5.1.2</b> Uses of the Deterministic Trend Model</a></li>
 <li class="chapter" data-level="5.1.3" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#application-estimating-a-polynomial-trend-for-u.s.-real-gdp"><i class="fa fa-check"></i><b>5.1.3</b> Application: Estimating a polynomial trend for U.S. Real GDP</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#seasonal-model"><i class="fa fa-check"></i><b>5.2</b> Seasonal Model</a><ul>
+<li class="chapter" data-level="5.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#seasonal-model"><i class="fa fa-check"></i><b>5.2</b> Seasonal Model</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#regression-model-with-seasonal-dummy-variables"><i class="fa fa-check"></i><b>5.2.1</b> Regression Model with Seasonal Dummy Variables</a></li>
 <li class="chapter" data-level="5.2.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#application-seasonal-model-of-housing-starts"><i class="fa fa-check"></i><b>5.2.2</b> Application: Seasonal Model of Housing Starts</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="modeling-cycle.html"><a href="modeling-cycle.html"><i class="fa fa-check"></i><b>6</b> Modeling Cycle</a><ul>
-<li class="chapter" data-level="6.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#stationarity-and-autocorrelation"><i class="fa fa-check"></i><b>6.1</b> Stationarity and Autocorrelation</a><ul>
+<li class="chapter" data-level="6" data-path="modeling-cycle.html"><a href="modeling-cycle.html"><i class="fa fa-check"></i><b>6</b> Modeling Cycle</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#stationarity-and-autocorrelation"><i class="fa fa-check"></i><b>6.1</b> Stationarity and Autocorrelation</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#covariance-stationary-time-series"><i class="fa fa-check"></i><b>6.1.1</b> Covariance Stationary Time Series</a></li>
 <li class="chapter" data-level="6.1.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#correlation-vs-autocorrelation"><i class="fa fa-check"></i><b>6.1.2</b> Correlation vs Autocorrelation</a></li>
 <li class="chapter" data-level="6.1.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#partial-autocorrelation"><i class="fa fa-check"></i><b>6.1.3</b> Partial Autocorrelation</a></li>
 <li class="chapter" data-level="6.1.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#lag-operator"><i class="fa fa-check"></i><b>6.1.4</b> Lag operator</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#autoregressive-ar-model"><i class="fa fa-check"></i><b>6.2</b> Autoregressive (AR) Model</a><ul>
+<li class="chapter" data-level="6.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#autoregressive-ar-model"><i class="fa fa-check"></i><b>6.2</b> Autoregressive (AR) Model</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#unit-root-and-stationarity"><i class="fa fa-check"></i><b>6.2.1</b> Unit root and Stationarity</a></li>
 <li class="chapter" data-level="6.2.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#properties-of-an-ar1-model"><i class="fa fa-check"></i><b>6.2.2</b> Properties of an AR(1) model</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#estimating-an-ar-model"><i class="fa fa-check"></i><b>6.3</b> Estimating an AR model</a><ul>
+<li class="chapter" data-level="6.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#estimating-an-ar-model"><i class="fa fa-check"></i><b>6.3</b> Estimating an AR model</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#maximum-likelihood-estimation-mle"><i class="fa fa-check"></i><b>6.3.1</b> Maximum Likelihood Estimation (MLE)</a></li>
 <li class="chapter" data-level="6.3.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#mle-of-an-arp-model"><i class="fa fa-check"></i><b>6.3.2</b> MLE of an AR(p) model</a></li>
 <li class="chapter" data-level="6.3.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#selection-of-optimal-order-of-the-ar-model"><i class="fa fa-check"></i><b>6.3.3</b> Selection of optimal order of the AR model</a></li>
 <li class="chapter" data-level="6.3.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#forecasting-using-arp-model"><i class="fa fa-check"></i><b>6.3.4</b> Forecasting using AR(p) model</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#moving-average-ma-model"><i class="fa fa-check"></i><b>6.4</b> Moving Average (MA) Model</a><ul>
+<li class="chapter" data-level="6.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#moving-average-ma-model"><i class="fa fa-check"></i><b>6.4</b> Moving Average (MA) Model</a>
+<ul>
 <li class="chapter" data-level="6.4.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#invertibility-of-an-ma-process"><i class="fa fa-check"></i><b>6.4.1</b> Invertibility of an MA process</a></li>
 <li class="chapter" data-level="6.4.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#properties-of-an-invertible-ma1"><i class="fa fa-check"></i><b>6.4.2</b> Properties of an invertible MA(1)</a></li>
 <li class="chapter" data-level="6.4.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#forecast-based-on-maq"><i class="fa fa-check"></i><b>6.4.3</b> Forecast based on MA(q)</a></li>
@@ -191,64 +213,97 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6.5" data-path="modeling-cycle.html"><a href="modeling-cycle.html#armap-q"><i class="fa fa-check"></i><b>6.5</b> ARMA(p, q)</a></li>
 <li class="chapter" data-level="6.6" data-path="modeling-cycle.html"><a href="modeling-cycle.html#integrated-arma-or-arimapdq"><i class="fa fa-check"></i><b>6.6</b> Integrated ARMA or ARIMA(p,d,q)</a></li>
 <li class="chapter" data-level="6.7" data-path="modeling-cycle.html"><a href="modeling-cycle.html#trend-stationary-vs-difference-stationary-time-series"><i class="fa fa-check"></i><b>6.7</b> Trend Stationary vs Difference Stationary Time Series</a></li>
-<li class="chapter" data-level="6.8" data-path="modeling-cycle.html"><a href="modeling-cycle.html#testing-for-a-unit-root"><i class="fa fa-check"></i><b>6.8</b> Testing for a unit root</a><ul>
+<li class="chapter" data-level="6.8" data-path="modeling-cycle.html"><a href="modeling-cycle.html#testing-for-a-unit-root"><i class="fa fa-check"></i><b>6.8</b> Testing for a unit root</a>
+<ul>
 <li class="chapter" data-level="6.8.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#testing-for-unit-root-in-usdcad-exchange-rate"><i class="fa fa-check"></i><b>6.8.1</b> Testing for unit root in USD/CAD exchange rate</a></li>
 </ul></li>
 <li class="chapter" data-level="6.9" data-path="modeling-cycle.html"><a href="modeling-cycle.html#box-jenkins-method-for-estimating-arimapdq"><i class="fa fa-check"></i><b>6.9</b> Box-Jenkins Method for estimating ARIMA(p,d,q)</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression (VAR) Model</a><ul>
+<li class="chapter" data-level="7" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression (VAR) Model</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#reduced-form-var"><i class="fa fa-check"></i><b>7.1</b> Reduced-form VAR</a></li>
 <li class="chapter" data-level="7.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#structural-var"><i class="fa fa-check"></i><b>7.2</b> Structural VAR</a></li>
 <li class="chapter" data-level="7.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#cholesky-decomposition-and-recursive-var-model"><i class="fa fa-check"></i><b>7.3</b> Cholesky Decomposition and Recursive VAR model</a></li>
-<li class="chapter" data-level="7.4" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function-forecast-error-variance-decomposition-and-granger-causality"><i class="fa fa-check"></i><b>7.4</b> Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality</a><ul>
+<li class="chapter" data-level="7.4" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function-forecast-error-variance-decomposition-and-granger-causality"><i class="fa fa-check"></i><b>7.4</b> Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function"><i class="fa fa-check"></i><b>7.4.1</b> Impulse response function</a></li>
 <li class="chapter" data-level="7.4.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#forecase-error-variance-decomposition"><i class="fa fa-check"></i><b>7.4.2</b> Forecase Error Variance Decomposition</a></li>
 <li class="chapter" data-level="7.4.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#granger-causality"><i class="fa fa-check"></i><b>7.4.3</b> Granger causality</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#application-effect-of-monetary-policy-on-inflation-and-unemployment"><i class="fa fa-check"></i><b>7.5</b> Application: Effect of monetary policy on inflation and unemployment</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a><ul>
+<li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#some-stylized-facts-about-stock-market-volatility"><i class="fa fa-check"></i><b>8.1</b> Some stylized facts about stock market volatility</a></li>
 <li class="chapter" data-level="8.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#archq-autoregressive-conditional-heteroscedasticiy-of-order-q"><i class="fa fa-check"></i><b>8.2</b> ARCH(q): Autoregressive Conditional Heteroscedasticiy of order <span class="math inline">\(q\)</span></a></li>
 <li class="chapter" data-level="8.3" data-path="modeling-volatility.html"><a href="modeling-volatility.html#garchpq-generalized-autoregressive-conditional-heteroscedasicity-of-order-p-and-q"><i class="fa fa-check"></i><b>8.3</b> GARCH(p,q): Generalized Autoregressive Conditional Heteroscedasicity of order <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span></a></li>
-<li class="chapter" data-level="8.4" data-path="modeling-volatility.html"><a href="modeling-volatility.html#extensions-of-standard-garch-model"><i class="fa fa-check"></i><b>8.4</b> Extensions of standard GARCH model</a><ul>
+<li class="chapter" data-level="8.4" data-path="modeling-volatility.html"><a href="modeling-volatility.html#extensions-of-standard-garch-model"><i class="fa fa-check"></i><b>8.4</b> Extensions of standard GARCH model</a>
+<ul>
 <li class="chapter" data-level="8.4.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#gjr-garch11"><i class="fa fa-check"></i><b>8.4.1</b> GJR-GARCH(1,1)</a></li>
 <li class="chapter" data-level="8.4.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#exponential-garch-or-egarch11"><i class="fa fa-check"></i><b>8.4.2</b> Exponential GARCH or EGARCH(1,1)</a></li>
 </ul></li>
 <li class="chapter" data-level="8.5" data-path="modeling-volatility.html"><a href="modeling-volatility.html#application-of-garch-model-estimating-volatility-of-sp500-return"><i class="fa fa-check"></i><b>8.5</b> Application of GARCH model: Estimating volatility of SP500 return</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html"><i class="fa fa-check"></i><b>A</b> Review of Differential Calculus and Optimization</a><ul>
-<li class="chapter" data-level="A.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#derivative-of-a-single-variable-function"><i class="fa fa-check"></i><b>A.1</b> Derivative of a single variable function</a><ul>
-<li class="chapter" data-level="A.1.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#rules-of-differentiation"><i class="fa fa-check"></i><b>A.1.1</b> Rules of Differentiation</a></li>
+<li class="chapter" data-level="A" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html"><i class="fa fa-check"></i><b>A</b> Review of Serial Correlation and Heteroscedasticity</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#classical-assumptions"><i class="fa fa-check"></i><b>A.1</b> Classical Assumptions</a></li>
+<li class="chapter" data-level="A.2" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#heteroscedasticity"><i class="fa fa-check"></i><b>A.2</b> Heteroscedasticity</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#consequences-of-heteroscedasticity-for-the-ols-estimator"><i class="fa fa-check"></i><b>A.2.1</b> Consequences of Heteroscedasticity for the OLS estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="A.2" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#second-derivative-and-non-linearity"><i class="fa fa-check"></i><b>A.2</b> Second derivative and non-linearity</a></li>
-<li class="chapter" data-level="A.3" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#partial-derivatives-multi-variable-functions"><i class="fa fa-check"></i><b>A.3</b> Partial derivatives: Multi-variable functions</a></li>
-<li class="chapter" data-level="A.4" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#optimization"><i class="fa fa-check"></i><b>A.4</b> Optimization</a></li>
+<li class="chapter" data-level="A.3" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#testing-for-hetroscedasticity-in-data"><i class="fa fa-check"></i><b>A.3</b> Testing for Hetroscedasticity in data</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#lm-test-for-linear-heteroscedasticity-bp-test"><i class="fa fa-check"></i><b>A.3.1</b> LM test for linear heteroscedasticity: BP test</a></li>
+<li class="chapter" data-level="A.3.2" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#lm-test-for-linear-heteroscedasticity-whites-test"><i class="fa fa-check"></i><b>A.3.2</b> LM test for linear heteroscedasticity: White’s test</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#serial-correlation-1"><i class="fa fa-check"></i><b>A.4</b> Serial correlation</a>
+<ul>
+<li class="chapter" data-level="A.4.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#consequences-of-serial-correlation-for-the-ols-estimator"><i class="fa fa-check"></i><b>A.4.1</b> Consequences of Serial Correlation for the OLS estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#testing-for-serial-correlation-in-data"><i class="fa fa-check"></i><b>A.5</b> Testing for Serial Correlation in data</a>
+<ul>
+<li class="chapter" data-level="A.5.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#breusch-godfrey-bg-lm-test-for-serial-correlation"><i class="fa fa-check"></i><b>A.5.1</b> Breusch-Godfrey (BG) LM test for serial correlation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html"><i class="fa fa-check"></i><b>B</b> Review of Differential Calculus and Optimization</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#derivative-of-a-single-variable-function"><i class="fa fa-check"></i><b>B.1</b> Derivative of a single variable function</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#rules-of-differentiation"><i class="fa fa-check"></i><b>B.1.1</b> Rules of Differentiation</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#second-derivative-and-non-linearity"><i class="fa fa-check"></i><b>B.2</b> Second derivative and non-linearity</a></li>
+<li class="chapter" data-level="B.3" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#partial-derivatives-multi-variable-functions"><i class="fa fa-check"></i><b>B.3</b> Partial derivatives: Multi-variable functions</a></li>
+<li class="chapter" data-level="B.4" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#optimization"><i class="fa fa-check"></i><b>B.4</b> Optimization</a></li>
 <li class="chapter" data-level="" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#problems"><i class="fa fa-check"></i>Problems</a></li>
 </ul></li>
-<li class="chapter" data-level="B" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html"><i class="fa fa-check"></i><b>B</b> Review of Probability and Statistics</a><ul>
-<li class="chapter" data-level="B.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability"><i class="fa fa-check"></i><b>B.1</b> Probability</a></li>
-<li class="chapter" data-level="B.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#random-variable"><i class="fa fa-check"></i><b>B.2</b> Random Variable</a></li>
-<li class="chapter" data-level="B.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution"><i class="fa fa-check"></i><b>B.3</b> Probability distribution</a><ul>
-<li class="chapter" data-level="B.3.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-discrete-random-variable"><i class="fa fa-check"></i><b>B.3.1</b> Probability distribution of a discrete random variable</a></li>
-<li class="chapter" data-level="B.3.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-continuous-random-variable"><i class="fa fa-check"></i><b>B.3.2</b> Probability distribution of a continuous random variable</a></li>
+<li class="chapter" data-level="C" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html"><i class="fa fa-check"></i><b>C</b> Review of Probability and Statistics</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability"><i class="fa fa-check"></i><b>C.1</b> Probability</a></li>
+<li class="chapter" data-level="C.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#random-variable"><i class="fa fa-check"></i><b>C.2</b> Random Variable</a></li>
+<li class="chapter" data-level="C.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution"><i class="fa fa-check"></i><b>C.3</b> Probability distribution</a>
+<ul>
+<li class="chapter" data-level="C.3.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-discrete-random-variable"><i class="fa fa-check"></i><b>C.3.1</b> Probability distribution of a discrete random variable</a></li>
+<li class="chapter" data-level="C.3.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-continuous-random-variable"><i class="fa fa-check"></i><b>C.3.2</b> Probability distribution of a continuous random variable</a></li>
 </ul></li>
-<li class="chapter" data-level="B.4" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#moments-of-a-probability-distribution-function"><i class="fa fa-check"></i><b>B.4</b> Moments of a probability distribution function</a><ul>
-<li class="chapter" data-level="B.4.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#first-moment-of-a-probability-distribution-expected-value"><i class="fa fa-check"></i><b>B.4.1</b> First moment of a probability distribution: Expected value</a></li>
-<li class="chapter" data-level="B.4.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#second-moment-of-the-distribution."><i class="fa fa-check"></i><b>B.4.2</b> Second moment of the distribution.</a></li>
-<li class="chapter" data-level="B.4.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#third-and-fourth-moments-skewness-and-kurtosis"><i class="fa fa-check"></i><b>B.4.3</b> Third and Fourth Moments: Skewness and Kurtosis</a></li>
+<li class="chapter" data-level="C.4" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#moments-of-a-probability-distribution-function"><i class="fa fa-check"></i><b>C.4</b> Moments of a probability distribution function</a>
+<ul>
+<li class="chapter" data-level="C.4.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#first-moment-of-a-probability-distribution-expected-value"><i class="fa fa-check"></i><b>C.4.1</b> First moment of a probability distribution: Expected value</a></li>
+<li class="chapter" data-level="C.4.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#second-moment-of-the-distribution."><i class="fa fa-check"></i><b>C.4.2</b> Second moment of the distribution.</a></li>
+<li class="chapter" data-level="C.4.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#third-and-fourth-moments-skewness-and-kurtosis"><i class="fa fa-check"></i><b>C.4.3</b> Third and Fourth Moments: Skewness and Kurtosis</a></li>
 </ul></li>
-<li class="chapter" data-level="B.5" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#useful-probability-distributions"><i class="fa fa-check"></i><b>B.5</b> Useful probability distributions</a></li>
-<li class="chapter" data-level="B.6" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#joint-probability-distribution"><i class="fa fa-check"></i><b>B.6</b> Joint Probability Distribution</a></li>
-<li class="chapter" data-level="B.7" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#measures-of-statistical-association"><i class="fa fa-check"></i><b>B.7</b> Measures of statistical association</a><ul>
-<li class="chapter" data-level="B.7.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#rules-of-expectation-and-variances"><i class="fa fa-check"></i><b>B.7.1</b> Rules of expectation and variances</a></li>
+<li class="chapter" data-level="C.5" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#useful-probability-distributions"><i class="fa fa-check"></i><b>C.5</b> Useful probability distributions</a></li>
+<li class="chapter" data-level="C.6" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#joint-probability-distribution"><i class="fa fa-check"></i><b>C.6</b> Joint Probability Distribution</a></li>
+<li class="chapter" data-level="C.7" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#measures-of-statistical-association"><i class="fa fa-check"></i><b>C.7</b> Measures of statistical association</a>
+<ul>
+<li class="chapter" data-level="C.7.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#rules-of-expectation-and-variances"><i class="fa fa-check"></i><b>C.7.1</b> Rules of expectation and variances</a></li>
 </ul></li>
-<li class="chapter" data-level="B.8" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#sampling-and-estimation"><i class="fa fa-check"></i><b>B.8</b> Sampling and Estimation</a></li>
-<li class="chapter" data-level="B.9" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#hypothesis-testing"><i class="fa fa-check"></i><b>B.9</b> Hypothesis testing</a><ul>
-<li class="chapter" data-level="B.9.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-a-single-population-parameter"><i class="fa fa-check"></i><b>B.9.1</b> Testing a restriction on a single population parameter</a></li>
-<li class="chapter" data-level="B.9.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-multiple-population-parameter"><i class="fa fa-check"></i><b>B.9.2</b> Testing a restriction on multiple population parameter</a></li>
-<li class="chapter" data-level="B.9.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#confidence-interval-and-hypothesis-testing"><i class="fa fa-check"></i><b>B.9.3</b> Confidence interval and Hypothesis testing</a></li>
+<li class="chapter" data-level="C.8" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#sampling-and-estimation"><i class="fa fa-check"></i><b>C.8</b> Sampling and Estimation</a></li>
+<li class="chapter" data-level="C.9" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#hypothesis-testing"><i class="fa fa-check"></i><b>C.9</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="C.9.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-a-single-population-parameter"><i class="fa fa-check"></i><b>C.9.1</b> Testing a restriction on a single population parameter</a></li>
+<li class="chapter" data-level="C.9.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-multiple-population-parameter"><i class="fa fa-check"></i><b>C.9.2</b> Testing a restriction on multiple population parameter</a></li>
+<li class="chapter" data-level="C.9.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#confidence-interval-and-hypothesis-testing"><i class="fa fa-check"></i><b>C.9.3</b> Confidence interval and Hypothesis testing</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#problems-1"><i class="fa fa-check"></i>Problems</a></li>
 </ul></li>
@@ -272,20 +327,20 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="regression-based-forecasting" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Regression-based Forecasting</h1>
+<div id="regression-based-forecasting" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Regression-based Forecasting<a href="regression-based-forecasting.html#regression-based-forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>One way to compute the conditional expectation is the linear regression model. Here, our information set contains data on all relevant explanatory variables available at the time of forecast, i.e,</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 \Omega_t={X_{1t}, X_{2t},...X_{Kt}}
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>Hence, we get the following equality:</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[\begin{equation}
 E(y_t|\Omega_t)=E(y_{t}|X_{1t}, X_{2t}, X_{3t},...,X_{Kt})
-\end{equation}\]</span>
+\end{equation}\]</span></p>
 <p>The right hand side of the above equation is the multiple regression model of the form:
 <span class="math display">\[\begin{equation}
- y_{t}=\beta_0+\beta_1 X_{1t}+\beta_2 X_{2t}+..+\beta_K X_{Kt}+\epsilon_t
- \end{equation}\]</span></p>
+y_{t}=\beta_0+\beta_1 X_{1t}+\beta_2 X_{2t}+..+\beta_K X_{Kt}+\epsilon_t
+\end{equation}\]</span></p>
 <p>We can easily estimate the above model using Ordinary Least Squares (OLS) and compute the <em>predicted value</em> of <span class="math inline">\(y\)</span>:
 <span class="math display">\[\begin{equation}
     \widehat{y}_t = \widehat{\beta_0} +\widehat{\beta_1} X_{1t} +\widehat{\beta_2} X_{2t}+...+ \widehat{\beta_k} X_{Kt}
@@ -294,258 +349,179 @@ E(y_t|\Omega_t)=E(y_{t}|X_{1t}, X_{2t}, X_{3t},...,X_{Kt})
 <span class="math display">\[\begin{equation}
         \widehat{y}_{t+h} =  \widehat{\beta_0} +\widehat{\beta_1} X_{1t+h} +\widehat{\beta_2} X_{2t+h}+...+ \widehat{\beta_k} X_{Kt+h}
     \end{equation}\]</span></p>
-<div id="scenario-analysis-and-conditional-forecasts" class="section level2">
-<h2><span class="header-section-number">2.1</span> Scenario Analysis and Conditional Forecasts</h2>
+<div id="scenario-analysis-and-conditional-forecasts" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Scenario Analysis and Conditional Forecasts<a href="regression-based-forecasting.html#scenario-analysis-and-conditional-forecasts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>One way to use a regression model to produce forecasts is called
 <em>scenario analysis</em> where we produce a different forecast for the dependent variable under each possible scenario about the future values of the independent variables. For example, what will be the forecast for inflation if the Federal Reserve Bank raises the interest rate? Would our forecast differ depending on the size of the increase in the interest rate?</p>
 </div>
-<div id="unconditional-forecasts" class="section level2">
-<h2><span class="header-section-number">2.2</span> Unconditional Forecasts</h2>
+<div id="unconditional-forecasts" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Unconditional Forecasts<a href="regression-based-forecasting.html#unconditional-forecasts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>An alternative is to separately forecast each independent variable and then compute the forecast for the dependent variable. Yet another alternative is to use lagged variables as independent variables. Depending on the number of lags, we can forecast that much ahead into future (see Distributed Lag Section for details).</p>
 </div>
-<div id="some-practical-issues" class="section level2">
-<h2><span class="header-section-number">2.3</span> Some practical issues</h2>
+<div id="some-practical-issues" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Some practical issues<a href="regression-based-forecasting.html#some-practical-issues" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
 <li><p>To forecast the dependent variable we first need to compute a forecast for the independent variable. Errors in this step induce errors later.</p></li>
 <li><p><em>Spurious regression</em>: It is quite possible to find a strong linear relationship between two completely unrelated variables over time if they share a common time trend.</p></li>
 <li><p><em>Model Uncertainty</em>: We do not know the true functional form for the regression model and hence our estimated model is only a proxy for the true model.</p></li>
 <li><p><em>Parameter Uncertainty</em>: This kind of forecast uses regression coefficients that are computed using a fixed sample. Over time with new data, there will be changes in these coefficients.</p></li>
 </ol>
-</div>
-<div id="distributed-lag-regression-models" class="section level2">
-<h2><span class="header-section-number">2.4</span> Distributed Lag Regression Models</h2>
-<p>Consider the following simple regression model:</p>
-<span class="math display">\[\begin{equation}
-y_t= \beta_0 +\beta_1 x_t + \epsilon_t
-\end{equation}\]</span>
-<p>Here, if want to forecast <span class="math inline">\(y_{t+1}\)</span> then we must either consider different scenarios for <span class="math inline">\(x_{t+1}\)</span> or independently forecast <span class="math inline">\(x_{t+1}\)</span> first, and then use it to compute forecast for <span class="math inline">\(y_{t+1}\)</span>. An alternative is to estimate the following lagged regression model:</p>
-<span class="math display">\[\begin{equation}
-y_t= \beta_0 +\beta_1 x_{t-1} + \epsilon_t
-\end{equation}\]</span>
-<p>Note that by estimating the above model we get the following predicted value equation for <span class="math inline">\(t+1\)</span>:</p>
-<span class="math display">\[\begin{equation}
-\widehat{y_{t+1}}=\widehat{\beta_0}+\widehat{\beta_1}x_{t}
-\end{equation}\]</span>
-<p>Hence, we can easily produce 1-period ahead forecast from this model. In order to produce forecast farther into future we would need to add more lags of the independent variable to the model. A generalized model of this kind is called <em>distributed lag model</em> and is given by:
-<span class="math display">\[\begin{equation}
-y_t= \beta_0 +\sum_{s=1}^p\beta_s x_{t-s} + \epsilon_t
-\end{equation}\]</span></p>
-<p>The number of lags to include can be determined using some kind of goodness of fit measure.</p>
-<div id="dynamic-effect-of-x-on-y" class="section level3">
-<h3><span class="header-section-number">2.4.1</span> Dynamic Effect of X on Y</h3>
-<p>A very useful benefit of estimating a distributed lag model is that it allows us to measure how changes in <span class="math inline">\(x\)</span> in the current period can impact the dependent variable over time. Consider a simple distributed lag model with two lags:
-<span class="math display">\[\begin{equation}
-y_t=\beta_0 + \beta_1 x_{t-1} + \beta_2 x_{t-2} +\epsilon_t
-\end{equation}\]</span></p>
-<p>In this model the lag structure implies that any change in <span class="math inline">\(x\)</span> will persist for two periods in terms of its effect on <span class="math inline">\(y\)</span>. In fact we now have to consider the <em>dynamic</em> effect of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>. Formally, there are two types of effects:</p>
-<ol style="list-style-type: decimal">
-<li><em>dynamic effect</em> of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span> given by:
-<span class="math display">\[\frac{\partial y_{t+s}}{\partial x_t} \quad s=0,1,2,...\]</span></li>
-</ol>
-<p>In our example, the sequence of dynamic effects are:
-<span class="math display">\[\begin{equation}
-\frac{\partial y_{t}}{\partial x_t}  =0; \ \frac{\partial y_{t+1}}{\partial x_t}=\beta_1; \ \frac{\partial y_{t+2}}{\partial x_t}=\beta_2; \ \frac{\partial y_{t+s}}{\partial x_t}=0 \ \forall \ s&gt;2 
-\end{equation}\]</span></p>
-<ol start="2" style="list-style-type: decimal">
-<li><em>long run effect</em> of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span> given by:
-<span class="math display">\[\begin{equation}
-\sum_{s=0}^p\frac{\partial y_{t+s}}{\partial x_t}   
-\end{equation}\]</span></li>
-</ol>
-<p>In our example, the long run effect is:</p>
-<p><span class="math display">\[\beta_1+\beta_2\]</span></p>
-</div>
-<div id="model-selection-criterion" class="section level3">
-<h3><span class="header-section-number">2.4.2</span> Model Selection Criterion</h3>
-<p>Most often we compare models that have different number of independent variables. For example, in our application, in order to select the number of lags for output and capital stock, we will essentially compare models with different number of independent variables. In such cases we must account for the trade-off between goodness of fit and degrees of freedom. Increasing the number of independent variables will:</p>
-<ol style="list-style-type: decimal">
-<li><p>lower the MSE and hence leads to better fit.</p></li>
-<li><p>lowers the degrees of freedom</p></li>
-</ol>
-<p>Two commonly used measures based on MSE incorporate this trade-off:</p>
-<ol style="list-style-type: decimal">
-<li>Akaike Information Criterion (AIC):
-<span class="math display">\[ AIC= MSE \times e^{\frac{2k}{T}} \]</span></li>
-</ol>
-<p>where <span class="math inline">\(k\)</span> is the number of estimated parameters, <span class="math inline">\(T\)</span> is the sample size. Then, <span class="math inline">\(K/T\)</span> is the number of parameters estimated per observation and <span class="math inline">\(e^{\frac{2k}{T}}\)</span> is the <em>penalty factor</em> imposed on adding more variables to the model. As we increase <span class="math inline">\(k\)</span>, this penalty factor will increase exponentially for a given value of <span class="math inline">\(T\)</span>.</p>
-<ol start="2" style="list-style-type: decimal">
-<li>Bayesian Information Criterion (BIC):</li>
-</ol>
-<p><span class="math display">\[ BIC= MSE \times T^{\frac{k}{T}} \]</span></p>
-<p>Lower values of either AIC or BIC indicates greater accuracy. So we select a model with lower value of either of these two criteria. Note that the penalty imposed by BIC is harsher and hence it will typically select a more parsimonious model (Figure <a href="regression-based-forecasting.html#fig:ch2-figure1">2.1</a>).</p>
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.5.2</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:ch2-figure1"></span>
-<img src="bookdown-demo_files/figure-html/ch2-figure1-1.png" alt="Penalty Factor of AIC and BIC" width="80%" />
-<p class="caption">
-Figure 2.1: Penalty Factor of AIC and BIC
-</p>
-</div>
-</div>
-</div>
-<div id="application-a-model-of-investment-expenditure" class="section level2">
-<h2><span class="header-section-number">2.5</span> Application: A Model of Investment Expenditure</h2>
-<div id="a-multiple-regression-model-of-invesment-expenditure" class="section level3">
-<h3><span class="header-section-number">2.5.1</span> A Multiple Regression Model of Invesment Expenditure</h3>
-<p>Suppose have annual data on private investment, private sector output, and capital stock. Our model specification is given by:
-<span class="math display">\[\begin{equation}
-y_t= \beta_0 + \beta_1 x_{1t}+ \beta_2 x_{2t}+\epsilon_t
-\end{equation}\]</span></p>
-<p>We can estimate the above model using OLS and then conduct scenario-based forecasting. For ease of interpretation, we will convert all variables in natural logarithms.</p>
-<p>Table <a href="regression-based-forecasting.html#tab:ch2-table1">2.1</a> below presents the estimated coefficients of our regression model. Higher output and capital stock leads to greater investment expenditure.</p>
-<pre><code>## Warning: package &#39;knitr&#39; was built under R version 3.5.2</code></pre>
-<table>
-<caption><span id="tab:ch2-table1">Table 2.1: </span>A Multiple Regression Model of Investment Expenditure</caption>
-<thead>
-<tr class="header">
-<th></th>
-<th align="center">Estimated Coefficients</th>
-<th align="center">Std. Error</th>
-<th align="center">t-ratio</th>
-<th align="center">p-value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>(Intercept)</td>
-<td align="center">-4.8421855</td>
-<td align="center">0.9623332</td>
-<td align="center">-5.031714</td>
-<td align="center">0.0000044</td>
-</tr>
-<tr class="even">
-<td>x1</td>
-<td align="center">0.9987751</td>
-<td align="center">0.2418282</td>
-<td align="center">4.130102</td>
-<td align="center">0.0001104</td>
-</tr>
-<tr class="odd">
-<td>x2</td>
-<td align="center">0.4204833</td>
-<td align="center">0.3643054</td>
-<td align="center">1.154205</td>
-<td align="center">0.2528456</td>
-</tr>
-</tbody>
-</table>
-<p>Next, we compute forecast of investment expenditure under three different scenarios:</p>
-<ol style="list-style-type: decimal">
-<li><p>For next 3 years, both output and capital stock remain at the average of last 3 years.</p></li>
-<li><p>For next 3 years, both output and capital stock remain at 1% above the average of last 3 years.</p></li>
-<li><p>For next 3 years, both output and capital stock remain at 1% below the average of last 3 years.</p></li>
-</ol>
-<p>Figure <a href="regression-based-forecasting.html#fig:ch2-figure2">2.2</a> below present our investment expenditure outlook under these 3 scenarios.</p>
-<div class="figure" style="text-align: center"><span id="fig:ch2-figure2"></span>
-<img src="bookdown-demo_files/figure-html/ch2-figure2-1.png" alt="Investment outlook for next 3 years" width="80%" />
-<p class="caption">
-Figure 2.2: Investment outlook for next 3 years
-</p>
-</div>
-</div>
-<div id="a-distributed-lag-model-of-investment-expenditure" class="section level3">
-<h3><span class="header-section-number">2.5.2</span> A Distributed Lag Model of Investment Expenditure</h3>
-<p>In this application we will estimate a distributed lag model for investment expenditure. The idea here is that it takes time for investment to respond to output and capital stock changes. The model specification we want to estimate is:</p>
-<span class="math display">\[\begin{equation}
-y_t= \beta_0 + \sum_{i=1}^p\beta_i x_{1t-i}+\sum_{i=1}^p\alpha_i x_{2t-i}+\epsilon_t
-\end{equation}\]</span>
-<p>where <span class="math inline">\(y\)</span> denotes real investment expenditure of the private sector, <span class="math inline">\(x_1\)</span> denotes output of the private sector, and <span class="math inline">\(x_2\)</span> denotes capital stock of the private sector.</p>
-<p>We estimate our model by first selecting the optimal lag order for each independent variable, and selecting the one with lowest value for AIC/BIC. From @(tab:ch2-table2) we find that the lowest BIC occurs at lag=2. Hence, we estimate a model with two lags for each independent variable in our model.</p>
-<pre><code>## Warning: package &#39;dynlm&#39; was built under R version 3.5.2</code></pre>
-<table>
-<caption><span id="tab:ch2-table2">Table 2.2: </span>Optimal Order of the lags</caption>
-<thead>
-<tr class="header">
-<th align="center">Lag</th>
-<th align="center">AIC</th>
-<th align="center">BIC</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center">1</td>
-<td align="center">-98.42469</td>
-<td align="center">-89.72714</td>
-</tr>
-<tr class="even">
-<td align="center">2</td>
-<td align="center">-127.36043</td>
-<td align="center">-114.31411</td>
-</tr>
-<tr class="odd">
-<td align="center">3</td>
-<td align="center">-129.95355</td>
-<td align="center">-112.55845</td>
-</tr>
-<tr class="even">
-<td align="center">4</td>
-<td align="center">-127.49885</td>
-<td align="center">-105.75498</td>
-</tr>
-</tbody>
-</table>
-<p>Hence, our final model is given by:
-<span class="math display">\[\begin{equation}
-y_t= \beta_0 + \sum_{i=1}^2\beta_i x_{1t-i}+\sum_{i=1}^2\alpha_i x_{2t-i}
-\end{equation}\]</span></p>
-<p>The results of our estimation are presented below in Table <a href="regression-based-forecasting.html#tab:ch2-table3">2.3</a></p>
-<table>
-<caption><span id="tab:ch2-table3">Table 2.3: </span>Distributed Lag Model of Investment Expenditure</caption>
-<thead>
-<tr class="header">
-<th></th>
-<th align="center">Estimated Coefficients</th>
-<th align="center">Std. Error</th>
-<th align="center">t-ratio</th>
-<th align="center">p-value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>(Intercept)</td>
-<td align="center">-6.541336</td>
-<td align="center">0.8300877</td>
-<td align="center">-7.880295</td>
-<td align="center">0.0000000</td>
-</tr>
-<tr class="even">
-<td>L(x1, 1:2)1</td>
-<td align="center">10.932987</td>
-<td align="center">1.9354346</td>
-<td align="center">5.648854</td>
-<td align="center">0.0000005</td>
-</tr>
-<tr class="odd">
-<td>L(x1, 1:2)2</td>
-<td align="center">-9.769632</td>
-<td align="center">1.9286226</td>
-<td align="center">-5.065601</td>
-<td align="center">0.0000044</td>
-</tr>
-<tr class="even">
-<td>L(x2, 1:2)1</td>
-<td align="center">2.545657</td>
-<td align="center">0.7735580</td>
-<td align="center">3.290842</td>
-<td align="center">0.0017028</td>
-</tr>
-<tr class="odd">
-<td>L(x2, 1:2)2</td>
-<td align="center">-2.189088</td>
-<td align="center">0.7904689</td>
-<td align="center">-2.769354</td>
-<td align="center">0.0075309</td>
-</tr>
-</tbody>
-</table>
-<ol style="list-style-type: decimal">
-<li><p>Using our estimated model we can easily compute the dynamic effect as well as the long run effect of each independent variable on the dependent variable.</p></li>
-<li><p>Given the lag structure of our estimated model, we can also produce forecasts for <span class="math inline">\(y_{t+1}\)</span> by computing the following equation:</p></li>
-</ol>
-<span class="math display">\[\begin{equation}
-f_{t,1}=\widehat{y_{t+1}}=\hat{\beta_0}+\hat{\beta_1}x_{1t} + \hat{\beta_2}x_{1t-1}+ \hat{\alpha_1}x_{2t}+\hat{\alpha_2}x_{2t-1}
-\end{equation}\]</span>
+<!-- ## Distributed Lag Regression Models -->
+<!-- Consider the following simple regression model: -->
+<!-- \begin{equation} -->
+<!-- y_t= \beta_0 +\beta_1 x_t + \epsilon_t -->
+<!-- \end{equation} -->
+<!-- Here, if want to forecast $y_{t+1}$ then we must either consider different scenarios for $x_{t+1}$ or independently forecast $x_{t+1}$ first, and then use it to compute forecast for $y_{t+1}$. An alternative is to estimate the following lagged regression model: -->
+<!-- \begin{equation} -->
+<!-- y_t= \beta_0 +\beta_1 x_{t-1} + \epsilon_t -->
+<!-- \end{equation} -->
+<!-- Note that by estimating the above model we get the following predicted value equation for $t+1$: -->
+<!-- \begin{equation} -->
+<!-- \widehat{y_{t+1}}=\widehat{\beta_0}+\widehat{\beta_1}x_{t} -->
+<!-- \end{equation} -->
+<!-- Hence, we can easily produce 1-period ahead forecast from this model. A generalized model of this kind is called *distributed lag model* and is given by: -->
+<!-- \begin{equation} -->
+<!-- y_t= \beta_0 +\sum_{s=1}^p\beta_s x_{t-s} + \epsilon_t -->
+<!-- \end{equation} -->
+<!-- The number of lags to include can be determined using some kind of goodness of fit measure.  -->
+<!-- ### Dynamic Effect of X on Y -->
+<!-- A very useful benefit of estimating a distributed lag model is that it allows us to measure how changes in $x$ in the current period can impact the dependent variable over time. Consider a simple distributed lag model with two lags: -->
+<!-- \begin{equation} -->
+<!-- y_t=\beta_0 + \beta_1 x_{t-1} + \beta_2 x_{t-2} +\epsilon_t -->
+<!-- \end{equation} -->
+<!-- In this model the lag structure implies that any change in $x$ will persist for two periods in terms of its effect on $y$. In fact we now have to consider the *dynamic* effect of $x$ on $y$. Formally, there are two types of effects: -->
+<!-- 1. *dynamic effect* of $x$ on $y$ given by: -->
+<!-- \[\frac{\partial y_{t+s}}{\partial x_t} \quad s=0,1,2,...\] -->
+<!-- In our example, the sequence of dynamic effects are: -->
+<!-- \begin{equation} -->
+<!-- \frac{\partial y_{t}}{\partial x_t}  =0; \ \frac{\partial y_{t+1}}{\partial x_t}=\beta_1; \ \frac{\partial y_{t+2}}{\partial x_t}=\beta_2; \ \frac{\partial y_{t+s}}{\partial x_t}=0 \ \forall \ s>2  -->
+<!-- \end{equation} -->
+<!-- 2. *long run effect* of $x$ on $y$ given by: -->
+<!-- \begin{equation} -->
+<!-- \sum_{s=0}^p\frac{\partial y_{t+s}}{\partial x_t}    -->
+<!-- \end{equation} -->
+<!-- In our example, the long run effect is: -->
+<!-- \[\beta_1+\beta_2\] -->
+<!-- ### Model Selection Criterion -->
+<!-- Most often we compare models that have different number of independent variables. For example, in our application, in order to select the number of lags for output  and capital stock, we will essentially compare models with different number of independent variables. In such cases we must account for the trade-off between goodness of fit and degrees of freedom. Increasing the number of independent variables will: -->
+<!-- 1. lower the MSE and hence leads to better fit. -->
+<!-- 2. lowers the degrees of freedom -->
+<!-- Two commonly used measures based on MSE incorporate this trade-off: -->
+<!-- 1. Akaike Information Criterion (AIC): -->
+<!-- \[ AIC= MSE \times e^{\frac{2k}{T}} \] -->
+<!-- where $k$ is the number of estimated parameters, $T$ is the sample size. Then, $K/T$ is the number of parameters estimated per observation and $e^{\frac{2k}{T}}$ is the *penalty factor* imposed on adding more variables to the model. As we increase $k$, this penalty factor will increase exponentially for a given value of $T$. -->
+<!-- 2. Bayesian Information Criterion (BIC): -->
+<!-- \[ BIC= MSE \times T^{\frac{k}{T}} \] -->
+<!-- Lower values of either AIC or BIC indicates greater accuracy. So we select a model with lower value of either of these two criteria. Note that the penalty imposed by BIC is harsher and hence it will typically select a more parsimonious model (Figure \@ref(fig:ch2-figure1)). -->
+<!-- ```{r ch2-figure1, echo = FALSE, fig.cap = 'Penalty Factor of AIC and BIC', out.width='80%', fig.asp=.75, fig.align='center'} -->
+<!-- T=100 -->
+<!-- k=1:1:25 -->
+<!-- ratio=k/T -->
+<!-- AIC_p=exp(2*k/T) -->
+<!-- SIC_p=T^(k/T) -->
+<!-- #### plot### -->
+<!-- library(ggplot2) -->
+<!-- df=data.frame(ratio,AIC_p,SIC_p) -->
+<!-- ggplot(df, aes(ratio)) +                     -->
+<!-- geom_line(aes(y=AIC_p, color="AIC_p"))+  # first layer -->
+<!-- geom_line(aes(y=SIC_p, color="SIC_P"))+ # second layer -->
+<!-- ylab("Penalty Factor")+ -->
+<!-- xlab("k/T") -->
+<!-- ``` -->
+<!-- ## Application: A  Model of Investment Expenditure -->
+<!-- ### A Multiple Regression Model of Invesment Expenditure -->
+<!-- Suppose have annual data on private investment, private sector output, and capital stock. Our model specification is given by: -->
+<!-- \begin{equation} -->
+<!-- y_t= \beta_0 + \beta_1 x_{1t}+ \beta_2 x_{2t}+\epsilon_t -->
+<!-- \end{equation} -->
+<!-- We can estimate the above model using OLS and then conduct scenario-based forecasting. For ease of interpretation, we will convert all variables in natural logarithms. -->
+<!-- Table \@ref(tab:ch2-table1) below presents the estimated coefficients of our regression model. Higher output and capital stock leads to greater investment expenditure.  -->
+<!-- ```{r ch2-table1, echo = FALSE} -->
+<!-- suppressMessages(library(xts)) -->
+<!-- suppressMessages(library(knitr)) -->
+<!-- suppressMessages(library(forecast)) -->
+<!-- suppressMessages(library(timeSeries)) -->
+<!-- suppressMessages(library(ggplot2)) -->
+<!-- # cretae a data object frame  -->
+<!-- data=read.csv("~/Dropbox/Ebooks/Econ-483-Notes/datafiles/dlag.csv") -->
+<!-- y=ts(data$y, start=1950, end=2014, frequency = 1) -->
+<!-- x1=ts(data$x1, start=1950, end=2014, frequency = 1) -->
+<!-- x2=ts(data$x2, start=1950, end=2014, frequency = 1) -->
+<!-- y=log(y) -->
+<!-- x1=log(x1) -->
+<!-- x2=log(x2) -->
+<!-- fit=tslm(y~x1+x2) -->
+<!-- kable(summary(fit)$coefficients, booktabs=TRUE, caption='A Multiple Regression Model of Investment Expenditure', align=rep("c",4), col.names=c("Estimated Coefficients", "Std. Error", "t-ratio", "p-value")) -->
+<!-- ``` -->
+<!-- Next, we compute forecast of investment expenditure under three different scenarios: -->
+<!-- 1. For next 3 years, both output and capital stock remain at the average of last 3 years. -->
+<!-- 2. For next 3 years, both output and capital stock remain at 1% above  the average of last 3 years. -->
+<!-- 2. For next 3 years, both output and capital stock remain at 1% below the average of last 3 years. -->
+<!-- Figure \@ref(fig:ch2-figure2) below present our investment expenditure outlook under these 3 scenarios. -->
+<!-- ```{r ch2-figure2, echo = FALSE, fig.cap = 'Investment outlook for next 3 years', out.width='80%', fig.asp=.75, fig.align='center'} -->
+<!-- x1past=window(x1,2012) -->
+<!-- x2past=window(x2,2012) -->
+<!-- newdata=data.frame(x1=rep(mean(x1past),3), x2=rep(mean(x2past),3)) -->
+<!-- #newdata=data.frame(x1=c(2,2,2,2),x2=c(0,0,0,0)) -->
+<!-- s1=forecast(fit, newdata=newdata, level=95) -->
+<!-- newdata=data.frame(x1=1.01*rep(mean(x1past),3), x2=1.01*rep(mean(x2past),3)) -->
+<!-- s2=forecast(fit, newdata=newdata, level=95) -->
+<!-- newdata=data.frame(x1=0.99*rep(mean(x1past),3), x2=0.99*rep(mean(x2past),3)) -->
+<!-- s3=forecast(fit, newdata=newdata, level=95) -->
+<!-- par(mfrow=c(3,1)) -->
+<!-- par(mar=c(2,2,2,2)) -->
+<!-- plot(s1,include=25,  main="Scenario 1") -->
+<!-- plot(s2,include=25,  main="Scenario 2") -->
+<!-- plot(s3,include=25,  main="Scenario 3") -->
+<!-- ``` -->
+<!-- ### A Distributed Lag Model of Investment Expenditure -->
+<!-- In this application we will estimate a distributed lag model for investment expenditure. The idea here is that it takes time for investment to respond to output and capital stock changes. The model specification we want to estimate is: -->
+<!-- \begin{equation} -->
+<!-- y_t= \beta_0 + \sum_{i=1}^p\beta_i x_{1t-i}+\sum_{i=1}^p\alpha_i x_{2t-i}+\epsilon_t -->
+<!-- \end{equation} -->
+<!-- where $y$ denotes real investment expenditure of the private sector, $x_1$ denotes output of the private sector, and $x_2$ denotes capital stock of the private sector. -->
+<!-- We estimate our model by first selecting the optimal lag order for each independent variable, and selecting the one with lowest  value for AIC/BIC. From @\ref(tab:ch2-table2) we find that the lowest BIC occurs at lag=2. Hence, we estimate a model with two lags for each independent variable in our model. -->
+<!-- ```{r ch2-table2, echo = FALSE} -->
+<!-- suppressMessages(library(xts)) -->
+<!-- suppressMessages(library(knitr)) -->
+<!-- suppressMessages(library(dynlm)) -->
+<!-- # cretae a data object frame  -->
+<!-- data=read.csv("~/Dropbox/Ebooks/Econ-483-Notes/datafiles/dlag.csv") -->
+<!-- y=ts(data$y, start=1950, end=2014, frequency = 1) -->
+<!-- x1=ts(data$x1, start=1950, end=2014, frequency = 1) -->
+<!-- x2=ts(data$x2, start=1950, end=2014, frequency = 1) -->
+<!-- y=log(y) -->
+<!-- x1=log(x1) -->
+<!-- x2=log(x2) -->
+<!-- pmax=4 -->
+<!-- p = seq(1,pmax, 1) -->
+<!-- aic =double(length(p)) -->
+<!-- bic = double(length(p)) -->
+<!-- for (i in seq(along = p)) { -->
+<!--   k =p[i] -->
+<!--   out = dynlm(formula=y ~ L(x1,1:k)+L(x2,1:k)) -->
+<!--   aic[i] = AIC(out,k=2) -->
+<!--   bic[i] = AIC(out, k = log(length(y))) -->
+<!-- } -->
+<!-- #### what is the optimal degree? -->
+<!-- select = cbind(p,aic, bic) -->
+<!-- kable(select, booktabs=TRUE, caption='Optimal Order of the lags', align=rep("c",3), col.names=c("Lag", "AIC", "BIC")) -->
+<!-- ``` -->
+<!-- Hence, our final model is given by: -->
+<!-- \begin{equation} -->
+<!-- y_t= \beta_0 + \sum_{i=1}^2\beta_i x_{1t-i}+\sum_{i=1}^2\alpha_i x_{2t-i} -->
+<!-- \end{equation} -->
+<!-- The results of our estimation are presented below in Table \@ref(tab:ch2-table3) -->
+<!-- ```{r ch2-table3, echo = FALSE} -->
+<!-- final=dynlm(formula=y~L(x1, 1:2)+L(x2, 1:2)) -->
+<!-- kable(summary(final)$coefficients, booktabs=TRUE, caption='Distributed Lag Model of Investment Expenditure', align=rep("c",4), col.names=c("Estimated Coefficients", "Std. Error", "t-ratio", "p-value")) -->
+<!-- ``` -->
+<!-- 1. Using our estimated model we can easily compute the dynamic effect as well as the long run effect of each independent variable on the dependent variable. -->
+<!-- 2. Given the lag structure of our estimated model, we can also produce forecasts for $y_{t+1}$ by computing the following equation: -->
+<!-- \begin{equation} -->
+<!-- f_{t,1}=\widehat{y_{t+1}}=\hat{\beta_0}+\hat{\beta_1}x_{1t} + \hat{\beta_2}x_{1t-1}+ \hat{\alpha_1}x_{2t}+\hat{\alpha_2}x_{2t-1} -->
+<!-- \end{equation} -->
 
-</div>
 </div>
 </div>
             </section>
@@ -558,12 +534,13 @@ f_{t,1}=\widehat{y_{t+1}}=\hat{\beta_0}+\hat{\beta_1}x_{1t} + \hat{\beta_2}x_{1t
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -571,12 +548,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -588,7 +565,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
+"view": {
+"link": null,
+"text": null
+},
 "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
@@ -602,9 +587,10 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

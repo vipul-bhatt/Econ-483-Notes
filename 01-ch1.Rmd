@@ -26,6 +26,7 @@ plot.xts(as.xts(y2),yaxis.right=F, main="Advance Retail Sales (Millions of Dolla
 
 
 ```
+
 The first panel shows data for the real gross domestic product (GDP) for the US in billions of 2012 dollars, measured at a quarterly frequency. The second panel shows data for the advance retail sales (millions of dollars), measured at monthly frequency.
 
 Formally, we denote a time series variable by $y_t$, where $t=0,1,2,..,T$ is the observation index. For example, at $t=10$ we get the tenth observation of this time series, $y_{10}$.
@@ -72,6 +73,7 @@ invisible(p1)
 invisible(p2)
 
 ```
+
 ## Testing for Serial Correlion
 
 We can use a Lagrange-Multiplier (LM) test for detecting serial correlation. This test is also known as *Breuch-Godfrey* test. I will use the linear regression model to explain this test. Consider the following regression model:
@@ -106,6 +108,9 @@ If the test statistic value is greater than the critical value then we reject th
 
 ## White Noise Process
 
+::: {.definition}
+(White Noise)
+:::
 A time series is a *white noise* process if it has zero mean, constant and finite variance, and is serially uncorrelated. Formally, $y_t$ is a white noise process if:
 
 1. $E(y_t)=0$
@@ -123,8 +128,9 @@ By definition we cannot forecast a white noise process. An important diagnostics
 
 ## Important Elements of Forecasting
 
-```{definition, d1, name='Forecast'}
-```
+::: {.definition}
+(Forecast)
+:::
 A *forecast*  is an *informed* guess about the unknown future value of a time series of interest. For example, what is the stock price of Facebook next Monday? 
 
 There are three possible types of forecasts:
@@ -208,8 +214,9 @@ f_{t,1}=1.3%
 3. *Interval Forecast*: our forecast at each horizon is a range which is obtained by adding *margin of errors* to the point forecast. With some probability we expect our future value to fall withing this range. For example, the  95% interval forecast for the next period real GDP growth is (-2.36%,4.96%). Hence, with 95% confidence we expect next period GDP to fall between -2.36% and 4.96%.
 
 
-```{definition, d2, name='Forecast Horizon'}
-```
+::: {.definition}
+(Forecast Horizon)
+:::
 *Forecast Horizon* is the number of periods into the future for which we forecast a time series. We will denote it by $h$. Hence, for $h=1$, we are looking at 1-period ahead forecast,  for $h=2$ we are looking at 2-period ahead forecast and so on.
 
 Formally, for a given time series $y_t$, the h-period ahead unknown value is denoted by $y_{t+h}$. The forecast of this value is denoted $f_{t,h}$.  
@@ -225,9 +232,9 @@ text(22, 16,"Forecast Horizon \n (Out-of-Sample)")
 
 ```
 
-```{definition, d3, name='Forecast Error'}
-```
-
+::: {.definition}
+(Forecast Error)
+:::
 A *forecast error* is the difference between the realization of the future value and the previously made forecast. Formally, the $h$-period ahead forecast error is given by:
 
 \begin{equation}
@@ -236,8 +243,6 @@ e_{t,h}=y_{t+h}-f_{t,h}
 
 Hence, for every horizon, we will have a forecast and a corresponding forecast error. These errors can be negative (indicating over prediction) or positive (indicating under prediction). 
 
-```{definition, d4, name='Information Set'}
-```
 
 Forecasts are based on *information* available at the time of making the forecast. *Information Set* contains all the relevant information about the time series we would like to forecast. We denote the set of information available at time $T$ by $\Omega_T$. There are two types of information sets:
 
@@ -259,9 +264,9 @@ Forecasts are based on *information* available at the time of making the forecas
 
 Think of a forecast as a solution to an *optimization* problem. When forecasts are wrong, the person making the forecast will suffer some *loss*. This loss will be a function of the magnitude as well as the sign of the *forecast error*. Hence, we can think of an *optimal forecast* as a solution to a minimization problem where the forecaster is minimizing the loss from the forecast error.
 
-```{definition, d5, name='Loss Function'}
-```
-
+::: {.definition}
+(Loss Function)
+:::
 A *loss* function is a mapping between forecast errors and their associated losses. Formally, we denote the h-period ahead loss function by $L(e_{t,h})$. For a function to be used as a loss function, three properties must be satisfied:
 
 1. $L(0)=0$
@@ -297,8 +302,6 @@ curve(x^2+4*x, from=-10, to=10, xlab="e", ylab="Loss")
 
 Once we have chosen our loss function, the optimal forecast can be obtained by minimizing the expected loss function. 
 
-```{definition, d6, name='Optimal Forecast'}
-```
 
 An *optimal forecast*  minimizes the expected loss from the forecast, given the information available at the time. Mathematically, we denote it by $f^*_{t,h}$ and it solves the following minimization problem:
 \begin{equation}
@@ -315,4 +318,5 @@ f^*_{t,h}=E(y_{t+h}|\Omega_t)
 ```
 
 Note that $E(e_{t,h}^2)$ is known as *mean squared errors (MSE)*. Hence, the expected loss from a quadratic loss function is the same as the MSE. In this course, we assume that the forecaster faces a quadratic loss function and hence based on Theorem 1.1, we will learn different models for estimating the conditional mean of the future value of the time series of interest, i.e., $E(y_{t+h}|\Omega_t)$.
+
 

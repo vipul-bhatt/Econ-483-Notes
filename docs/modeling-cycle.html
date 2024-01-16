@@ -1,46 +1,46 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Modeling Cycle | Applied Time Series Analysis</title>
-  <meta name="description" content="Lecture notes for Applied Time Series Analysis">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Lecture notes for Applied Time Series Analysis" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Modeling Cycle | Applied Time Series Analysis />
+  <meta property="og:title" content="Chapter 6 Modeling Cycle | Applied Time Series Analysis" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Lecture notes for Applied Time Series Analysis" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Modeling Cycle | Applied Time Series Analysis />
+  <meta name="twitter:title" content="Chapter 6 Modeling Cycle | Applied Time Series Analysis" />
   
   <meta name="twitter:description" content="Lecture notes for Applied Time Series Analysis" />
   
 
-<meta name="author" content="Vipul Bhatt">
+<meta name="author" content="Vipul Bhatt" />
 
 
-<meta name="date" content="2019-10-13">
+<meta name="date" content="2024-01-15" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="modeling-trend-and-seasonal-components.html">
-<link rel="next" href="vector-autoregression-var-model.html">
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link rel="prev" href="modeling-trend-and-seasonal-components.html"/>
+<link rel="next" href="vector-autoregression-var-model.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -48,23 +48,34 @@
 
 
 
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -72,38 +83,45 @@ pre.numberSource a.sourceLine::before
     color: #aaaaaa;
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
 code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -123,7 +141,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a><ul>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#time-series"><i class="fa fa-check"></i><b>1.1</b> Time Series</a></li>
 <li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#serial-correlation"><i class="fa fa-check"></i><b>1.2</b> Serial Correlation</a></li>
 <li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#testing-for-serial-correlion"><i class="fa fa-check"></i><b>1.3</b> Testing for Serial Correlion</a></li>
@@ -131,59 +150,62 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#important-elements-of-forecasting"><i class="fa fa-check"></i><b>1.5</b> Important Elements of Forecasting</a></li>
 <li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#loss-function-and-optimal-forecast"><i class="fa fa-check"></i><b>1.6</b> Loss Function and Optimal Forecast</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html"><i class="fa fa-check"></i><b>2</b> Regression-based Forecasting</a><ul>
+<li class="chapter" data-level="2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html"><i class="fa fa-check"></i><b>2</b> Regression-based Forecasting</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#scenario-analysis-and-conditional-forecasts"><i class="fa fa-check"></i><b>2.1</b> Scenario Analysis and Conditional Forecasts</a></li>
 <li class="chapter" data-level="2.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#unconditional-forecasts"><i class="fa fa-check"></i><b>2.2</b> Unconditional Forecasts</a></li>
 <li class="chapter" data-level="2.3" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#some-practical-issues"><i class="fa fa-check"></i><b>2.3</b> Some practical issues</a></li>
-<li class="chapter" data-level="2.4" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#distributed-lag-regression-models"><i class="fa fa-check"></i><b>2.4</b> Distributed Lag Regression Models</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#dynamic-effect-of-x-on-y"><i class="fa fa-check"></i><b>2.4.1</b> Dynamic Effect of X on Y</a></li>
-<li class="chapter" data-level="2.4.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#model-selection-criterion"><i class="fa fa-check"></i><b>2.4.2</b> Model Selection Criterion</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#application-a-model-of-investment-expenditure"><i class="fa fa-check"></i><b>2.5</b> Application: A Model of Investment Expenditure</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#a-multiple-regression-model-of-invesment-expenditure"><i class="fa fa-check"></i><b>2.5.1</b> A Multiple Regression Model of Invesment Expenditure</a></li>
-<li class="chapter" data-level="2.5.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#a-distributed-lag-model-of-investment-expenditure"><i class="fa fa-check"></i><b>2.5.2</b> A Distributed Lag Model of Investment Expenditure</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html"><i class="fa fa-check"></i><b>3</b> Components of a Time Series</a><ul>
+<li class="chapter" data-level="3" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html"><i class="fa fa-check"></i><b>3</b> Components of a Time Series</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html#decomposing-a-time-series"><i class="fa fa-check"></i><b>3.1</b> Decomposing a time series</a></li>
 <li class="chapter" data-level="3.2" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html#uses-of-decomposition-of-a-time-series"><i class="fa fa-check"></i><b>3.2</b> Uses of Decomposition of a time series</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="smoothing-methods.html"><a href="smoothing-methods.html"><i class="fa fa-check"></i><b>4</b> Smoothing Methods</a><ul>
+<li class="chapter" data-level="4" data-path="smoothing-methods.html"><a href="smoothing-methods.html"><i class="fa fa-check"></i><b>4</b> Smoothing Methods</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="smoothing-methods.html"><a href="smoothing-methods.html#moving-average-method"><i class="fa fa-check"></i><b>4.1</b> Moving Average Method</a></li>
 <li class="chapter" data-level="4.2" data-path="smoothing-methods.html"><a href="smoothing-methods.html#simple-exponential-smoothing"><i class="fa fa-check"></i><b>4.2</b> Simple Exponential Smoothing</a></li>
 <li class="chapter" data-level="4.3" data-path="smoothing-methods.html"><a href="smoothing-methods.html#holt-winters-smoothing"><i class="fa fa-check"></i><b>4.3</b> Holt-Winters Smoothing</a></li>
 <li class="chapter" data-level="4.4" data-path="smoothing-methods.html"><a href="smoothing-methods.html#holt-winters-smoothing-with-seasonality"><i class="fa fa-check"></i><b>4.4</b> Holt-Winters Smoothing with Seasonality</a></li>
 <li class="chapter" data-level="4.5" data-path="smoothing-methods.html"><a href="smoothing-methods.html#application"><i class="fa fa-check"></i><b>4.5</b> Application</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html"><i class="fa fa-check"></i><b>5</b> Modeling Trend and Seasonal Components</a><ul>
-<li class="chapter" data-level="5.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#trend-estimation"><i class="fa fa-check"></i><b>5.1</b> Trend Estimation</a><ul>
+<li class="chapter" data-level="5" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html"><i class="fa fa-check"></i><b>5</b> Modeling Trend and Seasonal Components</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#trend-estimation"><i class="fa fa-check"></i><b>5.1</b> Trend Estimation</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#parametrizing-a-deterministic-trend"><i class="fa fa-check"></i><b>5.1.1</b> Parametrizing a deterministic trend</a></li>
 <li class="chapter" data-level="5.1.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#uses-of-the-deterministic-trend-model"><i class="fa fa-check"></i><b>5.1.2</b> Uses of the Deterministic Trend Model</a></li>
 <li class="chapter" data-level="5.1.3" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#application-estimating-a-polynomial-trend-for-u.s.-real-gdp"><i class="fa fa-check"></i><b>5.1.3</b> Application: Estimating a polynomial trend for U.S. Real GDP</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#seasonal-model"><i class="fa fa-check"></i><b>5.2</b> Seasonal Model</a><ul>
+<li class="chapter" data-level="5.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#seasonal-model"><i class="fa fa-check"></i><b>5.2</b> Seasonal Model</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#regression-model-with-seasonal-dummy-variables"><i class="fa fa-check"></i><b>5.2.1</b> Regression Model with Seasonal Dummy Variables</a></li>
 <li class="chapter" data-level="5.2.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#application-seasonal-model-of-housing-starts"><i class="fa fa-check"></i><b>5.2.2</b> Application: Seasonal Model of Housing Starts</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="modeling-cycle.html"><a href="modeling-cycle.html"><i class="fa fa-check"></i><b>6</b> Modeling Cycle</a><ul>
-<li class="chapter" data-level="6.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#stationarity-and-autocorrelation"><i class="fa fa-check"></i><b>6.1</b> Stationarity and Autocorrelation</a><ul>
+<li class="chapter" data-level="6" data-path="modeling-cycle.html"><a href="modeling-cycle.html"><i class="fa fa-check"></i><b>6</b> Modeling Cycle</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#stationarity-and-autocorrelation"><i class="fa fa-check"></i><b>6.1</b> Stationarity and Autocorrelation</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#covariance-stationary-time-series"><i class="fa fa-check"></i><b>6.1.1</b> Covariance Stationary Time Series</a></li>
 <li class="chapter" data-level="6.1.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#correlation-vs-autocorrelation"><i class="fa fa-check"></i><b>6.1.2</b> Correlation vs Autocorrelation</a></li>
 <li class="chapter" data-level="6.1.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#partial-autocorrelation"><i class="fa fa-check"></i><b>6.1.3</b> Partial Autocorrelation</a></li>
 <li class="chapter" data-level="6.1.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#lag-operator"><i class="fa fa-check"></i><b>6.1.4</b> Lag operator</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#autoregressive-ar-model"><i class="fa fa-check"></i><b>6.2</b> Autoregressive (AR) Model</a><ul>
+<li class="chapter" data-level="6.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#autoregressive-ar-model"><i class="fa fa-check"></i><b>6.2</b> Autoregressive (AR) Model</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#unit-root-and-stationarity"><i class="fa fa-check"></i><b>6.2.1</b> Unit root and Stationarity</a></li>
 <li class="chapter" data-level="6.2.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#properties-of-an-ar1-model"><i class="fa fa-check"></i><b>6.2.2</b> Properties of an AR(1) model</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#estimating-an-ar-model"><i class="fa fa-check"></i><b>6.3</b> Estimating an AR model</a><ul>
+<li class="chapter" data-level="6.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#estimating-an-ar-model"><i class="fa fa-check"></i><b>6.3</b> Estimating an AR model</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#maximum-likelihood-estimation-mle"><i class="fa fa-check"></i><b>6.3.1</b> Maximum Likelihood Estimation (MLE)</a></li>
 <li class="chapter" data-level="6.3.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#mle-of-an-arp-model"><i class="fa fa-check"></i><b>6.3.2</b> MLE of an AR(p) model</a></li>
 <li class="chapter" data-level="6.3.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#selection-of-optimal-order-of-the-ar-model"><i class="fa fa-check"></i><b>6.3.3</b> Selection of optimal order of the AR model</a></li>
 <li class="chapter" data-level="6.3.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#forecasting-using-arp-model"><i class="fa fa-check"></i><b>6.3.4</b> Forecasting using AR(p) model</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#moving-average-ma-model"><i class="fa fa-check"></i><b>6.4</b> Moving Average (MA) Model</a><ul>
+<li class="chapter" data-level="6.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#moving-average-ma-model"><i class="fa fa-check"></i><b>6.4</b> Moving Average (MA) Model</a>
+<ul>
 <li class="chapter" data-level="6.4.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#invertibility-of-an-ma-process"><i class="fa fa-check"></i><b>6.4.1</b> Invertibility of an MA process</a></li>
 <li class="chapter" data-level="6.4.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#properties-of-an-invertible-ma1"><i class="fa fa-check"></i><b>6.4.2</b> Properties of an invertible MA(1)</a></li>
 <li class="chapter" data-level="6.4.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#forecast-based-on-maq"><i class="fa fa-check"></i><b>6.4.3</b> Forecast based on MA(q)</a></li>
@@ -191,64 +213,97 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6.5" data-path="modeling-cycle.html"><a href="modeling-cycle.html#armap-q"><i class="fa fa-check"></i><b>6.5</b> ARMA(p, q)</a></li>
 <li class="chapter" data-level="6.6" data-path="modeling-cycle.html"><a href="modeling-cycle.html#integrated-arma-or-arimapdq"><i class="fa fa-check"></i><b>6.6</b> Integrated ARMA or ARIMA(p,d,q)</a></li>
 <li class="chapter" data-level="6.7" data-path="modeling-cycle.html"><a href="modeling-cycle.html#trend-stationary-vs-difference-stationary-time-series"><i class="fa fa-check"></i><b>6.7</b> Trend Stationary vs Difference Stationary Time Series</a></li>
-<li class="chapter" data-level="6.8" data-path="modeling-cycle.html"><a href="modeling-cycle.html#testing-for-a-unit-root"><i class="fa fa-check"></i><b>6.8</b> Testing for a unit root</a><ul>
+<li class="chapter" data-level="6.8" data-path="modeling-cycle.html"><a href="modeling-cycle.html#testing-for-a-unit-root"><i class="fa fa-check"></i><b>6.8</b> Testing for a unit root</a>
+<ul>
 <li class="chapter" data-level="6.8.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#testing-for-unit-root-in-usdcad-exchange-rate"><i class="fa fa-check"></i><b>6.8.1</b> Testing for unit root in USD/CAD exchange rate</a></li>
 </ul></li>
 <li class="chapter" data-level="6.9" data-path="modeling-cycle.html"><a href="modeling-cycle.html#box-jenkins-method-for-estimating-arimapdq"><i class="fa fa-check"></i><b>6.9</b> Box-Jenkins Method for estimating ARIMA(p,d,q)</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression (VAR) Model</a><ul>
+<li class="chapter" data-level="7" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression (VAR) Model</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#reduced-form-var"><i class="fa fa-check"></i><b>7.1</b> Reduced-form VAR</a></li>
 <li class="chapter" data-level="7.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#structural-var"><i class="fa fa-check"></i><b>7.2</b> Structural VAR</a></li>
 <li class="chapter" data-level="7.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#cholesky-decomposition-and-recursive-var-model"><i class="fa fa-check"></i><b>7.3</b> Cholesky Decomposition and Recursive VAR model</a></li>
-<li class="chapter" data-level="7.4" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function-forecast-error-variance-decomposition-and-granger-causality"><i class="fa fa-check"></i><b>7.4</b> Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality</a><ul>
+<li class="chapter" data-level="7.4" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function-forecast-error-variance-decomposition-and-granger-causality"><i class="fa fa-check"></i><b>7.4</b> Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function"><i class="fa fa-check"></i><b>7.4.1</b> Impulse response function</a></li>
 <li class="chapter" data-level="7.4.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#forecase-error-variance-decomposition"><i class="fa fa-check"></i><b>7.4.2</b> Forecase Error Variance Decomposition</a></li>
 <li class="chapter" data-level="7.4.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#granger-causality"><i class="fa fa-check"></i><b>7.4.3</b> Granger causality</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#application-effect-of-monetary-policy-on-inflation-and-unemployment"><i class="fa fa-check"></i><b>7.5</b> Application: Effect of monetary policy on inflation and unemployment</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a><ul>
+<li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#some-stylized-facts-about-stock-market-volatility"><i class="fa fa-check"></i><b>8.1</b> Some stylized facts about stock market volatility</a></li>
 <li class="chapter" data-level="8.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#archq-autoregressive-conditional-heteroscedasticiy-of-order-q"><i class="fa fa-check"></i><b>8.2</b> ARCH(q): Autoregressive Conditional Heteroscedasticiy of order <span class="math inline">\(q\)</span></a></li>
 <li class="chapter" data-level="8.3" data-path="modeling-volatility.html"><a href="modeling-volatility.html#garchpq-generalized-autoregressive-conditional-heteroscedasicity-of-order-p-and-q"><i class="fa fa-check"></i><b>8.3</b> GARCH(p,q): Generalized Autoregressive Conditional Heteroscedasicity of order <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span></a></li>
-<li class="chapter" data-level="8.4" data-path="modeling-volatility.html"><a href="modeling-volatility.html#extensions-of-standard-garch-model"><i class="fa fa-check"></i><b>8.4</b> Extensions of standard GARCH model</a><ul>
+<li class="chapter" data-level="8.4" data-path="modeling-volatility.html"><a href="modeling-volatility.html#extensions-of-standard-garch-model"><i class="fa fa-check"></i><b>8.4</b> Extensions of standard GARCH model</a>
+<ul>
 <li class="chapter" data-level="8.4.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#gjr-garch11"><i class="fa fa-check"></i><b>8.4.1</b> GJR-GARCH(1,1)</a></li>
 <li class="chapter" data-level="8.4.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#exponential-garch-or-egarch11"><i class="fa fa-check"></i><b>8.4.2</b> Exponential GARCH or EGARCH(1,1)</a></li>
 </ul></li>
 <li class="chapter" data-level="8.5" data-path="modeling-volatility.html"><a href="modeling-volatility.html#application-of-garch-model-estimating-volatility-of-sp500-return"><i class="fa fa-check"></i><b>8.5</b> Application of GARCH model: Estimating volatility of SP500 return</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html"><i class="fa fa-check"></i><b>A</b> Review of Differential Calculus and Optimization</a><ul>
-<li class="chapter" data-level="A.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#derivative-of-a-single-variable-function"><i class="fa fa-check"></i><b>A.1</b> Derivative of a single variable function</a><ul>
-<li class="chapter" data-level="A.1.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#rules-of-differentiation"><i class="fa fa-check"></i><b>A.1.1</b> Rules of Differentiation</a></li>
+<li class="chapter" data-level="A" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html"><i class="fa fa-check"></i><b>A</b> Review of Serial Correlation and Heteroscedasticity</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#classical-assumptions"><i class="fa fa-check"></i><b>A.1</b> Classical Assumptions</a></li>
+<li class="chapter" data-level="A.2" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#heteroscedasticity"><i class="fa fa-check"></i><b>A.2</b> Heteroscedasticity</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#consequences-of-heteroscedasticity-for-the-ols-estimator"><i class="fa fa-check"></i><b>A.2.1</b> Consequences of Heteroscedasticity for the OLS estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="A.2" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#second-derivative-and-non-linearity"><i class="fa fa-check"></i><b>A.2</b> Second derivative and non-linearity</a></li>
-<li class="chapter" data-level="A.3" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#partial-derivatives-multi-variable-functions"><i class="fa fa-check"></i><b>A.3</b> Partial derivatives: Multi-variable functions</a></li>
-<li class="chapter" data-level="A.4" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#optimization"><i class="fa fa-check"></i><b>A.4</b> Optimization</a></li>
+<li class="chapter" data-level="A.3" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#testing-for-hetroscedasticity-in-data"><i class="fa fa-check"></i><b>A.3</b> Testing for Hetroscedasticity in data</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#lm-test-for-linear-heteroscedasticity-bp-test"><i class="fa fa-check"></i><b>A.3.1</b> LM test for linear heteroscedasticity: BP test</a></li>
+<li class="chapter" data-level="A.3.2" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#lm-test-for-linear-heteroscedasticity-whites-test"><i class="fa fa-check"></i><b>A.3.2</b> LM test for linear heteroscedasticity: White’s test</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#serial-correlation-1"><i class="fa fa-check"></i><b>A.4</b> Serial correlation</a>
+<ul>
+<li class="chapter" data-level="A.4.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#consequences-of-serial-correlation-for-the-ols-estimator"><i class="fa fa-check"></i><b>A.4.1</b> Consequences of Serial Correlation for the OLS estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#testing-for-serial-correlation-in-data"><i class="fa fa-check"></i><b>A.5</b> Testing for Serial Correlation in data</a>
+<ul>
+<li class="chapter" data-level="A.5.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#breusch-godfrey-bg-lm-test-for-serial-correlation"><i class="fa fa-check"></i><b>A.5.1</b> Breusch-Godfrey (BG) LM test for serial correlation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html"><i class="fa fa-check"></i><b>B</b> Review of Differential Calculus and Optimization</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#derivative-of-a-single-variable-function"><i class="fa fa-check"></i><b>B.1</b> Derivative of a single variable function</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#rules-of-differentiation"><i class="fa fa-check"></i><b>B.1.1</b> Rules of Differentiation</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#second-derivative-and-non-linearity"><i class="fa fa-check"></i><b>B.2</b> Second derivative and non-linearity</a></li>
+<li class="chapter" data-level="B.3" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#partial-derivatives-multi-variable-functions"><i class="fa fa-check"></i><b>B.3</b> Partial derivatives: Multi-variable functions</a></li>
+<li class="chapter" data-level="B.4" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#optimization"><i class="fa fa-check"></i><b>B.4</b> Optimization</a></li>
 <li class="chapter" data-level="" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#problems"><i class="fa fa-check"></i>Problems</a></li>
 </ul></li>
-<li class="chapter" data-level="B" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html"><i class="fa fa-check"></i><b>B</b> Review of Probability and Statistics</a><ul>
-<li class="chapter" data-level="B.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability"><i class="fa fa-check"></i><b>B.1</b> Probability</a></li>
-<li class="chapter" data-level="B.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#random-variable"><i class="fa fa-check"></i><b>B.2</b> Random Variable</a></li>
-<li class="chapter" data-level="B.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution"><i class="fa fa-check"></i><b>B.3</b> Probability distribution</a><ul>
-<li class="chapter" data-level="B.3.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-discrete-random-variable"><i class="fa fa-check"></i><b>B.3.1</b> Probability distribution of a discrete random variable</a></li>
-<li class="chapter" data-level="B.3.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-continuous-random-variable"><i class="fa fa-check"></i><b>B.3.2</b> Probability distribution of a continuous random variable</a></li>
+<li class="chapter" data-level="C" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html"><i class="fa fa-check"></i><b>C</b> Review of Probability and Statistics</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability"><i class="fa fa-check"></i><b>C.1</b> Probability</a></li>
+<li class="chapter" data-level="C.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#random-variable"><i class="fa fa-check"></i><b>C.2</b> Random Variable</a></li>
+<li class="chapter" data-level="C.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution"><i class="fa fa-check"></i><b>C.3</b> Probability distribution</a>
+<ul>
+<li class="chapter" data-level="C.3.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-discrete-random-variable"><i class="fa fa-check"></i><b>C.3.1</b> Probability distribution of a discrete random variable</a></li>
+<li class="chapter" data-level="C.3.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-continuous-random-variable"><i class="fa fa-check"></i><b>C.3.2</b> Probability distribution of a continuous random variable</a></li>
 </ul></li>
-<li class="chapter" data-level="B.4" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#moments-of-a-probability-distribution-function"><i class="fa fa-check"></i><b>B.4</b> Moments of a probability distribution function</a><ul>
-<li class="chapter" data-level="B.4.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#first-moment-of-a-probability-distribution-expected-value"><i class="fa fa-check"></i><b>B.4.1</b> First moment of a probability distribution: Expected value</a></li>
-<li class="chapter" data-level="B.4.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#second-moment-of-the-distribution."><i class="fa fa-check"></i><b>B.4.2</b> Second moment of the distribution.</a></li>
-<li class="chapter" data-level="B.4.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#third-and-fourth-moments-skewness-and-kurtosis"><i class="fa fa-check"></i><b>B.4.3</b> Third and Fourth Moments: Skewness and Kurtosis</a></li>
+<li class="chapter" data-level="C.4" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#moments-of-a-probability-distribution-function"><i class="fa fa-check"></i><b>C.4</b> Moments of a probability distribution function</a>
+<ul>
+<li class="chapter" data-level="C.4.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#first-moment-of-a-probability-distribution-expected-value"><i class="fa fa-check"></i><b>C.4.1</b> First moment of a probability distribution: Expected value</a></li>
+<li class="chapter" data-level="C.4.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#second-moment-of-the-distribution."><i class="fa fa-check"></i><b>C.4.2</b> Second moment of the distribution.</a></li>
+<li class="chapter" data-level="C.4.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#third-and-fourth-moments-skewness-and-kurtosis"><i class="fa fa-check"></i><b>C.4.3</b> Third and Fourth Moments: Skewness and Kurtosis</a></li>
 </ul></li>
-<li class="chapter" data-level="B.5" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#useful-probability-distributions"><i class="fa fa-check"></i><b>B.5</b> Useful probability distributions</a></li>
-<li class="chapter" data-level="B.6" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#joint-probability-distribution"><i class="fa fa-check"></i><b>B.6</b> Joint Probability Distribution</a></li>
-<li class="chapter" data-level="B.7" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#measures-of-statistical-association"><i class="fa fa-check"></i><b>B.7</b> Measures of statistical association</a><ul>
-<li class="chapter" data-level="B.7.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#rules-of-expectation-and-variances"><i class="fa fa-check"></i><b>B.7.1</b> Rules of expectation and variances</a></li>
+<li class="chapter" data-level="C.5" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#useful-probability-distributions"><i class="fa fa-check"></i><b>C.5</b> Useful probability distributions</a></li>
+<li class="chapter" data-level="C.6" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#joint-probability-distribution"><i class="fa fa-check"></i><b>C.6</b> Joint Probability Distribution</a></li>
+<li class="chapter" data-level="C.7" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#measures-of-statistical-association"><i class="fa fa-check"></i><b>C.7</b> Measures of statistical association</a>
+<ul>
+<li class="chapter" data-level="C.7.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#rules-of-expectation-and-variances"><i class="fa fa-check"></i><b>C.7.1</b> Rules of expectation and variances</a></li>
 </ul></li>
-<li class="chapter" data-level="B.8" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#sampling-and-estimation"><i class="fa fa-check"></i><b>B.8</b> Sampling and Estimation</a></li>
-<li class="chapter" data-level="B.9" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#hypothesis-testing"><i class="fa fa-check"></i><b>B.9</b> Hypothesis testing</a><ul>
-<li class="chapter" data-level="B.9.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-a-single-population-parameter"><i class="fa fa-check"></i><b>B.9.1</b> Testing a restriction on a single population parameter</a></li>
-<li class="chapter" data-level="B.9.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-multiple-population-parameter"><i class="fa fa-check"></i><b>B.9.2</b> Testing a restriction on multiple population parameter</a></li>
-<li class="chapter" data-level="B.9.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#confidence-interval-and-hypothesis-testing"><i class="fa fa-check"></i><b>B.9.3</b> Confidence interval and Hypothesis testing</a></li>
+<li class="chapter" data-level="C.8" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#sampling-and-estimation"><i class="fa fa-check"></i><b>C.8</b> Sampling and Estimation</a></li>
+<li class="chapter" data-level="C.9" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#hypothesis-testing"><i class="fa fa-check"></i><b>C.9</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="C.9.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-a-single-population-parameter"><i class="fa fa-check"></i><b>C.9.1</b> Testing a restriction on a single population parameter</a></li>
+<li class="chapter" data-level="C.9.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-multiple-population-parameter"><i class="fa fa-check"></i><b>C.9.2</b> Testing a restriction on multiple population parameter</a></li>
+<li class="chapter" data-level="C.9.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#confidence-interval-and-hypothesis-testing"><i class="fa fa-check"></i><b>C.9.3</b> Confidence interval and Hypothesis testing</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#problems-1"><i class="fa fa-check"></i>Problems</a></li>
 </ul></li>
@@ -272,23 +327,21 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="modeling-cycle" class="section level1">
-<h1><span class="header-section-number">Chapter 6</span> Modeling Cycle</h1>
+<div id="modeling-cycle" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Modeling Cycle<a href="modeling-cycle.html#modeling-cycle" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this chapter we will focus on the cyclical component of a time series and hence focus on data that either has no trend and seasonal components, or data that is filtered to eliminate any trend and seasonality. One of the most commonly used method to model cyclicality is the <em>Autogressive Moving Average (ARMA)</em>. This model has two distinct components:</p>
 <ol style="list-style-type: decimal">
 <li><p><em>Autoregressive (AR) component</em>: the current period value of a time series variable depends on its past (lagged) observations. We use <span class="math inline">\(p\)</span> to denote the <strong>order</strong> of the AR component and is the number of lags of a variable that directly affect the current period value. For example, a firm’s production in the current period maybe impacted by past levels of production. If last year’s production exceeded demand, the stock of unsold goods may be used to meet this period demand first, hence lowering the current period production.</p></li>
 <li><p><em>Moving average (MA) component</em>: the current period value of a time series variable depends on current period <strong>shock</strong> as well as past shocks to this variable. We use <span class="math inline">\(q\)</span> to denote the <strong>order</strong> of the MA component and is the number of past period shocks that affect the current period value of the variable of interest. For example, if the Federal Reserve Bank raises the interest in 2016, the effects of that policy shock may impact investment and consumption spending in 2017.</p></li>
 </ol>
 <p>Before we consider these time series model in details it is useful to discuss certain properties of time series that allow us a better understanding of these models.</p>
-<div id="stationarity-and-autocorrelation" class="section level2">
-<h2><span class="header-section-number">6.1</span> Stationarity and Autocorrelation</h2>
-<div id="covariance-stationary-time-series" class="section level3">
-<h3><span class="header-section-number">6.1.1</span> Covariance Stationary Time Series</h3>
-
+<div id="stationarity-and-autocorrelation" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Stationarity and Autocorrelation<a href="modeling-cycle.html#stationarity-and-autocorrelation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="covariance-stationary-time-series" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Covariance Stationary Time Series<a href="modeling-cycle.html#covariance-stationary-time-series" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="definition">
-<span id="def:d7" class="definition"><strong>Definition 6.1  (Covariance Stationary Time Series)  </strong></span>
+<p><span id="def:unlabeled-div-6" class="definition"><strong>Definition 6.1  </strong></span>(Covariance Stationary Time Series)</p>
 </div>
-
 <p>A time series <span class="math inline">\(\{y_t\}\)</span> is said to be a <em>covariance stationary process</em> if:</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(E(y_t)=\mu_y \quad \forall \quad t\)</span></li>
@@ -296,13 +349,13 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><span class="math inline">\(Cov(y_t,y_{t-s})=\gamma(s) \quad \forall \quad s\neq t\)</span></li>
 </ol>
 <p>One way to think about stationarity is <em>mean-reversion</em>, i.e, the tendency of a time series to return to its <em>long-run</em> unconditional mean following a shock (or a series of shock). Figure @(fig:ch6-figure1) below shows this property graphically.</p>
-<div class="figure" style="text-align: center"><span id="fig:ch6-figure1"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch6-figure1"></span>
 <img src="bookdown-demo_files/figure-html/ch6-figure1-1.png" alt="Reversion to mean" width="80%" />
 <p class="caption">
 Figure 6.1: Reversion to mean
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:ch6-figure2"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch6-figure2"></span>
 <img src="bookdown-demo_files/figure-html/ch6-figure2-1.png" alt="Reversion to mean in practice" width="80%" />
 <p class="caption">
 Figure 6.2: Reversion to mean in practice
@@ -316,40 +369,37 @@ Figure 6.2: Reversion to mean in practice
 <!-- 2. Similarly, a model with seasonality will be non-stationary. -->
 <!--  -->
 </div>
-<div id="correlation-vs-autocorrelation" class="section level3">
-<h3><span class="header-section-number">6.1.2</span> Correlation vs Autocorrelation</h3>
+<div id="correlation-vs-autocorrelation" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> Correlation vs Autocorrelation<a href="modeling-cycle.html#correlation-vs-autocorrelation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In statistics, correlation is a measure of relationship between two variables. In the time series setting, we can think of the current period value and the past period value of a variable as two <strong>separate</strong> variables, and compute correlation between them. Such a correlation, between current and lagged observation of a time series is called <strong>serial correlation</strong> or <strong>autocorrelation</strong>. In general, for a time series, <span class="math inline">\(\{y_t\}\)</span>, the autocorrelation is given by:</p>
 <p><span class="math display">\[\begin{align}
     Cor(y_t,y_{t-s})=\frac{ Cov(y_t,y_{t-s})}{\sqrt{\sigma^2_{y_t} \times \sigma^2_{y_{t-s}}}}
         \end{align}\]</span>
 where <span class="math inline">\(Cov(y_t,y_{t-s})= E(y_t-\mu_{y_t})(y_{t-s}-\mu_{y_{t-s}})\)</span> and <span class="math inline">\(\sigma^2_{y_t}=E(y_t-\mu_{y_t})^2\)</span></p>
 <p>For a stationary time series, using the three conditions the <strong>Autocorrelation Function (ACF)</strong> denoted by <span class="math inline">\(\rho(s)\)</span> is given by:</p>
-
+<p><span class="math display">\[\begin{align}
+    ACF(s) \ or \ \rho(s)=\frac{\gamma(s)}{\gamma(0)}
+    \end{align}\]</span></p>
 <p>Non-zero values of the ACF indicates presences of serial correlation in the data. Figure <a href="modeling-cycle.html#fig:ch6-figure3">6.3</a> shows the ACF for a stationary time series with positive serial correlation. If your data is stationary then the ACF should eventually converge to 0. For a non-stationary data, the ACF function will not decay over time.</p>
-<div class="figure" style="text-align: center"><span id="fig:ch6-figure3"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch6-figure3"></span>
 <img src="bookdown-demo_files/figure-html/ch6-figure3-1.png" alt="ACF for a Stationary Time Series" width="80%" />
 <p class="caption">
 Figure 6.3: ACF for a Stationary Time Series
 </p>
 </div>
 </div>
-<div id="partial-autocorrelation" class="section level3">
-<h3><span class="header-section-number">6.1.3</span> Partial Autocorrelation</h3>
-
-<div class="definition">
-<span id="def:d9" class="definition"><strong>Definition 6.2  (Partial Auto Correlation Function (PACF))  </strong></span>
-</div>
-
+<div id="partial-autocorrelation" class="section level3 hasAnchor" number="6.1.3">
+<h3><span class="header-section-number">6.1.3</span> Partial Autocorrelation<a href="modeling-cycle.html#partial-autocorrelation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The ACF captures the relationship between the current period value of a time series and all of its past observations. It includes both direct as well as indirect effects of the past observations on the current period value. Often times it is of interest to measure the direct relationship between the current and past observations, <strong>partialing</strong> out all indirect effects. The <em>partial autocorrelation function (PACF)</em> for a stationary time series <span class="math inline">\(y_t\)</span> at lag <span class="math inline">\(s\)</span> is the direct correlation between <span class="math inline">\(y_t\)</span> and <span class="math inline">\(y_{t-s}\)</span>, after filtering out the linear influence of <span class="math inline">\(y_{t-1},\ldots,y_{t-s-1}\)</span> on <span class="math inline">\(y_t\)</span>. Figure <a href="modeling-cycle.html#fig:ch6-figure4">6.4</a> below shows the PACF for a stationary time series where only one lag directly affects the time series in the current period.</p>
-<div class="figure" style="text-align: center"><span id="fig:ch6-figure4"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch6-figure4"></span>
 <img src="bookdown-demo_files/figure-html/ch6-figure4-1.png" alt="PACF for a Stationary Time Series" width="80%" />
 <p class="caption">
 Figure 6.4: PACF for a Stationary Time Series
 </p>
 </div>
 </div>
-<div id="lag-operator" class="section level3">
-<h3><span class="header-section-number">6.1.4</span> Lag operator</h3>
+<div id="lag-operator" class="section level3 hasAnchor" number="6.1.4">
+<h3><span class="header-section-number">6.1.4</span> Lag operator<a href="modeling-cycle.html#lag-operator" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A <strong>lag operator</strong> denoted by <span class="math inline">\(L\)</span> allows us to write ARMA models in a more concise way. Applying lag operator once moves the time index by one period; applying it twice moves the time index back by two period; applying it <span class="math inline">\(s\)</span> times moves the index back by <span class="math inline">\(s\)</span> periods.
 <span class="math display">\[ Ly_t=y_{t-1} \]</span>
 <span class="math display">\[ L^2y_t=y_{t-2} \]</span>
@@ -358,10 +408,12 @@ Figure 6.4: PACF for a Stationary Time Series
 <span class="math display">\[ L^sy_t=y_{t-s} \]</span></p>
 </div>
 </div>
-<div id="autoregressive-ar-model" class="section level2">
-<h2><span class="header-section-number">6.2</span> Autoregressive (AR) Model</h2>
+<div id="autoregressive-ar-model" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Autoregressive (AR) Model<a href="modeling-cycle.html#autoregressive-ar-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A <em>stationary</em>time series <span class="math inline">\(\{x_t\}\)</span> can be modeled as an AR process. In general, an AR(p) model is given by:</p>
-
+<p><span class="math display">\[\begin{equation}
+y_t = \phi_0 +\phi_1 y_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t
+\end{equation}\]</span></p>
 <p>Here <span class="math inline">\(\phi_i\)</span> captures the effect of <span class="math inline">\(y_{t-i}\)</span> on <span class="math inline">\(y_t\)</span>. The order of the AR process is not known apriori. It is common to use either AIC or BIC to determine the optimal lag length for an AR process.</p>
 <p>Using the Lag operator, we can rewrite the above AR(p) model as follows:
 <span class="math display">\[ \Phi(L)y_t=\phi_0+\epsilon_t \]</span></p>
@@ -374,8 +426,8 @@ where,
 <p><strong>Characteristic equation</strong>: A characteristic equation is given by:</p>
 <p><span class="math display">\[\Phi(L)=0\]</span></p>
 <p>The roots of this equation play an important role in determining the dynamic behavior of a time series.</p>
-<div id="unit-root-and-stationarity" class="section level3">
-<h3><span class="header-section-number">6.2.1</span> Unit root and Stationarity</h3>
+<div id="unit-root-and-stationarity" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Unit root and Stationarity<a href="modeling-cycle.html#unit-root-and-stationarity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For a time series to be stationary there should be no <strong>unit root</strong> in its <em>characteristic equation</em>. In other words, all roots of the characteristic equation must fall outside the unit circle. Consider the following AR(1) model:
 <span class="math display">\[\Phi(L)y_t = \phi_0 + \epsilon_t\]</span></p>
 <p>The characteristic equation is given by:
@@ -385,8 +437,8 @@ where,
 <p>For no unit root to be present, <span class="math inline">\(L^*&gt;|1|\)</span> which implies that <span class="math inline">\(|\phi_1|&lt;1\)</span>.</p>
 <p>Typically, for any AR process to be stationary, some restrictions will be imposed on the values of <span class="math inline">\(\phi_i&#39;s\)</span>, the coefficients of the lagged variables in the model.</p>
 </div>
-<div id="properties-of-an-ar1-model" class="section level3">
-<h3><span class="header-section-number">6.2.2</span> Properties of an AR(1) model</h3>
+<div id="properties-of-an-ar1-model" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Properties of an AR(1) model<a href="modeling-cycle.html#properties-of-an-ar1-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A stationary AR(1) model is given by:
 <span class="math display">\[ y_t=\phi_0 +\phi_1 y_{t-1}+ \epsilon_t \quad ; \ \epsilon_t\sim WN(0, \sigma_\epsilon^2) \ and \  |\phi_1|&lt;1\]</span></p>
 <ol style="list-style-type: decimal">
@@ -406,27 +458,27 @@ where,
 \phi_1 &amp; \text{if  s=1}\\
 0 &amp; \text{if s&gt;1}
   \end{cases}
- \end{equation*}\]</span></li>
+\end{equation*}\]</span></li>
 </ol></li>
 </ol>
 </div>
 </div>
-<div id="estimating-an-ar-model" class="section level2">
-<h2><span class="header-section-number">6.3</span> Estimating an AR model</h2>
+<div id="estimating-an-ar-model" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Estimating an AR model<a href="modeling-cycle.html#estimating-an-ar-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>When estimating the AR model we have two alternatives:</p>
 <ol style="list-style-type: decimal">
 <li><p>OLS: biased (but consistent) estimates. Also, later on when we add MA components we cannot use OLS.</p></li>
 <li><p>Maximum Likelihood Estimation (MLE): can be used to estimate AR as well as MA components</p></li>
 </ol>
-<div id="maximum-likelihood-estimation-mle" class="section level3">
-<h3><span class="header-section-number">6.3.1</span> Maximum Likelihood Estimation (MLE)</h3>
+<div id="maximum-likelihood-estimation-mle" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Maximum Likelihood Estimation (MLE)<a href="modeling-cycle.html#maximum-likelihood-estimation-mle" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>MLE approach is based on the following idea:</li>
 </ul>
 <p><em>what set of values of our parameters maximize the likelihood of observing our data if the model we have was used to generate this data.</em></p>
 <p><strong>Likelihood function</strong>: is a function that gives us the probability of observing our data given a model with some parameters.</p>
-<div id="likelihood-vs-probability" class="section level4">
-<h4><span class="header-section-number">6.3.1.1</span> Likelihood vs Probability</h4>
+<div id="likelihood-vs-probability" class="section level4 hasAnchor" number="6.3.1.1">
+<h4><span class="header-section-number">6.3.1.1</span> Likelihood vs Probability<a href="modeling-cycle.html#likelihood-vs-probability" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Consider a simple example of tossing a coin. Let <span class="math inline">\(X\)</span> denotes the random variable that is the outcome of this experiment being either heads or tails. Let <span class="math inline">\(\theta\)</span> denote the probability of heads which implies <span class="math inline">\(1-\theta\)</span> is the probability of obtaining tails. Here, <span class="math inline">\(\theta\)</span> is our parameter of interest. Suppose we toss the coin 10 times and obtain the following data on <span class="math inline">\(X\)</span>:
 <span class="math display">\[X=\{H,H,H,H,H,H,T,T,T,T\}\]</span></p>
 <p>Then, the probability of obtaining this sequence of X is given by:
@@ -437,39 +489,33 @@ where,
 <p>Note that with fixed <span class="math inline">\(X\)</span>, as we change <span class="math inline">\(\theta\)</span> the likelihood of observing this data will change.</p>
 <p><strong>This is an important point that distinguishes likelihood function from the probability distribution function. Although both have the same equation, the probability function is a function of the data with the value of the parameter fixed, while the likelihood function is a function of the parameter with the data fixed.</strong></p>
 </div>
-<div id="maximum-likelhood-estimation" class="section level4">
-<h4><span class="header-section-number">6.3.1.2</span> Maximum Likelhood Estimation</h4>
+<div id="maximum-likelhood-estimation" class="section level4 hasAnchor" number="6.3.1.2">
+<h4><span class="header-section-number">6.3.1.2</span> Maximum Likelhood Estimation<a href="modeling-cycle.html#maximum-likelhood-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Now we are in a position to formally define the likelihood function.</p>
-
 <div class="definition">
-<span id="def:unnamed-chunk-4" class="definition"><strong>Definition 6.3  </strong></span>Let <span class="math inline">\(X\)</span> denotes a random variable with a given probability distribution function denoted by <span class="math inline">\(f(x_i|\theta)\)</span>. Let <span class="math inline">\(D=\{x_1, x_2,\dots,x_n\}\)</span> denote a sample realization of <span class="math inline">\(X\)</span>. Then, the likelhood function, denoted by <span class="math inline">\(L(\theta)\)</span> is given by:
-<span class="math display">\[L(\theta)=f(x_1,x_2,\dots,x_n|\theta)\]</span>
+<p><span id="def:unnamed-chunk-4" class="definition"><strong>Definition 6.2  </strong></span>Let <span class="math inline">\(X\)</span> denotes a random variable with a given probability distribution function denoted by <span class="math inline">\(f(x_i|\theta)\)</span>. Let <span class="math inline">\(D=\{x_1, x_2,\dots,x_n\}\)</span> denote a sample realization of <span class="math inline">\(X\)</span>. Then, the likelhood function, denoted by <span class="math inline">\(L(\theta)\)</span> is given by:
+<span class="math display">\[L(\theta)=f(x_1,x_2,\dots,x_n|\theta)\]</span></p>
 </div>
-
 <p>If we further assume that each realization of <span class="math inline">\(X\)</span> is independent of the others, we get:
 <span class="math display">\[L(\theta)=f(x_1,x_2,\dots,x_n|\theta)=f(x_1|\theta)\times f(x_2|\theta) \times \dots \times f(x_n|\theta)\]</span></p>
 <p>A mathematical simplification is to work with natural logs of the likelihood function, which assuming independently distributed random sample, gives us:</p>
 <p><span class="math display">\[ lnL(\theta)=ln(f(x_1|\theta)\times f(x_2|\theta) \times \dots \times f(x_n|\theta))=\sum_{i=1}^{N}ln(f(x_i|\theta))\]</span></p>
-
 <div class="definition">
-<span id="def:unnamed-chunk-5" class="definition"><strong>Definition 6.4  </strong></span>The maximum likelihood estimator, denoted by <span class="math inline">\(\hat{\theta}_{MLE}\)</span>, maximizes the log likelihood function:
-<span class="math display">\[ \hat{\theta}_{MLE} \equiv arg \max_{\theta} lnL(\theta) \]</span>
+<p><span id="def:unnamed-chunk-5" class="definition"><strong>Definition 6.3  </strong></span>The maximum likelihood estimator, denoted by <span class="math inline">\(\hat{\theta}_{MLE}\)</span>, maximizes the log likelihood function:
+<span class="math display">\[ \hat{\theta}_{MLE} \equiv arg \max_{\theta} lnL(\theta) \]</span></p>
 </div>
-
-
 <div class="example">
 <p><span id="exm:unnamed-chunk-6" class="example"><strong>Example 6.1  </strong></span>Compute maximum likelihood estimator of <span class="math inline">\(\mu\)</span> of an indpendently distributed random variable that is normally distributed with a mean of <span class="math inline">\(\mu\)</span> and a variance of <span class="math inline">\(1\)</span>:</p>
 <p><span class="math display">\[ f(y_t|\mu)=\frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2} (y_t-\mu)^2}\]</span></p>
 <p>Solution: The log likelihood function is given by:</p>
 <p><span class="math display">\[lnL= -Tln2\pi-\frac{1}{2}\sum_{t=1}^T(y_t-\mu)^2 \]</span></p>
-From the first order condition, we get
-<span class="math display">\[ \frac{\partial LnL}{\partial \mu}=\sum_{t=1}^T(y_t-\mu)=0\Rightarrow \hat{\mu}_{MLE}=\frac{\sum_{t=1}^T y_t}{T}\]</span>
-</div>
-
+<p>From the first order condition, we get
+<span class="math display">\[ \frac{\partial LnL}{\partial \mu}=\sum_{t=1}^T(y_t-\mu)=0\Rightarrow \hat{\mu}_{MLE}=\frac{\sum_{t=1}^T y_t}{T}\]</span></p>
 </div>
 </div>
-<div id="mle-of-an-arp-model" class="section level3">
-<h3><span class="header-section-number">6.3.2</span> MLE of an AR(p) model</h3>
+</div>
+<div id="mle-of-an-arp-model" class="section level3 hasAnchor" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> MLE of an AR(p) model<a href="modeling-cycle.html#mle-of-an-arp-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>One complication we face in estimating an AR(p) model is that by definition the realizations of the variable are not independent of each other. As a result we cannot simplify the likelihood function by multiplying individual probability density functions to obtain the joint probability density function, i.e.,
 <span class="math display">\[ f(y_1,y_2,\dots,y_T|\theta) \neq f(y_1|\theta)\times f(y_2|\theta)\times \dots \times f(y_T|\theta)\]</span></p>
 <p>Furthermore, as the order of AR increases, the joint density function we need to estimate becomes even more complicated. In this class we will focus on the method that divides the joint density into the product of conditional densities and density of a set of initial values. The idea comes from the conditional probability formula for two related events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>:</p>
@@ -484,8 +530,8 @@ From the first order condition, we get
 <p><span class="math display">\[ ln \ L(\theta) = ln \ f(y_1;\theta) + \sum_{t=2}^{T} ln \ f(y_t|y_{t-1}; \theta)  \]</span></p>
 <p>We can then maximize the above likelihood function to obtain an MLE estimator for the AR(1) model.</p>
 </div>
-<div id="selection-of-optimal-order-of-the-ar-model" class="section level3">
-<h3><span class="header-section-number">6.3.3</span> Selection of optimal order of the AR model</h3>
+<div id="selection-of-optimal-order-of-the-ar-model" class="section level3 hasAnchor" number="6.3.3">
+<h3><span class="header-section-number">6.3.3</span> Selection of optimal order of the AR model<a href="modeling-cycle.html#selection-of-optimal-order-of-the-ar-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Note that apriori we do not know the order of the AR model for any given time series. We can determine the optimal lag order by using either AIC or BIC. The process is as follows:</p>
 <ol style="list-style-type: decimal">
 <li><p>Set <span class="math inline">\(p=p_{max}\)</span> where <span class="math inline">\(p_{max}\)</span> is an integer. A rule of thumb is to set
@@ -494,8 +540,8 @@ From the first order condition, we get
 <li><p>Select the final model as the one with lowest AIC or lowest BIC.</p></li>
 </ol>
 </div>
-<div id="forecasting-using-arp-model" class="section level3">
-<h3><span class="header-section-number">6.3.4</span> Forecasting using AR(p) model</h3>
+<div id="forecasting-using-arp-model" class="section level3 hasAnchor" number="6.3.4">
+<h3><span class="header-section-number">6.3.4</span> Forecasting using AR(p) model<a href="modeling-cycle.html#forecasting-using-arp-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Having estimated our AR(p) model with the optimal lag length, we can use the conditional mean to compute the forecast and conditional variance to compute the forecast errors. Consider an AR(1) model:</p>
 <p><span class="math display">\[y_t=\phi_0+\phi_1 y_{t-1} +\epsilon_t\]</span></p>
 <p>Then, the 1-period ahead forecast is given by:
@@ -506,20 +552,16 @@ Similarly, the 2-period ahead forecast is given by:
 <span class="math display">\[f_{t,h}=\phi_0+\phi_1 f_{t,h-1}\]</span></p>
 <p>Correspondingly, the h-period ahead forecast error is given by:
 <span class="math display">\[e_{t,h}=y_{t+h}- f_{t,h}=\epsilon_{t+h}+\phi_1 e_{t,h-1}\]</span></p>
-
 <div class="theorem">
-<span id="thm:unnamed-chunk-7" class="theorem"><strong>Theorem 6.1  </strong></span>The h-period ahead forecast converges to the unconditional mean of <span class="math inline">\(y_t\)</span>, i.e., <span class="math display">\[\lim_{h\to\infty} f_{t,h}=\mu_y=\frac{\phi_0}{1-\phi_1}\]</span>
+<p><span id="thm:unnamed-chunk-7" class="theorem"><strong>Theorem 6.1  </strong></span>The h-period ahead forecast converges to the unconditional mean of <span class="math inline">\(y_t\)</span>, i.e., <span class="math display">\[\lim_{h\to\infty} f_{t,h}=\mu_y=\frac{\phi_0}{1-\phi_1}\]</span></p>
 </div>
-
-
 <div class="theorem">
-<span id="thm:unnamed-chunk-8" class="theorem"><strong>Theorem 6.2  </strong></span>The variance of the h-period ahead forecast error converges to the unconditional variance of <span class="math inline">\(y_t\)</span>, i.e., <span class="math display">\[\lim_{h\to\infty} Var(e_{t,h})=\sigma^2_y=\frac{\sigma^2_\epsilon}{1-\phi_1^2}\]</span>
-</div>
-
+<p><span id="thm:unnamed-chunk-8" class="theorem"><strong>Theorem 6.2  </strong></span>The variance of the h-period ahead forecast error converges to the unconditional variance of <span class="math inline">\(y_t\)</span>, i.e., <span class="math display">\[\lim_{h\to\infty} Var(e_{t,h})=\sigma^2_y=\frac{\sigma^2_\epsilon}{1-\phi_1^2}\]</span></p>
 </div>
 </div>
-<div id="moving-average-ma-model" class="section level2">
-<h2><span class="header-section-number">6.4</span> Moving Average (MA) Model</h2>
+</div>
+<div id="moving-average-ma-model" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Moving Average (MA) Model<a href="modeling-cycle.html#moving-average-ma-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Another commonly used method for capturing the cyclical component of the time series is the <strong>moving average (MA)</strong> model where the current value of a time series linearly depends on current and past shocks. Formally, a <em>stationary</em> time series <span class="math inline">\(\{y_t\}\)</span> can be modeled as an MA(q) process:
 <span class="math display">\[\begin{equation}
   y_t = \theta_0 + \epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
@@ -528,8 +570,8 @@ Similarly, the 2-period ahead forecast is given by:
 <p><span class="math display">\[y_t = \theta_0 +\Theta(L) \epsilon_t\]</span></p>
 <p>where <span class="math inline">\(\Theta(L)=1+\theta_1 L+ \theta_2 L^2+...+\theta_q L^q\)</span> is lag polynomial of order <span class="math inline">\(q\)</span>.</p>
 <p>Note that because each one of the current and past shocks are white noise processes, an MA(q) model is always stationary.</p>
-<div id="invertibility-of-an-ma-process" class="section level3">
-<h3><span class="header-section-number">6.4.1</span> Invertibility of an MA process</h3>
+<div id="invertibility-of-an-ma-process" class="section level3 hasAnchor" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Invertibility of an MA process<a href="modeling-cycle.html#invertibility-of-an-ma-process" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Consider the following MA(1) process with<span class="math inline">\(\theta_0=0\)</span> for simplicity:
 <span class="math display">\[y_t=\epsilon_t +\theta_1 \epsilon_{t-1}\]</span></p>
 <p>Using the lag operator we can rewrite this equation as follows:</p>
@@ -541,14 +583,12 @@ Similarly, the 2-period ahead forecast is given by:
 <span class="math display">\[\Rightarrow y_t -\theta_1 y_{t-1} +\theta_1^2y_{t-2}-\theta_1^3 y_{t-3}....=\epsilon_t\]</span></p>
 <p>Rearranging terms, we get the <span class="math inline">\(AR(\infty)\)</span> representation for an invertible MA(1) model:
 <span class="math display">\[y_t=-\sum_{i=1}^{\infty}(-\theta_1)^i \ y_{t-i}+\epsilon_t\]</span></p>
-
 <div class="definition">
-<span id="def:unnamed-chunk-9" class="definition"><strong>Definition 6.5  </strong></span>An MA process is invertible if it can be represented as a stationary <span class="math inline">\(AR(\infty)\)</span>.
+<p><span id="def:unnamed-chunk-9" class="definition"><strong>Definition 6.4  </strong></span>An MA process is invertible if it can be represented as a stationary <span class="math inline">\(AR(\infty)\)</span>.</p>
 </div>
-
 </div>
-<div id="properties-of-an-invertible-ma1" class="section level3">
-<h3><span class="header-section-number">6.4.2</span> Properties of an invertible MA(1)</h3>
+<div id="properties-of-an-invertible-ma1" class="section level3 hasAnchor" number="6.4.2">
+<h3><span class="header-section-number">6.4.2</span> Properties of an invertible MA(1)<a href="modeling-cycle.html#properties-of-an-invertible-ma1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>An invertible MA(1) model is given by:</p>
 <p><span class="math display">\[ y_t = \theta_0 + \epsilon_t + \theta_1 \epsilon_{t-1} \quad ; \ \epsilon_t\sim WN(0, \sigma_\epsilon^2) \ and \  |\theta_1|&lt;1\]</span></p>
 <ol style="list-style-type: decimal">
@@ -562,15 +602,15 @@ Similarly, the 2-period ahead forecast is given by:
 <span class="math display">\[\begin{equation*}
   ACF(s) =
   \begin{cases}
- \frac{\theta_1}{1+\theta_1^2} &amp; \text{if  s=1}\\
- 0 &amp; \text{if s&gt;1}
+\frac{\theta_1}{1+\theta_1^2} &amp; \text{if  s=1}\\
+0 &amp; \text{if s&gt;1}
   \end{cases}
- \end{equation*}\]</span></p></li>
+\end{equation*}\]</span></p></li>
 <li><p>PACF function: using the invertibility it is evident that PACF of an MA(1) decays with <span class="math inline">\(s\)</span>.</p></li>
 </ol>
 </div>
-<div id="forecast-based-on-maq" class="section level3">
-<h3><span class="header-section-number">6.4.3</span> Forecast based on MA(q)</h3>
+<div id="forecast-based-on-maq" class="section level3 hasAnchor" number="6.4.3">
+<h3><span class="header-section-number">6.4.3</span> Forecast based on MA(q)<a href="modeling-cycle.html#forecast-based-on-maq" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Like before, the h-period ahead forecast is the conditional expected value of the time series. Consider an MA(1) model:</p>
 <p><span class="math display">\[y_t=\theta_0 +\epsilon_t + \theta_1 \epsilon_{t-1}\]</span></p>
 <p>Then, the 1-period ahead forecast is given by:</p>
@@ -580,10 +620,12 @@ Similarly, the 2-period ahead forecast is given by:
 <p>In general, for an MA(q) model, the forecast for <span class="math inline">\(h&gt;q\)</span> is the long run mean <span class="math inline">\(\theta_0\)</span>. This is why we say that an MA(q) process has a memory of <em>q</em> periods.</p>
 </div>
 </div>
-<div id="armap-q" class="section level2">
-<h2><span class="header-section-number">6.5</span> ARMA(p, q)</h2>
+<div id="armap-q" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> ARMA(p, q)<a href="modeling-cycle.html#armap-q" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>An ARMA model simply combines both AR and MA components to model the dynamics of a time series. Formally,</p>
-
+<p><span class="math display">\[\begin{equation}
+   y_t = \phi_0 +\phi_1 y_{t-1} + \phi_2 y_{t-2} + ...... + \phi_p y_{t-p}+\epsilon_t + \theta_1 \epsilon_{t-1} + \theta_2 \epsilon_{t-2} + ...... + \theta_q \epsilon_{t-q}
+   \end{equation}\]</span></p>
 <p>Note that:</p>
 <ol style="list-style-type: decimal">
 <li><p>Estimation is done by maximum likelihood method.</p></li>
@@ -597,8 +639,8 @@ Similarly, the 2-period ahead forecast is given by:
 <p><span class="math display">\[f_{t,2} = E(y_{t+2}|\Omega_t) = \phi_0 + \phi_1 f_{t,1}\]</span></p>
 <p>Hence, no role is played by the MA component in determining the 2-period ahead forecast. For any <span class="math inline">\(h&gt;1\)</span> only the AR component affects the forecast from this model.</p>
 </div>
-<div id="integrated-arma-or-arimapdq" class="section level2">
-<h2><span class="header-section-number">6.6</span> Integrated ARMA or ARIMA(p,d,q)</h2>
+<div id="integrated-arma-or-arimapdq" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Integrated ARMA or ARIMA(p,d,q)<a href="modeling-cycle.html#integrated-arma-or-arimapdq" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Thus far we have assumed that our data is stationary. However, often we may find that this assumption is not supported in practice. In such a case we need to tranform our data appropriately before estimating an ARMA model. The procedure can be summarized as follows:</p>
 <ol style="list-style-type: decimal">
 <li><p>Determine whether there is a unit root in data or not. Presence of unit root indicates non-stationarity. We will use Augmented Dickey-Fuller (ADF) test for this purpose.</p></li>
@@ -606,8 +648,8 @@ Similarly, the 2-period ahead forecast is given by:
 <li><p>Once we have obtained a stationary transformation of our original data, we can proceed and estimate the ARMA model as before.</p></li>
 </ol>
 </div>
-<div id="trend-stationary-vs-difference-stationary-time-series" class="section level2">
-<h2><span class="header-section-number">6.7</span> Trend Stationary vs Difference Stationary Time Series</h2>
+<div id="trend-stationary-vs-difference-stationary-time-series" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Trend Stationary vs Difference Stationary Time Series<a href="modeling-cycle.html#trend-stationary-vs-difference-stationary-time-series" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are two types of time series we often encounter in real world:</p>
 <ol style="list-style-type: decimal">
 <li>Trend-stationary: a time-series variable is non-stationary becuase it has a deterministic trend. Once we detrend our data then it will become stationary. In this case the appropriate transformation is to estimate a trend model and then use the residual as the detrended stationary data. For example, suppose our data has a linear trend given by:</li>
@@ -622,8 +664,8 @@ Similarly, the 2-period ahead forecast is given by:
 <p><span class="math display">\[\Delta_1 \ y_t=(1-L)^1 \ y_t=y_t-y_{t-1} \quad  \text{is stationary}\]</span></p>
 <p>In otherwords, the first difference of an I(1) process is stationary. Similarly for <span class="math inline">\(d=2\)</span>, we obtain an <span class="math inline">\(I(2)\)</span> process where second difference will be stationary and so forth.</p>
 </div>
-<div id="testing-for-a-unit-root" class="section level2">
-<h2><span class="header-section-number">6.8</span> Testing for a unit root</h2>
+<div id="testing-for-a-unit-root" class="section level2 hasAnchor" number="6.8">
+<h2><span class="header-section-number">6.8</span> Testing for a unit root<a href="modeling-cycle.html#testing-for-a-unit-root" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Consider the following AR(1) model with no trend and intercept:</p>
 <p><span class="math display">\[y_t=\phi_1 y_{t-1} +\epsilon_t  \ quad ; \epsilon_t\sim WN(0,\sigma^2_\epsilon)\]</span></p>
 <p>We know that if <span class="math inline">\(\phi_1=1\)</span> we have a unit root in this data. Lets subtract <span class="math inline">\(y_{t-1}\)</span> from both sides and rewrite this model as:</p>
@@ -639,7 +681,7 @@ Similarly, the 2-period ahead forecast is given by:
 <p>Under the null hypothesis this test statistic follows the DF-distribution and the critical values are provided in most statistical softwares. Given that this is a left-tail test, the decision rule is that if the test statistic is less than the critical value then we reject the null hypothesis.</p>
 <p>There are two issues we face when implementing this test in practice:</p>
 <ol style="list-style-type: decimal">
-<li>First, the above procedure assumes that there is no intercept and trend in the data. In real world, we cannot make that assumption and must extend the test procedure to accomodate a non-zero intercept and trend. Hence, we have the following two additional versions of the DF test:
+<li><p>First, the above procedure assumes that there is no intercept and trend in the data. In real world, we cannot make that assumption and must extend the test procedure to accomodate a non-zero intercept and trend. Hence, we have the following two additional versions of the DF test:</p>
 <ol style="list-style-type: lower-roman">
 <li>Constant and no trend model: Here our AR(1) model is</li>
 </ol>
@@ -675,8 +717,8 @@ The test statistic for this test is denoted by <span class="math inline">\(\phi_
 <li><p>Second, we only have allowed for AR(1). We need to extend the above testing procedure for higher order AR models. The Augmented DF (ADF) test allows for higher order lags in testing for a unit root. For example, the model with an intercept, trend, and <span class="math inline">\(p\)</span> lags is given by:
 <span class="math display">\[\Delta y_t= \phi_0 + \beta \ t+ \rho \ y_{t-1}+\sum_{i=2}^p\delta_i  y_{t-i}+\epsilon_t  \quad where \ \rho=\sum_{i=1}^p \phi_i-1\]</span></p></li>
 </ol>
-<div id="testing-for-unit-root-in-usdcad-exchange-rate" class="section level3">
-<h3><span class="header-section-number">6.8.1</span> Testing for unit root in USD/CAD exchange rate</h3>
+<div id="testing-for-unit-root-in-usdcad-exchange-rate" class="section level3 hasAnchor" number="6.8.1">
+<h3><span class="header-section-number">6.8.1</span> Testing for unit root in USD/CAD exchange rate<a href="modeling-cycle.html#testing-for-unit-root-in-usdcad-exchange-rate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this application we will test for unit root in US-Canada exchange rate. For this purpose we work with monthly data from Jan 1971 through Oct 2018. Below I show the results for 3 models using the <strong>urca</strong> package in R.</p>
 <pre><code>## 
 ## ############################################### 
@@ -691,21 +733,21 @@ The test statistic for this test is denoted by <span class="math inline">\(\phi_
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.069552 -0.008898  0.000394  0.010457  0.125035 
+## -0.069820 -0.009107  0.000237  0.010474  0.125124 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## z.lag.1    0.0001697  0.0005772   0.294    0.769    
-## z.diff.lag 0.2735079  0.0399221   6.851 1.87e-11 ***
+## z.lag.1    0.0001568  0.0005601    0.28     0.78    
+## z.diff.lag 0.2574519  0.0385402    6.68 5.24e-11 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.01717 on 581 degrees of freedom
-## Multiple R-squared:  0.07518,    Adjusted R-squared:  0.072 
-## F-statistic: 23.61 on 2 and 581 DF,  p-value: 1.38e-10
+## Residual standard error: 0.01746 on 632 degrees of freedom
+## Multiple R-squared:  0.06634,    Adjusted R-squared:  0.06338 
+## F-statistic: 22.45 on 2 and 632 DF,  p-value: 3.8e-10
 ## 
 ## 
-## Value of test-statistic is: 0.294 
+## Value of test-statistic is: 0.28 
 ## 
 ## Critical values for test statistics: 
 ##       1pct  5pct 10pct
@@ -723,22 +765,22 @@ The test statistic for this test is denoted by <span class="math inline">\(\phi_
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.067674 -0.009494 -0.000629  0.010037  0.123450 
+## -0.067869 -0.009589 -0.000771  0.009999  0.123380 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.010540   0.005313   1.984   0.0478 *  
-## z.lag.1     -0.008307   0.004312  -1.927   0.0545 .  
-## z.diff.lag   0.276679   0.039854   6.942 1.04e-11 ***
+## (Intercept)  0.011288   0.005352   2.109   0.0353 *  
+## z.lag.1     -0.008878   0.004320  -2.055   0.0403 *  
+## z.diff.lag   0.261053   0.038473   6.785 2.67e-11 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.01712 on 580 degrees of freedom
-## Multiple R-squared:  0.08056,    Adjusted R-squared:  0.07739 
-## F-statistic: 25.41 on 2 and 580 DF,  p-value: 2.643e-11
+## Residual standard error: 0.01742 on 631 degrees of freedom
+## Multiple R-squared:  0.07208,    Adjusted R-squared:  0.06914 
+## F-statistic: 24.51 on 2 and 631 DF,  p-value: 5.61e-11
 ## 
 ## 
-## Value of test-statistic is: -1.9266 2.011 
+## Value of test-statistic is: -2.0552 2.2637 
 ## 
 ## Critical values for test statistics: 
 ##       1pct  5pct 10pct
@@ -757,23 +799,23 @@ The test statistic for this test is denoted by <span class="math inline">\(\phi_
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.067690 -0.009464 -0.000581  0.009935  0.123348 
+## -0.067861 -0.009434 -0.000801  0.009864  0.123206 
 ## 
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  1.054e-02  5.318e-03   1.983   0.0479 *  
-## z.lag.1     -8.431e-03  4.446e-03  -1.896   0.0584 .  
-## tt           5.041e-07  4.345e-06   0.116   0.9077    
-## z.diff.lag   2.768e-01  3.990e-02   6.937 1.08e-11 ***
+## (Intercept)  1.136e-02  5.364e-03   2.117   0.0346 *  
+## z.lag.1     -9.173e-03  4.505e-03  -2.036   0.0422 *  
+## tt           9.159e-07  3.941e-06   0.232   0.8163    
+## z.diff.lag   2.613e-01  3.852e-02   6.784  2.7e-11 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.01714 on 579 degrees of freedom
-## Multiple R-squared:  0.08058,    Adjusted R-squared:  0.07581 
-## F-statistic: 16.91 on 3 and 579 DF,  p-value: 1.523e-10
+## Residual standard error: 0.01743 on 630 degrees of freedom
+## Multiple R-squared:  0.07216,    Adjusted R-squared:  0.06775 
+## F-statistic: 16.33 on 3 and 630 DF,  p-value: 3.114e-10
 ## 
 ## 
-## Value of test-statistic is: -1.8964 1.3429 1.8594 
+## Value of test-statistic is: -2.0362 1.5249 2.1357 
 ## 
 ## Critical values for test statistics: 
 ##       1pct  5pct 10pct
@@ -783,8 +825,8 @@ The test statistic for this test is denoted by <span class="math inline">\(\phi_
 <p>For the first model with no constant and trend, the test statistic <span class="math inline">\(\tau_1= 0.2469\)</span> and the 5% critical value is -1.95. For the second model with a constant, the test statistics is <span class="math inline">\(\tau_2= -1.9315\)</span> and the 5% critical value is -2.86. Finally, for the third model with a trend, the test statistic <span class="math inline">\(\tau_3= -1.8839\)</span> and the 5% critical value is -3.41. In each, because the test statistic is greater than the critical value, we do not reject the null hypothesis and conclude there is unit root.</p>
 </div>
 </div>
-<div id="box-jenkins-method-for-estimating-arimapdq" class="section level2">
-<h2><span class="header-section-number">6.9</span> Box-Jenkins Method for estimating ARIMA(p,d,q)</h2>
+<div id="box-jenkins-method-for-estimating-arimapdq" class="section level2 hasAnchor" number="6.9">
+<h2><span class="header-section-number">6.9</span> Box-Jenkins Method for estimating ARIMA(p,d,q)<a href="modeling-cycle.html#box-jenkins-method-for-estimating-arimapdq" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Box-Jenkins is a three-step procedure for finding the best fitting ARIMA(p,d,q) for a non-statinary time series.</p>
 <ol style="list-style-type: decimal">
 <li><p>Model identification: here we determine the order of integration <span class="math inline">\(d\)</span>, and the optimal number of AR and MA components, <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> respectively.</p>
@@ -808,12 +850,13 @@ The test statistic for this test is denoted by <span class="math inline">\(\phi_
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -821,12 +864,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -838,7 +881,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
+"view": {
+"link": null,
+"text": null
+},
 "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
@@ -852,9 +903,10 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

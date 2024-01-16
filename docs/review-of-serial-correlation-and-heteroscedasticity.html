@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>A Review of Serial Correlation and Heteroscedasticity | Applied Time Series Analysis</title>
+  <meta name="description" content="Lecture notes for Applied Time Series Analysis" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="A Review of Serial Correlation and Heteroscedasticity | Applied Time Series Analysis" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Lecture notes for Applied Time Series Analysis" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Review of Serial Correlation and Heteroscedasticity | Applied Time Series Analysis" />
+  
+  <meta name="twitter:description" content="Lecture notes for Applied Time Series Analysis" />
+  
+
+<meta name="author" content="Vipul Bhatt" />
+
+
+<meta name="date" content="2024-01-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="modeling-volatility.html"/>
+<link rel="next" href="review-of-differential-calculus-and-optimization.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Time Series Analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#time-series"><i class="fa fa-check"></i><b>1.1</b> Time Series</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#serial-correlation"><i class="fa fa-check"></i><b>1.2</b> Serial Correlation</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#testing-for-serial-correlion"><i class="fa fa-check"></i><b>1.3</b> Testing for Serial Correlion</a></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#white-noise-process"><i class="fa fa-check"></i><b>1.4</b> White Noise Process</a></li>
+<li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#important-elements-of-forecasting"><i class="fa fa-check"></i><b>1.5</b> Important Elements of Forecasting</a></li>
+<li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#loss-function-and-optimal-forecast"><i class="fa fa-check"></i><b>1.6</b> Loss Function and Optimal Forecast</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html"><i class="fa fa-check"></i><b>2</b> Regression-based Forecasting</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#scenario-analysis-and-conditional-forecasts"><i class="fa fa-check"></i><b>2.1</b> Scenario Analysis and Conditional Forecasts</a></li>
+<li class="chapter" data-level="2.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#unconditional-forecasts"><i class="fa fa-check"></i><b>2.2</b> Unconditional Forecasts</a></li>
+<li class="chapter" data-level="2.3" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#some-practical-issues"><i class="fa fa-check"></i><b>2.3</b> Some practical issues</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html"><i class="fa fa-check"></i><b>3</b> Components of a Time Series</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html#decomposing-a-time-series"><i class="fa fa-check"></i><b>3.1</b> Decomposing a time series</a></li>
+<li class="chapter" data-level="3.2" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html#uses-of-decomposition-of-a-time-series"><i class="fa fa-check"></i><b>3.2</b> Uses of Decomposition of a time series</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="smoothing-methods.html"><a href="smoothing-methods.html"><i class="fa fa-check"></i><b>4</b> Smoothing Methods</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="smoothing-methods.html"><a href="smoothing-methods.html#moving-average-method"><i class="fa fa-check"></i><b>4.1</b> Moving Average Method</a></li>
+<li class="chapter" data-level="4.2" data-path="smoothing-methods.html"><a href="smoothing-methods.html#simple-exponential-smoothing"><i class="fa fa-check"></i><b>4.2</b> Simple Exponential Smoothing</a></li>
+<li class="chapter" data-level="4.3" data-path="smoothing-methods.html"><a href="smoothing-methods.html#holt-winters-smoothing"><i class="fa fa-check"></i><b>4.3</b> Holt-Winters Smoothing</a></li>
+<li class="chapter" data-level="4.4" data-path="smoothing-methods.html"><a href="smoothing-methods.html#holt-winters-smoothing-with-seasonality"><i class="fa fa-check"></i><b>4.4</b> Holt-Winters Smoothing with Seasonality</a></li>
+<li class="chapter" data-level="4.5" data-path="smoothing-methods.html"><a href="smoothing-methods.html#application"><i class="fa fa-check"></i><b>4.5</b> Application</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html"><i class="fa fa-check"></i><b>5</b> Modeling Trend and Seasonal Components</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#trend-estimation"><i class="fa fa-check"></i><b>5.1</b> Trend Estimation</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#parametrizing-a-deterministic-trend"><i class="fa fa-check"></i><b>5.1.1</b> Parametrizing a deterministic trend</a></li>
+<li class="chapter" data-level="5.1.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#uses-of-the-deterministic-trend-model"><i class="fa fa-check"></i><b>5.1.2</b> Uses of the Deterministic Trend Model</a></li>
+<li class="chapter" data-level="5.1.3" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#application-estimating-a-polynomial-trend-for-u.s.-real-gdp"><i class="fa fa-check"></i><b>5.1.3</b> Application: Estimating a polynomial trend for U.S. Real GDP</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#seasonal-model"><i class="fa fa-check"></i><b>5.2</b> Seasonal Model</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#regression-model-with-seasonal-dummy-variables"><i class="fa fa-check"></i><b>5.2.1</b> Regression Model with Seasonal Dummy Variables</a></li>
+<li class="chapter" data-level="5.2.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#application-seasonal-model-of-housing-starts"><i class="fa fa-check"></i><b>5.2.2</b> Application: Seasonal Model of Housing Starts</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="modeling-cycle.html"><a href="modeling-cycle.html"><i class="fa fa-check"></i><b>6</b> Modeling Cycle</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#stationarity-and-autocorrelation"><i class="fa fa-check"></i><b>6.1</b> Stationarity and Autocorrelation</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#covariance-stationary-time-series"><i class="fa fa-check"></i><b>6.1.1</b> Covariance Stationary Time Series</a></li>
+<li class="chapter" data-level="6.1.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#correlation-vs-autocorrelation"><i class="fa fa-check"></i><b>6.1.2</b> Correlation vs Autocorrelation</a></li>
+<li class="chapter" data-level="6.1.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#partial-autocorrelation"><i class="fa fa-check"></i><b>6.1.3</b> Partial Autocorrelation</a></li>
+<li class="chapter" data-level="6.1.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#lag-operator"><i class="fa fa-check"></i><b>6.1.4</b> Lag operator</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#autoregressive-ar-model"><i class="fa fa-check"></i><b>6.2</b> Autoregressive (AR) Model</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#unit-root-and-stationarity"><i class="fa fa-check"></i><b>6.2.1</b> Unit root and Stationarity</a></li>
+<li class="chapter" data-level="6.2.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#properties-of-an-ar1-model"><i class="fa fa-check"></i><b>6.2.2</b> Properties of an AR(1) model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#estimating-an-ar-model"><i class="fa fa-check"></i><b>6.3</b> Estimating an AR model</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#maximum-likelihood-estimation-mle"><i class="fa fa-check"></i><b>6.3.1</b> Maximum Likelihood Estimation (MLE)</a></li>
+<li class="chapter" data-level="6.3.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#mle-of-an-arp-model"><i class="fa fa-check"></i><b>6.3.2</b> MLE of an AR(p) model</a></li>
+<li class="chapter" data-level="6.3.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#selection-of-optimal-order-of-the-ar-model"><i class="fa fa-check"></i><b>6.3.3</b> Selection of optimal order of the AR model</a></li>
+<li class="chapter" data-level="6.3.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#forecasting-using-arp-model"><i class="fa fa-check"></i><b>6.3.4</b> Forecasting using AR(p) model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#moving-average-ma-model"><i class="fa fa-check"></i><b>6.4</b> Moving Average (MA) Model</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#invertibility-of-an-ma-process"><i class="fa fa-check"></i><b>6.4.1</b> Invertibility of an MA process</a></li>
+<li class="chapter" data-level="6.4.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#properties-of-an-invertible-ma1"><i class="fa fa-check"></i><b>6.4.2</b> Properties of an invertible MA(1)</a></li>
+<li class="chapter" data-level="6.4.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#forecast-based-on-maq"><i class="fa fa-check"></i><b>6.4.3</b> Forecast based on MA(q)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="modeling-cycle.html"><a href="modeling-cycle.html#armap-q"><i class="fa fa-check"></i><b>6.5</b> ARMA(p, q)</a></li>
+<li class="chapter" data-level="6.6" data-path="modeling-cycle.html"><a href="modeling-cycle.html#integrated-arma-or-arimapdq"><i class="fa fa-check"></i><b>6.6</b> Integrated ARMA or ARIMA(p,d,q)</a></li>
+<li class="chapter" data-level="6.7" data-path="modeling-cycle.html"><a href="modeling-cycle.html#trend-stationary-vs-difference-stationary-time-series"><i class="fa fa-check"></i><b>6.7</b> Trend Stationary vs Difference Stationary Time Series</a></li>
+<li class="chapter" data-level="6.8" data-path="modeling-cycle.html"><a href="modeling-cycle.html#testing-for-a-unit-root"><i class="fa fa-check"></i><b>6.8</b> Testing for a unit root</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#testing-for-unit-root-in-usdcad-exchange-rate"><i class="fa fa-check"></i><b>6.8.1</b> Testing for unit root in USD/CAD exchange rate</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="modeling-cycle.html"><a href="modeling-cycle.html#box-jenkins-method-for-estimating-arimapdq"><i class="fa fa-check"></i><b>6.9</b> Box-Jenkins Method for estimating ARIMA(p,d,q)</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression (VAR) Model</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#reduced-form-var"><i class="fa fa-check"></i><b>7.1</b> Reduced-form VAR</a></li>
+<li class="chapter" data-level="7.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#structural-var"><i class="fa fa-check"></i><b>7.2</b> Structural VAR</a></li>
+<li class="chapter" data-level="7.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#cholesky-decomposition-and-recursive-var-model"><i class="fa fa-check"></i><b>7.3</b> Cholesky Decomposition and Recursive VAR model</a></li>
+<li class="chapter" data-level="7.4" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function-forecast-error-variance-decomposition-and-granger-causality"><i class="fa fa-check"></i><b>7.4</b> Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function"><i class="fa fa-check"></i><b>7.4.1</b> Impulse response function</a></li>
+<li class="chapter" data-level="7.4.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#forecase-error-variance-decomposition"><i class="fa fa-check"></i><b>7.4.2</b> Forecase Error Variance Decomposition</a></li>
+<li class="chapter" data-level="7.4.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#granger-causality"><i class="fa fa-check"></i><b>7.4.3</b> Granger causality</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#application-effect-of-monetary-policy-on-inflation-and-unemployment"><i class="fa fa-check"></i><b>7.5</b> Application: Effect of monetary policy on inflation and unemployment</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#some-stylized-facts-about-stock-market-volatility"><i class="fa fa-check"></i><b>8.1</b> Some stylized facts about stock market volatility</a></li>
+<li class="chapter" data-level="8.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#archq-autoregressive-conditional-heteroscedasticiy-of-order-q"><i class="fa fa-check"></i><b>8.2</b> ARCH(q): Autoregressive Conditional Heteroscedasticiy of order <span class="math inline">\(q\)</span></a></li>
+<li class="chapter" data-level="8.3" data-path="modeling-volatility.html"><a href="modeling-volatility.html#garchpq-generalized-autoregressive-conditional-heteroscedasicity-of-order-p-and-q"><i class="fa fa-check"></i><b>8.3</b> GARCH(p,q): Generalized Autoregressive Conditional Heteroscedasicity of order <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span></a></li>
+<li class="chapter" data-level="8.4" data-path="modeling-volatility.html"><a href="modeling-volatility.html#extensions-of-standard-garch-model"><i class="fa fa-check"></i><b>8.4</b> Extensions of standard GARCH model</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#gjr-garch11"><i class="fa fa-check"></i><b>8.4.1</b> GJR-GARCH(1,1)</a></li>
+<li class="chapter" data-level="8.4.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#exponential-garch-or-egarch11"><i class="fa fa-check"></i><b>8.4.2</b> Exponential GARCH or EGARCH(1,1)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="modeling-volatility.html"><a href="modeling-volatility.html#application-of-garch-model-estimating-volatility-of-sp500-return"><i class="fa fa-check"></i><b>8.5</b> Application of GARCH model: Estimating volatility of SP500 return</a></li>
+</ul></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html"><i class="fa fa-check"></i><b>A</b> Review of Serial Correlation and Heteroscedasticity</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#classical-assumptions"><i class="fa fa-check"></i><b>A.1</b> Classical Assumptions</a></li>
+<li class="chapter" data-level="A.2" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#heteroscedasticity"><i class="fa fa-check"></i><b>A.2</b> Heteroscedasticity</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#consequences-of-heteroscedasticity-for-the-ols-estimator"><i class="fa fa-check"></i><b>A.2.1</b> Consequences of Heteroscedasticity for the OLS estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#testing-for-hetroscedasticity-in-data"><i class="fa fa-check"></i><b>A.3</b> Testing for Hetroscedasticity in data</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#lm-test-for-linear-heteroscedasticity-bp-test"><i class="fa fa-check"></i><b>A.3.1</b> LM test for linear heteroscedasticity: BP test</a></li>
+<li class="chapter" data-level="A.3.2" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#lm-test-for-linear-heteroscedasticity-whites-test"><i class="fa fa-check"></i><b>A.3.2</b> LM test for linear heteroscedasticity: White’s test</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#serial-correlation-1"><i class="fa fa-check"></i><b>A.4</b> Serial correlation</a>
+<ul>
+<li class="chapter" data-level="A.4.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#consequences-of-serial-correlation-for-the-ols-estimator"><i class="fa fa-check"></i><b>A.4.1</b> Consequences of Serial Correlation for the OLS estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#testing-for-serial-correlation-in-data"><i class="fa fa-check"></i><b>A.5</b> Testing for Serial Correlation in data</a>
+<ul>
+<li class="chapter" data-level="A.5.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#breusch-godfrey-bg-lm-test-for-serial-correlation"><i class="fa fa-check"></i><b>A.5.1</b> Breusch-Godfrey (BG) LM test for serial correlation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html"><i class="fa fa-check"></i><b>B</b> Review of Differential Calculus and Optimization</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#derivative-of-a-single-variable-function"><i class="fa fa-check"></i><b>B.1</b> Derivative of a single variable function</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#rules-of-differentiation"><i class="fa fa-check"></i><b>B.1.1</b> Rules of Differentiation</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#second-derivative-and-non-linearity"><i class="fa fa-check"></i><b>B.2</b> Second derivative and non-linearity</a></li>
+<li class="chapter" data-level="B.3" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#partial-derivatives-multi-variable-functions"><i class="fa fa-check"></i><b>B.3</b> Partial derivatives: Multi-variable functions</a></li>
+<li class="chapter" data-level="B.4" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#optimization"><i class="fa fa-check"></i><b>B.4</b> Optimization</a></li>
+<li class="chapter" data-level="" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#problems"><i class="fa fa-check"></i>Problems</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html"><i class="fa fa-check"></i><b>C</b> Review of Probability and Statistics</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability"><i class="fa fa-check"></i><b>C.1</b> Probability</a></li>
+<li class="chapter" data-level="C.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#random-variable"><i class="fa fa-check"></i><b>C.2</b> Random Variable</a></li>
+<li class="chapter" data-level="C.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution"><i class="fa fa-check"></i><b>C.3</b> Probability distribution</a>
+<ul>
+<li class="chapter" data-level="C.3.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-discrete-random-variable"><i class="fa fa-check"></i><b>C.3.1</b> Probability distribution of a discrete random variable</a></li>
+<li class="chapter" data-level="C.3.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-continuous-random-variable"><i class="fa fa-check"></i><b>C.3.2</b> Probability distribution of a continuous random variable</a></li>
+</ul></li>
+<li class="chapter" data-level="C.4" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#moments-of-a-probability-distribution-function"><i class="fa fa-check"></i><b>C.4</b> Moments of a probability distribution function</a>
+<ul>
+<li class="chapter" data-level="C.4.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#first-moment-of-a-probability-distribution-expected-value"><i class="fa fa-check"></i><b>C.4.1</b> First moment of a probability distribution: Expected value</a></li>
+<li class="chapter" data-level="C.4.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#second-moment-of-the-distribution."><i class="fa fa-check"></i><b>C.4.2</b> Second moment of the distribution.</a></li>
+<li class="chapter" data-level="C.4.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#third-and-fourth-moments-skewness-and-kurtosis"><i class="fa fa-check"></i><b>C.4.3</b> Third and Fourth Moments: Skewness and Kurtosis</a></li>
+</ul></li>
+<li class="chapter" data-level="C.5" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#useful-probability-distributions"><i class="fa fa-check"></i><b>C.5</b> Useful probability distributions</a></li>
+<li class="chapter" data-level="C.6" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#joint-probability-distribution"><i class="fa fa-check"></i><b>C.6</b> Joint Probability Distribution</a></li>
+<li class="chapter" data-level="C.7" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#measures-of-statistical-association"><i class="fa fa-check"></i><b>C.7</b> Measures of statistical association</a>
+<ul>
+<li class="chapter" data-level="C.7.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#rules-of-expectation-and-variances"><i class="fa fa-check"></i><b>C.7.1</b> Rules of expectation and variances</a></li>
+</ul></li>
+<li class="chapter" data-level="C.8" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#sampling-and-estimation"><i class="fa fa-check"></i><b>C.8</b> Sampling and Estimation</a></li>
+<li class="chapter" data-level="C.9" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#hypothesis-testing"><i class="fa fa-check"></i><b>C.9</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="C.9.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-a-single-population-parameter"><i class="fa fa-check"></i><b>C.9.1</b> Testing a restriction on a single population parameter</a></li>
+<li class="chapter" data-level="C.9.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-multiple-population-parameter"><i class="fa fa-check"></i><b>C.9.2</b> Testing a restriction on multiple population parameter</a></li>
+<li class="chapter" data-level="C.9.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#confidence-interval-and-hypothesis-testing"><i class="fa fa-check"></i><b>C.9.3</b> Confidence interval and Hypothesis testing</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#problems-1"><i class="fa fa-check"></i>Problems</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://vipul-bhatt.github.io/Econ-483-Notes/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Time Series Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="review-of-serial-correlation-and-heteroscedasticity" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">A</span> Review of Serial Correlation and Heteroscedasticity<a href="review-of-serial-correlation-and-heteroscedasticity.html#review-of-serial-correlation-and-heteroscedasticity" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="classical-assumptions" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">A.1</span> Classical Assumptions<a href="review-of-serial-correlation-and-heteroscedasticity.html#classical-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Similar to our discussion in chapter 2, a desirable sample estimator must be unbiased and efficient. The discussion so far has focused on estimating regression parameters using sample data on the dependent and the independent variables. We will now focus on the conditions under which the OLS estimator of regression parameters are <strong>unbiased</strong> and <strong>efficient</strong>.</p>
+<p>Suppose we have the following regression model:</p>
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1  X_i+ \epsilon_i\]</span></p>
+<p>In the above model, <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> denote true but unknown population parameters of interest. We can use a sample data for <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(X_i\)</span> to compute sample estimators for these two parameters. OLS is one such method of obtaining sample estimators <span class="math inline">\(\hat{\beta_0}\)</span> and <span class="math inline">\(\hat{\beta_1}\)</span>. For these OLS estimators to be unbiased and efficient we need:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Unbiasedness:</strong></li>
+</ol>
+<p><span class="math display">\[E(\hat{\beta_0)}=\beta_0 \ \text{and} \ E(\hat{\beta_1)}=\beta_1\]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Efficiency</strong>:</li>
+</ol>
+<p><span class="math display">\[Var(\hat{\beta_0}) \ \text{and} \ Var(\hat{\beta_1}) \ \text{are smallest possible.} \]</span></p>
+<p>In order for the OLS estimators to be unbiased and efficient, we need a set of assumptions to be satisfied. These assumptions are known as <strong>classical assumptions</strong> and the result is formally known as the <strong>Gauss-Markov</strong> theorem named after two mathematicians, namely, Carl Gauss and Andrey Markov.</p>
+<div class="theorem">
+<p><span id="thm:unnamed-chunk-16" class="theorem"><strong>Theorem A.1  (Gauss-Markov theorem) </strong></span>The OLS estimator is the best linear and unbiased estimator (BLUE) if and only if the following six classical assumptions are satisfied:</p>
+<ol style="list-style-type: decimal">
+<li><p>The regression model is linear in parameters.</p></li>
+<li><p>There is no linear relationship between included independent variables in the regression model or there is <strong>no perfect multicollinearity</strong>.</p></li>
+<li><p>The expected value of the regression error term is 0.</p></li>
+</ol>
+<p><span class="math display">\[E(\epsilon_i)=0 \ \text{for all} \ i\]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li>There is no heteroscedasticity, i.e, the variance of the regression error term is constant.</li>
+</ol>
+<p><span class="math display">\[Var(\epsilon_i)=\sigma^2 \ \text{for all} \ i\]</span></p>
+<ol start="5" style="list-style-type: decimal">
+<li>There is no serial correlation. In time series data serial correlation implies observations of a variable are correlated over time. This is also known as <strong>auto-correlation</strong>. One of the classical assumption is that there is no serial (or auto) correlation in regression error terms.<span class="math display">\[Cor(\epsilon_t, \epsilon_{t-s})=0 \ \text{where} \ t\neq s\]</span></li>
+</ol>
+</div>
+
+<div class="rmdNote">
+Note that for cross-sectional data correlation in error terms across observations is known as <strong>spatial correlation</strong>. In this course we will abstract away from this type of correlation and focus only on the serial correlation in time series data.
+</div>
+<ol start="6" style="list-style-type: decimal">
+<li>No endogeneity problem, i.e, all included independent variables in the model are exogenous and hence are uncorrelated with the regression error terms.</li>
+</ol>
+<p><span class="math display">\[Cor(X_{ki}, \epsilon_i) = 0 \ \text{for} k=1,2,3, .., K\ \]</span></p>
+<p>Of these 6 assumptions, in practice, we often take assumptions 1 through 3 for granted and do not consider violations of these assumptions in our data. However, assumptions 3 to 6 are often not met in data and are investigated much more rigorously. Accordingly, in this chapter we will focus on heteroscedasticity, serial correlation, and no endogeneity.</p>
+</div>
+<div id="heteroscedasticity" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">A.2</span> Heteroscedasticity<a href="review-of-serial-correlation-and-heteroscedasticity.html#heteroscedasticity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>One of the main assumptions that affect the efficiency of the OLS estimator is the assumption of no heteroscedasticity which forces a constant variance for the error term in our regression model. Consider the following simple regression model that explains food expenditure (<span class="math inline">\(Y\)</span>) based on a person’s disposable income (<span class="math inline">\(X\)</span>):</p>
+<p><span class="math display">\[Y_i=\beta_0 + \beta_1 X_i + \epsilon_i\]</span></p>
+<p>The classical assumption of no heteroscedasticity (or Homoscedasticity) implies that <span class="math inline">\(Var(\epsilon_i)=\sigma^2_\epsilon\)</span>. In the context of our example, this assumption can be interpreted as follows. The information a person’s income has for his food expenditure does not vary by the any characteristic of this person (say income). As a result the range of errors we can make in predicting someone’s food expenditure based on their income stays constant. Graphically, if error term are homoscedastic then there is no relationship between the range of errors we can make and a person’s income. Graphically, Figure 6.1 below shows this pattern–whether we look at observations with low income or those with high income, the range of errors we make is more or less constant.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-18"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-18-1.png" alt="Homoscedastic Errors" width="672" />
+<p class="caption">
+Figure A.1: Homoscedastic Errors
+</p>
+</div>
+<p>However, it is reasonable to argue that the value of information differ across observations in the following sense. Some observations have a greater role in reducing error variance than others. In our example, one can argue that food expenditure forms a bigger percent of a person with lower income than one with higher income who may use his income for non-food expenditure activities. In this case we would expect that the variance of errors will increase as income increases. This particular pattern of heteroscedastic errors is shown in Figure 6.2 below.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-19"></span>
+<img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" alt="Heteroscedastic Errors" width="672" />
+<p class="caption">
+Figure A.2: Heteroscedastic Errors
+</p>
+</div>
+<p>In general the exact form of heteroscedasticity will depend on the nature of the problem at hand. However, whether or not heteroscedasticity is present in our data is an empirical question.</p>
+<div id="consequences-of-heteroscedasticity-for-the-ols-estimator" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">A.2.1</span> Consequences of Heteroscedasticity for the OLS estimator<a href="review-of-serial-correlation-and-heteroscedasticity.html#consequences-of-heteroscedasticity-for-the-ols-estimator" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Presence of heteroscedasticity is a violation of the classical assumption and accordingly will affect the properties of the OLS estimator. In general, if there is heteroscedasticity in data then:</p>
+<ol style="list-style-type: decimal">
+<li><p>The OLS estimator of each <span class="math inline">\(\beta\)</span> coefficient is still unbiased.</p></li>
+<li><p>However, due to ignoring the systematic variation in the error term, the OLS estimator is no longer efficient and the sample estimators of the standard errors of each <span class="math inline">\(\beta\)</span> is incorrect. Consequently, we cannot conduct hypothesis testing on regression coefficients using the OLS estimator.</p></li>
+</ol>
+</div>
+</div>
+<div id="testing-for-hetroscedasticity-in-data" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">A.3</span> Testing for Hetroscedasticity in data<a href="review-of-serial-correlation-and-heteroscedasticity.html#testing-for-hetroscedasticity-in-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The first step for incorporating heteroscedasticity in our estimation is to test for its presence in our sample data. This test is based on OLS residuals of the original regression model and accounts for both linear and non-linear forms of heteroscedasticity. Consider the following regression model with two independent variables:</p>
+<p><span class="math display">\[Y_i=\beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \epsilon_i\]</span></p>
+<p>Using OLS we can obtain the residuals from this model, denoted by <span class="math inline">\(e_i\)</span>. Next, we will use this residual data to test for the presence of heteroscedasticity.</p>
+<div id="lm-test-for-linear-heteroscedasticity-bp-test" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">A.3.1</span> LM test for linear heteroscedasticity: BP test<a href="review-of-serial-correlation-and-heteroscedasticity.html#lm-test-for-linear-heteroscedasticity-bp-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The first test of heteroscedasticity is the Breusch-Pagan (BP) test of linear heteroscedasticity. The procedure for implementing this test is detailed below:</p>
+<p>Step 1. Estimate the regression model using OLS and obtain residuals: <span class="math inline">\(e_i\)</span></p>
+<p>Step 2: Estimate the BP regression model where the dependent variable is squared residuals and all independent variables are included on the right hand side:</p>
+<p><span class="math display">\[e^2_i=\alpha_0 + \alpha_1 X_{1i} + \alpha_2 X_{2i} + \epsilon_i\]</span></p>
+<p>Obtain <span class="math inline">\(R^2\)</span> from this regression and denote it by <span class="math inline">\(R^2_{BP}\)</span>.</p>
+<p>Step 3: The test of linear Heteroscedasticity is given by-</p>
+<p><span class="math display">\[H_0: \alpha_1=\alpha_2=0 \Rightarrow \text{No linear heteroscedasticity}\]</span>
+<span class="math display">\[H_A: Not \  H_0 \Rightarrow \text{linear heteroscedasticity}\]</span></p>
+<p>The test statistic id denoted by <span class="math inline">\(LM\)</span> and the formula is given by:</p>
+<p><span class="math display">\[LM=R^2_{BP} \times N\]</span></p>
+<p>where <span class="math inline">\(N\)</span> denotes sample size. Under the null hypothesis this test statistic follows Chi-square distribution with <span class="math inline">\(J\)</span> degrees of freedom, where <span class="math inline">\(J\)</span> denotes number of independent variables in the BPG regression of Step 2. If the LM test statistic is greater than the critical value from the Chi-square distribution, we reject the null hypothesis and conclude that there is sample evidence for linear heteroscedasticity.</p>
+</div>
+<div id="lm-test-for-linear-heteroscedasticity-whites-test" class="section level3 hasAnchor" number="9.3.2">
+<h3><span class="header-section-number">A.3.2</span> LM test for linear heteroscedasticity: White’s test<a href="review-of-serial-correlation-and-heteroscedasticity.html#lm-test-for-linear-heteroscedasticity-whites-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can also test for the presence of non-linear heteroscedasticity using White’s test. The procedure for implementing this test is detailed below:</p>
+<p>Step 1. Estimate the regression model using OLS and obtain residuals: <span class="math inline">\(e_i\)</span></p>
+<p>Step 2: Estimate the BPG regression model where the dependent variable is squared residuals. Now, independent variables include all independent variables, squared of all independent variables, and their product. So for example with 2 independent variables <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> we get the following White regression:</p>
+<p><span class="math display">\[e^2_i=\alpha_0 + \alpha_1 X_{1i} + \alpha_2 X_{2i} + \alpha_3 X^2_{1i} + \alpha_4 X^2_{2i}+\alpha_5 (X_{1i}\times X_{2i})+ \epsilon_i\]</span></p>
+<p>Obtain <span class="math inline">\(R^2\)</span> from this regression and denote it by <span class="math inline">\(R^2_{White}\)</span>.</p>
+<p>Step 3: The test of Hetroscedasticity is given by-</p>
+<p><span class="math display">\[H_0: \alpha_1=\alpha_2=\alpha_3=\alpha_4=\alpha_5=0 \Rightarrow \text{No heteroscedasticity}\]</span>
+<span class="math display">\[H_A: Not \  H_0 \Rightarrow \text{heteroscedasticity}\]</span></p>
+<p>The test statistic id denoted by <span class="math inline">\(LM\)</span> and the formula is given by:</p>
+<p><span class="math display">\[LM=R^2_{White} \times N\]</span></p>
+<p>where <span class="math inline">\(N\)</span> denotes sample size. Under the null hypothesis this test statistic follows Chi-square distribution with <span class="math inline">\(J\)</span> degrees of freedom, where <span class="math inline">\(J\)</span> denotes number of independent variables in the White regression of Step 2. If the LM test statistic is greater than the critical value from the Chi-square distribution, we reject the null hypothesis and conclude that there is sample evidence for heteroscedasticity.</p>
+<div class="example">
+<p><span id="exm:unnamed-chunk-20" class="example"><strong>Example A.1  (Testing for Hetroscedasticity) </strong></span>One of the most important models in finance is the Fama-French 3-factor model of risk premium of a stock. As per this model, the expected return on an asset over and above a risk free rate depends on depends on three factors:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Market risk: Market return minus risk free rate</p></li>
+<li><p>Size premium: small market captilization stocks tend to out perform large market capitalization stocks. This variable captures this permium.</p></li>
+<li><p>Value premium: Stocks with high book-to-market value out perform those with low value. This variable in this sense captures the value premium.</p></li>
+</ol>
+<p>The regression model implied is given by:</p>
+<p><span class="math display">\[y_t= \beta_0 + \beta_1 X_{1t} + \beta_2X_{2t} + \beta_3 X_{3t} + \epsilon_t\]</span></p>
+<p>Here, <span class="math inline">\(y_t\)</span> is the return on a stock minus the risk free rate. In this example we will use IBM stock and proxy risk free rate by using return on 1 month TB. <span class="math inline">\(X_{1t}\)</span> denotes market risk, <span class="math inline">\(X_{2t}\)</span> denotes size premium, and <span class="math inline">\(X_{3t}\)</span> denotes value risk. The data for these three factors is downloaded from the following website:</p>
+<p><a href="https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html" class="uri">https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html</a></p>
+<p>In this application we use monthly data from Jan-2007 through June 2019. Table <a href="review-of-serial-correlation-and-heteroscedasticity.html#tab:ch6table1">A.1</a> provides the estimation of this model using OLS.</p>
+</div>
+<table style="border: solid 2px;">
+<tr>
+<th style="font-weight: bold; border-top: solid 2px; text-align:left; ">
+ 
+</th>
+<th colspan="4" style="font-weight: bold; border-top: solid 2px;">
+Dependent variable: (Return on IBM-Risk Free Rate)
+</th>
+</tr>
+<tr>
+<td style="border: solid 1px; font-weight:bold; border-top: solid 2px; text-align:left; ">
+Explanatory Variables
+</td>
+<td style="border: solid 1px; font-weight:bold; border-top: solid 2px; text-align: center;">
+b
+</td>
+<td style="border: solid 1px; font-weight:bold; border-top: solid 2px; text-align:center;">
+s.e.(b)
+</td>
+<td style="border: solid 1px; font-weight:bold; border-top: solid 2px; text-align: center;">
+t-ratio
+</td>
+<td style="border: solid 1px; font-weight:bold; border-top: solid 2px; text-align: center;">
+p-value
+</td>
+</tr>
+<tr>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Intercept
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align: center;">
+-0.054 <sup>***</sup>
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align:center;">
+0.010
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align: center;">
+-5.245
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align: center;">
+<strong>&lt;0.001</strong>
+</td>
+</tr>
+<tr>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Market Risk Premium
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align: center;">
+0.014 <sup>***</sup>
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align:center;">
+0.002
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align: center;">
+6.083
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align: center;">
+<strong>&lt;0.001</strong>
+</td>
+</tr>
+<tr>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Size Premium
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align: center;">
+0.006 <sup></sup>
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align:center;">
+0.007
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align: center;">
+0.851
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align: center;">
+0.396
+</td>
+</tr>
+<tr>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">
+Volume Premium
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align: center;">
+-0.012 <sup></sup>
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align:center;">
+0.006
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align: center;">
+-1.943
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  text-align: center;">
+0.054
+</td>
+</tr>
+<tr>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:2px solid;">
+Observations
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:center; border-top:2px solid;" colspan="4">
+150
+</td>
+</tr>
+<tr>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / R<sup>2</sup> adjusted
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:center;" colspan="4">
+0.215 / 0.199
+</td>
+</tr>
+<tr>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+log-Likelihood
+</td>
+<td style="border: solid 1px; padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:center;" colspan="4">
+101.354
+</td>
+</tr>
+<tr>
+<td colspan="5" style="font-style:italic; border-top:double black; text-align:right;">
+<ul>
+<li>p&lt;0.05   ** p&lt;0.01   *** p&lt;0.001
+</td>
+</tr></li>
+</ul>
+</table>
+<caption>
+<span id="tab:ch6table1">Table A.1: </span> OLS Estimation of Fama-French 3-factor model
+</caption>
+<p>In order to use the OLS estimator for hypothesis testing, we need to confirm whether there is heteroscedasticity in our data. For this example the BP test regression is given by:</p>
+<p><span class="math display">\[e^2_i=\alpha_0 + \alpha_1 f_{1i} + \alpha_2 f_{2i} +\alpha_3 f_{3i} + \epsilon_i\]</span></p>
+<p>The null hypothesis for no heteroscedasticity requires <span class="math inline">\(\alpha_1=\alpha_2=\alpha_3=0\)</span>.</p>
+<p>The White test regression is given by:</p>
+<p><span class="math display">\[e^2_i=\alpha_0 + \alpha_1 f_{1i} + \alpha_2 f_{2i} +\alpha_3 f_{3i} + \alpha_4 f^2_{1i} +\alpha_5 f^2_{2i} + \alpha_{6}f^2_{3i} + \alpha_7 (f_{1i} \times f_{2i})+ \alpha_8 (f_{1i} \times f_{3i})+ \alpha_9 (f_{2i} \times f_{3i})+\epsilon_i\]</span></p>
+<p>The null hypothesis for no heteroscedasticity requires <span class="math inline">\(\alpha_1=\alpha_2=\alpha_3=\alpha_4=\alpha_5=\alpha_6=\alpha_7=\alpha_8=\alpha_9=0\)</span>. We conduct both BP and White’s test in R and present the results in Table <a href="review-of-serial-correlation-and-heteroscedasticity.html#tab:ch6table2">A.2</a>. We find that there is evidence of heteroscedasticity according to both tests, as we reject the null hypothesis for BP test at 5% level of significance and we reject the null hypothesis for White’s test at 10% level of significance.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">BP test</th>
+<th align="right">White’s test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">LM statistic</td>
+<td align="right">10.099</td>
+<td align="right">15.396</td>
+</tr>
+<tr class="even">
+<td align="left">p-value</td>
+<td align="right">0.018</td>
+<td align="right">0.081</td>
+</tr>
+</tbody>
+</table>
+<caption>
+<span id="tab:ch6table2">Table A.2: </span> Two tests of heteroscedasticity
+</caption>
+</div>
+</div>
+<div id="serial-correlation-1" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">A.4</span> Serial correlation<a href="review-of-serial-correlation-and-heteroscedasticity.html#serial-correlation-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In time series data it is common to observe correlation across observations over time. Indeed many relationships in economics are dynamic in nature. For example, consumption habits indicate past consumption has an effect on current consumption. Similarly, production activities typically stretch over multiple periods and output in one period is often affect by the level produced in the previous period. As these examples indicate it is reasonable to argue that time series economic data may exhibit some kind of serial correlation.</p>
+<p>The correlation between observations of a time series variable is captured by the autocorrelation function (ACF) which is given by:</p>
+<p><span class="math display">\[ACF(s)=\frac{Cov(y_t, y_{t-s})}{\sigma_{y_t} \times \sigma_{y_{t-s}}}\]</span></p>
+<p>Note that here <span class="math inline">\(t\)</span> indexes the current period and <span class="math inline">\(s\)</span> is an integer. For example, if <span class="math inline">\(s=1\)</span>, we are looking at correlation between <span class="math inline">\(y_{t}\)</span> and <span class="math inline">\(y_{t-1}\)</span>. This is known as <strong>first order</strong> serial correlation. Similarly, for <span class="math inline">\(s=2\)</span>, we get the <strong>second order</strong> serial correlation between <span class="math inline">\(y_{t}\)</span> and <span class="math inline">\(y_{t-2}\)</span>. In this ACF is a function of <span class="math inline">\(s\)</span> and will give us a series of values of correlation of the current period with <span class="math inline">\(s\)</span> past periods.</p>
+<p>One of the main assumptions that affect the efficiency of the OLS estimator is the assumption of no serial correlation which forces the error term in our regression model to be independent across observations over time. Consider the following simple regression model:</p>
+<p><span class="math display">\[Y_t=\beta_0 + \beta_1 X_t + \epsilon_t\]</span></p>
+<p>The classical assumption of no serial correlation implies that <span class="math inline">\(Cor(\epsilon_t,\epsilon_{t-s})=0\)</span>, where <span class="math inline">\(t\)</span> indexes current time period and <span class="math inline">\(s\)</span> is an integer.</p>
+<p>However, it is quite possible that the regression errors are actually correlated over time. For simplicity, lets assume that the error term in our model has first order serial correlation of the following form:</p>
+<p><span class="math display">\[\epsilon_t = \rho \epsilon_{t-1} + u_t\]</span></p>
+<p>Here <span class="math inline">\(\rho\)</span> captures the first order serial correlation and is the slope parameter. <span class="math inline">\(u_t\)</span> is a classical error term that satisfies all classical assumptions and hence is serially uncorrelated by definition. Now, depending on the sign of <span class="math inline">\(\rho\)</span> the serial correlation can be positive or negative. In economics it is most common to observe positive serial correlation where the persistence in data ensures that a positive (negative) value of the regression error in one period is likely to be followed by another positive (negative) value. In contrast for negative serial correlation a positive error in one period is more likely to be followed by a positive error next period, and vice-versa. Figure <a href="review-of-serial-correlation-and-heteroscedasticity.html#fig:fig1">A.3</a> below shows the pattern of residuals for the two cases of positive and negative serial correlation in the regression error terms.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:fig1"></span>
+<img src="bookdown-demo_files/figure-html/fig1-1.png" alt="Serially correlated Errors" width="1152" />
+<p class="caption">
+Figure A.3: Serially correlated Errors
+</p>
+</div>
+<p>In general we can have higher order serial correlation in data and whether or not there is such correlation in our data is an empirical question.</p>
+<div id="consequences-of-serial-correlation-for-the-ols-estimator" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">A.4.1</span> Consequences of Serial Correlation for the OLS estimator<a href="review-of-serial-correlation-and-heteroscedasticity.html#consequences-of-serial-correlation-for-the-ols-estimator" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Presence of serial correlation is a violation of the classical assumption and accordingly will affect the properties of the OLS estimator. In general, if there is serial correlation:</p>
+<ol style="list-style-type: decimal">
+<li><p>The OLS estimator of each <span class="math inline">\(\beta\)</span> coefficient is still unbiased.</p></li>
+<li><p>However, the OLS estimator is no longer efficient and the sample estimators of the standard errors of each <span class="math inline">\(\beta\)</span> is incorrect. Consequently, we cannot conduct hypothesis testing on regression coefficients using the OLS estimator.</p></li>
+</ol>
+</div>
+</div>
+<div id="testing-for-serial-correlation-in-data" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">A.5</span> Testing for Serial Correlation in data<a href="review-of-serial-correlation-and-heteroscedasticity.html#testing-for-serial-correlation-in-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="breusch-godfrey-bg-lm-test-for-serial-correlation" class="section level3 hasAnchor" number="9.5.1">
+<h3><span class="header-section-number">A.5.1</span> Breusch-Godfrey (BG) LM test for serial correlation<a href="review-of-serial-correlation-and-heteroscedasticity.html#breusch-godfrey-bg-lm-test-for-serial-correlation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In order to test for higher order serial correlations we can use the BG test which uses the OLS residuals to test for evidence of serial correlation. The procedure for this test is described below:</p>
+<p>Step 1. Estimate the regression model using OLS and obtain residuals: <span class="math inline">\(e_t\)</span></p>
+<p>Step 2: Estimate the BG regression model where the dependent variable is the residuals and independent variables are all X variables in the model, and lagged values of this residual. The number of lagged residuals capture the order of serial correlation. In general for testing serial correlation up to order of <span class="math inline">\(p\)</span>, we will estimate the following regression:</p>
+<p><span class="math display">\[e_t=\alpha_0 + \gamma_1 c\cdot X_{1t}+ \gamma_2 \cdot X_{2t}+...+\gamma_K \cdot X_{kt}+ \alpha_1 e_{t-1} + \alpha_2 e_{t-2} +...+ \alpha_p e_{t-p} + u_t\]</span></p>
+<p>Denote <span class="math inline">\(R^2_{BG}\)</span> as the R-squared of this regression model.</p>
+<p>Step 3: The serial correlation test is given by:</p>
+<p><span class="math display">\[H_0: \alpha_1=\alpha_2=\alpha_3=....=\alpha_p=0\]</span>
+<span class="math display">\[H_A: Not \ H_0\]</span></p>
+<p>The LM test statistic is given by:</p>
+<p><span class="math display">\[LM=N\times R^2_{BG}\]</span></p>
+<p>Under the null hypothesis, this test statistic follows Chi-square distribution with <span class="math inline">\(p\)</span> degrees of freedom. If LM statistic is bigger than the critical value, we reject the null and conclude that there is serial correlation.</p>
+<div class="example">
+<p><span id="exm:unnamed-chunk-24" class="example"><strong>Example A.2  (Testing for serial correlation) </strong></span>Let us use the same example as the one we used for testing hetroscedasticity. We estimated a three factor model for the stock return of Apple using use monthly data from Jan-2007 through June 2019 (see Table <a href="review-of-serial-correlation-and-heteroscedasticity.html#tab:ch6table1">A.1</a> for OLS estimation results of this model).</p>
+<p>We can implement both tests for serial correlation in R using the <em>lmtest</em> package. Table <a href="review-of-serial-correlation-and-heteroscedasticity.html#tab:ch6table4">A.3</a> below presents the results test-statistic for both serial correlation tests. For comparison, I am testing for first order serial correlation. the BG test clearly indicates presence of serial correlation as indicated by a p-value which is less than 0.05. For Durbin-Watson test, sample size is 150 and K=3. Using the Durbin-Watson table we get dL=1.584 and dU=1.665. Because d=0.75 is less than dL, we reject the null hypothesis of no serial correlation and conclude there is evidence for positive first order serial correlation.</p>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">BG test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Test statistic</td>
+<td align="right">53.623</td>
+</tr>
+<tr class="even">
+<td align="left">p-value</td>
+<td align="right">0.000</td>
+</tr>
+</tbody>
+</table>
+<caption>
+<span id="tab:ch6table4">Table A.3: </span> Two tests of Serial Correlation
+</caption>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modeling-volatility.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="review-of-differential-calculus-and-optimization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": null,
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

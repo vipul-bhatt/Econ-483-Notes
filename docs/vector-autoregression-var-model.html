@@ -1,46 +1,46 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Vector Autoregression (VAR) Model | Applied Time Series Analysis</title>
-  <meta name="description" content="Lecture notes for Applied Time Series Analysis">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="Lecture notes for Applied Time Series Analysis" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 7 Vector Autoregression (VAR) Model | Applied Time Series Analysis />
+  <meta property="og:title" content="Chapter 7 Vector Autoregression (VAR) Model | Applied Time Series Analysis" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Lecture notes for Applied Time Series Analysis" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 Vector Autoregression (VAR) Model | Applied Time Series Analysis />
+  <meta name="twitter:title" content="Chapter 7 Vector Autoregression (VAR) Model | Applied Time Series Analysis" />
   
   <meta name="twitter:description" content="Lecture notes for Applied Time Series Analysis" />
   
 
-<meta name="author" content="Vipul Bhatt">
+<meta name="author" content="Vipul Bhatt" />
 
 
-<meta name="date" content="2019-10-13">
+<meta name="date" content="2024-01-15" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="modeling-cycle.html">
-<link rel="next" href="modeling-volatility.html">
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link rel="prev" href="modeling-cycle.html"/>
+<link rel="next" href="modeling-volatility.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -48,23 +48,34 @@
 
 
 
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -72,38 +83,45 @@ pre.numberSource a.sourceLine::before
     color: #aaaaaa;
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code span.dt { color: #902000; } /* DataType */
 code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
 code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
 code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -123,7 +141,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a><ul>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction to Forecasting</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#time-series"><i class="fa fa-check"></i><b>1.1</b> Time Series</a></li>
 <li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#serial-correlation"><i class="fa fa-check"></i><b>1.2</b> Serial Correlation</a></li>
 <li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#testing-for-serial-correlion"><i class="fa fa-check"></i><b>1.3</b> Testing for Serial Correlion</a></li>
@@ -131,59 +150,62 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="1.5" data-path="intro.html"><a href="intro.html#important-elements-of-forecasting"><i class="fa fa-check"></i><b>1.5</b> Important Elements of Forecasting</a></li>
 <li class="chapter" data-level="1.6" data-path="intro.html"><a href="intro.html#loss-function-and-optimal-forecast"><i class="fa fa-check"></i><b>1.6</b> Loss Function and Optimal Forecast</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html"><i class="fa fa-check"></i><b>2</b> Regression-based Forecasting</a><ul>
+<li class="chapter" data-level="2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html"><i class="fa fa-check"></i><b>2</b> Regression-based Forecasting</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#scenario-analysis-and-conditional-forecasts"><i class="fa fa-check"></i><b>2.1</b> Scenario Analysis and Conditional Forecasts</a></li>
 <li class="chapter" data-level="2.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#unconditional-forecasts"><i class="fa fa-check"></i><b>2.2</b> Unconditional Forecasts</a></li>
 <li class="chapter" data-level="2.3" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#some-practical-issues"><i class="fa fa-check"></i><b>2.3</b> Some practical issues</a></li>
-<li class="chapter" data-level="2.4" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#distributed-lag-regression-models"><i class="fa fa-check"></i><b>2.4</b> Distributed Lag Regression Models</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#dynamic-effect-of-x-on-y"><i class="fa fa-check"></i><b>2.4.1</b> Dynamic Effect of X on Y</a></li>
-<li class="chapter" data-level="2.4.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#model-selection-criterion"><i class="fa fa-check"></i><b>2.4.2</b> Model Selection Criterion</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#application-a-model-of-investment-expenditure"><i class="fa fa-check"></i><b>2.5</b> Application: A Model of Investment Expenditure</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#a-multiple-regression-model-of-invesment-expenditure"><i class="fa fa-check"></i><b>2.5.1</b> A Multiple Regression Model of Invesment Expenditure</a></li>
-<li class="chapter" data-level="2.5.2" data-path="regression-based-forecasting.html"><a href="regression-based-forecasting.html#a-distributed-lag-model-of-investment-expenditure"><i class="fa fa-check"></i><b>2.5.2</b> A Distributed Lag Model of Investment Expenditure</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html"><i class="fa fa-check"></i><b>3</b> Components of a Time Series</a><ul>
+<li class="chapter" data-level="3" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html"><i class="fa fa-check"></i><b>3</b> Components of a Time Series</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html#decomposing-a-time-series"><i class="fa fa-check"></i><b>3.1</b> Decomposing a time series</a></li>
 <li class="chapter" data-level="3.2" data-path="components-of-a-time-series.html"><a href="components-of-a-time-series.html#uses-of-decomposition-of-a-time-series"><i class="fa fa-check"></i><b>3.2</b> Uses of Decomposition of a time series</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="smoothing-methods.html"><a href="smoothing-methods.html"><i class="fa fa-check"></i><b>4</b> Smoothing Methods</a><ul>
+<li class="chapter" data-level="4" data-path="smoothing-methods.html"><a href="smoothing-methods.html"><i class="fa fa-check"></i><b>4</b> Smoothing Methods</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="smoothing-methods.html"><a href="smoothing-methods.html#moving-average-method"><i class="fa fa-check"></i><b>4.1</b> Moving Average Method</a></li>
 <li class="chapter" data-level="4.2" data-path="smoothing-methods.html"><a href="smoothing-methods.html#simple-exponential-smoothing"><i class="fa fa-check"></i><b>4.2</b> Simple Exponential Smoothing</a></li>
 <li class="chapter" data-level="4.3" data-path="smoothing-methods.html"><a href="smoothing-methods.html#holt-winters-smoothing"><i class="fa fa-check"></i><b>4.3</b> Holt-Winters Smoothing</a></li>
 <li class="chapter" data-level="4.4" data-path="smoothing-methods.html"><a href="smoothing-methods.html#holt-winters-smoothing-with-seasonality"><i class="fa fa-check"></i><b>4.4</b> Holt-Winters Smoothing with Seasonality</a></li>
 <li class="chapter" data-level="4.5" data-path="smoothing-methods.html"><a href="smoothing-methods.html#application"><i class="fa fa-check"></i><b>4.5</b> Application</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html"><i class="fa fa-check"></i><b>5</b> Modeling Trend and Seasonal Components</a><ul>
-<li class="chapter" data-level="5.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#trend-estimation"><i class="fa fa-check"></i><b>5.1</b> Trend Estimation</a><ul>
+<li class="chapter" data-level="5" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html"><i class="fa fa-check"></i><b>5</b> Modeling Trend and Seasonal Components</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#trend-estimation"><i class="fa fa-check"></i><b>5.1</b> Trend Estimation</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#parametrizing-a-deterministic-trend"><i class="fa fa-check"></i><b>5.1.1</b> Parametrizing a deterministic trend</a></li>
 <li class="chapter" data-level="5.1.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#uses-of-the-deterministic-trend-model"><i class="fa fa-check"></i><b>5.1.2</b> Uses of the Deterministic Trend Model</a></li>
 <li class="chapter" data-level="5.1.3" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#application-estimating-a-polynomial-trend-for-u.s.-real-gdp"><i class="fa fa-check"></i><b>5.1.3</b> Application: Estimating a polynomial trend for U.S. Real GDP</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#seasonal-model"><i class="fa fa-check"></i><b>5.2</b> Seasonal Model</a><ul>
+<li class="chapter" data-level="5.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#seasonal-model"><i class="fa fa-check"></i><b>5.2</b> Seasonal Model</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#regression-model-with-seasonal-dummy-variables"><i class="fa fa-check"></i><b>5.2.1</b> Regression Model with Seasonal Dummy Variables</a></li>
 <li class="chapter" data-level="5.2.2" data-path="modeling-trend-and-seasonal-components.html"><a href="modeling-trend-and-seasonal-components.html#application-seasonal-model-of-housing-starts"><i class="fa fa-check"></i><b>5.2.2</b> Application: Seasonal Model of Housing Starts</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="modeling-cycle.html"><a href="modeling-cycle.html"><i class="fa fa-check"></i><b>6</b> Modeling Cycle</a><ul>
-<li class="chapter" data-level="6.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#stationarity-and-autocorrelation"><i class="fa fa-check"></i><b>6.1</b> Stationarity and Autocorrelation</a><ul>
+<li class="chapter" data-level="6" data-path="modeling-cycle.html"><a href="modeling-cycle.html"><i class="fa fa-check"></i><b>6</b> Modeling Cycle</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#stationarity-and-autocorrelation"><i class="fa fa-check"></i><b>6.1</b> Stationarity and Autocorrelation</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#covariance-stationary-time-series"><i class="fa fa-check"></i><b>6.1.1</b> Covariance Stationary Time Series</a></li>
 <li class="chapter" data-level="6.1.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#correlation-vs-autocorrelation"><i class="fa fa-check"></i><b>6.1.2</b> Correlation vs Autocorrelation</a></li>
 <li class="chapter" data-level="6.1.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#partial-autocorrelation"><i class="fa fa-check"></i><b>6.1.3</b> Partial Autocorrelation</a></li>
 <li class="chapter" data-level="6.1.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#lag-operator"><i class="fa fa-check"></i><b>6.1.4</b> Lag operator</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#autoregressive-ar-model"><i class="fa fa-check"></i><b>6.2</b> Autoregressive (AR) Model</a><ul>
+<li class="chapter" data-level="6.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#autoregressive-ar-model"><i class="fa fa-check"></i><b>6.2</b> Autoregressive (AR) Model</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#unit-root-and-stationarity"><i class="fa fa-check"></i><b>6.2.1</b> Unit root and Stationarity</a></li>
 <li class="chapter" data-level="6.2.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#properties-of-an-ar1-model"><i class="fa fa-check"></i><b>6.2.2</b> Properties of an AR(1) model</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#estimating-an-ar-model"><i class="fa fa-check"></i><b>6.3</b> Estimating an AR model</a><ul>
+<li class="chapter" data-level="6.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#estimating-an-ar-model"><i class="fa fa-check"></i><b>6.3</b> Estimating an AR model</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#maximum-likelihood-estimation-mle"><i class="fa fa-check"></i><b>6.3.1</b> Maximum Likelihood Estimation (MLE)</a></li>
 <li class="chapter" data-level="6.3.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#mle-of-an-arp-model"><i class="fa fa-check"></i><b>6.3.2</b> MLE of an AR(p) model</a></li>
 <li class="chapter" data-level="6.3.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#selection-of-optimal-order-of-the-ar-model"><i class="fa fa-check"></i><b>6.3.3</b> Selection of optimal order of the AR model</a></li>
 <li class="chapter" data-level="6.3.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#forecasting-using-arp-model"><i class="fa fa-check"></i><b>6.3.4</b> Forecasting using AR(p) model</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#moving-average-ma-model"><i class="fa fa-check"></i><b>6.4</b> Moving Average (MA) Model</a><ul>
+<li class="chapter" data-level="6.4" data-path="modeling-cycle.html"><a href="modeling-cycle.html#moving-average-ma-model"><i class="fa fa-check"></i><b>6.4</b> Moving Average (MA) Model</a>
+<ul>
 <li class="chapter" data-level="6.4.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#invertibility-of-an-ma-process"><i class="fa fa-check"></i><b>6.4.1</b> Invertibility of an MA process</a></li>
 <li class="chapter" data-level="6.4.2" data-path="modeling-cycle.html"><a href="modeling-cycle.html#properties-of-an-invertible-ma1"><i class="fa fa-check"></i><b>6.4.2</b> Properties of an invertible MA(1)</a></li>
 <li class="chapter" data-level="6.4.3" data-path="modeling-cycle.html"><a href="modeling-cycle.html#forecast-based-on-maq"><i class="fa fa-check"></i><b>6.4.3</b> Forecast based on MA(q)</a></li>
@@ -191,64 +213,97 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li class="chapter" data-level="6.5" data-path="modeling-cycle.html"><a href="modeling-cycle.html#armap-q"><i class="fa fa-check"></i><b>6.5</b> ARMA(p, q)</a></li>
 <li class="chapter" data-level="6.6" data-path="modeling-cycle.html"><a href="modeling-cycle.html#integrated-arma-or-arimapdq"><i class="fa fa-check"></i><b>6.6</b> Integrated ARMA or ARIMA(p,d,q)</a></li>
 <li class="chapter" data-level="6.7" data-path="modeling-cycle.html"><a href="modeling-cycle.html#trend-stationary-vs-difference-stationary-time-series"><i class="fa fa-check"></i><b>6.7</b> Trend Stationary vs Difference Stationary Time Series</a></li>
-<li class="chapter" data-level="6.8" data-path="modeling-cycle.html"><a href="modeling-cycle.html#testing-for-a-unit-root"><i class="fa fa-check"></i><b>6.8</b> Testing for a unit root</a><ul>
+<li class="chapter" data-level="6.8" data-path="modeling-cycle.html"><a href="modeling-cycle.html#testing-for-a-unit-root"><i class="fa fa-check"></i><b>6.8</b> Testing for a unit root</a>
+<ul>
 <li class="chapter" data-level="6.8.1" data-path="modeling-cycle.html"><a href="modeling-cycle.html#testing-for-unit-root-in-usdcad-exchange-rate"><i class="fa fa-check"></i><b>6.8.1</b> Testing for unit root in USD/CAD exchange rate</a></li>
 </ul></li>
 <li class="chapter" data-level="6.9" data-path="modeling-cycle.html"><a href="modeling-cycle.html#box-jenkins-method-for-estimating-arimapdq"><i class="fa fa-check"></i><b>6.9</b> Box-Jenkins Method for estimating ARIMA(p,d,q)</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression (VAR) Model</a><ul>
+<li class="chapter" data-level="7" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html"><i class="fa fa-check"></i><b>7</b> Vector Autoregression (VAR) Model</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#reduced-form-var"><i class="fa fa-check"></i><b>7.1</b> Reduced-form VAR</a></li>
 <li class="chapter" data-level="7.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#structural-var"><i class="fa fa-check"></i><b>7.2</b> Structural VAR</a></li>
 <li class="chapter" data-level="7.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#cholesky-decomposition-and-recursive-var-model"><i class="fa fa-check"></i><b>7.3</b> Cholesky Decomposition and Recursive VAR model</a></li>
-<li class="chapter" data-level="7.4" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function-forecast-error-variance-decomposition-and-granger-causality"><i class="fa fa-check"></i><b>7.4</b> Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality</a><ul>
+<li class="chapter" data-level="7.4" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function-forecast-error-variance-decomposition-and-granger-causality"><i class="fa fa-check"></i><b>7.4</b> Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#impulse-response-function"><i class="fa fa-check"></i><b>7.4.1</b> Impulse response function</a></li>
 <li class="chapter" data-level="7.4.2" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#forecase-error-variance-decomposition"><i class="fa fa-check"></i><b>7.4.2</b> Forecase Error Variance Decomposition</a></li>
 <li class="chapter" data-level="7.4.3" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#granger-causality"><i class="fa fa-check"></i><b>7.4.3</b> Granger causality</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="vector-autoregression-var-model.html"><a href="vector-autoregression-var-model.html#application-effect-of-monetary-policy-on-inflation-and-unemployment"><i class="fa fa-check"></i><b>7.5</b> Application: Effect of monetary policy on inflation and unemployment</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a><ul>
+<li class="chapter" data-level="8" data-path="modeling-volatility.html"><a href="modeling-volatility.html"><i class="fa fa-check"></i><b>8</b> Modeling Volatility</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#some-stylized-facts-about-stock-market-volatility"><i class="fa fa-check"></i><b>8.1</b> Some stylized facts about stock market volatility</a></li>
 <li class="chapter" data-level="8.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#archq-autoregressive-conditional-heteroscedasticiy-of-order-q"><i class="fa fa-check"></i><b>8.2</b> ARCH(q): Autoregressive Conditional Heteroscedasticiy of order <span class="math inline">\(q\)</span></a></li>
 <li class="chapter" data-level="8.3" data-path="modeling-volatility.html"><a href="modeling-volatility.html#garchpq-generalized-autoregressive-conditional-heteroscedasicity-of-order-p-and-q"><i class="fa fa-check"></i><b>8.3</b> GARCH(p,q): Generalized Autoregressive Conditional Heteroscedasicity of order <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span></a></li>
-<li class="chapter" data-level="8.4" data-path="modeling-volatility.html"><a href="modeling-volatility.html#extensions-of-standard-garch-model"><i class="fa fa-check"></i><b>8.4</b> Extensions of standard GARCH model</a><ul>
+<li class="chapter" data-level="8.4" data-path="modeling-volatility.html"><a href="modeling-volatility.html#extensions-of-standard-garch-model"><i class="fa fa-check"></i><b>8.4</b> Extensions of standard GARCH model</a>
+<ul>
 <li class="chapter" data-level="8.4.1" data-path="modeling-volatility.html"><a href="modeling-volatility.html#gjr-garch11"><i class="fa fa-check"></i><b>8.4.1</b> GJR-GARCH(1,1)</a></li>
 <li class="chapter" data-level="8.4.2" data-path="modeling-volatility.html"><a href="modeling-volatility.html#exponential-garch-or-egarch11"><i class="fa fa-check"></i><b>8.4.2</b> Exponential GARCH or EGARCH(1,1)</a></li>
 </ul></li>
 <li class="chapter" data-level="8.5" data-path="modeling-volatility.html"><a href="modeling-volatility.html#application-of-garch-model-estimating-volatility-of-sp500-return"><i class="fa fa-check"></i><b>8.5</b> Application of GARCH model: Estimating volatility of SP500 return</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
-<li class="chapter" data-level="A" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html"><i class="fa fa-check"></i><b>A</b> Review of Differential Calculus and Optimization</a><ul>
-<li class="chapter" data-level="A.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#derivative-of-a-single-variable-function"><i class="fa fa-check"></i><b>A.1</b> Derivative of a single variable function</a><ul>
-<li class="chapter" data-level="A.1.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#rules-of-differentiation"><i class="fa fa-check"></i><b>A.1.1</b> Rules of Differentiation</a></li>
+<li class="chapter" data-level="A" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html"><i class="fa fa-check"></i><b>A</b> Review of Serial Correlation and Heteroscedasticity</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#classical-assumptions"><i class="fa fa-check"></i><b>A.1</b> Classical Assumptions</a></li>
+<li class="chapter" data-level="A.2" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#heteroscedasticity"><i class="fa fa-check"></i><b>A.2</b> Heteroscedasticity</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#consequences-of-heteroscedasticity-for-the-ols-estimator"><i class="fa fa-check"></i><b>A.2.1</b> Consequences of Heteroscedasticity for the OLS estimator</a></li>
 </ul></li>
-<li class="chapter" data-level="A.2" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#second-derivative-and-non-linearity"><i class="fa fa-check"></i><b>A.2</b> Second derivative and non-linearity</a></li>
-<li class="chapter" data-level="A.3" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#partial-derivatives-multi-variable-functions"><i class="fa fa-check"></i><b>A.3</b> Partial derivatives: Multi-variable functions</a></li>
-<li class="chapter" data-level="A.4" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#optimization"><i class="fa fa-check"></i><b>A.4</b> Optimization</a></li>
+<li class="chapter" data-level="A.3" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#testing-for-hetroscedasticity-in-data"><i class="fa fa-check"></i><b>A.3</b> Testing for Hetroscedasticity in data</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#lm-test-for-linear-heteroscedasticity-bp-test"><i class="fa fa-check"></i><b>A.3.1</b> LM test for linear heteroscedasticity: BP test</a></li>
+<li class="chapter" data-level="A.3.2" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#lm-test-for-linear-heteroscedasticity-whites-test"><i class="fa fa-check"></i><b>A.3.2</b> LM test for linear heteroscedasticity: White’s test</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#serial-correlation-1"><i class="fa fa-check"></i><b>A.4</b> Serial correlation</a>
+<ul>
+<li class="chapter" data-level="A.4.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#consequences-of-serial-correlation-for-the-ols-estimator"><i class="fa fa-check"></i><b>A.4.1</b> Consequences of Serial Correlation for the OLS estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#testing-for-serial-correlation-in-data"><i class="fa fa-check"></i><b>A.5</b> Testing for Serial Correlation in data</a>
+<ul>
+<li class="chapter" data-level="A.5.1" data-path="review-of-serial-correlation-and-heteroscedasticity.html"><a href="review-of-serial-correlation-and-heteroscedasticity.html#breusch-godfrey-bg-lm-test-for-serial-correlation"><i class="fa fa-check"></i><b>A.5.1</b> Breusch-Godfrey (BG) LM test for serial correlation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html"><i class="fa fa-check"></i><b>B</b> Review of Differential Calculus and Optimization</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#derivative-of-a-single-variable-function"><i class="fa fa-check"></i><b>B.1</b> Derivative of a single variable function</a>
+<ul>
+<li class="chapter" data-level="B.1.1" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#rules-of-differentiation"><i class="fa fa-check"></i><b>B.1.1</b> Rules of Differentiation</a></li>
+</ul></li>
+<li class="chapter" data-level="B.2" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#second-derivative-and-non-linearity"><i class="fa fa-check"></i><b>B.2</b> Second derivative and non-linearity</a></li>
+<li class="chapter" data-level="B.3" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#partial-derivatives-multi-variable-functions"><i class="fa fa-check"></i><b>B.3</b> Partial derivatives: Multi-variable functions</a></li>
+<li class="chapter" data-level="B.4" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#optimization"><i class="fa fa-check"></i><b>B.4</b> Optimization</a></li>
 <li class="chapter" data-level="" data-path="review-of-differential-calculus-and-optimization.html"><a href="review-of-differential-calculus-and-optimization.html#problems"><i class="fa fa-check"></i>Problems</a></li>
 </ul></li>
-<li class="chapter" data-level="B" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html"><i class="fa fa-check"></i><b>B</b> Review of Probability and Statistics</a><ul>
-<li class="chapter" data-level="B.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability"><i class="fa fa-check"></i><b>B.1</b> Probability</a></li>
-<li class="chapter" data-level="B.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#random-variable"><i class="fa fa-check"></i><b>B.2</b> Random Variable</a></li>
-<li class="chapter" data-level="B.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution"><i class="fa fa-check"></i><b>B.3</b> Probability distribution</a><ul>
-<li class="chapter" data-level="B.3.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-discrete-random-variable"><i class="fa fa-check"></i><b>B.3.1</b> Probability distribution of a discrete random variable</a></li>
-<li class="chapter" data-level="B.3.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-continuous-random-variable"><i class="fa fa-check"></i><b>B.3.2</b> Probability distribution of a continuous random variable</a></li>
+<li class="chapter" data-level="C" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html"><i class="fa fa-check"></i><b>C</b> Review of Probability and Statistics</a>
+<ul>
+<li class="chapter" data-level="C.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability"><i class="fa fa-check"></i><b>C.1</b> Probability</a></li>
+<li class="chapter" data-level="C.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#random-variable"><i class="fa fa-check"></i><b>C.2</b> Random Variable</a></li>
+<li class="chapter" data-level="C.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution"><i class="fa fa-check"></i><b>C.3</b> Probability distribution</a>
+<ul>
+<li class="chapter" data-level="C.3.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-discrete-random-variable"><i class="fa fa-check"></i><b>C.3.1</b> Probability distribution of a discrete random variable</a></li>
+<li class="chapter" data-level="C.3.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#probability-distribution-of-a-continuous-random-variable"><i class="fa fa-check"></i><b>C.3.2</b> Probability distribution of a continuous random variable</a></li>
 </ul></li>
-<li class="chapter" data-level="B.4" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#moments-of-a-probability-distribution-function"><i class="fa fa-check"></i><b>B.4</b> Moments of a probability distribution function</a><ul>
-<li class="chapter" data-level="B.4.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#first-moment-of-a-probability-distribution-expected-value"><i class="fa fa-check"></i><b>B.4.1</b> First moment of a probability distribution: Expected value</a></li>
-<li class="chapter" data-level="B.4.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#second-moment-of-the-distribution."><i class="fa fa-check"></i><b>B.4.2</b> Second moment of the distribution.</a></li>
-<li class="chapter" data-level="B.4.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#third-and-fourth-moments-skewness-and-kurtosis"><i class="fa fa-check"></i><b>B.4.3</b> Third and Fourth Moments: Skewness and Kurtosis</a></li>
+<li class="chapter" data-level="C.4" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#moments-of-a-probability-distribution-function"><i class="fa fa-check"></i><b>C.4</b> Moments of a probability distribution function</a>
+<ul>
+<li class="chapter" data-level="C.4.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#first-moment-of-a-probability-distribution-expected-value"><i class="fa fa-check"></i><b>C.4.1</b> First moment of a probability distribution: Expected value</a></li>
+<li class="chapter" data-level="C.4.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#second-moment-of-the-distribution."><i class="fa fa-check"></i><b>C.4.2</b> Second moment of the distribution.</a></li>
+<li class="chapter" data-level="C.4.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#third-and-fourth-moments-skewness-and-kurtosis"><i class="fa fa-check"></i><b>C.4.3</b> Third and Fourth Moments: Skewness and Kurtosis</a></li>
 </ul></li>
-<li class="chapter" data-level="B.5" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#useful-probability-distributions"><i class="fa fa-check"></i><b>B.5</b> Useful probability distributions</a></li>
-<li class="chapter" data-level="B.6" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#joint-probability-distribution"><i class="fa fa-check"></i><b>B.6</b> Joint Probability Distribution</a></li>
-<li class="chapter" data-level="B.7" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#measures-of-statistical-association"><i class="fa fa-check"></i><b>B.7</b> Measures of statistical association</a><ul>
-<li class="chapter" data-level="B.7.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#rules-of-expectation-and-variances"><i class="fa fa-check"></i><b>B.7.1</b> Rules of expectation and variances</a></li>
+<li class="chapter" data-level="C.5" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#useful-probability-distributions"><i class="fa fa-check"></i><b>C.5</b> Useful probability distributions</a></li>
+<li class="chapter" data-level="C.6" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#joint-probability-distribution"><i class="fa fa-check"></i><b>C.6</b> Joint Probability Distribution</a></li>
+<li class="chapter" data-level="C.7" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#measures-of-statistical-association"><i class="fa fa-check"></i><b>C.7</b> Measures of statistical association</a>
+<ul>
+<li class="chapter" data-level="C.7.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#rules-of-expectation-and-variances"><i class="fa fa-check"></i><b>C.7.1</b> Rules of expectation and variances</a></li>
 </ul></li>
-<li class="chapter" data-level="B.8" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#sampling-and-estimation"><i class="fa fa-check"></i><b>B.8</b> Sampling and Estimation</a></li>
-<li class="chapter" data-level="B.9" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#hypothesis-testing"><i class="fa fa-check"></i><b>B.9</b> Hypothesis testing</a><ul>
-<li class="chapter" data-level="B.9.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-a-single-population-parameter"><i class="fa fa-check"></i><b>B.9.1</b> Testing a restriction on a single population parameter</a></li>
-<li class="chapter" data-level="B.9.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-multiple-population-parameter"><i class="fa fa-check"></i><b>B.9.2</b> Testing a restriction on multiple population parameter</a></li>
-<li class="chapter" data-level="B.9.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#confidence-interval-and-hypothesis-testing"><i class="fa fa-check"></i><b>B.9.3</b> Confidence interval and Hypothesis testing</a></li>
+<li class="chapter" data-level="C.8" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#sampling-and-estimation"><i class="fa fa-check"></i><b>C.8</b> Sampling and Estimation</a></li>
+<li class="chapter" data-level="C.9" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#hypothesis-testing"><i class="fa fa-check"></i><b>C.9</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="C.9.1" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-a-single-population-parameter"><i class="fa fa-check"></i><b>C.9.1</b> Testing a restriction on a single population parameter</a></li>
+<li class="chapter" data-level="C.9.2" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#testing-a-restriction-on-multiple-population-parameter"><i class="fa fa-check"></i><b>C.9.2</b> Testing a restriction on multiple population parameter</a></li>
+<li class="chapter" data-level="C.9.3" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#confidence-interval-and-hypothesis-testing"><i class="fa fa-check"></i><b>C.9.3</b> Confidence interval and Hypothesis testing</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="review-of-probability-and-statistics.html"><a href="review-of-probability-and-statistics.html#problems-1"><i class="fa fa-check"></i>Problems</a></li>
 </ul></li>
@@ -272,12 +327,12 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="vector-autoregression-var-model" class="section level1">
-<h1><span class="header-section-number">Chapter 7</span> Vector Autoregression (VAR) Model</h1>
+<div id="vector-autoregression-var-model" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Vector Autoregression (VAR) Model<a href="vector-autoregression-var-model.html#vector-autoregression-var-model" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Thus far our analysis has been limited to a univariate time series. Often one maybe interested in understanding the dynamics of multiple time series variables. Vector Autoregression (VAR) model is one of the most commonly used model for this purpose. Suppose you have <span class="math inline">\(N\)</span> time series variables in your sample Then a VAR model is a system of <span class="math inline">\(N\)</span> linear equations where each variable is modeled as a linear function of its own lags and current and past values of the remaining <span class="math inline">\(N-1\)</span> variables. In this sense a VAR model combines and extends the the AR model and distributed lag model we covered earlier.</p>
 <p>There are two main ways we can specify a VAR model, each distinguished by the treatment of contemporaneous effects among variable included in the model. To make each type’s main features salient, suppose that we have three variables in our model: inflation (denoted by <span class="math inline">\(\pi\)</span>), unemployment (denoted by <span class="math inline">\(u\)</span>), and the federal fund rate (denoted by <span class="math inline">\(i\)</span>). In the remainder of this chapter will use this 3-variable system as our example.</p>
-<div id="reduced-form-var" class="section level2">
-<h2><span class="header-section-number">7.1</span> Reduced-form VAR</h2>
+<div id="reduced-form-var" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Reduced-form VAR<a href="vector-autoregression-var-model.html#reduced-form-var" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In a reduced-form VAR we abstract away from any contemporaneous linkages among variables in the model and hence in that sense take an <strong>atheoretical</strong> approach to estimating dynamic relationships among these variables. Specifically, we assume that each variable in the model is a function of its own lags and lags of remaining variables in the system. For example, using our 3 variables, a reduced-form VAR(1) is given by:</p>
 <p><span class="math display">\[\pi_t = a_{10} + a_{11} \pi_{t-1} + a_{12} u_{t-1} + a_{13} i_{t-1} + e_{1t}\]</span>
 <span class="math display">\[u_t = a_{20} + a_{21} \pi_{t-1} + a_{22} u_{t-1} + a_{23} i_{t-1} + e_{2t}\]</span>
@@ -290,8 +345,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><p>One important drawback of the reduced-form VAR is that it cannot be used for structural inference and policy analysis. For example, suppose we are want to find out what will be the effect of raising the ffr by 50 basis points on inflation and unemployment? To answer this question, we need the shocks in each equation to be independent of each other. Only then, for example, we can say that <span class="math inline">\(e_{3t}\)</span> represents shock to the FFR alone. However, in the reduced-form VAR, because each variable is related to each other, shocks in each equation are also correlated to each other.</p></li>
 </ol>
 </div>
-<div id="structural-var" class="section level2">
-<h2><span class="header-section-number">7.2</span> Structural VAR</h2>
+<div id="structural-var" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Structural VAR<a href="vector-autoregression-var-model.html#structural-var" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The reduced-form VAR specified above is <strong>atheoretical</strong> in the sense that it does not impose any economic structure on the relationships between different variables. As a result a reduced-form model cannot be used to uncover causal relationships between correlated variables. A <strong>structural VAR</strong> model allows each variable to depend on past as well as current values of other variables in the system. As a result, a structural VAR adds contemporaneous linkages among variables included in the model. Continuing with our example, a structural version of the 3-variable VAR can be written as follows:</p>
 <p><span class="math display">\[\pi_t = \beta_{11} + \beta_{12} u_t + \beta_{13} i_t + \phi_{11} \pi_{t-1} + \phi_{12} u_{t-1} + \phi_{13} i_{t-1} + \epsilon_{1t}\]</span>
 <span class="math display">\[u_t = \beta_{21} + \beta_{22} \pi_t+ \beta_{23} i_t+\phi_{21} \pi_{t-1} + \phi_{22} u_{t-1} + \phi_{23} i_{t-1} + \epsilon_{2t}\]</span>
@@ -305,8 +360,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </ol>
 <p>Consequently, a structural VAR model cannot be estimated using OLS. In order to process we need to impose some kind of identifying restrictions on the structural VAR model to deal with the contemporaneous linkages among variables. Such restrictions often come from economic theory and may involve the entire model or a just a single equation. However, to conduct structural inference we have to use economic theory to afford structural interpretation to shocks of our VAR model.</p>
 </div>
-<div id="cholesky-decomposition-and-recursive-var-model" class="section level2">
-<h2><span class="header-section-number">7.3</span> Cholesky Decomposition and Recursive VAR model</h2>
+<div id="cholesky-decomposition-and-recursive-var-model" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Cholesky Decomposition and Recursive VAR model<a href="vector-autoregression-var-model.html#cholesky-decomposition-and-recursive-var-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>One solution that falls in between the reduced-form VAR with no structural interpretation and the structural VAR with full set of contemporaneous linkages is the <strong>recursive VAR</strong> model. In this specification, the error term in each equation is assumed to be uncorrelated with the error term in the preceding equations. This is accomplished by assuming some sort of <strong>ordering</strong> among variables in the VAR model so that only some variables contemporaneously affect others. For example, suppose we use the following ordering: inflation, unemployment, and the federal fund rate (ffr). This ordering will imply the following recursive VAR model:</p>
 <p><span class="math display">\[\pi_t = \beta_{11} + \phi_{11} \pi_{t-1} + \phi_{12} u_{t-1} + \phi_{13} i_{t-1} + \epsilon_{1t}\]</span>
 <span class="math display">\[u_t = \beta_{21} + \beta_{22} \pi_t+\phi_{21} \pi_{t-1} + \phi_{22} u_{t-1} + \phi_{23} i_{t-1} + \epsilon_{2t}\]</span>
@@ -318,19 +373,19 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><p>If we change the ordering, we will get different results. In a model with <span class="math inline">\(N\)</span> variables, there are N! possible orderings. So in our example, there are 3!= 6 possible alternative specifications for the VAR model. Hence, this approach requires us to judiciously choose the ordering of the variables.</p></li>
 </ol>
 </div>
-<div id="impulse-response-function-forecast-error-variance-decomposition-and-granger-causality" class="section level2">
-<h2><span class="header-section-number">7.4</span> Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality</h2>
+<div id="impulse-response-function-forecast-error-variance-decomposition-and-granger-causality" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Impulse Response Function, Forecast Error Variance Decomposition, and Granger Causality<a href="vector-autoregression-var-model.html#impulse-response-function-forecast-error-variance-decomposition-and-granger-causality" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In addition to estimating each equation and providing a forecast of all variables in the system, there are two additional outputs produced by a VAR model which can be used for both descriptive and inference purposes. This analysis requires us to either use a recursive VAR model or impose some restrictions based on economic theory so that each shock can be interpreted as a shock to that particular variable. In this chapter we will use the recursive VAR structure when discussing impulse response functions and variance decomposition.</p>
-<div id="impulse-response-function" class="section level3">
-<h3><span class="header-section-number">7.4.1</span> Impulse response function</h3>
+<div id="impulse-response-function" class="section level3 hasAnchor" number="7.4.1">
+<h3><span class="header-section-number">7.4.1</span> Impulse response function<a href="vector-autoregression-var-model.html#impulse-response-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Suppose we are interested in finding out how shock to one variable in the system at time <span class="math inline">\(t\)</span> affects the dynamics of other variables. For example, suppose there is unanticipated increase in the ffr caused by the actions of the Fed. What would be the dynamic response of inflation and unemployment to this monetary policy shock? Using the recursive VAR, we can interpret the shock to the FFR (the last variable in our ordering) as a pure interest rate shock because it is by construction uncorrelated with shocks to inflation and unemployment. The <strong>impuse response</strong> produced by the VAR model traces out the response of current and future values of unemployment and inflation to one-unit increase in the error term of the ffr equation, holding error terms in inflation and unemployment equation at zero. We can study both the <strong>impact effect</strong> as well as the <strong>cumulative effect</strong> of such a shock to ffr on unemployment and inflation.</p>
 </div>
-<div id="forecase-error-variance-decomposition" class="section level3">
-<h3><span class="header-section-number">7.4.2</span> Forecase Error Variance Decomposition</h3>
+<div id="forecase-error-variance-decomposition" class="section level3 hasAnchor" number="7.4.2">
+<h3><span class="header-section-number">7.4.2</span> Forecase Error Variance Decomposition<a href="vector-autoregression-var-model.html#forecase-error-variance-decomposition" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Another useful output from an estimated VAR model is the <strong>forecast error variance decomposition (fevd)</strong>. Here, we can address the following question: following a shock to one of the variables in the VAR model what percentage of the variance in the forecast error of other variables in the model can be attributed to this particular shock? For example, what percentage of the forecast error variance of inflation can be attributed to the shock in inflation, shock in unemployment, and shock to ffr. In this sense the forecast error variance decomposition measures the amount of each variable in the VAR model contributes to the other variables in the autoregression.</p>
 </div>
-<div id="granger-causality" class="section level3">
-<h3><span class="header-section-number">7.4.3</span> Granger causality</h3>
+<div id="granger-causality" class="section level3 hasAnchor" number="7.4.3">
+<h3><span class="header-section-number">7.4.3</span> Granger causality<a href="vector-autoregression-var-model.html#granger-causality" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Another important analysis that one can conduct using a VAR model is <strong>Granger-causality</strong>. As a bi-variate concept, Granger causality means that lags of one variable improves our capacity to predict another variable. For example, if unemployment <strong>Granger-causes</strong> inflation, then lags of unemployment have non-zero coefficients in the reduced-form inflation equation. Formally, consider the following regression:</p>
 <p><span class="math display">\[\pi_t=\beta_0 + \sum_{i=1}^{P} \beta_i u_{t-i} \sum_{i=1}^{P} \delta_i \pi_{t-i} + \epsilon_t\]</span></p>
 <p>To test whether unemployment Granger causes inflation we can conduct the following hypothesis test:</p>
@@ -339,8 +394,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <p>This is an F-test and rejection of the null hypothesis indicates unemployment Granger-causes inflation.</p>
 </div>
 </div>
-<div id="application-effect-of-monetary-policy-on-inflation-and-unemployment" class="section level2">
-<h2><span class="header-section-number">7.5</span> Application: Effect of monetary policy on inflation and unemployment</h2>
+<div id="application-effect-of-monetary-policy-on-inflation-and-unemployment" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Application: Effect of monetary policy on inflation and unemployment<a href="vector-autoregression-var-model.html#application-effect-of-monetary-policy-on-inflation-and-unemployment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The Federal reserve bank (The Fed) in the U.S. has a dual mandate: to maintain low inflation and low unemployment. The monetary policy stance of the Fed is expressed in terms of the federal funds rate (ffr). In this section we learn how to estimate a VAR model with three variables: inflation (<span class="math inline">\(\pi_t\)</span>), unemployment (<span class="math inline">\(u_t\)</span>), and interest rate (<span class="math inline">\(i_t\)</span>). For this purpose we will use quarterly data on these variables from 1960Q1 through 2019Q2. We will use the Fred Stat website and download data on these variables:</p>
 <ol style="list-style-type: decimal">
 <li>Seasonally quarterly GDP deflator (GDPDEF): <a href="https://fred.stlouisfed.org/series/GDPDEF" class="uri">https://fred.stlouisfed.org/series/GDPDEF</a> ht
@@ -365,31 +420,31 @@ We define inflation as follows:</li>
 ##  Granger causality H0: inf do not Granger-cause u ffr
 ## 
 ## data:  VAR object varmodel
-## F-Test = 5.4331, df1 = 4, df2 = 687, p-value = 0.0002606</code></pre>
+## F-Test = 3.9185, df1 = 4, df2 = 738, p-value = 0.003718</code></pre>
 <pre><code>## 
 ##  Granger causality H0: u do not Granger-cause inf ffr
 ## 
 ## data:  VAR object varmodel
-## F-Test = 5.4764, df1 = 4, df2 = 687, p-value = 0.0002413</code></pre>
+## F-Test = 1.8588, df1 = 4, df2 = 738, p-value = 0.1158</code></pre>
 <pre><code>## 
 ##  Granger causality H0: ffr do not Granger-cause inf u
 ## 
 ## data:  VAR object varmodel
-## F-Test = 3.8411, df1 = 4, df2 = 687, p-value = 0.004271</code></pre>
+## F-Test = 5.2338, df1 = 4, df2 = 738, p-value = 0.0003679</code></pre>
 <p>Next we present the impulse responses for the recursive VAR structure where we use the following ordering: inflation, unemployment, and interest rate. For brevity, I only show the effect of an unexpected increase in ffr on all three variables as this shock propagates through the recursive VAR structure using the estimated coefficients from the reduced-form VAR model. From Figures 7.1 through 7.3 we observe a persistent positive effect of higher interest rate on both unemployment and inflation that fades over time.</p>
-<div class="figure" style="text-align: center"><span id="fig:ch7fig21"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch7fig2-1"></span>
 <img src="bookdown-demo_files/figure-html/ch7fig2-1.png" alt="Impulse Response Function " width="672" />
 <p class="caption">
 Figure 7.1: Impulse Response Function
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:ch7fig22"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch7fig2-2"></span>
 <img src="bookdown-demo_files/figure-html/ch7fig2-2.png" alt="Impulse Response Function " width="672" />
 <p class="caption">
 Figure 7.2: Impulse Response Function
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:ch7fig23"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch7fig2-3"></span>
 <img src="bookdown-demo_files/figure-html/ch7fig2-3.png" alt="Impulse Response Function " width="672" />
 <p class="caption">
 Figure 7.3: Impulse Response Function
@@ -417,21 +472,21 @@ horizon, 63 percent of the forecast error variance in for ffr can be attributed 
 </tr>
 <tr class="even">
 <td align="right">4</td>
-<td align="right">0.916</td>
+<td align="right">0.949</td>
+<td align="right">0.002</td>
 <td align="right">0.048</td>
-<td align="right">0.036</td>
 </tr>
 <tr class="odd">
 <td align="right">8</td>
-<td align="right">0.866</td>
-<td align="right">0.096</td>
-<td align="right">0.038</td>
+<td align="right">0.940</td>
+<td align="right">0.003</td>
+<td align="right">0.057</td>
 </tr>
 <tr class="even">
 <td align="right">12</td>
-<td align="right">0.853</td>
-<td align="right">0.111</td>
-<td align="right">0.036</td>
+<td align="right">0.937</td>
+<td align="right">0.004</td>
+<td align="right">0.059</td>
 </tr>
 </tbody>
 </table>
@@ -448,27 +503,27 @@ horizon, 63 percent of the forecast error variance in for ffr can be attributed 
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">0.001</td>
-<td align="right">0.999</td>
+<td align="right">0.077</td>
+<td align="right">0.923</td>
 <td align="right">0.000</td>
 </tr>
 <tr class="even">
 <td align="right">4</td>
-<td align="right">0.001</td>
-<td align="right">0.995</td>
-<td align="right">0.004</td>
+<td align="right">0.070</td>
+<td align="right">0.916</td>
+<td align="right">0.014</td>
 </tr>
 <tr class="odd">
 <td align="right">8</td>
-<td align="right">0.008</td>
-<td align="right">0.961</td>
-<td align="right">0.031</td>
+<td align="right">0.068</td>
+<td align="right">0.918</td>
+<td align="right">0.015</td>
 </tr>
 <tr class="even">
 <td align="right">12</td>
-<td align="right">0.038</td>
-<td align="right">0.885</td>
-<td align="right">0.077</td>
+<td align="right">0.062</td>
+<td align="right">0.902</td>
+<td align="right">0.037</td>
 </tr>
 </tbody>
 </table>
@@ -485,33 +540,33 @@ horizon, 63 percent of the forecast error variance in for ffr can be attributed 
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">0.014</td>
-<td align="right">0.141</td>
-<td align="right">0.844</td>
+<td align="right">0.016</td>
+<td align="right">0.061</td>
+<td align="right">0.923</td>
 </tr>
 <tr class="even">
 <td align="right">4</td>
-<td align="right">0.045</td>
-<td align="right">0.367</td>
-<td align="right">0.588</td>
+<td align="right">0.044</td>
+<td align="right">0.102</td>
+<td align="right">0.854</td>
 </tr>
 <tr class="odd">
 <td align="right">8</td>
-<td align="right">0.127</td>
-<td align="right">0.439</td>
-<td align="right">0.434</td>
+<td align="right">0.141</td>
+<td align="right">0.092</td>
+<td align="right">0.767</td>
 </tr>
 <tr class="even">
 <td align="right">12</td>
-<td align="right">0.202</td>
-<td align="right">0.428</td>
-<td align="right">0.370</td>
+<td align="right">0.231</td>
+<td align="right">0.079</td>
+<td align="right">0.689</td>
 </tr>
 </tbody>
 </table>
 <p>Finally, we can use our reduced-form VAR estimation to produce forecasts for each variable in the model.
 Figure <a href="vector-autoregression-var-model.html#fig:ch7fig1">7.4</a> below provides forecast for next 8 quarters from 2019Q3 through 2021Q2. These forecasts can be compared with univariate forecast for each variable using ARIMA or some other method to assess the improvement in forecast accuracy due to estimating a VAR model.</p>
-<div class="figure" style="text-align: center"><span id="fig:ch7fig1"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ch7fig1"></span>
 <img src="bookdown-demo_files/figure-html/ch7fig1-1.png" alt="Forecast for 2019Q3 through 2021Q2" width="672" />
 <p class="caption">
 Figure 7.4: Forecast for 2019Q3 through 2021Q2
@@ -530,12 +585,13 @@ Figure 7.4: Forecast for 2019Q3 through 2021Q2
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -543,12 +599,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -560,7 +616,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
+"view": {
+"link": null,
+"text": null
+},
 "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
@@ -574,9 +638,10 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
